@@ -1,0 +1,57 @@
+{% load static %}
+    <!-- header-start -->
+    <header>
+        <div class="header-area ">
+            <div id="sticky-header" class="main-header-area">
+                <div class="container-fluid p-0">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col-xl-2 col-lg-2">
+                            <div class="logo-img">
+                                <a href="{% url 'index' %}">
+                                    <img src="{% static 'reprohack/images/reprohack_logo_sm.png' %}" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 col-lg-7">
+                            <div class="main-menu  d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li><a class="active" href="{% url 'index' %}">home</a></li>
+                                       <li><a href="{% url 'event_list' %}">Events</a></li>
+                                       <li><a href="{% url 'paper_list' %}">Papers</a></li>
+                                        <li><a href="about.html">About</a></li>
+                                      
+                                        <li><a href="contact.html">Contact</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 d-none d-lg-block">
+                            <div class="log_chat_area d-flex align-items-center">
+                                {% if user.is_authenticated %}
+                                <a href="" class="login popup-with-form">
+                                    <i class="flaticon-user"></i>
+                                    <span>{{ user.get_username }}</span>
+                                </a>
+                                {% else %}
+                                    <a href="{% url 'login' %}" class="login popup-with-form">
+                                        <i class="flaticon-user"></i>
+                                        <span></span>
+                                    </a>
+                                {% endif %}
+                                <div class="live_chat_btn">
+                                    <a class="boxed_btn_orange" href="{% url 'paper_new' %}">
+                                        <i class="fa fa-paper"></i>
+                                        <span>Submit Paper</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>

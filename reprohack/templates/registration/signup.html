@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- bradcam_area_start -->
+<div class="bradcam_area breadcam_bg overlay2">
+    <h3>About Us</h3>
+</div>
+<!-- bradcam_area_end -->
+  <h2>Sign up</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign up</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="bradcam_area breadcam_bg overlay2">
+    <h1>Papers</h1>
+</div>
+<h2>Browse ReproHack papers</h2>
+    {% for paper in object_list %}
+            <h3><a href="{{ paper.get_absolute_url }}">{{ paper.title }}</a></h3>
+            <h3><a href="{{ paper.get_absolute_url }}">{{ paper.citation_txt }}</a></h3>
+            <br>
+        </div>
+    {% endfor %}
+{% endblock %}

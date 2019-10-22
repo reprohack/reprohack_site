@@ -1,0 +1,6 @@
+*.DS_Store
+.vscode
+myvenv/*
+/static
+*pycache*
+db.sqlite3

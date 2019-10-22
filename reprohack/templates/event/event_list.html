@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="bradcam_area breadcam_bg overlay2">
+    <h1>Events</h1>
+</div>
+<h2>Upcoming ReproHacks</h2>
+    {% for event in object_list %}
+        <div class="event">
+            <div class="date">
+                {{ event.date }}
+            </div>
+            <h3><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
+            <br>
+        </div>
+    {% endfor %}
+{% endblock %}
