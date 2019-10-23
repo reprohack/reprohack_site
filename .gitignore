@@ -4,3 +4,5 @@ myvenv/*
 /static
 *pycache*
 db.sqlite3
+*.pyc
+*~
