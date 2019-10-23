@@ -10,8 +10,11 @@ from django.urls import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from taggit.managers import TaggableManager
+from djgeojson.fields import PointField
+from django.contrib.gis.db import models as gismodels
+from django.contrib.gis.geos import Point
 
-class Event(models.Model):
+class Event(gismodels.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     host = models.CharField(max_length=200)
@@ -25,8 +28,7 @@ class Event(models.Model):
     address = models.CharField(max_length=400, default='')
     city = models.CharField(max_length=60, default='')
     postcode = models.CharField(max_length=15, default='')
-    lat = models.IntegerField() 
-    lon = models.IntegerField()
+    geom = PointField(blank=True)
     submission_date = models.DateTimeField(default=timezone.now)
     registration_url = models.URLField()
 

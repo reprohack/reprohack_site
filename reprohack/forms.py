@@ -5,18 +5,27 @@ from django.forms import ModelForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit, Row, Column, HTML, Field
 from crispy_forms.bootstrap import PrependedText
+from leaflet.forms.widgets import LeafletWidget
 from reprohack.models import Event, Paper
 
 
 ## -------- Event -------- ##
+LEAFLET_WIDGET_ATTRS = {
+'DEFAULT_CENTER': (6.0, 45.0),
+'DEFAULT_ZOOM': 5,
+'MIN_ZOOM': 3,
+'MAX_ZOOM': 18,
+}
 class EventForm(ModelForm):
     class Meta:
         model = Event
         exclude = ['submission_date', 'user']
+        widgets = {'geom': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS)}
         
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
         super(EventForm, self).__init__(*args, **kwargs)
+        self.fields['geom'].label = ""
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Submit event'))
@@ -35,30 +44,11 @@ class EventForm(ModelForm):
                 Column('city', css_class='form-group col-md-8 mb-0'),
                 Column('postcode', css_class='form-group col-md-4 mb-0'),
             ),
-            Row(
-                Column('lat', css_class='form-group col-md-6 mb-0'),
-                Column('lon', css_class='form-group col-md-6 mb-0'),
-            ),
+            HTML('<h2>GeoLocate your Event!<h2><br>'),
+            'geom',
             'registration_url',
         )
 
-    def clean(self):
-        authorship = self.cleaned_data.get('authorship')
-
-        if authorship:
-            self.cleaned_data['author_user'] = self.user
-        else:
-            self.cleaned_data['author_user'] = ""
-            self.fields_required(['author_first_name'])
-            self.fields_required(['author_last_name'])
-            self.fields_required(['author_email'])
-        return self.cleaned_data
-    
-    def fields_required(self, fields):
-        for field in fields:
-            if not self.cleaned_data.get(field, ''):
-                msg = forms.ValidationError("This field is required.")
-                self.add_error(field, msg)
 
 ## -------- Paper -------- ## 
 class PaperForm(ModelForm):
@@ -119,7 +109,23 @@ class PaperForm(ModelForm):
                 ),
             ),
         )
+    def clean(self):
+        authorship = self.cleaned_data.get('authorship')
 
+        if authorship:
+            self.cleaned_data['author_user'] = self.user
+        else:
+            self.cleaned_data['author_user'] = ""
+            self.fields_required(['author_first_name'])
+            self.fields_required(['author_last_name'])
+            self.fields_required(['author_email'])
+        return self.cleaned_data
+    
+    def fields_required(self, fields):
+        for field in fields:
+            if not self.cleaned_data.get(field, ''):
+                msg = forms.ValidationError("This field is required.")
+                self.add_error(field, msg)
 
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True)

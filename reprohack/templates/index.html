@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load leaflet_tags %}
 {% block content %}  
     <!-- slider_area_start -->
     <div class="slider_area ">
@@ -126,6 +127,9 @@
                 <div class="row">
                 
                         <img src="{% static 'reprohack/images/workflow.png' %}" alt="">
+                </div>
+                <div>
+                    {% leaflet_map "yourmap" %}
                 </div>
             </div>
             </div>
