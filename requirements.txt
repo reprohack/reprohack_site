@@ -8,6 +8,7 @@ django-leaflet==0.24.0
 django-markdownx==2.0.28
 django-taggit==1.1.0
 isort==4.3.21
+jsonfield==2.0.2
 lazy-object-proxy==1.4.2
 Markdown==3.1.1
 mccabe==0.6.1
