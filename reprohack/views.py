@@ -77,6 +77,15 @@ class EventList(ListView):
         return context
 
 
+class EventMap(ListView):
+    model = Event
+    template_name = 'index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        return context
+
 def index(request):
     context = {}
     return render(request, 'index.html', context)

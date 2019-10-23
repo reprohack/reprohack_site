@@ -3,16 +3,23 @@
 
 {% block content %}
 <div class="bradcam_area breadcam_bg overlay2">
-    <h1>Events</h1>
+    <h3>Events</h3>
 </div>
-<h2>Upcoming ReproHacks</h2>
-    {% for event in object_list %}
-        <div class="event">
-            <div class="date">
-                {{ event.date }}
-            </div>
-            <h3><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
+<div class="whole-wrap">
+    <div class="container box_1170">
+        <div class="section-top-border">
+            <h1>Upcoming ReproHacks</h1>
             <br>
+            {% for event in object_list %}
+            <div class="event">
+                <div class="date">
+                    {{ event.date }}
+                </div>
+                <h3><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
+                <br>
+            </div>
         </div>
-    {% endfor %}
+    </div>
+</div>
+{% endfor %}
 {% endblock %}

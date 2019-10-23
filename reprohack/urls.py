@@ -24,5 +24,5 @@ urlpatterns = [
     path('paper/<int:pk>/', PaperDetail.as_view(), name='paper_detail'),
     path('paper/<int:pk>/edit/', PaperUpdate.as_view(), name='paper_edit'),
     path('paper/new/', PaperCreate.as_view(), name='paper_new'),
-    url(r'^data.geojson$', GeoJSONLayerView.as_view(model = Event, properties=('title', 'description', 'date')), name='data')
+    url(r'^data.geojson$', GeoJSONLayerView.as_view(model = Event, properties=('title', 'city', 'date')), name='data')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

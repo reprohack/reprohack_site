@@ -36,27 +36,22 @@
     <style>
         .leaflet-container {
             height: 100%;
+            width: 80%;
+            z-index: -9999;
         }
     </style>
     <script type="text/javascript">
-        var dataurl = '{% url "data" %}';
-        window.addEventListener("map:init", function (event) {
-            var map = event.detail.map;
-            // Download GeoJSON data with Ajax
-            fetch(dataurl)
-                .then(function (resp) {
-                    return resp.json();
-                })
-                .then(function (data) {
-                    L.geoJson(data, {
+        function map_init(map, options) {
+         
+                    L.geoJson(event, {
                         onEachFeature: function onEachFeature(feature, layer) {
                             var props = feature.properties;
-                            var content = `<h4>${props.date}</h4><h3>${props.title}</h3><p>${props.description}</p>`;
+                            var content = `<h4>${props.date}</h4><h3>${props.title}</h3><p>${props.city}</p>`;
                             layer.bindPopup(content);
                         }
                     }).addTo(map);
-                });
-        });
+
+        ;}
     </script>
 </head>
 
