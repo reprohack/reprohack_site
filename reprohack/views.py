@@ -14,28 +14,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from reprohack.models import Event, Paper
 from reprohack.forms import EventForm, PaperForm
 
-# Create your views here.
-def event_new (request):
-        if request.method == "POST":
-            form = EventForm(request.POST)
-            if form.is_valid():
-                event = form.save(commit=False)
-                event.submitter = request.user
-                event.submission_date = timezone.now()
-                event.save()
-                return redirect('event/event_detail.html', pk=event.pk)
-        else:
-            form = EventForm()
-        return render(request, 'event/event_edit.html', {'form': form})
-
-def event_list (request):
-    events = Event.objects.filter(date__lte=timezone.now()).order_by('date')
-    return render(request, 'event/event_list.html', {'events': events})
-
-def event_detail (request, pk):
-    event = get_object_or_404(Event, pk=pk)
-    return render(request, 'event/event_detail.html', {'event': event})
-
 class EventCreate(LoginRequiredMixin, CreateView):
     model = Event
     form_class = EventForm
