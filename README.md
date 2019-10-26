@@ -37,6 +37,25 @@ python manage.py runserver
 
 The map visible on http://127.0.0.1:8000/ can be edited from the AdminSite at ``/admin``.
 
+Docker
+======
+
+This project also has support for docker. In order to run with docker you must first have docker installed.
+
+NOTE: Docker support is in beta as does not yet support volumes (persistent data) so all data will erase
+
+To build docker container:
+```{bash}
+docker build -t reprohack .
+```
+
+To run image built in previous step:
+```{bash}
+docker run -it -p 8000:8000 reprohack
+```
+
+NOTE: The docker support for this project will eventually evolve into docker-compose for a fully-fleged enviroment.
+
 ***
 
 Please note that the 'reprohack_site' project is released with a
