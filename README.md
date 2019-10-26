@@ -36,3 +36,9 @@ python manage.py runserver
 ```
 
 The map visible on http://127.0.0.1:8000/ can be edited from the AdminSite at ``/admin``.
+
+***
+
+Please note that the 'reprohack_site' project is released with a
+[Contributor Code of Conduct](CODE_OF_CONDUCT.md).
+By contributing to this project, you agree to abide by its terms.

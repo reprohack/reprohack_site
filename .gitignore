@@ -6,3 +6,5 @@ myvenv/*
 db.sqlite3
 *.pyc
 *~
+.Rproj.user
+*.Rproj
