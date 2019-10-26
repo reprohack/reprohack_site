@@ -8,7 +8,9 @@ Reprohack django site
 Install
 =======
 
-Install Django dependencies:
+The site requires System Library `GDAL` to map event locations. See [installation instructions](https://gdal.org/download.html).
+
+Once `GDAL` is installed, install Django dependencies:
 
 ```{bash}
 pip install -r requirements.txt
