@@ -9,6 +9,12 @@ COPY requirements_docker.txt .
 
 RUN pip install -r requirements_docker.txt
 
+WORKDIR /usr/src/app
+
+ADD reprohack .
+ADD mysite .
+ADD manage.py .
+
 EXPOSE 8000
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
