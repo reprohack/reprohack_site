@@ -81,10 +81,10 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 # Docker additional configuration for database
-if os.environ['RH_DOCKER'] == 0:
-    DB_PATH = os.path.join(BASE_DIR, 'db.sqlite3')
-else:
+if os.environ.get('RH_DOCKER'):
     DB_PATH = os.path.join('/data', 'db.sqlite3')
+else:
+    DB_PATH = os.path.join(BASE_DIR, 'db.sqlite3')
 
 DATABASES = {
     'default': {
