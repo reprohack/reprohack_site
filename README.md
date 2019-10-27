@@ -51,10 +51,8 @@ docker build -t reprohack .
 
 To run image built in previous step:
 ```{bash}
-docker run -it -p 8000:8000 reprohack
+docker run -it -p 8000:8000 -v <folder-on-local-machiene>:/data reprohack
 ```
-
-NOTE: The docker support for this project will eventually evolve into docker-compose for a fully-fleged enviroment.
 
 ***
 
