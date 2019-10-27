@@ -9,6 +9,8 @@ COPY requirements_docker.txt .
 
 RUN pip install -r requirements_docker.txt
 
+VOLUME /data
+
 WORKDIR /usr/src/app
 
 ADD reprohack .
