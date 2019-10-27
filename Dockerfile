@@ -2,11 +2,10 @@ FROM python:3
 
 ENV PYTHONBUFFERED 1
 
+WORKDIR /install
 RUN apt-get update && apt-get install --yes libgdal-dev libjpeg-dev
 
-WORKDIR /app
- 
-COPY . .
+COPY requirements_docker.txt .
 
 RUN pip install -r requirements_docker.txt
 
