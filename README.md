@@ -49,9 +49,9 @@ docker build -t reprohack .
 
 To run image built in previous step:
 ```{bash}
-docker run -it -p 8000:8000 -v <folder-on-local-machiene>:/data reprohack
+docker run -it -p 8000:8000 -v <folder-on-local-machine>:/data reprohack
 ```
-Replace `<folder-on-your-machiene>` with the path to a folder which you will use to store persistent data for the application.
+Replace `<folder-on-your-machine>` with the path to a folder which you will use to store persistent data for the application.
 ***
 
 Please note that the 'reprohack_site' project is released with a
