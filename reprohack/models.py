@@ -83,14 +83,14 @@ class Paper(models.Model):
     def get_absolute_url(self):
         return reverse('paper_detail', args=[self.id])
 
-
+class UnregisteredAuthor(models.Model)
 
 class ReportGroup(models.Model):
     paper = models.ForeignKey(Paper, on_delete=models.CASCADE)
     members = models.ManyToManyField(
         User,
         through='Membership',
-        through_fields=('report_group', 'person'),
+        through_fields=('report_group', 'user'),
     )
 
 class Membership(models.Model):
