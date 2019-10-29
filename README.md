@@ -37,6 +37,29 @@ python manage.py runserver
 
 The map visible on http://127.0.0.1:8000/ can be edited from the AdminSite at ``/admin``.
 
+Note: When hosting the page on the internet, you will need to add the `hostname` to the Django settings. 
+Edit `mysite/settings.py` by adding the `hostname`  to `ALLOWED_HOSTS` list.
+
+Docker
+======
+
+This project also has support for docker. In order to run with docker you must first have docker installed.
+
+To build docker container:
+```{bash}
+docker build -t reprohack .
+```
+
+To run image built in previous step:
+```{bash}
+docker run -it -p 8000:8000 -v <folder-on-local-machine>:/data reprohack
+```
+Replace `<folder-on-your-machine>` with the absolute path to a folder which you will use to store persistent data for the application.
+
+Note: If you are using docker with docker-machine you need to add vm's ip adress to `ALLOWED_HOSTS` in Django setting. You can do it by following the steps:
+1. Find out the ip address of your vm: `docker-machine env <default>`; replace <default> with name of the vm used for docker-machine.
+2. Before builidng the Docker image, edit `mysite/settings.py` by adding the ip address to `ALLOWED_HOSTS` list.
+3. Proceed as instructed above.
 ***
 
 Please note that the 'reprohack_site' project is released with a
