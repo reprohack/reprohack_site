@@ -36,7 +36,7 @@
 /* 1. Theme default css */
 /* line 4, C:/Users/SPN Graphics/Desktop/CL September/Edu mark/207 Education/HTML/scss/_reset.scss */
 body {
-  font-family: "Crimson Text", serif;
+  font-family: 'Source Sans Pro', sans-serif;
   font-weight: normal;
   font-style: normal;
 }
@@ -120,7 +120,7 @@ p {
   line-height: 28px;
   color: #919191;
   margin-bottom: 13px;
-  font-family: "Crimson Text", serif;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 /* line 67, C:/Users/SPN Graphics/Desktop/CL September/Edu mark/207 Education/HTML/scss/_reset.scss */
@@ -642,7 +642,7 @@ h3 {
 /* line 21, C:/Users/SPN Graphics/Desktop/CL September/Edu mark/207 Education/HTML/scss/_section_title.scss */
 .section_title p {
   font-size: 17px;
-  font-family: "Crimson Text", serif;
+  font-family: 'Source Sans Pro', sans-serif;
   font-weight: 400;
   line-height: 28px;
   color: #727272;
@@ -2392,7 +2392,7 @@ h3 {
 .subscribe_newsletter .newsletter_form .newsletter_form input::placeholder {
   font-size: 16px;
   font-weight: 400;
-  font-family: "Crimson Text", serif;
+  font-family: 'Source Sans Pro', sans-serif;
   color: #919191;
 }
 
