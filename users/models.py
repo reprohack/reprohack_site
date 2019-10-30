@@ -4,7 +4,7 @@ from timezone_field import TimeZoneField
 
 ### ----- User models ------ ###
 class User(AbstractUser):
-    orcid_id = models.CharField(max_length=17)
+    orcid_id = models.CharField(max_length=19)
     timezone = TimeZoneField()
     twitter = models.CharField(max_length=40)
     github = models.CharField(max_length=40)
