@@ -4,7 +4,7 @@ from django import forms
 from django.utils import timezone
 from datetime import date, datetime
 from django.forms.widgets import TimeInput
-from django.contrib.auth.models import User
+from users.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
 from django.db.models.signals import post_save
@@ -60,8 +60,6 @@ class Paper(models.Model):
     citation_bib = models.CharField(max_length=800)
     # submitter details
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    twitter = models.CharField(max_length=40)
-    github = models.CharField(max_length=40)
     # authorship details
     authorship = models.BooleanField(default=True)
     author_first_name = forms.EmailField(max_length=50)
@@ -83,16 +81,17 @@ class Paper(models.Model):
     def get_absolute_url(self):
         return reverse('paper_detail', args=[self.id])
 
-class UnregisteredAuthor(models.Model)
+class UnregisteredAuthor(models.Model):
+    user = User()
 
 class ReportGroup(models.Model):
     paper = models.ForeignKey(Paper, on_delete=models.CASCADE)
     members = models.ManyToManyField(
         User,
         through='Membership',
-        through_fields=('report_group', 'user'),
+        through_fields=('report_group', 'rep_author'),
     )
 
 class Membership(models.Model):
     report_group = models.ForeignKey(ReportGroup, on_delete=models.CASCADE)
-    person = models.ForeignKey(User, on_delete=models.CASCADE)
+    rep_author = models.ForeignKey(User, on_delete=models.CASCADE)

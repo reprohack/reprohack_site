@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.urls import reverse_lazy
-from django.contrib.auth.models import User
+from users.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, DeleteView, UpdateView

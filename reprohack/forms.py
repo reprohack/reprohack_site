@@ -1,12 +1,12 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 from django.forms import ModelForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit, Row, Column, HTML, Field
 from crispy_forms.bootstrap import PrependedText
 from leaflet.forms.widgets import LeafletWidget
 from reprohack.models import Event, Paper
+from users.models import User
 
 
 ## -------- Event -------- ##
@@ -128,17 +128,8 @@ class PaperForm(ModelForm):
                 self.add_error(field, msg)
 
 class SignUpForm(UserCreationForm):
-    first_name = forms.CharField(max_length=30, required=True)
-    last_name = forms.CharField(max_length=30, required=True)
-    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
-    #orcid_id = forms.CharField(max_length=30, required=False, help_text='Optional.')
-    #affiliation = forms.CharField(max_length=30, required=False, help_text='Optional.')
-
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name',  'email', 'password1', 'password2')
-
-
-
+        exclude = [timezone]
 
 PrependedText('field_name', '@', placeholder="username")

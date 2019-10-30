@@ -40,9 +40,11 @@ INSTALLED_APPS = [
     'django_extensions',
     'crispy_forms',
     'taggit',
+    'timezone_field',
     #'markdownx',
     'leaflet',
     'djgeojson',
+    'users',
     'reprohack',
 ]
 
@@ -154,3 +156,5 @@ LEAFLET_CONFIG = {
     'MIN_ZOOM': 1,
     'MAX_ZOOM': 18,
 }
+
+AUTH_USER_MODEL = 'users.User'
