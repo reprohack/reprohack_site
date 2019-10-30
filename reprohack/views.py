@@ -13,6 +13,7 @@ from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from reprohack.models import Event, Paper
 from reprohack.forms import EventForm, PaperForm
+from users.forms import SignUpForm
 
 class EventCreate(LoginRequiredMixin, CreateView):
     model = Event
@@ -116,7 +117,7 @@ class PaperList(ListView):
 # signup
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
@@ -125,8 +126,8 @@ def signup(request):
             login(request, user)
             return redirect('home')
     else:
-        form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+        form = SignUpForm()
+    return render(request, 'registration/signup.html', {'form': form})
 
 
 

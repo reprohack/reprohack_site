@@ -7,7 +7,7 @@ from crispy_forms.bootstrap import PrependedText
 from leaflet.forms.widgets import LeafletWidget
 from reprohack.models import Event, Paper
 from users.models import User
-
+from timezone_field import TimeZoneField
 
 ## -------- Event -------- ##
 LEAFLET_WIDGET_ATTRS = {
@@ -91,8 +91,7 @@ class PaperForm(ModelForm):
             Field('tools', label = "Useful Software Skills"),
             HTML('<h3>Submitter contact details<h3>'),
             Row(
-                Column(PrependedText('twitter', '@', placeholder="twitter username"), css_class='form-group col-md-4 mb-0'),
-                Column(PrependedText('github', '@', placeholder="github username"), css_class='form-group col-md-4 mb-0'),
+                Column( css_class='form-group col-md-4 mb-0'),
                 css_class='form-row',
             ),
             Fieldset("Authorship details",
@@ -126,10 +125,3 @@ class PaperForm(ModelForm):
             if not self.cleaned_data.get(field, ''):
                 msg = forms.ValidationError("This field is required.")
                 self.add_error(field, msg)
-
-class SignUpForm(UserCreationForm):
-    class Meta:
-        model = User
-        exclude = [timezone]
-
-PrependedText('field_name', '@', placeholder="username")
