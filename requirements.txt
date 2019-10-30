@@ -7,7 +7,7 @@ django-geojson==2.12.0
 django-leaflet==0.24.0
 django-markdownx==2.0.28
 django-taggit==1.1.0
-GDAL==3.0.1
+django-timezone-field==3.1
 isort==4.3.21
 jsonfield==2.0.2
 lazy-object-proxy==1.4.2
