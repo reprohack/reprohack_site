@@ -19,9 +19,9 @@
                                         <li><a class="active" href="{% url 'index' %}">home</a></li>
                                        <li><a href="{% url 'event_list' %}">Events</a></li>
                                        <li><a href="{% url 'paper_list' %}">Papers</a></li>
-                                        <li><a href="about.html">About</a></li>
+                                        <li><a href="{% url 'about' %}">About</a></li>
                                       
-                                        <li><a href="contact.html">Contact</a></li>
+                                        <li><a href="contact.html">Resources</a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -29,22 +29,28 @@
                         <div class="col-xl-3 col-lg-3 d-none d-lg-block">
                             <div class="log_chat_area d-flex align-items-center">
                                 {% if user.is_authenticated %}
-                                <a href="" class="login popup-with-form">
+                                <a href="{{ user.get_absolute_url }}">
                                     <i class="flaticon-user"></i>
                                     <span>{{ user.get_username }}</span>
                                 </a>
-                                {% else %}
-                                    <a href="{% url 'login' %}" class="login popup-with-form">
-                                        <i class="flaticon-user"></i>
-                                        <span></span>
-                                    </a>
-                                {% endif %}
                                 <div class="live_chat_btn">
-                                    <a class="boxed_btn_orange" href="{% url 'paper_new' %}">
+                                    <a class="boxed_btn_orange" href="{% url 'logout' %}">
                                         <i class="fa fa-paper"></i>
-                                        <span>Submit Paper</span>
+                                        <span>Logout</span>
                                     </a>
                                 </div>
+                                {% else %}
+                                    <a href="{% url 'signup' %}">
+                                        <i class="flaticon-user"></i>
+                                        <span>Sign up </span>
+                                    </a>
+                                <div class="live_chat_btn">
+                                    <a class="boxed_btn_orange" href="{% url 'login' %}">
+                                        <i class="fa fa-paper"></i>
+                                        <span>Login</span>
+                                    </a>
+                                </div>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-12">
