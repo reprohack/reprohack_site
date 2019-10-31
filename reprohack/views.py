@@ -7,13 +7,52 @@ from django.urls import reverse_lazy
 from users.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import user_passes_test
+from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from django.views.generic.detail import DetailView
+from django.views.generic.detail import DetailView, BaseDetailView
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
+# custom
 from reprohack.models import Event, Paper
 from reprohack.forms import EventForm, PaperForm
-from users.forms import SignUpForm
+from users.forms import SignUpForm, EditUserForm
+
+
+
+class JSONResponseMixin:
+    """
+    A mixin that can be used to render a JSON response.
+    """
+    def render_to_json_response(self, context, **response_kwargs):
+        """
+        Returns a JSON response, transforming 'context' to make the payload.
+        """
+        return JsonResponse(
+            self.get_data(context),
+            **response_kwargs
+        )
+
+    def get_data(self, context):
+        """
+        Returns an object that will be serialized as JSON by json.dumps().
+        """
+        # Note: This is *EXTREMELY* naive; in reality, you'll need
+        # to do much more complex handling to ensure that arbitrary
+        # objects -- such as Django model instances or querysets
+        # -- can be serialized as JSON.
+        return context
+
+class JSONView(JSONResponseMixin, TemplateView):
+    def render_to_response(self, context, **response_kwargs):
+        return self.render_to_json_response(context, **response_kwargs)
+
+class JSONDetailView(JSONResponseMixin, BaseDetailView):
+    def render_to_response(self, context, **response_kwargs):
+        return self.render_to_json_response(context, **response_kwargs)
+
+
 
 class EventCreate(LoginRequiredMixin, CreateView):
     model = Event
@@ -130,6 +169,22 @@ def signup(request):
     return render(request, 'registration/signup.html', {'form': form})
 
 
+class UpdateUserView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = EditUserForm
+    template_name = 'registration/user_update.html'
+   # success_url = 'registration/user_detail.html'
 
+   # def auth_owner(self, request):
+    #    return self.user.pk == request.user.pk
 
+    #@user_passes_test(auth_owner)
+    #def my_view(request):
+    
+class UserDetailView(DetailView):
+    model = User
+    template_name = 'registration/user_detail.html'
+
+    #def get_events(self, request):
+    #    self.events = Event.objects.filter(user = request.user)
 
