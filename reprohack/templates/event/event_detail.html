@@ -2,7 +2,9 @@
 {% load static %}
 
 {% block content %}
-<div class="bradcam_area breadcam_bg overlay2"></div>
+<div class="bradcam_area breadcam_bg overlay2">
+    {{ event.title }}
+</div>
     <div class="event">
         {% if user.is_authenticated %}
             <a class="btn btn-default" href="{% url 'event_edit' pk=event.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
