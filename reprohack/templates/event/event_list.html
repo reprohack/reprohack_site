@@ -4,6 +4,8 @@
 {% block content %}
 <div class="bradcam_area breadcam_bg overlay2">
     <h3>Events</h3>
+    <br>
+    <a href="{% url 'event_new' %}" class="boxed_btn">Submit an event!</a>
 </div>
 <div class="whole-wrap">
     <div class="container box_1170">
@@ -18,8 +20,9 @@
                 <h3><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
                 <br>
             </div>
+            {% endfor %}
         </div>
     </div>
 </div>
-{% endfor %}
+
 {% endblock %}

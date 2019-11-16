@@ -5,18 +5,20 @@
 {% block content %}
 <!-- bradcam_area_start -->
 <div class="bradcam_area breadcam_bg overlay2">
-    <h3>Signup</h3>
+  <h3>Signup</h3>
 </div>
 <!-- bradcam_area_end -->
 <div class="whole-wrap">
   <div class="container box_1170">
-<div class="col-md-10">
-  <h3>Welcome to the reprohack community</h3>
-  <form method="post">
-    {% csrf_token %}
-    {% crispy form %}
-  </form>
-</div>
-</div>
+    <div class="section-top-border">
+      <div class="col-md-10">
+        <h3>Welcome to the reprohack community</h3>
+        <form method="post">
+          {% csrf_token %}
+          {% crispy form %}
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

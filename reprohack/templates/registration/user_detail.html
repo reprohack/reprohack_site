@@ -5,24 +5,27 @@
 {% block content %}
 <!-- bradcam_area_start -->
 <div class="bradcam_area breadcam_bg overlay2">
-    <h3>User profile</h3>
+  <h3>User profile</h3>
 </div>
 <!-- bradcam_area_end -->
 <div class="whole-wrap">
   <div class="container box_1170">
-<div class="col-md-10">
-  <h3>User profile</h3>
-  <a class="btn btn-default" href="{% url 'user_update' pk=user.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-  <h4><i class="flaticon-user"></i>
-    {{ user.username }} </h4>
-  
-  {{ user.email }}
-  {{ user.first_name }} 
-  {{ user.last_name }} 
-  {{ user.orcid_id }} 
-  <i class="ti-twitter-alt"></i>{{ user.twitter }} 
-  <i class="fa fa-github"></i>{{ user.github }} 
-</div>
-</div>
+    <div class="section-top-border">
+      <div class="col-md-10">
+        <h3>User profile</h3>
+        <a class="btn btn-default" href="{% url 'user_update' pk=user.pk %}"><span
+            class="glyphicon glyphicon-pencil"></span></a>
+        <h4><i class="flaticon-user"></i>
+          {{ user.username }} </h4>
+
+        {{ user.email }}
+        {{ user.first_name }}
+        {{ user.last_name }}
+        {{ user.orcid_id }}
+        <i class="ti-twitter-alt"></i>{{ user.twitter }}
+        <i class="fa fa-github"></i>{{ user.github }}
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
