@@ -7,7 +7,6 @@ from crispy_forms.bootstrap import PrependedText
 from leaflet.forms.widgets import LeafletWidget
 from reprohack.models import Event, Paper
 from users.models import User
-from timezone_field import TimeZoneField
 
 ## -------- Event -------- ##
 LEAFLET_WIDGET_ATTRS = {

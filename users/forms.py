@@ -5,13 +5,12 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit, Row, Column, HTML, Field
 from crispy_forms.bootstrap import PrependedText
 from users.models import User
-from timezone_field import TimeZoneField
 
 class EditUserForm(UserChangeForm):
     class Meta:
         model = User
-        exclude = ['timezone']
-
+        exclude = []
+        
     def __init__(self, *args, **kwargs):
         super(EditUserForm, self).__init__(*args, **kwargs)
         #self.email = self.cleaned_data['email']
@@ -50,7 +49,7 @@ class EditUserForm(UserChangeForm):
 class SignUpForm(UserCreationForm):
     class Meta:
         model = User
-        exclude = ['timezone']
+        exclude = []
 
     def __init__(self, *args, **kwargs):
         super(SignUpForm, self).__init__(*args, **kwargs)
