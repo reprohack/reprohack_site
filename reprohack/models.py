@@ -14,6 +14,7 @@ from djgeojson.fields import PointField
 from django.contrib.gis.db import models as gismodels
 from django.contrib.gis.geos import Point
 
+
 class Event(gismodels.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -21,13 +22,17 @@ class Event(gismodels.Model):
     title = models.CharField(max_length=200, default="Event title")
     # time
     date = models.DateField(default=date.today)
-    time_start = models.TimeField(default=datetime.time(timezone.now().replace(minute=00, hour=10)))
-    time_end = models.TimeField(default=datetime.time(timezone.now().replace(minute=00, hour=16)))
+    time_start = models.TimeField(default=datetime.time(
+        timezone.now().replace(minute=00, hour=10)))
+    time_end = models.TimeField(default=datetime.time(
+        timezone.now().replace(minute=00, hour=16)))
     # location
     location = models.CharField(max_length=200, default='')
-    address = models.CharField(max_length=400, default='')
+    address1 = models.CharField(max_length=200, default='')
+    address2 = models.CharField(max_length=200, default='')
     city = models.CharField(max_length=60, default='')
     postcode = models.CharField(max_length=15, default='')
+    country = models.CharField(max_length=60, default='')
     geom = PointField(blank=True)
     submission_date = models.DateTimeField(default=timezone.now)
     registration_url = models.URLField()
@@ -41,8 +46,9 @@ class Event(gismodels.Model):
 
     def get_absolute_url(self):
         return reverse('event_detail', args=[self.id])
- 
+
  # ---- Papers ---- #
+
 
 class Paper(models.Model):
     id = models.AutoField(primary_key=True)
@@ -65,7 +71,8 @@ class Paper(models.Model):
     author_first_name = forms.EmailField(max_length=50)
     author_last_name = forms.EmailField(max_length=50)
     author_email = forms.EmailField(max_length=254)
-    author_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', blank=True, null=True)
+    author_user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='+', blank=True, null=True)
     contact = models.BooleanField(default=True)
     public = models.BooleanField(default=True)
     #feedback = models.BooleanField(default=True)
@@ -81,8 +88,10 @@ class Paper(models.Model):
     def get_absolute_url(self):
         return reverse('paper_detail', args=[self.id])
 
+
 class UnregisteredAuthor(models.Model):
     user = User()
+
 
 class ReportGroup(models.Model):
     paper = models.ForeignKey(Paper, on_delete=models.CASCADE)
@@ -91,6 +100,7 @@ class ReportGroup(models.Model):
         through='Membership',
         through_fields=('report_group', 'rep_author'),
     )
+
 
 class Membership(models.Model):
     report_group = models.ForeignKey(ReportGroup, on_delete=models.CASCADE)

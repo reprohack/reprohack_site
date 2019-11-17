@@ -41,9 +41,10 @@ INSTALLED_APPS = [
     'crispy_forms',
     'taggit',
     'timezone_field',
-    #'markdownx',
+    # 'markdownx',
     'leaflet',
     'djgeojson',
+    'geocoder',
     'users',
     'reprohack',
 ]
@@ -142,7 +143,7 @@ STATICFILES_FINDERS = [
 ]
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "reprohack/static"),
-    #'/var/www/static/',
+    # '/var/www/static/',
 ]
 
 

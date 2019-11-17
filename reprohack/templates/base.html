@@ -1,6 +1,7 @@
 <!doctype html>
 {% load static %}
 {% load leaflet_tags %}
+{% load geojson_tags %}
 
 <html class="no-js" lang="zxx">
 
@@ -28,10 +29,11 @@
     <link rel='stylesheet' href="{% static 'reprohack/css/style.css'%}">
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
     <!--   <link rel="stylesheet" href="{% static 'reprohack/css/site.css' %}"> --->
-    {% leaflet_js %}
+
     {% leaflet_css %}
-    {% leaflet_js plugins="forms" %}
+    {% leaflet_js %}
     {% leaflet_css plugins="forms" %}
+    {% leaflet_js plugins="forms" %}
 
     <style>
         .leaflet-container {
@@ -42,16 +44,8 @@
     </style>
     <script type="text/javascript">
         function map_init(map, options) {
-         
-                    L.geoJson(event, {
-                        onEachFeature: function onEachFeature(feature, layer) {
-                            var props = feature.properties;
-                            var content = `<h4>${props.date}</h4><h3>${props.title}</h3><p>${props.city}</p>`;
-                            layer.bindPopup(content);
-                        }
-                    }).addTo(map);
-
-        ;}
+            L.geoJson({{ event_list| geojsonfeature | safe}}).addTo(map);
+        }
     </script>
 </head>
 

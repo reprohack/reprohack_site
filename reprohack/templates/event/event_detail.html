@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% load leaflet_tags %}
+{% load geojson_tags %}
+
 {% block content %}
 <div class="bradcam_area breadcam_bg overlay2">
     {{ event.title }}
@@ -25,6 +28,14 @@
                     <h5>{{ event.location }}, {{ event.address }}</h5>
                 </div>
                 <p>{{ event.description|linebreaksbr }}</p>
+                {% leaflet_map "main" callback="map_event" %}
+                <script type="text/javascript">
+                        function map_event(map, options) {
+                            map.flyTo({{ event.geom.coordinates }}, 15);
+                            L.geoJson({{ event| geojsonfeature | safe}}).addTo(map);
+                            
+                        }
+                </script>
             </div>
         </div>
     </div>

@@ -8,7 +8,7 @@ from django.conf import settings
 from djgeojson.views import GeoJSONLayerView
 from . import views
 from .models import Event
-from .views import EventCreate, EventUpdate, EventDetail, EventList, signup, PaperCreate, PaperUpdate, PaperDetail, PaperList, UserDetailView, UpdateUserView
+from .views import EventCreate, EventUpdate, EventDetail, EventList, EventMap, signup, PaperCreate, PaperUpdate, PaperDetail, PaperList, UserDetailView, UpdateUserView, UserCreateView
 
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
@@ -16,14 +16,14 @@ urlpatterns = [
     path('about', TemplateView.as_view(template_name='about.html'),
     name='about'),
     #url(r'^admin/', admin.site.urls),
-    path('signup/', signup, name='signup'),
+    path('signup/', UserCreateView.as_view(), name='signup'),
     path('users/<int:pk>/', UserDetailView.as_view(), name='user_detail'),
     #path('users/(?P<userid>\d+)/$', search.views.user_detail, name='user_detail'), 
     path('users/<int:pk>/edit/', UpdateUserView.as_view(), name='user_update'),
     path('password_reset_form/', auth_views.PasswordChangeView.as_view()),
     path('users/logout/',auth_views.LogoutView.as_view(template_name='registration/logout.html'), name='logout'),
-    path('', views.index, name='index'),
-    path('', views.index, name='home'),
+    path('', EventMap.as_view(), name='index'),
+    path('', EventMap.as_view(), name='home'),
     path('event/', EventList.as_view(), name='event_list'),
     path('event/<int:pk>/', EventDetail.as_view(), name='event_detail'),
     path('event/<int:pk>/edit/', EventUpdate.as_view(), name='event_edit'),

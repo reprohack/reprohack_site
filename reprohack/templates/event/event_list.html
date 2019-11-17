@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% load leaflet_tags %}
+{% load geojson_tags %}
+
 {% block content %}
 <div class="bradcam_area breadcam_bg overlay2">
     <h3>Events</h3>
@@ -12,7 +15,11 @@
         <div class="section-top-border">
             <h1>Upcoming ReproHacks</h1>
             <br>
-            {% for event in object_list %}
+            <div class="row">
+                <h2>ReproHack Map!</h2>
+                {% leaflet_map "main" callback="map_init" %}
+            </div>
+            {% for event in event_list %}
             <div class="event">
                 <div class="date">
                     {{ event.date }}
