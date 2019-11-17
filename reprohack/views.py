@@ -14,7 +14,7 @@ from django.views.generic.detail import DetailView, BaseDetailView
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from geojson import Point
-import geocoder
+from geocoder import google
 
 # custom
 from reprohack.models import Event, Paper
@@ -33,7 +33,8 @@ class EventCreate(LoginRequiredMixin, CreateView):
         self.object.user = self.request.user
         address = ', '.join(
             (self.object.address1, self.object.city, self.object.postcode, self.object.country))
-        self.object.geom = Point(geocoder.google(address).latlng)
+        self.object.geom = Point(
+            google(address).latlng[::-1])
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
