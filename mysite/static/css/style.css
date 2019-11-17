@@ -6672,3 +6672,14 @@ h6 {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+
+.ui-dialog {
+    z-index: 2;
+}
+
+.event {
+  background-color: #000;
+  color: #2E004B;
+  
+}
