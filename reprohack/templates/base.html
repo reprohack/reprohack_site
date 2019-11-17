@@ -20,6 +20,7 @@
     <link rel='stylesheet' href="{% static 'reprohack/css/owl.carousel.min.css'%}">
     <link rel='stylesheet' href="{% static 'reprohack/css/magnific-popup.css'%}">
     <link rel='stylesheet' href="{% static 'reprohack/css/font-awesome.min.css'%}">
+    <link rel="stylesheet" href="{% static 'reprohack/leaflet/leaflet.awesome-markers.css' %}%">
     <link rel='stylesheet' href="{% static 'reprohack/css/themify-icons.css'%}">
     <link rel='stylesheet' href="{% static 'reprohack/css/nice-select.css'%}">
     <link rel='stylesheet' href="{% static 'reprohack/css/flaticon.css'%}">
@@ -30,6 +31,7 @@
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
     <!--   <link rel="stylesheet" href="{% static 'reprohack/css/site.css' %}"> --->
 
+    {% block leaflet %}
     {% leaflet_css %}
     {% leaflet_js %}
     {% leaflet_css plugins="forms" %}
@@ -37,16 +39,59 @@
 
     <style>
         .leaflet-container {
-            height: 100%;
-            width: 80%;
-            z-index: -9999;
+            height: 500px;
+            width: 100%;
+            z-index: 1;
         }
     </style>
     <script type="text/javascript">
+        var today = new Date();
+        var futureMarker = L.AwesomeMarkers.icon({
+                icon: 'play',
+                markerColor: 'violet'
+            });
+
+        var pastMarker = L.AwesomeMarkers.icon({
+            icon: 'play',
+            markerColor: 'green'
+        });
+
+
+        function markerOnClick(e)
+            {
+            var latLngs = [e.target.getLatLng()];
+            var markerBounds = L.latLngBounds(latLngs);
+            map.fitBounds(markerBounds);
+            }
         function map_init(map, options) {
-            L.geoJson({{ event_list| geojsonfeature | safe}}).addTo(map);
+  
+            
+           var Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+                attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                subdomains: 'abcd',
+                minZoom: 1,
+                maxZoom: 16,
+                ext: 'jpg'
+                }).addTo(map);
+                            
+            var Stamen_TonerHybrid = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-hybrid/{z}/{x}/{y}{r}.{ext}', {
+                attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                subdomains: 'abcd',
+                minZoom: 0,
+                maxZoom: 20,
+                ext: 'png'
+            }).addTo(map);
+
+
+
+            L.geoJson({{ event_list| geojsonfeature:"title,date,city" | safe}}, {
+                    onEachFeature: function (feature, layer) {
+                        layer.bindPopup('<h4>'+feature.properties.title+'</h4><br><div class="date">'+feature.properties.date+'</div><p>'+feature.properties.city+'</p>');
+                        }
+                    }).on('click', markerOnClick).addTo(map);
         }
     </script>
+    {% endblock %}
 </head>
 
 <body>
@@ -169,6 +214,7 @@
     <script src="{% static 'reprohack/js/jquery.magnific-popup.min.js' %}"></script>
     <script src="{% static 'reprohack/js/plugins.js' %}"></script>
     <script src="{% static 'reprohack/js/gijgo.min.js' %}"></script>
+    <script src="{% static 'reprohack/leaflet/leaflet.awesome-markers.js' %}"></script>
 
     <!--contact js-->
     <script src="{% static 'reprohack/js/contact.js' %}"></script>

@@ -16,17 +16,24 @@
             <h1>Upcoming ReproHacks</h1>
             <br>
             <div class="row">
-                <h2>ReproHack Map!</h2>
-                {% leaflet_map "main" callback="map_init" %}
+                {% leaflet_map "event_list" callback="map_init" %}
             </div>
+             <br>
             {% for event in event_list %}
             <div class="event">
-                <div class="date">
-                    {{ event.date }}
-                </div>
-                <h3><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
-                <br>
+             <div class="card">
+                    <div class="card-body">
+                            <h3 class="card-title"><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                <div class="date">
+                                    {{ event.date }}
+                                </div>
+                            </h6>
+                            <p class="card-text"></p>
             </div>
+            </div>
+            </div>
+            <br>
             {% endfor %}
         </div>
     </div>
