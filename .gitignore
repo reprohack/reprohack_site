@@ -10,5 +10,4 @@ db.sqlite3
 *~
 .Rproj.user
 *.Rproj
-*/migrations/*
 .Rhistory
