@@ -25,7 +25,13 @@ SECRET_KEY = 'qbcfy#e-sws*h&0lmy^d49phmnjoa)%%v6h8@j!^78v8b^myw*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
+ALLOWED_HOSTS = [
+    '*',
+    'localhost',  # Required for Docker
+    '0.0.0.0',  # Required for Docker
+    '127.0.0.1',
+    '.pythonanywhere.com'
+]
 
 
 # Application definition
@@ -83,16 +89,12 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# Docker additional configuration for database
-if os.environ.get('RH_DOCKER'):
-    DB_PATH = os.path.join('/data', 'db.sqlite3')
-else:
-    DB_PATH = os.path.join(BASE_DIR, 'db.sqlite3')
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': DB_PATH,
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'read_default_file': 'mariadb.cnf',
+        },
     }
 }
 
