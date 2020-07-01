@@ -17,10 +17,10 @@ demo.
 ### Pull request process
 
 
-####  [Fork][https://the-turing-way.netlify.app/reproducible-research/vcs/vcs-github.html#a-workflow-to-contribute-to-others-github-projects-via-git] the repository to your profile
+####  [Fork](https://the-turing-way.netlify.app/reproducible-research/vcs/vcs-github.html#a-workflow-to-contribute-to-others-github-projects-via-git) the repository to your profile
 
 
-Make sure to [keep your fork up to date][https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork] with the master repository, otherwise you can end up with lots of dreaded [merge conflicts][https://the-turing-way.netlify.app/reproducible-research/vcs/vcs-git-merge.html#merge-conflicts].
+Make sure to [keep your fork up to date](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork) with the master repository, otherwise you can end up with lots of dreaded [merge conflicts](https://the-turing-way.netlify.app/reproducible-research/vcs/vcs-git-merge.html#merge-conflicts).
 
 #### Make the changes you've discussed
 
