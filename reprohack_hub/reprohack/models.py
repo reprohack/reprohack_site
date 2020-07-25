@@ -4,15 +4,16 @@ from django import forms
 from django.utils import timezone
 from datetime import date, datetime
 from django.forms.widgets import TimeInput
-from users.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from taggit.managers import TaggableManager
-from djgeojson.fields import PointField
+# from djgeojson.fields import PointField
 from django.contrib.gis.db import models as gismodels
 from django.contrib.gis.geos import Point
+
+from config.settings.base import AUTH_USER_MODEL as User
 
 
 class Event(gismodels.Model):
@@ -33,7 +34,7 @@ class Event(gismodels.Model):
     city = models.CharField(max_length=60, default='')
     postcode = models.CharField(max_length=15, default='')
     country = models.CharField(max_length=60, default='')
-    geom = PointField(blank=True)
+    geom = Point()
     submission_date = models.DateTimeField(default=timezone.now)
     registration_url = models.URLField()
 
@@ -89,8 +90,18 @@ class Paper(models.Model):
         return reverse('paper_detail', args=[self.id])
 
 
-class UnregisteredAuthor(models.Model):
-    user = User()
+# class UnregisteredAuthor(models.Model):
+# 
+#     """Model for data Authors not publicly registered.
+# 
+#     Todo:
+#         * Unsure of how this is meant to work
+#         * Is this an extension of the user model? If so maybe inheritance is better
+#         * If it's a base record so the user relationship is to an organiser, worth discussing
+#     """
+#     user = models.OneToOneField(User,
+#                                 on_delete=models.CASCADE,
+#                                 primary_key=True)
 
 
 class ReportGroup(models.Model):

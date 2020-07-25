@@ -62,6 +62,8 @@ DJANGO_APPS = [
     # "django.contrib.humanize", # Handy template tags
     "django.contrib.admin",
     "django.forms",
+    # custom
+    "django.contrib.gis",
 ]
 THIRD_PARTY_APPS = [
     "crispy_forms",
@@ -76,6 +78,12 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "reprohack_hub.users.apps.UsersConfig",
     # Your stuff: custom apps go here
+    "leaflet",
+    # "djgeojson",
+    # "geocoder",
+    "taggit",
+    "markdownx",
+    "reprohack_hub.reprohack.apps.ReprohackConfig"
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
