@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.urls import reverse_lazy
-from users.models import User
+# from users.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import user_passes_test
@@ -13,13 +13,19 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.detail import DetailView, BaseDetailView
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from geojson import Point
+# from geojson import Point
+
+# Note: this may require a full postgis docker image
+from django.contrib.gis.geos import Point
 from geocoder import google
+from config.settings.base import AUTH_USER_MODEL as User
 
 # custom
-from reprohack.models import Event, Paper
-from reprohack.forms import EventForm, PaperForm
-from users.forms import SignUpForm, EditUserForm
+from ..users.forms import UserCreationForm, UserChangeForm
+
+from .models import Event, Paper
+from .forms import EventForm, PaperForm
+# from users.forms import SignUpForm, EditUserForm
 
 
 class EventCreate(LoginRequiredMixin, CreateView):
@@ -126,7 +132,7 @@ class PaperList(ListView):
 # signup
 def signup(request):
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save(commit=False)
             username = form.cleaned_data.get('username')
@@ -135,13 +141,13 @@ def signup(request):
             login(request, user)
             return redirect('home')
     else:
-        form = SignUpForm()
+        form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
 
 
 class UserCreateView(CreateView):
     model = User
-    form_class = SignUpForm
+    form_class = UserCreationForm
     template_name = 'registration/signup.html'
    # success_url = "event/???pk???"
 
@@ -157,7 +163,7 @@ class UserCreateView(CreateView):
 
 class UpdateUserView(LoginRequiredMixin, UpdateView):
     model = User
-    form_class = EditUserForm
+    form_class = UserChangeForm
     template_name = 'registration/user_update.html'
    # success_url = 'registration/user_detail.html'
 

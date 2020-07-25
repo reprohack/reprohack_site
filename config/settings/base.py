@@ -79,7 +79,7 @@ LOCAL_APPS = [
     "reprohack_hub.users.apps.UsersConfig",
     # Your stuff: custom apps go here
     "leaflet",
-    # "djgeojson",
+    "djgeojson",
     # "geocoder",
     "taggit",
     "markdownx",

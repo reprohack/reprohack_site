@@ -5,8 +5,10 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit, Row, Column, HTML, Field
 from crispy_forms.bootstrap import PrependedText
 from leaflet.forms.widgets import LeafletWidget
-from reprohack.models import Event, Paper
-from users.models import User
+
+from ..users.models import User
+
+from .models import Event, Paper
 
 ## -------- Event -------- ##
 LEAFLET_WIDGET_ATTRS = {
