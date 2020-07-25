@@ -15,6 +15,8 @@ RUN apt-get update \
     # && apt-get install -y texlive-fonts-recommended \
     # && apt-get install -y texlive-latex-extra \
     # && apt-get install -y latexmk \
+    # Postgis for geospatial queries
+    && apt-get install -y postgis \
     # cleaning up unused files
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
     && rm -rf /var/lib/apt/lists/*
