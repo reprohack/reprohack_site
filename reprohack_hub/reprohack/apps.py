@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class ReprohackConfig(AppConfig):
-    name = 'reprohack'
+    name = 'reprohack_hub.reprohack'
