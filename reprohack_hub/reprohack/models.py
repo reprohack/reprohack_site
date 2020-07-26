@@ -17,6 +17,14 @@ from config.settings.base import AUTH_USER_MODEL as User
 
 
 class Event(gismodels.Model):
+
+    """An event to organise reproducing Paper results.
+
+    Todo:
+        * Should the host be another table?
+        * Should there be a ManyToManyField to Paper?
+    """
+
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     host = models.CharField(max_length=200)
@@ -52,6 +60,7 @@ class Event(gismodels.Model):
 
 
 class Paper(models.Model):
+
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200, default="Event title")
     citation_txt = models.TextField(max_length=300)
@@ -98,6 +107,7 @@ class Paper(models.Model):
 #         * Unsure of how this is meant to work
 #         * Is this an extension of the user model? If so maybe inheritance is better
 #         * If it's a base record so the user relationship is to an organiser, worth discussing
+#         * from django.contrib.auth.models import AnonymousUser
 #     """
 #     user = models.OneToOneField(User,
 #                                 on_delete=models.CASCADE,
