@@ -22,7 +22,10 @@ class Event(gismodels.Model):
 
     Todo:
         * Should the host be another table?
+        * Should the user be a "creator"?
+        * Consider shifting date -> start_time, end_time
         * Should there be a ManyToManyField to Paper?
+        * Consider UUIDs for URLs
     """
 
     id = models.AutoField(primary_key=True)
@@ -60,6 +63,16 @@ class Event(gismodels.Model):
 
 
 class Paper(models.Model):
+
+    """A paper to reproduce.
+
+    Todo:
+        * Consider UUIDs
+        * Consider ForeignKey to Event (ManyToManyField)
+        * Consider change user -> submitter
+        * Consider clarifying submission_date (date paper is submitted to
+                                               journal vs added to this database)
+    """
 
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200, default="Event title")
