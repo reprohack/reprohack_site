@@ -7,4 +7,3 @@ elif name == 'Sonja':
     print('Hey Sonja!')
 else:
     print('Hey anonymous!')
-    

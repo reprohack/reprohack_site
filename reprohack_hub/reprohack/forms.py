@@ -1,16 +1,12 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit, Row, Column, HTML, Field
-from crispy_forms.bootstrap import PrependedText
+from crispy_forms.layout import Layout, Fieldset, Submit, Row, Column, HTML, Field
 from leaflet.forms.widgets import LeafletWidget
-
-from ..users.models import User
 
 from .models import Event, Paper
 
-## -------- Event -------- ##
+# -------- Event -------- #
 LEAFLET_WIDGET_ATTRS = {
     'DEFAULT_CENTER': (6.0, 45.0),
     'DEFAULT_ZOOM': 5,
@@ -52,7 +48,7 @@ class EventForm(ModelForm):
         )
 
 
-## -------- Paper -------- ##
+# -------- Paper -------- #
 class PaperForm(ModelForm):
     class Meta:
         model = Paper
@@ -61,10 +57,10 @@ class PaperForm(ModelForm):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
         super(PaperForm, self).__init__(*args, **kwargs)
-        #self.email = self.cleaned_data['email']
+        # self.email = self.cleaned_data['email']
         self.fields['authorship'].label = "I am the corresponding author"
         self.fields['contact'].label = "I can be contacted by participants"
-        #self.fields['feedback'].label = "I wish to received feedback on reproductions"
+        # self.fields['feedback'].label = "I wish to received feedback on reproductions"
         self.fields['public'].label = "I wish to received feedback on reproductions"
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'

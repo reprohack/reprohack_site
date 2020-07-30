@@ -4,10 +4,8 @@
 import pytest
 
 from reprohack_hub.users.models import User
-from reprohack_hub.users.tests.factories import UserFactory
 
 from reprohack_hub.reprohack.models import Event, Paper
-
 
 pytestmark = pytest.mark.django_db
 

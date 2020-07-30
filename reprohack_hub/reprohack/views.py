@@ -1,16 +1,11 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.shortcuts import redirect
 from django.utils import timezone
-from django.urls import reverse_lazy
 # from users.models import User
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.decorators import user_passes_test
-from django.views.generic import TemplateView
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from django.views.generic.detail import DetailView, BaseDetailView
+from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 # from geojson import Point
@@ -32,13 +27,14 @@ class EventCreate(LoginRequiredMixin, CreateView):
     model = Event
     form_class = EventForm
     template_name = 'event/event_new.html'
-   # success_url = "event/???pk???"
+    # success_url = "event/???pk???"
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
         address = ', '.join(
-            (self.object.address1, self.object.city, self.object.postcode, self.object.country))
+            (self.object.address1, self.object.city, self.object.postcode,
+             self.object.country))
         self.object.geom = Point(
             google(address).latlng[::-1])
         self.object.save()
@@ -83,14 +79,14 @@ class EventMap(ListView):
         return context
 
 
-## ------ PAPER ------- ##
+# ------ PAPER ------- ##
 
 
 class PaperCreate(LoginRequiredMixin, CreateView):
     model = Paper
     form_class = PaperForm
     template_name = 'paper/paper_new.html'
-   # success_url = "event/???pk???"
+    # success_url = "event/???pk???"
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -128,7 +124,8 @@ class PaperList(ListView):
         return context
 
 
-## ------ USER ------- ##
+# ------ USER ------- ##
+
 # signup
 def signup(request):
     if request.method == 'POST':
@@ -149,14 +146,14 @@ class UserCreateView(CreateView):
     model = User
     form_class = UserCreationForm
     template_name = 'registration/signup.html'
-   # success_url = "event/???pk???"
+    # success_url = "event/???pk???"
 
     def form_valid(self, form):
         self.object.save()
-        #username = form.cleaned_data.get('username')
-        #raw_password = form.cleaned_data.get('password1')
-        #user = authenticate(username=username, password=raw_password)
-        #login(request, user)
+        # username = form.cleaned_data.get('username')
+        # raw_password = form.cleaned_data.get('password1')
+        # user = authenticate(username=username, password=raw_password)
+        # login(request, user)
         print(form.errors)
         return HttpResponseRedirect(self.get_success_url())
 
@@ -165,9 +162,9 @@ class UpdateUserView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserChangeForm
     template_name = 'registration/user_update.html'
-   # success_url = 'registration/user_detail.html'
+    # success_url = 'registration/user_detail.html'
 
-   # def auth_owner(self, request):
+    # def auth_owner(self, request):
     #    return self.user.pk == request.user.pk
 
     # @user_passes_test(auth_owner)

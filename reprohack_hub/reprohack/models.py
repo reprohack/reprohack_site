@@ -1,15 +1,9 @@
-from django.conf import settings
 from django.db import models
 from django import forms
 from django.utils import timezone
 from datetime import date, datetime
-from django.forms.widgets import TimeInput
-from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from taggit.managers import TaggableManager
-# from djgeojson.fields import PointField
 from django.contrib.gis.db import models as gismodels
 from django.contrib.gis.geos import Point
 
@@ -59,7 +53,8 @@ class Event(gismodels.Model):
     def get_absolute_url(self):
         return reverse('event_detail', args=[self.id])
 
- # ---- Papers ---- #
+
+# ---- Papers ---- #
 
 
 class Paper(models.Model):
@@ -98,7 +93,7 @@ class Paper(models.Model):
         User, on_delete=models.CASCADE, related_name='+', blank=True, null=True)
     contact = models.BooleanField(default=True)
     public = models.BooleanField(default=True)
-    #feedback = models.BooleanField(default=True)
+    # feedback = models.BooleanField(default=True)
     submission_date = models.DateTimeField(default=timezone.now)
 
     def submit(self):
@@ -113,9 +108,9 @@ class Paper(models.Model):
 
 
 # class UnregisteredAuthor(models.Model):
-# 
+#
 #     """Model for data Authors not publicly registered.
-# 
+#
 #     Todo:
 #         * Unsure of how this is meant to work
 #         * Is this an extension of the user model? If so maybe inheritance is better
