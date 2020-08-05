@@ -6,6 +6,9 @@ from django.utils.translation import gettext_lazy as _
 
 class User(AbstractUser):
     """Default user for ReproHack Hub.
+
+    Todo:
+        * Consider Surname and Other (first, middle etc.) names
     """
 
     #: First and last name do not cover name patterns around the globe
