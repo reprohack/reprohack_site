@@ -1,15 +1,18 @@
-from datetime import date, datetime
+"""
+ReproHack Venue, Event, Author, Paper and Review models.
 
+Todo:
+    * Check if default submission_date for Event and Paper is redundant.
+"""
 from taggit.managers import TaggableManager
 
-from django.db import models
-from django.core.validators import (MaxValueValidator,
-                                    MinValueValidator)
+from timezone_field import TimeZoneField
+
+from django.core.validators import MaxValueValidator, MinValueValidator
+# from django.db import models
 from django.urls import reverse
-from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from django.contrib.gis.db import models as gismodels
-from django.contrib.gis.geos import Point
+from django.contrib.gis.db import models
 
 from config.settings.base import AUTH_USER_MODEL as User
 
@@ -18,7 +21,32 @@ RATING_MAX = 10
 # RATING_DEFUALT = 5
 
 
-class Event(gismodels.Model):
+class Venue(models.Model):
+
+    """Venue with spatial coordinates.
+
+    To ensure this is likely to be user faced, users should only see Venues
+    related to Events they create.
+    """
+
+    id = models.AutoField(primary_key=True)
+    # creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    detail = models.CharField(_('Eg: Room #'), max_length=300)
+    address1 = models.CharField(max_length=200)
+    address2 = models.CharField(max_length=200)
+    city = models.CharField(max_length=60)
+    postcode = models.CharField(max_length=15)
+    country = models.CharField(max_length=60)
+    geom = models.PointField()
+
+    def __str__(self):
+        return self.name
+
+    # def get_absolute_url(self):
+    #     return reverse('venue_detail', args=[self.id])
+
+
+class Event(models.Model):
 
     """An event to organise reproducing Paper results.
 
@@ -32,29 +60,27 @@ class Event(gismodels.Model):
     """
 
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     host = models.CharField(max_length=200)
     title = models.CharField(_('Event Title'), max_length=200)
     # time
-    date = models.DateField(default=date.today)
-    time_start = models.TimeField(default=datetime.time(
-        timezone.now().replace(minute=00, hour=10)))
-    time_end = models.TimeField(default=datetime.time(
-        timezone.now().replace(minute=00, hour=16)))
-    # location
-    location = models.CharField(max_length=200)  # Location name?
-    address1 = models.CharField(max_length=200)
-    address2 = models.CharField(max_length=200)
-    city = models.CharField(max_length=60)
-    postcode = models.CharField(max_length=15)
-    country = models.CharField(max_length=60)
-    geom = Point()
-    submission_date = models.DateTimeField(default=timezone.now)
-    registration_url = models.URLField()
+    # date = models.DateField(default=date.today)
+    start_time = models.DateTimeField()  # Present default will be constant
+    end_time = models.DateTimeField()
+    time_zone = TimeZoneField(default='Europe/Berlin')
+    # remote = models.BooleanField(default=False)
 
-    def submit(self):
-        self.submission_date = timezone.now()
-        self.save()
+    # location
+    venue = models.ForeignKey(Venue, on_delete=models.SET_NULL, null=True)
+    # location = models.CharField(max_length=200)  # Location name?
+    # venue_detail = models.CharField(_('Eg. Entrance, Parking etc.'))
+    submission_date = models.DateTimeField(auto_now_add=True)
+    registration_url = models.URLField()
+    # remote = models.BooleanField(default=False)
+
+    # def submit(self):
+    #     self.submission_date = get_time_zone.now()
+    #     self.save()
 
     def __str__(self):
         return self.title
@@ -73,7 +99,9 @@ class Author(models.Model):
     Todo:
         * Consider a different on_delete process (Author record stays
           irrespective of User account)
-        * Through model
+        * Through model?
+        * Profile options Eg. title, last_name, first_names, university,
+          department, faculty etc.
     """
     id = models.AutoField(primary_key=True)
     account = models.OneToOneField(User,
@@ -98,10 +126,12 @@ class Paper(models.Model):
         * Consider change user -> submitter
         * Consider clarifying submission_date (date paper is
           submitted to journal vs added to this database)
+        * Could test DOI with https://github.com/fabiobatalha/crossrefapi
     """
 
     id = models.AutoField(primary_key=True)
     title = models.CharField(_("Paper Title"), max_length=200)
+    # events = models.ManyToManyField(Event, null=True, blank=True)
     event = models.ForeignKey(Event, null=True, blank=True,
                               on_delete=models.SET_NULL)
     available = models.BooleanField(_("Allow for review in any events"),
@@ -116,7 +146,7 @@ class Paper(models.Model):
     data_url = models.URLField()
     extra_url = models.URLField()
     tools = TaggableManager()
-    citation_bib = models.TextField(max_length=800)
+    citation_bib = models.TextField()
     # submitter details
     submitter = models.ForeignKey(User, on_delete=models.CASCADE)
     # authorship details
@@ -128,13 +158,13 @@ class Paper(models.Model):
     contact = models.BooleanField(default=True)
     public = models.BooleanField(default=True)
     # feedback = models.BooleanField(default=True)
-    submission_date = models.DateTimeField(default=timezone.now)
+    submission_date = models.DateTimeField(auto_now_add=True)
     archived = models.BooleanField(_("Removed from any reviews"), default=False,
                                    blank=True)
 
-    def submit(self):
-        self.submission_date = timezone.now()
-        self.save()
+    # def submit(self):
+    #     self.submission_date = get_time_zone.now()
+    #     self.save()
 
     def __str__(self):
         return self.title
@@ -184,7 +214,6 @@ class Review(models.Model):
         * Decide if there is a lead reviewer
         * Ask about reusability
         * Is contact email meant to be reviewer's (in their account?)
-        * Consider removing the default rating to avoid bias
         * Ways of autocompleting paper selction
         * Generate an event option to connected to
     """
@@ -206,10 +235,13 @@ class Review(models.Model):
         (WINDOWS, 'Windows Operating System')
     ]
 
+    id = models.AutoField(primary_key=True)
     event = models.ForeignKey(Event, on_delete=models.SET_NULL, null=True)
     paper = models.ForeignKey(Paper, on_delete=models.SET_NULL, null=True)
     # Lead reviewer...?
-    reviewers = models.ManyToManyField(User)
+    lead_reviewer = models.ForeignKey(User, on_delete=models.SET_NULL,
+                                      null=True, related_name="lead_reviewer")
+    other_reviewers = models.ManyToManyField(User, related_name="other_reviewers")
     reproducibility_description = models.TextField(_("Describe Reproducibility"),
                                                    blank=True, null=True)
     reproducibility_outcome = models.CharField(_("Categorise Reproducibility"),
@@ -217,7 +249,7 @@ class Review(models.Model):
                                                choices=REPRODUCIBILITY_OUTCOME_CHOICES,
                                                default=NOT_REPRODUCIBLE)
     reproducibility_rating = models.IntegerField(
-        _("Overall Reproducibility Score"),
+        _("Reproducibility Score"),
         # default=RATING_DEFUALT,  # Drop to avoid bias
         validators=[MinValueValidator(RATING_MIN),
                     MaxValueValidator(RATING_MAX)]
