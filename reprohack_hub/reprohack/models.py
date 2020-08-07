@@ -29,7 +29,7 @@ class Venue(models.Model):
     related to Events they create.
     """
 
-    id = models.AutoField(primary_key=True)
+    # id = models.AutoField(primary_key=True)
     # creator = models.ForeignKey(User, on_delete=models.CASCADE)
     detail = models.CharField(_('Eg: Room #'), max_length=300)
     address1 = models.CharField(max_length=200)
@@ -59,7 +59,7 @@ class Event(models.Model):
         * Consider Venue Model separate to Event
     """
 
-    id = models.AutoField(primary_key=True)
+    # id = models.AutoField(primary_key=True)
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     host = models.CharField(max_length=200)
     title = models.CharField(_('Event Title'), max_length=200)
@@ -103,7 +103,7 @@ class Author(models.Model):
         * Profile options Eg. title, last_name, first_names, university,
           department, faculty etc.
     """
-    id = models.AutoField(primary_key=True)
+    # id = models.AutoField(primary_key=True)
     account = models.OneToOneField(User,
                                    on_delete=models.SET_NULL,
                                    null=True
@@ -129,7 +129,7 @@ class Paper(models.Model):
         * Could test DOI with https://github.com/fabiobatalha/crossrefapi
     """
 
-    id = models.AutoField(primary_key=True)
+    # id = models.AutoField(primary_key=True)
     title = models.CharField(_("Paper Title"), max_length=200)
     # events = models.ManyToManyField(Event, null=True, blank=True)
     event = models.ForeignKey(Event, null=True, blank=True,
@@ -235,7 +235,7 @@ class Review(models.Model):
         (WINDOWS, 'Windows Operating System')
     ]
 
-    id = models.AutoField(primary_key=True)
+    # id = models.AutoField(primary_key=True)
     event = models.ForeignKey(Event, on_delete=models.SET_NULL, null=True)
     paper = models.ForeignKey(Paper, on_delete=models.SET_NULL, null=True)
     # Lead reviewer...?
