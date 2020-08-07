@@ -1,4 +1,4 @@
-FROM postgres:11.3
+FROM mdillon/postgis:11-alpine
 
 COPY ./compose/production/postgres/maintenance /usr/local/bin/maintenance
 RUN chmod +x /usr/local/bin/maintenance/*
