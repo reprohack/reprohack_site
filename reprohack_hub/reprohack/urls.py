@@ -8,6 +8,7 @@ from djgeojson.views import GeoJSONLayerView
 from .models import Event
 from .views import (EventCreate, EventUpdate, EventDetail, EventList, EventMap,
                     PaperCreate, PaperUpdate, PaperDetail, PaperList,
+                    ReviewCreate,
                     UserDetailView, UpdateUserView, UserCreateView)
 
 urlpatterns = [
@@ -33,9 +34,10 @@ urlpatterns = [
     path('paper/<int:pk>/', PaperDetail.as_view(), name='paper_detail'),
     path('paper/<int:pk>/edit/', PaperUpdate.as_view(), name='paper_edit'),
     path('paper/new/', PaperCreate.as_view(), name='paper_new'),
-    url(r'^data.geojson$', GeoJSONLayerView.as_view(model=Event,
-                                                    properties=('title',
-                                                                'city',
-                                                                'date')),
+    # path('review/<int:pk>/', ReviewDetail.as_view(), name="review_detail"),
+    path('review/new', ReviewCreate.as_view(), name="review_create"),
+    url(r'^data.geojson$',
+        GeoJSONLayerView.as_view(model=Event, properties=('title', 'city',
+                                                          'date')),
         name='data')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

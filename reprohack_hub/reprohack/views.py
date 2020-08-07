@@ -18,7 +18,7 @@ from config.settings.base import AUTH_USER_MODEL as User
 # custom
 from ..users.forms import UserCreationForm, UserChangeForm
 
-from .models import Event, Paper
+from .models import Event, Paper, Review
 from .forms import EventForm, PaperForm
 # from users.forms import SignUpForm, EditUserForm
 
@@ -124,7 +124,33 @@ class PaperList(ListView):
         return context
 
 
+# ----- Reviews ----- #
+
+
+class ReviewCreate(LoginRequiredMixin, CreateView):
+    model = Event
+    form_class = EventForm
+    template_name = 'review/review_new.html'
+    # success_url = "review/???pk???"
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_form_kwargs(self, *args, **kwargs):
+        kwargs = super(ReviewCreate, self).get_form_kwargs(*args, **kwargs)
+        kwargs['user'] = self.request.user
+
+
+class ReviewDetail(LoginRequiredMixin, DetailView):
+    model = Review
+    template_name = 'review/review_detail.html'
+
+
 # ------ USER ------- ##
+
 
 # signup
 def signup(request):

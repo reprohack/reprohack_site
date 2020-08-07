@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from factory import DjangoModelFactory, SubFactory, Sequence
+from factory import DjangoModelFactory, Sequence
 
 from reprohack_hub.reprohack.models import Author, Paper
 
