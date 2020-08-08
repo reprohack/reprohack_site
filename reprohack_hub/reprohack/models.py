@@ -8,6 +8,7 @@ from taggit.managers import TaggableManager
 
 from timezone_field import TimeZoneField
 
+from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 # from django.db import models
 from django.urls import reverse
@@ -119,12 +120,11 @@ class Paper(models.Model):
     """A paper to reproduce.
 
     Todo:
-        * Consider UUIDs
-        * Consider ForeignKey to Event (ManyToManyField)
-        * Consider change user -> submitter
+        * Consider UUIDs for url
         * Consider clarifying submission_date (date paper is
           submitted to journal vs added to this database)
         * Could test DOI with https://github.com/fabiobatalha/crossrefapi
+        * Consider shifting contact boolean to AuthorsAndSubmitters
     """
 
     # id = models.AutoField(primary_key=True)
@@ -146,14 +146,17 @@ class Paper(models.Model):
     tools = TaggableManager()
     citation_bib = models.TextField()
     # submitter details
-    submitter = models.ForeignKey(User, on_delete=models.CASCADE)
+    # submitter = models.ForeignKey(User, on_delete=models.CASCADE)
     # authorship details
-    authorship = models.BooleanField(default=True)
+    authors_and_submitters = models.ManyToManyField(User,
+                                                    through="AuthorsAndSubmitters",
+                                                    through_fields=('paper', 'user'),)
+    # authorship = models.BooleanField(default=True)
+    #
     # authors = models.ManyToManyField(Author,
     #                                  verbose_name="paper author(s)")
     # author_user = models.ForeignKey(
     #     User, on_delete=models.CASCADE, related_name='+', blank=True, null=True)
-    contact = models.BooleanField(default=True)
     public = models.BooleanField(default=True)
     # feedback = models.BooleanField(default=True)
     submission_date = models.DateTimeField(auto_now_add=True)
@@ -169,6 +172,31 @@ class Paper(models.Model):
 
     def get_absolute_url(self):
         return reverse('paper_detail', args=[self.id])
+
+
+class AuthorsAndSubmitters(models.Model):
+
+    """A group of authors and/or submitters of papers for review.
+
+    Todo:
+        * Consider other data (academic affiliation/status etc.) to add.
+        * Potentially combine info here with Users for summary of authorship.
+    """
+
+    paper = models.ForeignKey(Paper, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, blank=True, null=True,
+                             on_delete=models.SET_NULL)
+    contact = models.BooleanField(default=True)
+    author = models.BooleanField(default=True)
+    submitted = models.BooleanField(default=True)
+
+    def clean(self):
+        if not self.author and not self.submitter:
+            raise ValidationError(_('Users must be either an author or '
+                                    'submitter or both.'))
+
+    # def __str__(self):
+    #     return f"{self.user} {self.paper}"
 
 
 # class UnregisteredAuthor(models.Model):
@@ -198,6 +226,12 @@ class Paper(models.Model):
 # class Membership(models.Model):
 #     report_group = models.ForeignKey(ReportGroup, on_delete=models.CASCADE)
 #     rep_author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+# class ReviewerGroup(models.Model):
+#
+#     """A group of paper reviewers."""
+#
+#     reviewer = models.ForeignKey(User,)
 
 
 class Review(models.Model):
@@ -284,3 +318,10 @@ class Review(models.Model):
     reusability_suggestions = models.TextField()
     general_comments = models.TextField()
     # contact email should be included in user accounts,
+
+    def __str__(self):
+        """Summary of """
+        return f'Review of {self.paper} by {self.lead_reviewer}'
+
+    def get_absolute_url(self):
+        return reverse('review_detail', args=[self.id])

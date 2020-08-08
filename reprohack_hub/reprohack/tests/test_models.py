@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import datetime
+from datetime import timedelta
 
 import pytest
 
-from reprohack_hub.users.models import User
+from django.utils import timezone
 
-from reprohack_hub.reprohack.models import (Event, Paper, Venue
-                                            # Author  # , Review)
-                                            )
+from reprohack_hub.users.models import User
+from reprohack_hub.reprohack.models import (Event, Paper, Venue,
+                                            Review)
 
 pytestmark = pytest.mark.django_db
 
@@ -22,8 +22,8 @@ def test_event_save(user: User) -> None:
         host="Test Host",
         title=test_title,
         creator=user,
-        start_time=datetime.datetime.now(),
-        end_time=datetime.datetime.now() + datetime.timedelta(hours=1),
+        start_time=timezone.now(),
+        end_time=timezone.now() + timedelta(hours=1),
     )
     event.save()
     assert str(event) == test_title
@@ -38,23 +38,32 @@ def test_paper_save(user: User) -> None:
     test_title: str = "A Title"
     paper: Paper = Paper(
         title=test_title,
-        submitter=user,
     )
     paper.save()
+    paper.authors_and_submitters.add(user)
     assert str(paper) == test_title
     assert paper.get_absolute_url() == f'/reprohack/paper/{paper.id}/'
 
 
-# def test_review_save(author: Author, paper: Paper) -> None:
-#     """Test creating a basic Paper."""
-#     test_title: str = "A Title"
-#     paper: Paper = Paper(
-#         title=test_title,
-#         author=author,
-#     )
-#     paper.save()
-#     review: Review = Review(
-#         paper=paper
-#     )
-#     review.save()
-#     assert False
+def test_review_save(user: User) -> None:
+    """Test basic Paper Review save."""
+    test_title: str = "A Title"
+
+    paper: Paper = Paper(
+        title=test_title,
+    )
+    paper.save()
+    review: Review = Review(
+        paper=paper,
+        lead_reviewer=user,
+        reproducibility_rating=7,
+        operating_system=Review.LINUX,
+        documentation_rating=3,
+        method_familiarity=10,
+        method_reusability=0,
+        data_permissive_license=False,
+        code_permissive_license=True,
+    )
+    review.save()
+    assert str(review) == f'Review of {test_title} by {user}'
+    assert review.get_absolute_url() == f'/reprohack/review/{review.id}'
