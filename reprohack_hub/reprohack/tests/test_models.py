@@ -55,7 +55,6 @@ def test_review_save(user: User) -> None:
     paper.save()
     review: Review = Review(
         paper=paper,
-        lead_reviewer=user,
         reproducibility_rating=7,
         operating_system=Review.LINUX,
         documentation_rating=3,
@@ -65,5 +64,6 @@ def test_review_save(user: User) -> None:
         code_permissive_license=True,
     )
     review.save()
-    assert str(review) == f'Review of {test_title} by {user}'
+    review.reviewers.add(user)
+    assert str(review) == f"Review of '{test_title}' by {user}"
     assert review.get_absolute_url() == f'/reprohack/review/{review.id}'

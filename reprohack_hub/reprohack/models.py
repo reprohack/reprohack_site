@@ -10,7 +10,6 @@ from timezone_field import TimeZoneField
 
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
-# from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.contrib.gis.db import models
@@ -19,7 +18,6 @@ from config.settings.base import AUTH_USER_MODEL as User
 
 RATING_MIN = 0
 RATING_MAX = 10
-# RATING_DEFUALT = 5
 
 
 class Venue(models.Model):
@@ -227,12 +225,6 @@ class AuthorsAndSubmitters(models.Model):
 #     report_group = models.ForeignKey(ReportGroup, on_delete=models.CASCADE)
 #     rep_author = models.ForeignKey(User, on_delete=models.CASCADE)
 
-# class ReviewerGroup(models.Model):
-#
-#     """A group of paper reviewers."""
-#
-#     reviewer = models.ForeignKey(User,)
-
 
 class Review(models.Model):
 
@@ -270,10 +262,11 @@ class Review(models.Model):
     # id = models.AutoField(primary_key=True)
     event = models.ForeignKey(Event, on_delete=models.SET_NULL, null=True)
     paper = models.ForeignKey(Paper, on_delete=models.SET_NULL, null=True)
+    submission_date = models.DateTimeField(auto_now_add=True)
     # Lead reviewer...?
-    lead_reviewer = models.ForeignKey(User, on_delete=models.SET_NULL,
-                                      null=True, related_name="lead_reviewer")
-    other_reviewers = models.ManyToManyField(User, related_name="other_reviewers")
+    reviewers = models.ManyToManyField(User,
+                                       through="PaperReviewer",
+                                       through_fields=('review', 'user'),)
     reproducibility_description = models.TextField(_("Describe Reproducibility"),
                                                    blank=True, null=True)
     reproducibility_outcome = models.CharField(_("Categorise Reproducibility"),
@@ -282,7 +275,7 @@ class Review(models.Model):
                                                default=NOT_REPRODUCIBLE)
     reproducibility_rating = models.IntegerField(
         _("Reproducibility Score"),
-        # default=RATING_DEFUALT,  # Drop to avoid bias
+        # default=RATING_DEFAULT,  # Drop to avoid bias
         validators=[MinValueValidator(RATING_MIN),
                     MaxValueValidator(RATING_MAX)]
     )
@@ -320,8 +313,25 @@ class Review(models.Model):
     # contact email should be included in user accounts,
 
     def __str__(self):
-        """Summary of """
-        return f'Review of {self.paper} by {self.lead_reviewer}'
+        """Default display of review.
+
+        Todo:
+            * Consider adding reviewer list or 'et al.'.
+        """
+        return (f"Review of '{self.paper}' by " +
+                str(self.get_lead_reviewers().first()))
+
+    def get_lead_reviewers(self):
+        return self.reviewers.filter(paperreviewer__lead_reviewer=True)
 
     def get_absolute_url(self):
         return reverse('review_detail', args=[self.id])
+
+
+class PaperReviewer(models.Model):
+
+    """A group of paper reviewers."""
+
+    review = models.ForeignKey(Review, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    lead_reviewer = models.BooleanField(default=True)
