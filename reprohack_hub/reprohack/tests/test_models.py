@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import datetime
+
 import pytest
 
 from reprohack_hub.users.models import User
@@ -15,16 +17,20 @@ pytestmark = pytest.mark.django_db
 def test_event_save(user: User) -> None:
     """Test basic Event save."""
     test_title: str = "A Title"
-    # venue: Venue = Venue()
+    venue: Venue = Venue(detail="A Venue")
     event: Event = Event(
         host="Test Host",
         title=test_title,
         creator=user,
-        # venue=venue,
+        start_time=datetime.datetime.now(),
+        end_time=datetime.datetime.now() + datetime.timedelta(hours=1),
     )
     event.save()
     assert str(event) == test_title
     assert event.get_absolute_url() == f'/reprohack/event/{event.id}/'
+    event.venue = venue
+    venue.save()
+    event.save()
 
 
 def test_paper_save(user: User) -> None:

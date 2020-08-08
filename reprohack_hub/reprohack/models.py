@@ -37,7 +37,7 @@ class Venue(models.Model):
     city = models.CharField(max_length=60)
     postcode = models.CharField(max_length=15)
     country = models.CharField(max_length=60)
-    geom = models.PointField()
+    geom = models.PointField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -53,8 +53,6 @@ class Event(models.Model):
     Todo:
         * Should the host be another table?
         * Should the user be a "creator"?
-        * Consider shifting date -> start_time, end_time
-        * Should there be a ManyToManyField to Paper?
         * Consider UUIDs for URLs
         * Consider Venue Model separate to Event
     """
