@@ -13,7 +13,7 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
 
-    <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
+    <link rel="icon" href="{% static 'reprohack/images/reprohack_favicons/favicon.ico' %}">
 
     {% block css %}
     
@@ -22,8 +22,19 @@
     
 
     <!-- Your stuff: Third-party CSS libraries go here -->
+    <link rel='stylesheet' href="{% static 'reprohack/css/owl.carousel.min.css'%}">
+    <link rel='stylesheet' href="{% static 'reprohack/css/magnific-popup.css'%}">
+    <link rel='stylesheet' href="{% static 'reprohack/css/font-awesome.min.css'%}">
+    <link rel="stylesheet" href="{% static 'reprohack/leaflet/leaflet.awesome-markers.css' %}%">
+    <link rel='stylesheet' href="{% static 'reprohack/css/themify-icons.css'%}">
+    <link rel='stylesheet' href="{% static 'reprohack/css/nice-select.css'%}">
+    <link rel='stylesheet' href="{% static 'reprohack/css/flaticon.css'%}">
+    <link rel='stylesheet' href="{% static 'reprohack/css/gijgo.css'%}">
+    <link rel='stylesheet' href="{% static 'reprohack/css/animate.css'%}">
+    <link rel='stylesheet' href="{% static 'reprohack/css/slicknav.css'%}">
     {% compress css %}
     <!-- This file stores project-specific CSS -->
+    <link href="{% static 'reprohack/css/style.css'%}" rel='stylesheet'>
     
     <link href="{% static 'css/project.css' %}" rel="stylesheet">
     
@@ -101,11 +112,40 @@
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
       <!-- Your stuff: Third-party javascript libraries go here -->
+      <script src="{% static 'reprohack/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+      <script src="{% static 'reprohack/js/owl.carousel.min.js' %}"></script>
+      <script src="{% static 'reprohack/js/isotope.pkgd.min.js' %}"></script>
+      <script src="{% static 'reprohack/js/ajax-form.js' %}"></script>
+      <script src="{% static 'reprohack/js/waypoints.min.js' %}"></script>
+      <script src="{% static 'reprohack/js/jquery.counterup.min.js' %}"></script>
+      <script src="{% static 'reprohack/js/imagesloaded.pkgd.min.js' %}"></script>
+      <script src="{% static 'reprohack/js/scrollIt.js' %}"></script>
+      <script src="{% static 'reprohack/js/jquery.scrollUp.min.js' %}"></script>
+      <script src="{% static 'reprohack/js/wow.min.js' %}"></script>
+      <script src="{% static 'reprohack/js/nice-select.min.js' %}"></script>
+      <script src="{% static 'reprohack/js/jquery.slicknav.min.js' %}"></script>
+      <script src="{% static 'reprohack/js/jquery.magnific-popup.min.js' %}"></script>
+      <script src="{% static 'reprohack/js/plugins.js' %}"></script>
+      <script src="{% static 'reprohack/js/gijgo.min.js' %}"></script>
+      <script src="{% static 'reprohack/leaflet/leaflet.awesome-markers.js' %}"></script>
+
+      <!--contact js-->
+      <script src="{% static 'reprohack/js/contact.js' %}"></script>
+      <script src="{% static 'reprohack/js/jquery.ajaxchimp.min.js' %}"></script>
+      <script src="{% static 'reprohack/js/jquery.form.js' %}"></script>
+      <script src="{% static 'reprohack/js/jquery.validate.min.js' %}"></script>
+      <script src="{% static 'reprohack/js/mail-script.js' %}"></script>
       
 
       <!-- place project specific Javascript in this file -->
       {% compress js %}
       <script src="{% static 'js/project.js' %}"></script>
+
+      <script src="{% static 'reprohack/js/main.js' %}"></script>
+      <script> $(document).ready(function () {
+              $('.dateinput').datepicker({ format: "yyyy/mm/dd" });
+          }); 
+      </script>
       {% endcompress %}
 
     {% endblock javascript %}
