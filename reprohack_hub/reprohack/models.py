@@ -4,9 +4,10 @@ ReproHack Venue, Event, Author, Paper and Review models.
 Todo:
     * Check if default submission_date for Event and Paper is redundant.
 """
-from taggit.managers import TaggableManager
 
 from timezone_field import TimeZoneField
+
+from taggit.managers import TaggableManager
 
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -133,7 +134,7 @@ class Paper(models.Model):
     available = models.BooleanField(_("Allow for review in any events"),
                                     default=True)
     citation_txt = models.TextField(max_length=300)
-    doi = models.CharField(_("Eg: 10.1000/xyz123"), max_length=200,)
+    doi = models.CharField(_("DOI (eg: 10.1000/xyz123)"), max_length=200,)
     description = models.TextField(max_length=400)
     why = models.TextField(max_length=400)
     focus = models.TextField(max_length=400)
@@ -234,12 +235,17 @@ class Review(models.Model):
     is deleted from the database, by default related reviews
     will also be deleted.
 
+    Based on this example:
+
+    https://docs.google.com/forms/d/e/1FAIpQLSesByo93VRId3xD7EgiQFDW9ep_14tkyuZUm_VCVxXeDexKGw/viewform
+
     Todo:
-        * Decide if there is a lead reviewer
-        * Ask about reusability
-        * Is contact email meant to be reviewer's (in their account?)
         * Ways of autocompleting paper selction
         * Generate an event option to connected to
+        * Consider Team issue URL
+        * Consider additional descriptive list of reviewers without accounts
+        * Add custom descriptions for rating max and min
+        * Add markdownx filter to edit/render
     """
 
     FULLY_REPRODUCIBLE = 'y'
@@ -258,58 +264,94 @@ class Review(models.Model):
         (MACOS, 'Apple Operating System'),
         (WINDOWS, 'Windows Operating System')
     ]
+    RATING_CHOICES = [(x, x) for x in range(RATING_MIN, RATING_MAX + 1)]
 
     # id = models.AutoField(primary_key=True)
-    event = models.ForeignKey(Event, on_delete=models.SET_NULL, null=True)
-    paper = models.ForeignKey(Paper, on_delete=models.SET_NULL, null=True)
-    submission_date = models.DateTimeField(auto_now_add=True)
+    event = models.ForeignKey(Event,
+                              on_delete=models.SET_NULL,
+                              null=True, blank=True)
     # Lead reviewer...?
     reviewers = models.ManyToManyField(User,
                                        through="PaperReviewer",
                                        through_fields=('review', 'user'),)
-    reproducibility_description = models.TextField(_("Describe Reproducibility"),
-                                                   blank=True, null=True)
-    reproducibility_outcome = models.CharField(_("Categorise Reproducibility"),
+    #
+    paper = models.ForeignKey(Paper, on_delete=models.SET_NULL, null=True)
+    reproducibility_outcome = models.CharField(_("Did you manage to reproduce it?"),
                                                max_length=1,
                                                choices=REPRODUCIBILITY_OUTCOME_CHOICES,
                                                default=NOT_REPRODUCIBLE)
     reproducibility_rating = models.IntegerField(
-        _("Reproducibility Score"),
+        _("On a scale of 1 to 10, how much of the paper did you manage to "
+          "reproduce?"),
         # default=RATING_DEFAULT,  # Drop to avoid bias
         validators=[MinValueValidator(RATING_MIN),
-                    MaxValueValidator(RATING_MAX)]
+                    MaxValueValidator(RATING_MAX)],
+        choices=RATING_CHOICES,
     )
-    operating_system = models.CharField(max_length=7,
+    reproducibility_description = models.TextField(_("Briefly describe the "
+                                                     "procedure followed/tools"
+                                                     "used to reproduce it."),)
+    familiarity_with_method = models.TextField(_("Briefly describe your "
+                                                 "familiarity with the "
+                                                 "procedure/tools used by "
+                                                 "the paper."))
+    operating_system = models.CharField(_("Which type of operating system were you "
+                                          "working in?"), max_length=7,
                                         choices=OPERATING_SYSTEM_OPTIONS)
-    operating_system_detail = models.CharField(max_length=100)
-    software_installed = models.TextField()
-    software_used = models.TextField()
-    familiarity_with_method = models.TextField()
-    challenges = models.TextField()
-    advantages = models.TextField()
-    comments_and_suggestions = models.TextField()
-    documentation = models.TextField()
+    operating_system_detail = models.CharField(_("What operating system were you "
+                                                 "using eg: Ubuntu 14.04.6 LTS, "
+                                                 "macOS 10.15 or Windows 10 Pro? "),
+                                               max_length=100)
+    software_installed = models.TextField(_("What additional software did you need "
+                                          "to install?"))
+    software_used = models.TextField(_("What software did you use?"))
+    challenges = models.TextField(_("What were the main challenges you ran "
+                                    "into (if any)?"))
+    advantages = models.TextField(_("What were the positive features of "
+                                    "this approach?"))
+    comments_and_suggestions = models.TextField(_("Any other comments/suggestions "
+                                                  "on the reproducibility approach?"))
     documentation_rating = models.IntegerField(
+        _("How well was the material documented?"),
         # default=RATING_DEFUALT,
         validators=[MinValueValidator(RATING_MIN),
-                    MaxValueValidator(RATING_MAX)]
+                    MaxValueValidator(RATING_MAX)],
+        choices=RATING_CHOICES,
     )
-    documentation_cons = models.TextField()
-    documentation_pros = models.TextField()
-    method_familiarity = models.IntegerField(
+    documentation_cons = models.TextField(_("How could the documentation "
+                                            "be improved?"))
+    documentation_pros = models.TextField(_("What do you like about the "
+                                            "documentation?"))
+    method_familiarity_rating = models.IntegerField(
+        _("After attempting to reproduce, how familiar do you feel with "
+          "the code and methods used in the paper?"),
         # default=RATING_DEFUALT,
         validators=[MinValueValidator(RATING_MIN),
-                    MaxValueValidator(RATING_MAX)]
+                    MaxValueValidator(RATING_MAX)],
+        choices=RATING_CHOICES,
     )
-    method_reusability = models.IntegerField(  # Reusability?
+    transparency_suggestions = models.TextField(
+        _("Any suggestions on how the analysis could be made more "
+          "transparent?")
+    )
+    method_reusability_rating = models.IntegerField(  # Reusability?
+        _("Rate the project on reusability of the material."),
         # default=RATING_DEFUALT,
         validators=[MinValueValidator(RATING_MIN),
-                    MaxValueValidator(RATING_MAX)]
+                    MaxValueValidator(RATING_MAX)],
+        choices=RATING_CHOICES,
     )
-    data_permissive_license = models.BooleanField()
-    code_permissive_license = models.BooleanField()
-    reusability_suggestions = models.TextField()
-    general_comments = models.TextField()
+    # ("Are materials clearly "
+    #  "covered by a " "permissive enough " "license to build " "on?")
+    data_permissive_license = models.BooleanField(_("Permissive license "
+                                                    "for DATA included"))
+    code_permissive_license = models.BooleanField(_("Permissive license "
+                                                    "for CODE included"))
+    reusability_suggestions = models.TextField(_("Any suggestions on how "
+                                                 "the project could be "
+                                                 "more reusable?"))
+    general_comments = models.TextField(_("Any final comments:"))
+    submission_date = models.DateTimeField(auto_now_add=True)
     # contact email should be included in user accounts,
 
     def __str__(self):

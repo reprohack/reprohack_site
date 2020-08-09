@@ -58,8 +58,8 @@ def test_review_save(user: User) -> None:
         reproducibility_rating=7,
         operating_system=Review.LINUX,
         documentation_rating=3,
-        method_familiarity=10,
-        method_reusability=0,
+        method_familiarity_rating=10,
+        method_reusability_rating=0,
         data_permissive_license=False,
         code_permissive_license=True,
     )

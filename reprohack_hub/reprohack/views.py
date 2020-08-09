@@ -19,7 +19,7 @@ from config.settings.base import AUTH_USER_MODEL as User
 from ..users.forms import UserCreationForm, UserChangeForm
 
 from .models import Event, Paper, Review
-from .forms import EventForm, PaperForm
+from .forms import EventForm, PaperForm, ReviewForm
 # from users.forms import SignUpForm, EditUserForm
 
 
@@ -42,7 +42,7 @@ class EventCreate(LoginRequiredMixin, CreateView):
 
     def get_form_kwargs(self, *args, **kwargs):
         kwargs = super(EventCreate, self).get_form_kwargs(*args, **kwargs)
-        kwargs['user'] = self.request.user
+        kwargs['creator'] = self.request.user
         return kwargs
 
 
@@ -128,20 +128,20 @@ class PaperList(ListView):
 
 
 class ReviewCreate(LoginRequiredMixin, CreateView):
-    model = Event
-    form_class = EventForm
+    model = Review
+    form_class = ReviewForm
     template_name = 'review/review_new.html'
     # success_url = "review/???pk???"
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.user = self.request.user
+        self.object.reviewers.add(self.request.user)
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
-    def get_form_kwargs(self, *args, **kwargs):
-        kwargs = super(ReviewCreate, self).get_form_kwargs(*args, **kwargs)
-        kwargs['user'] = self.request.user
+    # def get_form_kwargs(self, *args, **kwargs):
+    #     kwargs = super(ReviewCreate, self).get_form_kwargs(*args, **kwargs)
+    #     # kwargs['reviewers'] = [self.request.user]
 
 
 class ReviewDetail(LoginRequiredMixin, DetailView):
