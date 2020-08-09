@@ -314,3 +314,11 @@ REST_FRAMEWORK = {
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
+
+# https://django-leaflet.readthedocs.io/en/latest/templates.html#configuration
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (56.0, 4),
+    'DEFAULT_ZOOM': 2,
+    'MIN_ZOOM': 1,
+    'MAX_ZOOM': 18,
+}
