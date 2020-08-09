@@ -1,7 +1,6 @@
-from django.conf.urls import url
 from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
-from django.urls import path, include
+from django.urls import include, path, re_path
 from django.conf.urls.static import static
 from django.conf import settings
 from djgeojson.views import GeoJSONLayerView
@@ -13,7 +12,6 @@ from .views import (EventCreate, EventUpdate, EventDetail, EventList, EventMap,
 
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
-    url(r'^markdownx/', include('markdownx.urls')),
     path('about', TemplateView.as_view(template_name='about.html'), name='about'),
     # url(r'^admin/', admin.site.urls),
     path('signup/', UserCreateView.as_view(), name='signup'),
@@ -37,8 +35,8 @@ urlpatterns = [
     # path('review/<int:pk>/', ReviewDetail.as_view(), name="review_detail"),
     path('review/new', ReviewCreate.as_view(), name="review_create"),
     path('review/<int:pk>', ReviewDetail.as_view(), name="review_detail"),
-    url(r'^data.geojson$',
-        GeoJSONLayerView.as_view(model=Event, properties=('title', 'city',
-                                                          'date')),
-        name='data')
+    re_path(r'^data.geojson$',
+            GeoJSONLayerView.as_view(model=Event, properties=('title', 'city',
+                                                              'date')),
+            name='data')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
