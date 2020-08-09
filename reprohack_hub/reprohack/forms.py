@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit, Row, Column, HTML, Field
-from leaflet.forms.widgets import LeafletWidget
+# from leaflet.forms.widgets import LeafletWidget
 
 from .models import Event, Paper, Review
 
@@ -19,7 +19,7 @@ class EventForm(ModelForm):
     class Meta:
         model = Event
         exclude = ['submission_date', 'creator', ]
-        widgets = {'geom': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS)}
+        # widgets = {'geom': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS)}
 
     def __init__(self, *args, **kwargs):
         self.creator = kwargs.pop('creator')
@@ -36,16 +36,17 @@ class EventForm(ModelForm):
                 Column('time_zone', css_class='form-group col-md-4 mb-0'),
                 css_class='form-row',
             ),
-            'venue',
-            # 'location',
-            # 'address1',
-            # 'address2',
-            # Row(
-            #     Column('city', css_class='form-group col-md-6 mb-0'),
-            #     Column('postcode', css_class='form-group col-md-3 mb-0'),
-            #     Column('country', css_class='form-group col-md-3 mb-0'),
-            # ),
+            # 'venue',
+            'venue_description',
+            'address1',
+            'address2',
+            Row(
+                Column('city', css_class='form-group col-md-6 mb-0'),
+                Column('postcode', css_class='form-group col-md-3 mb-0'),
+                Column('country', css_class='form-group col-md-3 mb-0'),
+            ),
             'registration_url',
+            # 'geom',
         )
 
 
@@ -67,7 +68,7 @@ class PaperForm(ModelForm):
         self.fields['public'].label = "I wish to receive feedback on reproductions"
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Submit event'))
+        self.helper.add_input(Submit('submit', 'Submit paper'))
         self.helper.layout = Layout(
             HTML('<h2>Paper details<h2>'),
             'title',
@@ -146,4 +147,4 @@ class ReviewForm(ModelForm):
         super(ReviewForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Submit event'))
+        self.helper.add_input(Submit('submit', 'Submit review'))

@@ -8,8 +8,7 @@ import pytest
 from django.utils import timezone
 
 from reprohack_hub.users.models import User
-from reprohack_hub.reprohack.models import (Event, Paper, Venue,
-                                            Review)
+from reprohack_hub.reprohack.models import Event, Paper, Review
 
 pytestmark = pytest.mark.django_db
 
@@ -17,7 +16,7 @@ pytestmark = pytest.mark.django_db
 def test_event_save(user: User) -> None:
     """Test basic Event save."""
     test_title: str = "A Title"
-    venue: Venue = Venue(detail="A Venue")
+    # venue: Venue = Venue(detail="A Venue")
     event: Event = Event(
         host="Test Host",
         title=test_title,
@@ -28,8 +27,8 @@ def test_event_save(user: User) -> None:
     event.save()
     assert str(event) == test_title
     assert event.get_absolute_url() == f'/reprohack/event/{event.id}/'
-    event.venue = venue
-    venue.save()
+    # event.venue = venue
+    # venue.save()
     event.save()
 
 

@@ -5,6 +5,10 @@ Todo:
     * Check if default submission_date for Event and Paper is redundant.
 """
 
+from datetime import datetime
+
+from markdownx.models import MarkdownxField
+
 from timezone_field import TimeZoneField
 
 from taggit.managers import TaggableManager
@@ -17,33 +21,48 @@ from django.contrib.gis.db import models
 
 from config.settings.base import AUTH_USER_MODEL as User
 
+from .utils import next_x_hour
+
 RATING_MIN = 0
 RATING_MAX = 10
 
+DEFAULT_EVENT_START_HOUR = 10
+DEFAULT_EVENT_END_HOUR = 16
 
-class Venue(models.Model):
 
-    """Venue with spatial coordinates.
+# class Venue(models.Model):
+#
+#     """Venue with spatial coordinates.
+#
+#     To ensure this is likely to be user faced, users should only see Venues
+#     related to Events they create.
+#     """
+#
+#     # id = models.AutoField(primary_key=True)
+#     # creator = models.ForeignKey(User, on_delete=models.CASCADE)
+#     detail = models.CharField(_('Eg: Room #'), max_length=300)
+#     address1 = models.CharField(max_length=200)
+#     address2 = models.CharField(max_length=200)
+#     city = models.CharField(max_length=60)
+#     postcode = models.CharField(max_length=15)
+#     country = models.CharField(max_length=60)
+#     geom = models.PointField(blank=True, null=True)
+#
+#     def __str__(self):
+#         return self.name
+#
+#     # def get_absolute_url(self):
+#     #     return reverse('venue_detail', args=[self.id])
 
-    To ensure this is likely to be user faced, users should only see Venues
-    related to Events they create.
-    """
 
-    # id = models.AutoField(primary_key=True)
-    # creator = models.ForeignKey(User, on_delete=models.CASCADE)
-    detail = models.CharField(_('Eg: Room #'), max_length=300)
-    address1 = models.CharField(max_length=200)
-    address2 = models.CharField(max_length=200)
-    city = models.CharField(max_length=60)
-    postcode = models.CharField(max_length=15)
-    country = models.CharField(max_length=60)
-    geom = models.PointField(blank=True, null=True)
+def default_event_start(hour: datetime = DEFAULT_EVENT_START_HOUR) -> datetime:
+    """Return next default start time."""
+    return next_x_hour(hour)
 
-    def __str__(self):
-        return self.name
 
-    # def get_absolute_url(self):
-    #     return reverse('venue_detail', args=[self.id])
+def default_event_end(hour: datetime = DEFAULT_EVENT_END_HOUR) -> datetime:
+    """Return next default start time."""
+    return next_x_hour(hour, default_event_start())
 
 
 class Event(models.Model):
@@ -51,8 +70,6 @@ class Event(models.Model):
     """An event to organise reproducing Paper results.
 
     Todo:
-        * Should the host be another table?
-        * Should the user be a "creator"?
         * Consider UUIDs for URLs
         * Consider Venue Model separate to Event
     """
@@ -63,17 +80,25 @@ class Event(models.Model):
     title = models.CharField(_('Event Title'), max_length=200)
     # time
     # date = models.DateField(default=date.today)
-    start_time = models.DateTimeField()  # Present default will be constant
-    end_time = models.DateTimeField()
+    start_time = models.DateTimeField(default=default_event_start)
+    end_time = models.DateTimeField(default=default_event_end)
     time_zone = TimeZoneField(default='Europe/Berlin')
     # remote = models.BooleanField(default=False)
 
     # location
-    venue = models.ForeignKey(Venue, on_delete=models.SET_NULL, null=True)
+    # venue = models.ForeignKey(Venue, on_delete=models.SET_NULL, null=True)
     # location = models.CharField(max_length=200)  # Location name?
-    # venue_detail = models.CharField(_('Eg. Entrance, Parking etc.'))
-    submission_date = models.DateTimeField(auto_now_add=True)
+    venue_description = MarkdownxField(_('Venue description (eg. entrance, '
+                                         'parking etc.)'))
+    address1 = models.CharField(max_length=200)
+    address2 = models.CharField(max_length=200)
+    city = models.CharField(max_length=60)
+    postcode = models.CharField(max_length=15)
+    country = models.CharField(max_length=60)
+    geom = models.PointField(blank=True, null=True)
     registration_url = models.URLField()
+
+    submission_date = models.DateTimeField(auto_now_add=True)
     # remote = models.BooleanField(default=False)
 
     # def submit(self):
@@ -85,30 +110,6 @@ class Event(models.Model):
 
     def get_absolute_url(self):
         return reverse('event_detail', args=[self.id])
-
-
-class Author(models.Model):
-
-    """Author of a paper.
-
-    These are an extension of users to facilitate optional
-    data if Paper authors are or become users.
-
-    Todo:
-        * Consider a different on_delete process (Author record stays
-          irrespective of User account)
-        * Through model?
-        * Profile options Eg. title, last_name, first_names, university,
-          department, faculty etc.
-    """
-    # id = models.AutoField(primary_key=True)
-    account = models.OneToOneField(User,
-                                   on_delete=models.SET_NULL,
-                                   null=True
-                                   )
-    # author_first_name = forms.EmailField(max_length=50)
-    # author_last_name = forms.EmailField(max_length=50)
-    # author_email = forms.EmailField(max_length=254)
 
 
 # ---- Papers ---- #
@@ -134,7 +135,7 @@ class Paper(models.Model):
     available = models.BooleanField(_("Allow for review in any events"),
                                     default=True)
     citation_txt = models.TextField(max_length=300)
-    doi = models.CharField(_("DOI (eg: 10.1000/xyz123)"), max_length=200,)
+    doi = models.CharField(_("DOI (eg. 10.1000/xyz123)"), max_length=200,)
     description = models.TextField(max_length=400)
     why = models.TextField(max_length=400)
     focus = models.TextField(max_length=400)
@@ -198,35 +199,6 @@ class AuthorsAndSubmitters(models.Model):
     #     return f"{self.user} {self.paper}"
 
 
-# class UnregisteredAuthor(models.Model):
-#
-#     """Model for data Authors not publicly registered.
-#
-#     Todo:
-#         * Unsure of how this is meant to work
-#         * Is this an extension of the user model? If so maybe inheritance is better
-#         * If it's a base record so the user relationship is to an organiser, worth discussing
-#         * from django.contrib.auth.models import AnonymousUser
-#     """
-#     user = models.OneToOneField(User,
-#                                 on_delete=models.CASCADE,
-#                                 primary_key=True)
-
-
-# class ReportGroup(models.Model):
-#     paper = models.ForeignKey(Paper, on_delete=models.CASCADE)
-#     members = models.ManyToManyField(
-#         User,
-#         through='Membership',
-#         through_fields=('report_group', 'rep_author'),
-#     )
-#
-#
-# class Membership(models.Model):
-#     report_group = models.ForeignKey(ReportGroup, on_delete=models.CASCADE)
-#     rep_author = models.ForeignKey(User, on_delete=models.CASCADE)
-
-
 class Review(models.Model):
 
     """A review of a Paper from either an individual or a group.
@@ -240,12 +212,12 @@ class Review(models.Model):
     https://docs.google.com/forms/d/e/1FAIpQLSesByo93VRId3xD7EgiQFDW9ep_14tkyuZUm_VCVxXeDexKGw/viewform
 
     Todo:
-        * Ways of autocompleting paper selction
-        * Generate an event option to connected to
+        * Discuss ways of autocompleting paper selction (only future, flag on
+          events, permission, etc.)
         * Consider Team issue URL
         * Consider additional descriptive list of reviewers without accounts
         * Add custom descriptions for rating max and min
-        * Add markdownx filter to edit/render
+        * Consider markdownx for descriptions
     """
 
     FULLY_REPRODUCIBLE = 'y'
@@ -299,8 +271,8 @@ class Review(models.Model):
                                           "working in?"), max_length=7,
                                         choices=OPERATING_SYSTEM_OPTIONS)
     operating_system_detail = models.CharField(_("What operating system were you "
-                                                 "using eg: Ubuntu 14.04.6 LTS, "
-                                                 "macOS 10.15 or Windows 10 Pro? "),
+                                                 "using (eg. Ubuntu 14.04.6 LTS, "
+                                                 "macOS 10.15 or Windows 10 Pro)?"),
                                                max_length=100)
     software_installed = models.TextField(_("What additional software did you need "
                                           "to install?"))
