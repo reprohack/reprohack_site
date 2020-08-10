@@ -65,4 +65,4 @@ def test_review_save(user: User) -> None:
     review.save()
     review.reviewers.add(user)
     assert str(review) == f"Review of '{test_title}' by {user}"
-    assert review.get_absolute_url() == f'/reprohack/review/{review.id}'
+    assert review.get_absolute_url() == f'/reprohack/review/{review.id}/'

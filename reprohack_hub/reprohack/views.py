@@ -140,19 +140,48 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
     # success_url = "review/???pk???"
 
     def form_valid(self, form):
-        self.object = form.save(commit=False)
+        # self.object = form.save(commit=False)
+        self.object = form.save()
+        # self.object.save()
         self.object.reviewers.add(self.request.user)
-        self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
     # def get_form_kwargs(self, *args, **kwargs):
     #     kwargs = super(ReviewCreate, self).get_form_kwargs(*args, **kwargs)
-    #     # kwargs['reviewers'] = [self.request.user]
+    #     kwargs['reviewers'] = [self.request.user]
+    #     return kwargs
 
 
 class ReviewDetail(LoginRequiredMixin, DetailView):
     model = Review
     template_name = 'review/review_detail.html'
+
+
+class ReviewUpdate(LoginRequiredMixin, UpdateView):
+    model = Review
+    form_class = ReviewForm
+    template_name = 'review/review_new.html'
+
+
+class ReviewList(LoginRequiredMixin, ListView):
+
+    """Present a list of 20 reviews.
+
+    Todo:
+        * Add order_by most recent
+        * Permission (maybe can only see their reviews)?
+        * General option of stats for public...?
+    """
+
+    model = Review
+    context_object_name = "reviews_list"
+    template_name = 'review/review_list.html'
+    paginate_by = 20  # if pagination is desired
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['now'] = timezone.now()
+    #     return context
 
 
 # ------ USER ------- ##

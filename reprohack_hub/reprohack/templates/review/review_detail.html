@@ -2,25 +2,22 @@
 {% load static %}
 
 {% block content %}
-<div class="bradcam_area breadcam_bg overlay2"></div>
+<div class="bradcam_area breadcam_bg overlay2">
+  <h3>Review of {{ review.paper }}</h3>
+    <br>
+</div>
 <div class="whole-wrap">
     <div class="container box_1170">
         <div class="section-top-border">
             <div class="review">
                 {% if user.is_authenticated %}
-                <a class="btn btn-default" href="{% url 'paper_edit' pk=paper.pk %}"><span
-                        class="glyphicon glyphicon-pencil"></span></a>
+                <a class="btn btn-default" href="{% url 'review_edit' pk=review.pk %}"><span
+                        class="glyphicon glyphicon-pencil">review</span></a>
                 {% endif %}
-                <h3>{{ paper.title }}</h3>
+                <h3>{{ review }}</h3>
                 <div>
-                    <h5>{{ paper.citation_txt }} - {{ paper.time_end }}</h5>
-
-                    <h4>Submitted by {{ paper.user }}, @ {{ paper.twitter }}</h4>
+                    <h4>Submitted by {{ review.reviewers.first }}</h4>
                 </div>
-                <p>{{ paper.description|linebreaksbr }}</p>
-                Why should we reproduce your paper?
-                <p>{{ paper.why|linebreaksbr }}</p>
-                <p>{{ paper.focus|linebreaksbr }}</p>
             </div>
         </div>
     </div>
