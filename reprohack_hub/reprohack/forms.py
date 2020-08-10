@@ -1,5 +1,7 @@
 from django import forms
 from django.forms import ModelForm
+from django.utils.translation import gettext_lazy as _
+
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit, Row, Column, HTML, Field
 # from leaflet.forms.widgets import LeafletWidget
@@ -137,7 +139,11 @@ class PaperForm(ModelForm):
 
 class ReviewForm(ModelForm):
 
-    """A form to review papers."""
+    """A form to review papers.
+
+    Todo:
+        * Test the query of available papers with respect to event.
+    """
 
     class Meta:
         model = Review
@@ -145,6 +151,59 @@ class ReviewForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ReviewForm, self).__init__(*args, **kwargs)
+        self.fields['paper'].queryset = Paper.objects.filter(available=True)
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Submit review'))
+        self.helper.layout = Layout(
+            # HTML('<h2>ReproHack Author Feedback Form</h2>'),
+            'event',
+            'paper',
+            HTML('<h3>Reproducibility</h3>'),
+            Fieldset("Reproducibility Scores",
+                     Row(
+                         Column('reproducibility_outcome',
+                                css_class='form-group col-md-4 mb-0'),
+                         Column('reproducibility_rating',
+                                css_class='form-group col-md-8 mb-0')
+                     )),
+            'reproducibility_description',
+            'familiarity_with_method',
+            Fieldset(_("Operating System"),
+                     Row(
+                         Column('operating_system',
+                                css_class='form-group col-md-4 mb-0'),
+                         Column('operating_system_detail',
+                                css_class='form-group col-md-8 mb-0')
+                     )),
+            # Fieldset(_("Software"),
+            #          Row(
+            #              Column('software_installed',
+            #                     css_class='form-group col-md-4 mb-0'),
+            #              Column('software_used',
+            #                     css_class='form-group col-md-8 mb-0')
+            #          )),
+            'software_installed',
+            'software_used',
+            'challenges',
+            'advantages',
+            'comments_and_suggestions',
+            HTML('<h3>Documentation</h3>'),
+            'documentation_rating',
+            'documentation_cons',
+            'documentation_pros',
+            'method_familiarity_rating',
+            'transparency_suggestions',
+            HTML('<h3>Reusability</h3>'),
+            'method_reusability_rating',
+            Fieldset(_("Are materials clearly covered by a "
+                       "permissive enough license to build on?"),
+                     Row(
+                         Column('data_permissive_license',
+                                css_class='form-group col-md-6 mb-0'),
+                         Column('code_permissive_license',
+                                css_class='form-group col-md-6 mb-0'),
+                     )),
+            'reusability_suggestions',
+            'general_comments',
+        )
