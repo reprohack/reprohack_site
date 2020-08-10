@@ -1,3 +1,5 @@
+import logging
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -22,6 +24,8 @@ from .models import Event, Paper, Review
 from .forms import EventForm, PaperForm, ReviewForm
 # from users.forms import SignUpForm, EditUserForm
 
+logger = logging.getLogger(__name__)
+
 
 class EventCreate(LoginRequiredMixin, CreateView):
     model = Event
@@ -32,11 +36,13 @@ class EventCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
-        address = ', '.join(
-            (self.object.address1, self.object.city, self.object.postcode,
-             self.object.country))
-        self.object.geom = Point(
-            google(address).latlng[::-1])
+        address = ', '.join((self.object.address1, self.object.city,
+                             self.object.postcode, self.object.country.name))
+        try:
+            self.object.geom = Point(
+                google(address).latlng[::-1])
+        except TypeError:
+            logger.warning(f'No coordinates returned for {address}')
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 

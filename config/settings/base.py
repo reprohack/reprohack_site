@@ -84,6 +84,7 @@ LOCAL_APPS = [
     # "geocoder",
     "taggit",
     "markdownx",
+    "django_countries",
     "reprohack_hub.reprohack.apps.ReprohackConfig"
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

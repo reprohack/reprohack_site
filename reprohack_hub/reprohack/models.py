@@ -7,6 +7,8 @@ Todo:
 
 from datetime import datetime
 
+from django_countries.fields import CountryField
+
 from markdownx.models import MarkdownxField
 
 from timezone_field import TimeZoneField
@@ -55,12 +57,12 @@ DEFAULT_EVENT_END_HOUR = 16
 #     #     return reverse('venue_detail', args=[self.id])
 
 
-def default_event_start(hour: datetime = DEFAULT_EVENT_START_HOUR) -> datetime:
+def default_event_start(hour: int = DEFAULT_EVENT_START_HOUR) -> datetime:
     """Return next default start time."""
     return next_x_hour(hour)
 
 
-def default_event_end(hour: datetime = DEFAULT_EVENT_END_HOUR) -> datetime:
+def default_event_end(hour: int = DEFAULT_EVENT_END_HOUR) -> datetime:
     """Return next default start time."""
     return next_x_hour(hour, default_event_start())
 
@@ -91,10 +93,10 @@ class Event(models.Model):
     venue_description = MarkdownxField(_('Venue description (eg. entrance, '
                                          'parking etc.)'))
     address1 = models.CharField(max_length=200)
-    address2 = models.CharField(max_length=200)
+    address2 = models.CharField(max_length=200, blank=True, null=True)
     city = models.CharField(max_length=60)
     postcode = models.CharField(max_length=15)
-    country = models.CharField(max_length=60)
+    country = CountryField()
     geom = models.PointField(blank=True, null=True)
     registration_url = models.URLField()
 
