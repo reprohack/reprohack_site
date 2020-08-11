@@ -1,34 +1,3 @@
-astroid==2.3.1
-certifi==2019.9.11
-chardet==3.0.4
-click==7.0
-decorator==4.4.1
-django-appconf==1.0.3
-django-crispy-forms==1.7.2
-django-extensions==2.2.3
-django-geojson==2.12.0
-django-leaflet==0.24.0
-django-markdownx==2.0.28
-django-taggit==1.1.0
-django-timezone-field==3.1
-django==2.2.13
-future==0.18.2
-geocoder==1.38.1
-geojson==2.5.0
-idna==2.8
-isort==4.3.21
-jsonfield==2.0.2
-lazy-object-proxy==1.4.2
-markdown==3.1.1
-mccabe==0.6.1
-mysqlclient==1.3.13
-pillow==6.2.0
-pylint==2.4.2
-pytz==2019.2
-ratelim==0.1.6
-requests==2.22.0
-six==1.12.0
-sqlparse==0.3.0
-typed-ast==1.4.0
-urllib3==1.25.7
-wrapt==1.11.2
+# This file is expected by Heroku.
+
+-r requirements/production.txt
