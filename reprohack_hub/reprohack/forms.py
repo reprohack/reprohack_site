@@ -1,9 +1,9 @@
-from django import forms
 from django.forms import ModelForm
 from django.utils.translation import gettext_lazy as _
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit, Row, Column, HTML, Field
+from crispy_forms.bootstrap import InlineRadios
 # from leaflet.forms.widgets import LeafletWidget
 
 from .models import Event, Paper, Review
@@ -118,23 +118,23 @@ class PaperForm(ModelForm):
                      ),
         )
 
-    def clean(self):
-        authorship = self.cleaned_data.get('authorship')
+    # def clean(self):
+    #     authorship = self.cleaned_data.get('authorship')
 
-        if authorship:
-            self.cleaned_data['author_user'] = self.user
-        else:
-            self.cleaned_data['author_user'] = ""
-            self.fields_required(['author_first_name'])
-            self.fields_required(['author_last_name'])
-            self.fields_required(['author_email'])
-        return self.cleaned_data
+    #     if authorship:
+    #         self.cleaned_data['author_user'] = self.user
+    #     else:
+    #         self.cleaned_data['author_user'] = ""
+    #         self.fields_required(['author_first_name'])
+    #         self.fields_required(['author_last_name'])
+    #         self.fields_required(['author_email'])
+    #     return self.cleaned_data
 
-    def fields_required(self, fields):
-        for field in fields:
-            if not self.cleaned_data.get(field, ''):
-                msg = forms.ValidationError("This field is required.")
-                self.add_error(field, msg)
+    # def fields_required(self, fields):
+    #     for field in fields:
+    #         if not self.cleaned_data.get(field, ''):
+    #             msg = forms.ValidationError("This field is required.")
+    #             self.add_error(field, msg)
 
 
 class ReviewForm(ModelForm):
@@ -159,14 +159,9 @@ class ReviewForm(ModelForm):
             # HTML('<h2>ReproHack Author Feedback Form</h2>'),
             'event',
             'paper',
-            HTML('<h3>Reproducibility</h3>'),
-            Fieldset("Reproducibility Scores",
-                     Row(
-                         Column('reproducibility_outcome',
-                                css_class='form-group col-md-4 mb-0'),
-                         Column('reproducibility_rating',
-                                css_class='form-group col-md-8 mb-0')
-                     )),
+            HTML(f"<h3>{_('Reproducibility')}</h3>"),
+            'reproducibility_outcome',
+            InlineRadios('reproducibility_rating'),
             'reproducibility_description',
             'familiarity_with_method',
             Fieldset(_("Operating System"),
@@ -176,26 +171,19 @@ class ReviewForm(ModelForm):
                          Column('operating_system_detail',
                                 css_class='form-group col-md-8 mb-0')
                      )),
-            # Fieldset(_("Software"),
-            #          Row(
-            #              Column('software_installed',
-            #                     css_class='form-group col-md-4 mb-0'),
-            #              Column('software_used',
-            #                     css_class='form-group col-md-8 mb-0')
-            #          )),
             'software_installed',
             'software_used',
             'challenges',
             'advantages',
             'comments_and_suggestions',
             HTML('<h3>Documentation</h3>'),
-            'documentation_rating',
+            InlineRadios('documentation_rating'),
             'documentation_cons',
             'documentation_pros',
-            'method_familiarity_rating',
+            InlineRadios('method_familiarity_rating'),
             'transparency_suggestions',
-            HTML('<h3>Reusability</h3>'),
-            'method_reusability_rating',
+            HTML(f"<h3>{_('Reusability')}</h3>"),
+            InlineRadios('method_reusability_rating'),
             Fieldset(_("Are materials clearly covered by a "
                        "permissive enough license to build on?"),
                      Row(

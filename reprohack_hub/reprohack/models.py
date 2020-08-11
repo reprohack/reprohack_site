@@ -27,6 +27,7 @@ from .utils import next_x_hour
 
 RATING_MIN = 0
 RATING_MAX = 10
+RATING_DEFAULT = 5
 
 DEFAULT_EVENT_START_HOUR = 10
 DEFAULT_EVENT_END_HOUR = 16
@@ -74,6 +75,7 @@ class Event(models.Model):
     Todo:
         * Consider UUIDs for URLs
         * Consider Venue Model separate to Event
+        * Auto-set to locale of user at point of login
     """
 
     # id = models.AutoField(primary_key=True)
@@ -84,14 +86,14 @@ class Event(models.Model):
     # date = models.DateField(default=date.today)
     start_time = models.DateTimeField(default=default_event_start)
     end_time = models.DateTimeField(default=default_event_end)
-    time_zone = TimeZoneField(default='Europe/Berlin')
+    time_zone = TimeZoneField(default='Europe/London')
     # remote = models.BooleanField(default=False)
 
     # location
     # venue = models.ForeignKey(Venue, on_delete=models.SET_NULL, null=True)
-    # location = models.CharField(max_length=200)  # Location name?
-    venue_description = MarkdownxField(_('Venue description (eg. entrance, '
-                                         'parking etc.)'))
+    description = MarkdownxField(_('Venue description (eg. entrance, '
+                                   'parking etc.)'))
+    location = models.CharField(max_length=200)  # Location name?
     address1 = models.CharField(max_length=200)
     address2 = models.CharField(max_length=200, blank=True, null=True)
     city = models.CharField(max_length=60)
@@ -220,13 +222,14 @@ class Review(models.Model):
         * Consider additional descriptive list of reviewers without accounts
         * Add custom descriptions for rating max and min
         * Consider markdownx for descriptions
+        * Change choice widget for ratings (like google form)
     """
 
     FULLY_REPRODUCIBLE = 'y'
     PARTIALLY_REPRODUCIBLE = 'p'
     NOT_REPRODUCIBLE = 'n'
     REPRODUCIBILITY_OUTCOME_CHOICES = [
-        (FULLY_REPRODUCIBLE, 'Fully Reproducible'),
+        (FULLY_REPRODUCIBLE, _('Fully Reproducible')),
         (PARTIALLY_REPRODUCIBLE, 'Partially Reproducible'),
         (NOT_REPRODUCIBLE, 'Not Reproducible')
     ]
@@ -255,15 +258,14 @@ class Review(models.Model):
                                                choices=REPRODUCIBILITY_OUTCOME_CHOICES,
                                                default=NOT_REPRODUCIBLE)
     reproducibility_rating = models.IntegerField(
-        _("On a scale of 1 to 10, how much of the paper did you manage to "
-          "reproduce?"),
-        # default=RATING_DEFAULT,  # Drop to avoid bias
+        _("How much of the paper did you manage to reproduce?"),
+        default=RATING_DEFAULT,
         validators=[MinValueValidator(RATING_MIN),
                     MaxValueValidator(RATING_MAX)],
         choices=RATING_CHOICES,
     )
     reproducibility_description = models.TextField(_("Briefly describe the "
-                                                     "procedure followed/tools"
+                                                     "procedure followed/tools "
                                                      "used to reproduce it."),)
     familiarity_with_method = models.TextField(_("Briefly describe your "
                                                  "familiarity with the "
@@ -287,7 +289,7 @@ class Review(models.Model):
                                                   "on the reproducibility approach?"))
     documentation_rating = models.IntegerField(
         _("How well was the material documented?"),
-        # default=RATING_DEFUALT,
+        default=RATING_DEFAULT,
         validators=[MinValueValidator(RATING_MIN),
                     MaxValueValidator(RATING_MAX)],
         choices=RATING_CHOICES,
@@ -299,7 +301,7 @@ class Review(models.Model):
     method_familiarity_rating = models.IntegerField(
         _("After attempting to reproduce, how familiar do you feel with "
           "the code and methods used in the paper?"),
-        # default=RATING_DEFUALT,
+        default=RATING_DEFAULT,
         validators=[MinValueValidator(RATING_MIN),
                     MaxValueValidator(RATING_MAX)],
         choices=RATING_CHOICES,
@@ -310,7 +312,7 @@ class Review(models.Model):
     )
     method_reusability_rating = models.IntegerField(  # Reusability?
         _("Rate the project on reusability of the material."),
-        # default=RATING_DEFUALT,
+        default=RATING_DEFAULT,
         validators=[MinValueValidator(RATING_MIN),
                     MaxValueValidator(RATING_MAX)],
         choices=RATING_CHOICES,
