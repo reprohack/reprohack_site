@@ -8,11 +8,15 @@ from .models import Event
 from .views import (EventCreate, EventUpdate, EventDetail, EventList, EventMap,
                     PaperCreate, PaperUpdate, PaperDetail, PaperList,
                     ReviewCreate, ReviewDetail, ReviewUpdate, ReviewList,
-                    UserDetailView, UpdateUserView, UserCreateView)
+                    UserDetailView, UpdateUserView, UserCreateView, MarkdownView)
 
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('about', TemplateView.as_view(template_name='about.html'), name='about'),
+    path('about_test',
+         MarkdownView.as_view(extra_context={'title': 'About Us',
+                                             'markdown_file': 'about.md'}),
+         name='about_test'),
     # url(r'^admin/', admin.site.urls),
     path('signup/', UserCreateView.as_view(), name='signup'),
     path('users/<int:pk>/', UserDetailView.as_view(), name='user_detail'),

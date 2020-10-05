@@ -1,11 +1,16 @@
 import logging
+from pathlib import Path
+from os import PathLike
+from typing import Dict
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.utils import timezone
+from django.utils.module_loading import import_string
 # from users.models import User
 from django.contrib.auth import login, authenticate
+from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
@@ -15,7 +20,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 # Note: this may require a full postgis docker image
 from django.contrib.gis.geos import Point
 from geocoder import google
-from config.settings.base import AUTH_USER_MODEL as User
+from django.conf import settings
+
+User = settings.AUTH_USER_MODEL
 
 # custom
 from ..users.forms import UserCreationForm, UserChangeForm
@@ -182,6 +189,27 @@ class ReviewList(LoginRequiredMixin, ListView):
     #     context = super().get_context_data(**kwargs)
     #     context['now'] = timezone.now()
     #     return context
+
+# Set markdownify from MARKDOWNX_MARKDOWNIFY_FUNCTION in settings
+markdownify = import_string(settings.MARKDOWNX_MARKDOWNIFY_FUNCTION)
+
+class MarkdownView(TemplateView):
+
+    """Base template for static Markdown file.
+
+    Todo:
+        * Consider caching.
+    """
+
+    template_name = 'markdown.html'
+
+    def get_context_data(self, **kwargs):
+        context: Dict = super().get_context_data(**kwargs)
+        markdown_file: str = context["markdown_file"]
+        markdown_path: PathLike = Path(f'markdown_pages/{markdown_file}')
+        with open(markdown_path) as markdown:
+            context['content'] = markdownify(markdown.read())
+        return context
 
 
 # ------ USER ------- ##

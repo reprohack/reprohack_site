@@ -323,3 +323,5 @@ LEAFLET_CONFIG = {
     'MIN_ZOOM': 1,
     'MAX_ZOOM': 18,
 }
+
+MARKDOWNX_MARKDOWNIFY_FUNCTION = 'markdownx.utils.markdownify'
