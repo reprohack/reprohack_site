@@ -22,15 +22,14 @@ from django.contrib.gis.geos import Point
 from geocoder import google
 from django.conf import settings
 
-User = settings.AUTH_USER_MODEL
-
-# custom
+# Custom
 from ..users.forms import UserCreationForm, UserChangeForm
-
 from .models import Event, Paper, Review
 from .forms import EventForm, PaperForm, ReviewForm
 # from users.forms import SignUpForm, EditUserForm
 
+
+User = settings.AUTH_USER_MODEL
 logger = logging.getLogger(__name__)
 
 
@@ -189,6 +188,7 @@ class ReviewList(LoginRequiredMixin, ListView):
     #     context = super().get_context_data(**kwargs)
     #     context['now'] = timezone.now()
     #     return context
+
 
 # Set markdownify from MARKDOWNX_MARKDOWNIFY_FUNCTION in settings
 markdownify = import_string(settings.MARKDOWNX_MARKDOWNIFY_FUNCTION)
