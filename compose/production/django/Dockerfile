@@ -16,6 +16,8 @@ RUN apt-get update \
   && apt-get install -y build-essential \
   # psycopg2 dependencies
   && apt-get install -y libpq-dev \
+  # GDAL lib
+  && apt-get install -y libgdal20 libgdal-dev \
   # Translations dependencies
   && apt-get install -y gettext \
   # cleaning up unused files
@@ -39,6 +41,7 @@ COPY ./compose/production/django/start /start
 RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 RUN chown django /start
+
 COPY ./compose/production/django/celery/worker/start /start-celeryworker
 RUN sed -i 's/\r$//g' /start-celeryworker
 RUN chmod +x /start-celeryworker
@@ -52,8 +55,9 @@ RUN chown django /start-celerybeat
 COPY ./compose/production/django/celery/flower/start /start-flower
 RUN sed -i 's/\r$//g' /start-flower
 RUN chmod +x /start-flower
-COPY --from=client-builder --chown=django:django /app /app
+RUN chown django /start-flower
 
+COPY --from=client-builder --chown=django:django /app /app
 
 USER django
 

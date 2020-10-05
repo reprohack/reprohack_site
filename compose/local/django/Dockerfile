@@ -8,6 +8,8 @@ RUN apt-get update \
   && apt-get install -y build-essential \
   # psycopg2 dependencies
   && apt-get install -y libpq-dev \
+  # GDAL lib
+  && apt-get install -y libgdal20 libgdal-dev \
   # Translations dependencies
   && apt-get install -y gettext \
   # Postgis for geospatial queries
