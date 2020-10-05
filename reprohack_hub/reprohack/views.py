@@ -193,6 +193,7 @@ class ReviewList(LoginRequiredMixin, ListView):
 # Set markdownify from MARKDOWNX_MARKDOWNIFY_FUNCTION in settings
 markdownify = import_string(settings.MARKDOWNX_MARKDOWNIFY_FUNCTION)
 
+
 class MarkdownView(TemplateView):
 
     """Base template for static Markdown file.
