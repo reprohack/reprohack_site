@@ -1,4 +1,4 @@
-{% load static i18n compress%}<!DOCTYPE html>
+{% load static i18n compress leaflet_tags geojson_tags %}<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -37,7 +37,67 @@
     <link href="{% static 'reprohack/css/style.css'%}" rel='stylesheet'>
     
     <link href="{% static 'css/project.css' %}" rel="stylesheet">
+
+    {% block leaflet %}
+      {% leaflet_js plugins="forms" %}
+      {% leaflet_css plugins="forms" %}
+
+      <style>
+          .leaflet-container {
+              height: 500px;
+              width: 100%;
+              z-index: 1;
+          }
+      </style>
+      <script type="text/javascript">
+          var today = new Date();
+          var futureMarker = L.AwesomeMarkers.icon({
+                  icon: 'play',
+                  markerColor: 'violet'
+              });
+
+          var pastMarker = L.AwesomeMarkers.icon({
+              icon: 'play',
+              markerColor: 'green'
+          });
+
+
+          function markerOnClick(e)
+              {
+              var latLngs = [e.target.getLatLng()];
+              var markerBounds = L.latLngBounds(latLngs);
+              map.fitBounds(markerBounds);
+              }
+          function map_init(map, options) {
     
+              
+             var Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+                  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                  subdomains: 'abcd',
+                  minZoom: 1,
+                  maxZoom: 16,
+                  ext: 'jpg'
+                  }).addTo(map);
+                              
+              var Stamen_TonerHybrid = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-hybrid/{z}/{x}/{y}{r}.{ext}', {
+                  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                  subdomains: 'abcd',
+                  minZoom: 0,
+                  maxZoom: 20,
+                  ext: 'png'
+              }).addTo(map);
+
+
+
+              L.geoJson({{ event_list| geojsonfeature:"title,date,city" | safe}}, {
+                      onEachFeature: function (feature, layer) {
+                          layer.bindPopup('<h4>'+feature.properties.title+'</h4><br><div class="date">'+feature.properties.date+'</div><p>'+feature.properties.city+'</p>');
+                          }
+                      }).on('click', markerOnClick).addTo(map);
+          }
+      </script>
+    {% endblock leaflet %}
+      
     {% endcompress %}
     {% endblock %}
 
@@ -45,6 +105,7 @@
 
   <body>
 
+    <!--
     <div class="mb-1">
       <nav class="navbar navbar-expand-md navbar-light bg-light">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,7 +147,9 @@
     </div>
 
     <div class="container">
+    -->
 
+      {% include 'navbar_test.html' %}
       {% if messages %}
           {% for message in messages %}
               <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
@@ -97,7 +160,12 @@
         <p>Use this document as a way to quick start any new project.</p>
       {% endblock content %}
 
+    <!--
     </div> <!-- /container -->
+
+    <!-- footer -->
+    {% include 'footer.html' %}
+    <!-- footer -->
 
     {% block modal %}{% endblock modal %}
 
