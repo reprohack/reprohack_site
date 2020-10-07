@@ -4,11 +4,10 @@
 from datetime import timedelta
 
 import pytest
-
 from django.utils import timezone
 
-from reprohack_hub.users.models import User
 from reprohack_hub.reprohack.models import Event, Paper, Review
+from reprohack_hub.users.models import User
 
 pytestmark = pytest.mark.django_db
 
@@ -26,7 +25,7 @@ def test_event_save(user: User) -> None:
     )
     event.save()
     assert str(event) == test_title
-    assert event.get_absolute_url() == f'/event/{event.id}/'
+    assert event.get_absolute_url() == f"/event/{event.id}/"
     # event.venue = venue
     # venue.save()
     event.save()
@@ -35,22 +34,18 @@ def test_event_save(user: User) -> None:
 def test_paper_save(user: User) -> None:
     """Test basic Paper save."""
     test_title: str = "A Title"
-    paper: Paper = Paper(
-        title=test_title,
-    )
+    paper: Paper = Paper(title=test_title,)
     paper.save()
     paper.authors_and_submitters.add(user)
     assert str(paper) == test_title
-    assert paper.get_absolute_url() == f'/paper/{paper.id}/'
+    assert paper.get_absolute_url() == f"/paper/{paper.id}/"
 
 
 def test_review_save(user: User) -> None:
     """Test basic Paper Review save."""
     test_title: str = "A Title"
 
-    paper: Paper = Paper(
-        title=test_title,
-    )
+    paper: Paper = Paper(title=test_title,)
     paper.save()
     review: Review = Review(
         paper=paper,
@@ -65,4 +60,4 @@ def test_review_save(user: User) -> None:
     review.save()
     review.reviewers.add(user)
     assert str(review) == f"Review of '{test_title}' by {user}"
-    assert review.get_absolute_url() == f'/review/{review.id}/'
+    assert review.get_absolute_url() == f"/review/{review.id}/"

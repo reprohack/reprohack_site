@@ -1,34 +1,29 @@
 import logging
-from pathlib import Path
 from os import PathLike
+from pathlib import Path
 from typing import Dict
 
+from django.conf import settings
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.gis.geos import Point
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.utils.module_loading import import_string
-# from users.models import User
-from django.contrib.auth import login, authenticate
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.list import ListView
-from django.contrib.auth.mixins import LoginRequiredMixin
-# from geojson import Point
-
-# Note: this may require a full postgis docker image
-from django.contrib.gis.geos import Point
 from geocoder import google
-from django.conf import settings
+
+# custom
+from ..users.forms import UserChangeForm, UserCreationForm
+from .forms import EventForm, PaperForm, ReviewForm
+from .models import Event, Paper, Review
 
 User = settings.AUTH_USER_MODEL
 
-# custom
-from ..users.forms import UserCreationForm, UserChangeForm
-
-from .models import Event, Paper, Review
-from .forms import EventForm, PaperForm, ReviewForm
 # from users.forms import SignUpForm, EditUserForm
 
 logger = logging.getLogger(__name__)
@@ -37,58 +32,63 @@ logger = logging.getLogger(__name__)
 class EventCreate(LoginRequiredMixin, CreateView):
     model = Event
     form_class = EventForm
-    template_name = 'event/event_new.html'
+    template_name = "event/event_new.html"
     # success_url = "event/???pk???"
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
-        address = ', '.join((self.object.address1, self.object.city,
-                             self.object.postcode, self.object.country.name))
+        address = ", ".join(
+            (
+                self.object.address1,
+                self.object.city,
+                self.object.postcode,
+                self.object.country.name,
+            )
+        )
         try:
-            self.object.geom = Point(
-                google(address).latlng[::-1])
+            self.object.geom = Point(google(address).latlng[::-1])
         except TypeError:
-            logger.warning(f'No coordinates returned for {address}')
+            logger.warning("No coordinates returned for %s", address)
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
     def get_form_kwargs(self, *args, **kwargs):
-        kwargs = super(EventCreate, self).get_form_kwargs(*args, **kwargs)
-        kwargs['creator'] = self.request.user
+        kwargs = super().get_form_kwargs(*args, **kwargs)
+        kwargs["creator"] = self.request.user
         return kwargs
 
 
 class EventUpdate(UpdateView):
     model = Event
     form_class = EventForm
-    template_name = 'event/event_edit.html'
+    template_name = "event/event_edit.html"
 
 
 class EventDetail(DetailView):
     model = Event
-    template_name = 'event/event_detail.html'
+    template_name = "event/event_detail.html"
 
 
 class EventList(ListView):
     model = Event
     context_object_name = "event_list"
-    template_name = 'event/event_list.html'
+    template_name = "event/event_list.html"
     paginate_by = 20  # if pagination is desired
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['now'] = timezone.now()
+        context["now"] = timezone.now()
         return context
 
 
 class EventMap(ListView):
     model = Event
-    template_name = 'index.html'
+    template_name = "index.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['now'] = timezone.now()
+        context["now"] = timezone.now()
         return context
 
 
@@ -98,7 +98,7 @@ class EventMap(ListView):
 class PaperCreate(LoginRequiredMixin, CreateView):
     model = Paper
     form_class = PaperForm
-    template_name = 'paper/paper_new.html'
+    template_name = "paper/paper_new.html"
     # success_url = "event/???pk???"
 
     def form_valid(self, form):
@@ -110,30 +110,30 @@ class PaperCreate(LoginRequiredMixin, CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
     def get_form_kwargs(self, *args, **kwargs):
-        kwargs = super(PaperCreate, self).get_form_kwargs(*args, **kwargs)
-        kwargs['user'] = self.request.user
+        kwargs = super().get_form_kwargs(*args, **kwargs)
+        kwargs["user"] = self.request.user
         return kwargs
 
 
 class PaperUpdate(UpdateView):
     model = Paper
     form_class = PaperForm
-    template_name = 'paper/paper_edit.html'
+    template_name = "paper/paper_edit.html"
 
 
 class PaperDetail(DetailView):
     model = Paper
-    template_name = 'paper/paper_detail.html'
+    template_name = "paper/paper_detail.html"
 
 
 class PaperList(ListView):
     model = Paper
-    template_name = 'paper/paper_list.html'
+    template_name = "paper/paper_list.html"
     paginate_by = 20  # if pagination is desired
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['now'] = timezone.now()
+        context["now"] = timezone.now()
         return context
 
 
@@ -143,15 +143,17 @@ class PaperList(ListView):
 class ReviewCreate(LoginRequiredMixin, CreateView):
     model = Review
     form_class = ReviewForm
-    template_name = 'review/review_new.html'
+    template_name = "review/review_new.html"
     # success_url = "review/???pk???"
 
     def form_valid(self, form):
         # self.object = form.save(commit=False)
-        self.object = form.save()
+        # self.object = form.save()
+        form.save()
         # self.object.save()
-        self.object.reviewers.add(self.request.user)
-        return HttpResponseRedirect(self.get_success_url())
+        # self.object.reviewers.add(self.request.user)
+        form.instance.reviewers.add(self.request.user)
+        return super().form_valid(form)
 
     # def get_form_kwargs(self, *args, **kwargs):
     #     kwargs = super(ReviewCreate, self).get_form_kwargs(*args, **kwargs)
@@ -161,13 +163,13 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
 
 class ReviewDetail(LoginRequiredMixin, DetailView):
     model = Review
-    template_name = 'review/review_detail.html'
+    template_name = "review/review_detail.html"
 
 
 class ReviewUpdate(LoginRequiredMixin, UpdateView):
     model = Review
     form_class = ReviewForm
-    template_name = 'review/review_new.html'
+    template_name = "review/review_new.html"
 
 
 class ReviewList(LoginRequiredMixin, ListView):
@@ -182,13 +184,14 @@ class ReviewList(LoginRequiredMixin, ListView):
 
     model = Review
     context_object_name = "reviews_list"
-    template_name = 'review/review_list.html'
+    template_name = "review/review_list.html"
     paginate_by = 20  # if pagination is desired
 
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
     #     context['now'] = timezone.now()
     #     return context
+
 
 # Set markdownify from MARKDOWNX_MARKDOWNIFY_FUNCTION in settings
 markdownify = import_string(settings.MARKDOWNX_MARKDOWNIFY_FUNCTION)
@@ -202,14 +205,14 @@ class MarkdownView(TemplateView):
         * Consider caching.
     """
 
-    template_name = 'markdown.html'
+    template_name = "markdown.html"
 
     def get_context_data(self, **kwargs):
         context: Dict = super().get_context_data(**kwargs)
         markdown_file: str = context["markdown_file"]
-        markdown_path: PathLike = Path(f'markdown_pages/{markdown_file}')
+        markdown_path: PathLike = Path(f"markdown_pages/{markdown_file}")
         with open(markdown_path) as markdown:
-            context['content'] = markdownify(markdown.read())
+            context["content"] = markdownify(markdown.read())
         return context
 
 
@@ -218,24 +221,24 @@ class MarkdownView(TemplateView):
 
 # signup
 def signup(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save(commit=False)
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
+            username = form.cleaned_data.get("username")
+            raw_password = form.cleaned_data.get("password1")
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('home')
+            return redirect("home")
     else:
         form = UserCreationForm()
-    return render(request, 'registration/signup.html', {'form': form})
+    return render(request, "registration/signup.html", {"form": form})
 
 
 class UserCreateView(CreateView):
     model = User
     form_class = UserCreationForm
-    template_name = 'registration/signup.html'
+    template_name = "registration/signup.html"
     # success_url = "event/???pk???"
 
     def form_valid(self, form):
@@ -251,7 +254,7 @@ class UserCreateView(CreateView):
 class UpdateUserView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserChangeForm
-    template_name = 'registration/user_update.html'
+    template_name = "registration/user_update.html"
     # success_url = 'registration/user_detail.html'
 
     # def auth_owner(self, request):
@@ -263,7 +266,7 @@ class UpdateUserView(LoginRequiredMixin, UpdateView):
 
 class UserDetailView(DetailView):
     model = User
-    template_name = 'registration/user_detail.html'
+    template_name = "registration/user_detail.html"
 
     # def get_events(self, request):
     #    self.events = Event.objects.filter(user = request.user)
