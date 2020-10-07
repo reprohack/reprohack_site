@@ -1,7 +1,9 @@
 {
   "name": "reprohack_hub",
   "version": "0.1.0",
-  "dependencies": {},
+  "dependencies": {
+    "leaflet.awesome-markers": "2.0.5"
+  },
   "devDependencies": {
     "autoprefixer": "^9.4.7",
     "browser-sync": "^2.14.0",
