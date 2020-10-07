@@ -1,10 +1,13 @@
 import pytest
 
+from reprohack_hub.reprohack.models import Event, Paper, Review
+from reprohack_hub.reprohack.tests.factories import (
+    EventFactory,
+    PaperFactory,
+    ReviewFactory,
+)
 from reprohack_hub.users.models import User
 from reprohack_hub.users.tests.factories import UserFactory
-
-from reprohack_hub.reprohack.models import Paper
-from reprohack_hub.reprohack.tests.factories import PaperFactory
 
 
 @pytest.fixture(autouse=True)
@@ -18,5 +21,15 @@ def user() -> User:
 
 
 @pytest.fixture
+def event() -> Event:
+    return EventFactory()
+
+
+@pytest.fixture
 def paper() -> Paper:
     return PaperFactory()
+
+
+@pytest.fixture
+def review() -> Review:
+    return ReviewFactory()
