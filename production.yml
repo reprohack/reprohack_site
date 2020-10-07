@@ -61,5 +61,3 @@ services:
     <<: *django
     image: reprohack_hub_production_flower
     command: /start-flower
-
-  
