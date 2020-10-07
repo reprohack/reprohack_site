@@ -14,12 +14,12 @@
         padding: 0px 0px 70px;
     }
     @media #{$medium_device}{
-    
+
     }
     .blog_right_sidebar .widget_title {
         font-size: 20px;
         margin-bottom: 40px;
-        font-style: inherit !important; 
+        font-style: inherit !important;
     }
     .single-home-blog{
         @media #{$small_mobile}{
@@ -35,7 +35,7 @@
             margin-top: 20px;
         }
         @media #{$medium_device}{
-        
+
         }
         .card-img-top{
             border-radius: 0px;
@@ -64,7 +64,7 @@
                     bottom: -140px;
                 }
                 @media #{$tab_device}{
-                
+
                 }
                 @media #{$medium_device}{
                     padding: 20px;
@@ -144,7 +144,7 @@
                     -webkit-text-fill-color: transparent;
                     -webkit-animation: 1s;
                 }
-                
+
             }
             ul{
                 li{
@@ -172,5 +172,3 @@
         }
     }
 }
-
-  

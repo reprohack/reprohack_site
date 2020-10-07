@@ -24,7 +24,7 @@
 .single-blog {
     overflow: hidden;
     margin-bottom: 30px;
-   
+
     &:hover {
         box-shadow: 0px 10px 20px 0px rgba(42, 34, 123, 0.1);
     }
@@ -309,7 +309,7 @@
                     position: absolute;
                     right: -10px;
                     bottom: 0px;
-                    // background: $title-color; 
+                    // background: $title-color;
                     color: #fff;
                     padding: 0px 5px;
                 }
@@ -827,7 +827,7 @@
         ul {
             li {
                 display: inline-block;
-                
+
                 a {
                     display: inline-block;
                     border: 1px solid #eeeeee;

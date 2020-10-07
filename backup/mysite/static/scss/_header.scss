@@ -101,7 +101,7 @@
                         font-family: $font1;
                         position: relative;
                         text-transform:capitalize;
-                        
+
                         @media #{$mid_device} {
                             // padding: 41px 0px 10px 0px;
                             font-size: 15px;
@@ -220,7 +220,7 @@
                 padding: 0;
             }
         }
-        
+
     }
     .log_chat_area{
         @include justify-content(flex-end);
