@@ -34,7 +34,7 @@
                             console.log({{event.geom.coordinates }})
                             map.flyTo({{ event.geom.coordinates }}.reverse(), 15);
                             L.geoJson({{ event| geojsonfeature | safe}}).addTo(map);
-                            
+
                         }
                 </script>
             </div>

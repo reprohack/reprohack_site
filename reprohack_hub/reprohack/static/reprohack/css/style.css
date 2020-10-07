@@ -249,7 +249,7 @@ h3 {
 .overlay2::before {
   position: absolute;
   content: "";
-  
+
   top: 0;
   left: 0;
   width: 100%;
@@ -5603,7 +5603,7 @@ h6 {
   left: 10px;
   display: block;
   color: #fff;
-  
+
   padding: 8px 15px;
   border-radius: 5px;
 }

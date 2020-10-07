@@ -16,10 +16,10 @@
     <link rel="icon" href="{% static 'reprohack/images/reprohack_favicons/favicon.ico' %}">
 
     {% block css %}
-    
+
     <!-- Latest compiled and minified Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
+
 
     <!-- Your stuff: Third-party CSS libraries go here -->
     <link rel='stylesheet' href="{% static 'reprohack/css/owl.carousel.min.css'%}">
@@ -35,7 +35,7 @@
     {% compress css %}
     <!-- This file stores project-specific CSS -->
     <link href="{% static 'reprohack/css/style.css'%}" rel='stylesheet'>
-    
+
     <link href="{% static 'css/project.css' %}" rel="stylesheet">
 
     {% block leaflet %}
@@ -69,8 +69,8 @@
               map.fitBounds(markerBounds);
               }
           function map_init(map, options) {
-    
-              
+
+
              var Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
                   attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
                   subdomains: 'abcd',
@@ -78,7 +78,7 @@
                   maxZoom: 16,
                   ext: 'jpg'
                   }).addTo(map);
-                              
+
               var Stamen_TonerHybrid = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-hybrid/{z}/{x}/{y}{r}.{ext}', {
                   attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
                   subdomains: 'abcd',
@@ -97,7 +97,7 @@
           }
       </script>
     {% endblock leaflet %}
-      
+
     {% endcompress %}
     {% endblock %}
 
@@ -173,7 +173,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     {% block javascript %}
-      
+
       <!-- Bootstrap JS and its dependencies-->
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -203,7 +203,7 @@
       <script src="{% static 'reprohack/js/jquery.form.js' %}"></script>
       <script src="{% static 'reprohack/js/jquery.validate.min.js' %}"></script>
       <script src="{% static 'reprohack/js/mail-script.js' %}"></script>
-      
+
 
       <!-- place project specific Javascript in this file -->
       {% compress js %}
@@ -212,11 +212,10 @@
       <script src="{% static 'reprohack/js/main.js' %}"></script>
       <script> $(document).ready(function () {
               $('.dateinput').datepicker({ format: "yyyy/mm/dd" });
-          }); 
+          });
       </script>
       {% endcompress %}
 
     {% endblock javascript %}
   </body>
 </html>
- 

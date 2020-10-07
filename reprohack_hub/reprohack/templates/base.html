@@ -64,8 +64,8 @@
             map.fitBounds(markerBounds);
             }
         function map_init(map, options) {
-  
-            
+
+
            var Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
                 attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
                 subdomains: 'abcd',
@@ -73,7 +73,7 @@
                 maxZoom: 16,
                 ext: 'jpg'
                 }).addTo(map);
-                            
+
             var Stamen_TonerHybrid = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-hybrid/{z}/{x}/{y}{r}.{ext}', {
                 attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
                 subdomains: 'abcd',
@@ -226,7 +226,7 @@
     <script src="{% static 'reprohack/js/main.js' %}"></script>
     <script> $(document).ready(function () {
             $('.dateinput').datepicker({ format: "yyyy/mm/dd" });
-        }); 
+        });
     </script>
 
     <!--    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
