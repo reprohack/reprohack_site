@@ -46,7 +46,7 @@ The map can be edited from the AdminSite at ``/admin``.
 Host Your Own
 =============
 
-Note: When hosting the page on the internet, you will need to add the `hostname` to the Django settings. 
+Note: When hosting the page on the internet, you will need to add the `hostname` to the Django settings.
 Edit `mysite/settings.py` by adding the `hostname`  to `ALLOWED_HOSTS` list.
 
 ***

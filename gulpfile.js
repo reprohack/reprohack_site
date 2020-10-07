@@ -27,7 +27,7 @@ function pathsConfig(appName) {
   const vendorsRoot = 'node_modules'
 
   return {
-    
+
     app: this.app,
     templates: `${this.app}/templates`,
     css: `${this.app}/static/css`,
@@ -58,7 +58,7 @@ function styles() {
   return src(`${paths.sass}/project.scss`)
     .pipe(sass({
       includePaths: [
-        
+
         paths.sass
       ]
     }).on('error', sass.logError))
@@ -134,7 +134,7 @@ function watchPaths() {
 const generateAssets = parallel(
   styles,
   scripts,
-  
+
   imgCompression
 )
 
