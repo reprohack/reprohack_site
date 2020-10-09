@@ -21,7 +21,7 @@ def test_markdown_page(client: Client) -> None:
 
 def test_create_review(client: Client, user: User, review: Review) -> None:
     """Test creating a review."""
-    # Test reviwer hasn't been set to a test paper review
+    # Test reviwer hasn't been set for a generated test paper review
     assert user not in review.reviewers.all()
     # Create a new review from similar data to test setting author
     review_dict = model_to_dict(review)
