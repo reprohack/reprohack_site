@@ -4,7 +4,8 @@
 from datetime import timedelta
 
 from django.utils import timezone
-from factory import DjangoModelFactory, Sequence, SubFactory
+from factory import Sequence, SubFactory
+from factory.django import DjangoModelFactory
 
 from reprohack_hub.reprohack.models import Event, Paper, Review
 from reprohack_hub.users.tests.factories import UserFactory
