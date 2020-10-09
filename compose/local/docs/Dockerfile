@@ -21,6 +21,9 @@ RUN apt-get update \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
     && rm -rf /var/lib/apt/lists/*
 
+# Update pip
+RUN pip install --upgrade pip
+
 # Requirements are installed here to ensure they will be cached.
 COPY ./requirements /requirements
 # All imports needed for autodoc.
