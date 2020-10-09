@@ -1,4 +1,5 @@
 import pytest
+from django.test import Client
 
 from reprohack_hub.reprohack.models import Event, Paper, Review
 from reprohack_hub.reprohack.tests.factories import (
@@ -18,6 +19,11 @@ def media_storage(settings, tmpdir):
 @pytest.fixture
 def user() -> User:
     return UserFactory()
+
+
+@pytest.fixture
+def client() -> Client:
+    return Client()
 
 
 @pytest.fixture
