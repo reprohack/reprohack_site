@@ -17,7 +17,7 @@ certificatesResolvers:
   letsencrypt:
     # https://docs.traefik.io/master/https/acme/#lets-encrypt
     acme:
-      email: ${HOST_MANAGER_EMAIL:-info@reprohack.org}
+      email: info@reprohack.org
       storage: /etc/traefik/acme/acme.json
       # https://docs.traefik.io/master/https/acme/#httpchallenge
       httpChallenge:
@@ -26,7 +26,8 @@ certificatesResolvers:
 http:
   routers:
     web-router:
-      rule: ${HOST_DOMAINS_LIST:-"Host(`reprohack.org`)"}
+      # rule: ${HOST_DOMAINS_LIST:-"Host(`reprohack.org`)"}
+      rule: "Host(`reprohack.org`)"
       entryPoints:
         - web
       middlewares:
@@ -35,7 +36,7 @@ http:
       service: django
 
     web-secure-router:
-      rule: ${HOST_DOMAINS_LIST:-"Host(`reprohack.org`)"}
+      rule: "Host(`reprohack.org`)"
       entryPoints:
         - web-secure
       middlewares:
@@ -46,7 +47,8 @@ http:
         certResolver: letsencrypt
 
     flower-secure-router:
-      rule: ${HOST_DOMAINS_LIST:-"Host(`reprohack.org`)"}
+      # rule: ${HOST_DOMAINS_LIST:-"Host(`reprohack.org`)"}
+      rule: "Host(`reprohack.org`)"
       entryPoints:
         - flower
       service: flower
