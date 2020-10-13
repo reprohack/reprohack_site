@@ -22,7 +22,6 @@
 
 
     <!-- Your stuff: Third-party CSS libraries go here -->
-    <link rel='stylesheet' href="{% static 'reprohack/css/leaflet.awesome-markers.css'%}">
     <link rel='stylesheet' href="{% static 'reprohack/css/owl.carousel.min.css'%}">
     <link rel='stylesheet' href="{% static 'reprohack/css/magnific-popup.css'%}">
     <link rel='stylesheet' href="{% static 'reprohack/css/font-awesome.min.css'%}">
@@ -37,66 +36,6 @@
     <link href="{% static 'reprohack/css/style.css'%}" rel='stylesheet'>
 
     <link href="{% static 'css/project.css' %}" rel="stylesheet">
-
-    {% block leaflet %}
-      {% leaflet_js plugins="forms" %}
-      {% leaflet_css plugins="forms" %}
-
-      <style>
-          .leaflet-container {
-              height: 500px;
-              width: 100%;
-              z-index: 1;
-          }
-      </style>
-      <script type="text/javascript">
-          var today = new Date();
-          var futureMarker = L.AwesomeMarkers.icon({
-                  icon: 'play',
-                  markerColor: 'violet'
-              });
-
-          var pastMarker = L.AwesomeMarkers.icon({
-              icon: 'play',
-              markerColor: 'green'
-          });
-
-
-          function markerOnClick(e)
-              {
-              var latLngs = [e.target.getLatLng()];
-              var markerBounds = L.latLngBounds(latLngs);
-              map.fitBounds(markerBounds);
-              }
-          function map_init(map, options) {
-
-
-             var Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
-                  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                  subdomains: 'abcd',
-                  minZoom: 1,
-                  maxZoom: 16,
-                  ext: 'jpg'
-                  }).addTo(map);
-
-              var Stamen_TonerHybrid = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-hybrid/{z}/{x}/{y}{r}.{ext}', {
-                  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                  subdomains: 'abcd',
-                  minZoom: 0,
-                  maxZoom: 20,
-                  ext: 'png'
-              }).addTo(map);
-
-
-
-              L.geoJson({{ event_list| geojsonfeature:"title,date,city" | safe}}, {
-                      onEachFeature: function (feature, layer) {
-                          layer.bindPopup('<h4>'+feature.properties.title+'</h4><br><div class="date">'+feature.properties.date+'</div><p>'+feature.properties.city+'</p>');
-                          }
-                      }).on('click', markerOnClick).addTo(map);
-          }
-      </script>
-    {% endblock leaflet %}
 
     {% endcompress %}
     {% endblock %}
@@ -180,7 +119,6 @@
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
       <!-- Your stuff: Third-party javascript libraries go here -->
-      <script src="{% static 'reprohack/js/leaflet.awesome-markers.min.js' %}"></script>
       <script src="{% static 'reprohack/js/vendor/modernizr-3.5.0.min.js' %}"></script>
       <script src="{% static 'reprohack/js/owl.carousel.min.js' %}"></script>
       <script src="{% static 'reprohack/js/isotope.pkgd.min.js' %}"></script>
@@ -207,7 +145,67 @@
 
       <!-- place project specific Javascript in this file -->
       {% compress js %}
+      {% block leaflet %}
+        {% leaflet_css plugins="forms" %}
+        {% leaflet_js plugins="forms" %}
+
+        <style>
+          .leaflet-container {
+              height: 500px;
+              width: 100%;
+              z-index: 1;
+          }
+        </style>
+        <script type="text/javascript">
+          var today = new Date();
+          var futureMarker = L.AwesomeMarkers.icon({
+                  icon: 'play',
+                  markerColor: 'violet'
+              });
+
+          var pastMarker = L.AwesomeMarkers.icon({
+              icon: 'play',
+              markerColor: 'green'
+          });
+
+
+          function markerOnClick(e)
+              {
+              var latLngs = [e.target.getLatLng()];
+              var markerBounds = L.latLngBounds(latLngs);
+              map.fitBounds(markerBounds);
+              }
+          function map_init(map, options) {
+
+
+             var Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+                  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                  subdomains: 'abcd',
+                  minZoom: 1,
+                  maxZoom: 16,
+                  ext: 'jpg'
+                  }).addTo(map);
+
+              var Stamen_TonerHybrid = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-hybrid/{z}/{x}/{y}{r}.{ext}', {
+                  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                  subdomains: 'abcd',
+                  minZoom: 0,
+                  maxZoom: 20,
+                  ext: 'png'
+              }).addTo(map);
+
+
+
+              L.geoJson({{ event_list| geojsonfeature:"title,date,city" | safe}}, {
+                      onEachFeature: function (feature, layer) {
+                          layer.bindPopup('<h4>'+feature.properties.title+'</h4><br><div class="date">'+feature.properties.date+'</div><p>'+feature.properties.city+'</p>');
+                          }
+                      }).on('click', markerOnClick).addTo(map);
+          }
+        </script>
+      {% endblock leaflet %}
       <script src="{% static 'js/project.js' %}"></script>
+
 
       <script src="{% static 'reprohack/js/main.js' %}"></script>
       <script> $(document).ready(function () {
