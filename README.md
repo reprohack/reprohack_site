@@ -8,12 +8,11 @@ Set development environment
 
 We use [Docker Compose](https://docs.docker.com/compose/)
 to provide you with a few steps to have your development environment
-up and running:
+up and running. To get an instance of the site running locally, run:
 
 ```{bash}
-$ docker-compose up
+$ docker-compose -f local.yml up
 ```
-
 Visit http://localhost:8000/ to see your development website.
 
 Note: If you are using docker with docker-machine you need to add vm's ip adress to `ALLOWED_HOSTS` in Django setting. You can do it by following the steps:
