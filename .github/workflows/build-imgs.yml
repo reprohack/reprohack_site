@@ -1,0 +1,110 @@
+#./compose/production/django/Dockerfile
+#./compose/production/traefik/Dockerfile
+#./compose/production/postgres/Dockerfile
+#reprohack_hub_production_traefik
+#reprohack_hub_production_django
+#reprohack_hub_production_postgres
+
+
+
+name: Build images
+
+on:
+  # schedule:
+  #   - cron: '0 10 * * *' # everyday at 10am
+  push:
+    branches:
+      - 'dev'
+      - 'master'
+    tags:
+      - 'v*.*.*'
+  pull_request:
+
+jobs:
+  buildimgs:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      # -
+      #   name: Login to DockerHub
+      #   if: github.event_name != 'pull_request'
+      #   uses: docker/login-action@v1
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # -
+      #   name: Login to GitHub Container Registry
+      #   uses: docker/login-action@v1
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.repository_owner }}
+      #     password: ${{ secrets.CR_PAT }}
+
+      -
+        name: Docker meta
+        id: docker_meta
+        uses: crazy-max/ghaction-docker-meta@v1
+        with:
+          # list of Docker images to use as base name for tags
+          images: reprohack/reprohack_hub_production_django
+          tag-sha: false # add git short SHA as Docker tag
+
+      -
+        name: Build and push for postgres image
+        id: docker_build_postgres
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./compose/production/postgres/Dockerfile
+          platforms: linux/amd64
+          # push: ${{ github.event_name != 'pull_request' }}
+          tags: reprohack/reprohack_hub_production_postgres/${{ steps.docker_meta.outputs.tags }}
+          labels: ${{ steps.docker_meta.outputs.labels }}
+          load: true
+          # tags: |
+          #   "user/app:{{ env.BRANCH_NAME }}"
+          #   "ghcr.io/user/app:{{ env.BRANCH_NAME }}"
+          # build-args: |
+          #   arg1=value1
+          #   arg2=value2
+
+      -
+        name: Image digest for postgres image
+        run: echo ${{ steps.docker_build_postgres.outputs.digest }}
+
+      -
+        name: Build and push traefik image
+        id: docker_build_traefik
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./compose/production/traefik/Dockerfile
+          platforms: linux/amd64
+          # push: ${{ github.event_name != 'pull_request' }}
+          tags: reprohack/reprohack_hub_production_traefik_TEST/${{ steps.docker_meta.outputs.version }}
+          labels: ${{ steps.docker_meta.outputs.labels }}
+          load: true
+          # tags: |
+          #   "user/app:{{ env.BRANCH_NAME }}"
+          #   "ghcr.io/user/app:{{ env.BRANCH_NAME }}"
+          # build-args: |
+          #   arg1=value1
+          #   arg2=value2
+
+      -
+        name: Image digest for traefik image
+        run: echo ${{ steps.docker_build_traefik.outputs.digest }}
+
+      -
+        name: List images
+        shell: bash
+        run: |
+          sudo docker images
