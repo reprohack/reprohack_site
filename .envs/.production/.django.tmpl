@@ -1,0 +1,48 @@
+# General
+# ------------------------------------------------------------------------------
+# DJANGO_READ_DOT_ENV_FILE=True
+DJANGO_SETTINGS_MODULE=config.settings.production
+# Django secret key should be a string of 64 alphanumeric chars
+DJANGO_SECRET_KEY=$TMPL_SECRET_KEY
+# Django admin url value should be a string of 64 alphanumeric chars terminted by a /
+DJANGO_ADMIN_URL=$TMPL_ADMIN_URL/
+# List of server hostnames that Django will respond to requests for
+# E.g. host.domain.com,alias.domain.com
+DJANGO_ALLOWED_HOSTS=$TMPL_HOST,$TMPL_ALIAS
+
+# Security
+# ------------------------------------------------------------------------------
+# TIP: better off using DNS, however, redirect is OK too
+DJANGO_SECURE_SSL_REDIRECT=False
+
+# Email
+# ------------------------------------------------------------------------------
+# E.g. alias@domain.com
+DJANGO_SERVER_EMAIL=$TMPL_SERVER_EMAIL
+EMAIL_HOST=
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+# E.g. alias@domain.com
+DEFAULT_FROM_EMAIL=$TMPL_DEFAULT_FROM_EMAIL
+
+# django-allauth
+# ------------------------------------------------------------------------------
+DJANGO_ACCOUNT_ALLOW_REGISTRATION=True
+
+# Gunicorn
+# ------------------------------------------------------------------------------
+WEB_CONCURRENCY=4
+
+
+# Redis
+# ------------------------------------------------------------------------------
+REDIS_URL=redis://redis:6379/0
+
+# Celery
+# ------------------------------------------------------------------------------
+
+# Flower
+# Celery Flower user should be an alphanumeric string
+CELERY_FLOWER_USER=$TMPL_CELERY_FLOWER_USER
+# Celery Flower password should be 64 alphanumeric chars
+CELERY_FLOWER_PASSWORD=$TMPL_CELERY_FLOWER_PASSWORD
