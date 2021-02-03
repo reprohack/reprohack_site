@@ -23,7 +23,7 @@ urlpatterns = [
     # path('users/(?P<userid>\d+)/$', search.views.user_detail, name='user_detail'),
     path('users/<int:pk>/edit/', UpdateUserView.as_view(), name='user_update'),
     path('password_reset_form/', auth_views.PasswordChangeView.as_view()),
-    path('users/logout/',
+    path('logout/',
          auth_views.LogoutView.as_view(template_name='registration/logout.html'),
          name='logout'),
     path('', EventMap.as_view(), name='index'),
