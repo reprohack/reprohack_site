@@ -242,6 +242,7 @@ class UserCreateView(CreateView):
     # success_url = "event/???pk???"
 
     def form_valid(self, form):
+        self.object = form.save(commit=False)
         self.object.save()
         # username = form.cleaned_data.get('username')
         # raw_password = form.cleaned_data.get('password1')
