@@ -11,6 +11,7 @@ User = get_user_model()
 class UserDetailView(LoginRequiredMixin, DetailView):
 
     model = User
+    template_name = "registration/user_detail.html"
     slug_field = "username"
     slug_url_kwarg = "username"
 
