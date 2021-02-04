@@ -37,9 +37,3 @@ class UserCreationForm(forms.UserCreationForm):
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Sign up'))
-        self.helper.layout = Layout(
-            # HTML('<h2>ReproHack Author Feedback Form</h2>'),
-            'username',
-            'email',
-            'password1',
-            'password2')
