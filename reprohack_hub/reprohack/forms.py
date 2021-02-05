@@ -6,7 +6,7 @@ from crispy_forms.layout import Layout, Fieldset, Submit, Row, Column, HTML, Fie
 from crispy_forms.bootstrap import InlineRadios
 # from leaflet.forms.widgets import LeafletWidget
 
-from .models import Event, Paper, Review
+from .models import Event, Paper, Review, Profile
 
 # -------- Event -------- #
 LEAFLET_WIDGET_ATTRS = {
@@ -170,7 +170,7 @@ class ReviewForm(ModelForm):
                                 css_class='form-group col-md-4 mb-0'),
                          Column('operating_system_detail',
                                 css_class='form-group col-md-8 mb-0')
-                     )),
+            )),
             'software_installed',
             'software_used',
             'challenges',
@@ -191,7 +191,15 @@ class ReviewForm(ModelForm):
                                 css_class='form-group col-md-6 mb-0'),
                          Column('code_permissive_license',
                                 css_class='form-group col-md-6 mb-0'),
-                     )),
+            )),
             'reusability_suggestions',
             'general_comments',
         )
+
+
+# --------------- USER PROFILE ---------------------- #
+
+class ProfileForm(ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('bio', 'affiliation', 'location', 'twitter', 'github', 'orcid')

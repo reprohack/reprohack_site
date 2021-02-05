@@ -19,8 +19,8 @@ from geocoder import google
 
 # custom
 from ..users.forms import UserChangeForm, UserCreationForm
-from .forms import EventForm, PaperForm, ReviewForm
-from .models import Event, Paper, Review
+from .forms import EventForm, PaperForm, ReviewForm, ProfileForm
+from .models import Event, Paper, Review, Profile
 
 User = settings.AUTH_USER_MODEL
 
@@ -271,3 +271,16 @@ class UserDetailView(DetailView):
 
     # def get_events(self, request):
     #    self.events = Event.objects.filter(user = request.user)
+
+
+# ------ USER PROFILE -------------- #
+
+class ProfileCreateView(CreateView):
+    model = Profile
+    form_class = ProfileForm
+    template_name = "registration/signup.html"
+    # success_url = "event/???pk???"
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
