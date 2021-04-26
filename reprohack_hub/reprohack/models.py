@@ -20,6 +20,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from config.settings.base import AUTH_USER_MODEL as User
 
@@ -279,7 +281,7 @@ class Review(models.Model):
                                                  "macOS 10.15 or Windows 10 Pro)?"),
                                                max_length=100)
     software_installed = models.TextField(_("What additional software did you need "
-                                          "to install?"))
+                                            "to install?"))
     software_used = models.TextField(_("What software did you use?"))
     challenges = models.TextField(_("What were the main challenges you ran "
                                     "into (if any)?"))
@@ -353,3 +355,26 @@ class PaperReviewer(models.Model):
     review = models.ForeignKey(Review, on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     lead_reviewer = models.BooleanField(default=True)
+
+
+# --------  USER PROFILE -------------------------- #
+# Created following instructions in https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#onetoone
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField(max_length=500, blank=True)
+    affiliation = models.CharField(max_length=70, blank=True)
+    location = models.CharField(max_length=70, blank=True)
+    twitter = models.CharField(max_length=15, blank=True)
+    github = models.CharField(max_length=39, blank=True)
+    orcid = models.CharField(max_length=17, blank=True)
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
