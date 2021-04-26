@@ -12,11 +12,10 @@ urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
-    path("users/", include("reprohack_hub.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
-    # path("reprohack/", include("reprohack_hub.reprohack.urls", namespace="reprohack")),
-    path("", include("reprohack_hub.reprohack.urls")),
+    # path("reprohack/", include("reprohack_hub.urls", namespace="reprohack")),
+    path("", include("reprohack_hub.urls")),
     re_path(r'^markdownx/', include('markdownx.urls')),
 ]
 

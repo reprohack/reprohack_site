@@ -83,7 +83,6 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "reprohack_hub.users.apps.UsersConfig",
     # Your stuff: custom apps go here
     "leaflet",
     "djgeojson",
@@ -91,7 +90,7 @@ LOCAL_APPS = [
     "taggit",
     "markdownx",
     "django_countries",
-    "reprohack_hub.reprohack.apps.ReprohackConfig"
+    "reprohack_hub.apps.ReprohackConfig"
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -105,7 +104,7 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
-AUTH_USER_MODEL = "users.User"
+AUTH_USER_MODEL = "reprohack_hub.User"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
 LOGIN_REDIRECT_URL = "users:redirect"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
@@ -188,7 +187,7 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
-                "reprohack_hub.utils.context_processors.settings_context",
+                "reprohack_hub.utils.settings_context",
             ],
         },
     }
@@ -268,9 +267,9 @@ ACCOUNT_EMAIL_REQUIRED = True
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_EMAIL_VERIFICATION = "none"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_ADAPTER = "reprohack_hub.users.adapters.AccountAdapter"
+ACCOUNT_ADAPTER = "reprohack_hub.adapters.AccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-SOCIALACCOUNT_ADAPTER = "reprohack_hub.users.adapters.SocialAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "reprohack_hub.adapters.SocialAccountAdapter"
 # django-compressor
 # ------------------------------------------------------------------------------
 # https://django-compressor.readthedocs.io/en/latest/quickstart/#installation

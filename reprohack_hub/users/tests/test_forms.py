@@ -1,7 +1,7 @@
 import pytest
 
-from reprohack_hub.users.forms import UserCreationForm
-from reprohack_hub.users.tests.factories import UserFactory
+from reprohack_hub.forms import UserCreationForm
+from reprohack_hub.tests.factories import UserFactory
 
 pytestmark = pytest.mark.django_db
 

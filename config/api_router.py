@@ -1,7 +1,7 @@
 from django.conf import settings
 from rest_framework.routers import DefaultRouter, SimpleRouter
 
-from reprohack_hub.users.api.views import UserViewSet
+from reprohack_hub.api.views import UserViewSet
 
 if settings.DEBUG:
     router = DefaultRouter()

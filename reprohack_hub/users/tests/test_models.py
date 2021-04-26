@@ -1,6 +1,6 @@
 import pytest
 
-from reprohack_hub.users.models import User
+from reprohack_hub.models import User
 
 pytestmark = pytest.mark.django_db
 

@@ -1,8 +1,8 @@
 import pytest
 from django.test import RequestFactory
 
-from reprohack_hub.users.api.views import UserViewSet
-from reprohack_hub.users.models import User
+from reprohack_hub.api.views import UserViewSet
+from reprohack_hub.models import User
 
 pytestmark = pytest.mark.django_db
 

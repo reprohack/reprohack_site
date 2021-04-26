@@ -1,6 +1,6 @@
 from django.urls import path
 
-from reprohack_hub.users.views import (
+from reprohack_hub.views import (
     user_detail_view,
     user_redirect_view,
     user_update_view,

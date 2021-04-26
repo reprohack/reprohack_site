@@ -1,14 +1,14 @@
 import pytest
 from django.test import Client
 
-from reprohack_hub.reprohack.models import Event, Paper, Review
-from reprohack_hub.reprohack.tests.factories import (
+from reprohack_hub.models import Event, Paper, Review
+from reprohack_hub.tests.factories import (
     EventFactory,
     PaperFactory,
     ReviewFactory,
 )
-from reprohack_hub.users.models import User
-from reprohack_hub.users.tests.factories import UserFactory
+from reprohack_hub.models import User
+from reprohack_hub.tests.factories import UserFactory
 
 
 @pytest.fixture(autouse=True)
