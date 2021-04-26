@@ -1,4 +1,4 @@
-{% load static i18n compress leaflet_tags geojson_tags %}<!DOCTYPE html>
+{% load static i18n compress  %}<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -145,65 +145,65 @@
 
       <!-- place project specific Javascript in this file -->
       {% compress js %}
-      {% block leaflet %}
-        {% leaflet_css plugins="forms" %}
-        {% leaflet_js plugins="forms" %}
-
-        <style>
-          .leaflet-container {
-              height: 500px;
-              width: 100%;
-              z-index: 1;
-          }
-        </style>
-        <script type="text/javascript">
-          var today = new Date();
-          var futureMarker = L.AwesomeMarkers.icon({
-                  icon: 'play',
-                  markerColor: 'violet'
-              });
-
-          var pastMarker = L.AwesomeMarkers.icon({
-              icon: 'play',
-              markerColor: 'green'
-          });
-
-
-          function markerOnClick(e)
-              {
-              var latLngs = [e.target.getLatLng()];
-              var markerBounds = L.latLngBounds(latLngs);
-              map.fitBounds(markerBounds);
-              }
-          function map_init(map, options) {
-
-
-             var Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
-                  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                  subdomains: 'abcd',
-                  minZoom: 1,
-                  maxZoom: 16,
-                  ext: 'jpg'
-                  }).addTo(map);
-
-              var Stamen_TonerHybrid = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-hybrid/{z}/{x}/{y}{r}.{ext}', {
-                  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                  subdomains: 'abcd',
-                  minZoom: 0,
-                  maxZoom: 20,
-                  ext: 'png'
-              }).addTo(map);
-
-
-
-              L.geoJson({{ event_list| geojsonfeature:"title,date,city" | safe}}, {
-                      onEachFeature: function (feature, layer) {
-                          layer.bindPopup('<h4>'+feature.properties.title+'</h4><br><div class="date">'+feature.properties.date+'</div><p>'+feature.properties.city+'</p>');
-                          }
-                      }).on('click', markerOnClick).addTo(map);
-          }
-        </script>
-      {% endblock leaflet %}
+{#      {% block leaflet %}#}
+{#        {% leaflet_css plugins="forms" %}#}
+{#        {% leaflet_js plugins="forms" %}#}
+{##}
+{#        <style>#}
+{#          .leaflet-container {#}
+{#              height: 500px;#}
+{#              width: 100%;#}
+{#              z-index: 1;#}
+{#          }#}
+{#        </style>#}
+{#        <script type="text/javascript">#}
+{#          var today = new Date();#}
+{#          var futureMarker = L.AwesomeMarkers.icon({#}
+{#                  icon: 'play',#}
+{#                  markerColor: 'violet'#}
+{#              });#}
+{##}
+{#          var pastMarker = L.AwesomeMarkers.icon({#}
+{#              icon: 'play',#}
+{#              markerColor: 'green'#}
+{#          });#}
+{##}
+{##}
+{#          function markerOnClick(e)#}
+{#              {#}
+{#              var latLngs = [e.target.getLatLng()];#}
+{#              var markerBounds = L.latLngBounds(latLngs);#}
+{#              map.fitBounds(markerBounds);#}
+{#              }#}
+{#          function map_init(map, options) {#}
+{##}
+{##}
+{#             var Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {#}
+{#                  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',#}
+{#                  subdomains: 'abcd',#}
+{#                  minZoom: 1,#}
+{#                  maxZoom: 16,#}
+{#                  ext: 'jpg'#}
+{#                  }).addTo(map);#}
+{##}
+{#              var Stamen_TonerHybrid = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-hybrid/{z}/{x}/{y}{r}.{ext}', {#}
+{#                  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',#}
+{#                  subdomains: 'abcd',#}
+{#                  minZoom: 0,#}
+{#                  maxZoom: 20,#}
+{#                  ext: 'png'#}
+{#              }).addTo(map);#}
+{##}
+{##}
+{##}
+              {#L.geoJson({{ event_list| geojsonfeature:"title,date,city" | safe}}, {#}
+              {#        onEachFeature: function (feature, layer) {#}
+              {#            layer.bindPopup('<h4>'+feature.properties.title+'</h4><br><div class="date">'+feature.properties.date+'</div><p>'+feature.properties.city+'</p>');#}
+              {#            }#}
+              {#        }).on('click', markerOnClick).addTo(map);#}
+{#          }#}
+{#        </script>#}
+{#      {% endblock leaflet %}#}
       <script src="{% static 'js/project.js' %}"></script>
 
 

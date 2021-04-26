@@ -19,7 +19,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from django.contrib.gis.db import models
+from django.db import models
 
 from config.settings.base import AUTH_USER_MODEL as User
 
@@ -99,7 +99,7 @@ class Event(models.Model):
     city = models.CharField(max_length=60)
     postcode = models.CharField(max_length=15)
     country = CountryField()
-    geom = models.PointField(blank=True, null=True)
+    # geom = models.PointField(blank=True, null=True)
     registration_url = models.URLField()
 
     submission_date = models.DateTimeField(auto_now_add=True)
