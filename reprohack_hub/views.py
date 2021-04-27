@@ -5,7 +5,7 @@ from typing import Dict
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.gis.geos import Point
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -18,7 +18,7 @@ from django.views.generic.list import ListView
 from geocoder import google
 
 # custom
-from .forms import EventForm, PaperForm, ReviewForm, ProfileForm, UserChangeForm, UserCreationForm
+from .forms import EventForm, PaperForm, ReviewForm, UserChangeForm, UserCreationForm
 from .models import Event, Paper, Review
 
 # Users
@@ -56,6 +56,8 @@ class EventCreate(LoginRequiredMixin, CreateView):
             logger.warning("No coordinates returned for %s", address)
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+
 
     def get_form_kwargs(self, *args, **kwargs):
         kwargs = super().get_form_kwargs(*args, **kwargs)
@@ -112,6 +114,10 @@ class PaperCreate(LoginRequiredMixin, CreateView):
         # self.object.save_m2m()
         print(form.errors)
         return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form):
+        print(form.errors)
+        return super().form_invalid(form)
 
     def get_form_kwargs(self, *args, **kwargs):
         kwargs = super().get_form_kwargs(*args, **kwargs)
@@ -223,23 +229,10 @@ class MarkdownView(TemplateView):
 # ------ USER ------- ##
 
 
-# signup
-def signup(request):
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save(commit=False)
-            username = form.cleaned_data.get("username")
-            raw_password = form.cleaned_data.get("password1")
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect("home")
-    else:
-        form = UserCreationForm()
-    return render(request, "registration/signup.html", {"form": form})
-
-
 class UserCreateView(CreateView):
+    """
+    Used when user signs up
+    """
     model = User
     form_class = UserCreationForm
     template_name = "registration/signup.html"
@@ -256,57 +249,24 @@ class UserCreateView(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class UpdateUserView(LoginRequiredMixin, UpdateView):
-    model = User
-    form_class = UserChangeForm
-    template_name = "registration/user_update.html"
-    # success_url = 'registration/user_detail.html'
-
-    # def auth_owner(self, request):
-    #    return self.user.pk == request.user.pk
-
-    # @user_passes_test(auth_owner)
-    # def my_view(request):
-
-
-class UserDetailView(DetailView):
-    model = User
-    template_name = "registration/user_detail.html"
-
-    # def get_events(self, request):
-    #    self.events = Event.objects.filter(user = request.user)
-
-
-# ------ USER PROFILE -------------- #
-
-class ProfileCreateView(CreateView):
-    model = User
-    form_class = ProfileForm
-    template_name = "registration/signup.html"
-    # success_url = "event/???pk???"
-
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.save()
-
-
-
-
-class UserDetailView(LoginRequiredMixin, DetailView):
+class UserDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
     model = User
     template_name = "registration/user_detail.html"
     slug_field = "username"
     slug_url_kwarg = "username"
 
+    def test_func(self):
+        return self.request.user.pk == self.get_object().pk
 
-user_detail_view = UserDetailView.as_view()
 
 
-class UserUpdateView(LoginRequiredMixin, UpdateView):
+
+class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     model = User
-    fields = ["name"]
+    form_class = UserChangeForm
+    template_name = "registration/user_update.html"
 
     def get_success_url(self):
         return reverse("users:detail", kwargs={"username": self.request.user.username})
@@ -320,8 +280,9 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         )
         return super().form_valid(form)
 
+    def test_func(self):
+        return self.request.user.pk == self.get_object().pk
 
-user_update_view = UserUpdateView.as_view()
 
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):
@@ -332,4 +293,3 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
         return reverse("users:detail", kwargs={"username": self.request.user.username})
 
 
-user_redirect_view = UserRedirectView.as_view()

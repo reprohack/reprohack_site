@@ -8,32 +8,25 @@ from .models import Event
 from .views import (EventCreate, EventUpdate, EventDetail, EventList, EventMap,
                     PaperCreate, PaperUpdate, PaperDetail, PaperList,
                     ReviewCreate, ReviewDetail, ReviewUpdate, ReviewList,
-                    UserDetailView, UpdateUserView, UserCreateView, MarkdownView)
-from reprohack_hub.views import (
-    user_detail_view,
-    user_redirect_view,
-    user_update_view,
-)
+                    UserDetailView, UserUpdateView, UserCreateView, UserRedirectView, MarkdownView)
+
 
 
 
 
 urlpatterns = [
-    path("users/redirect/", view=user_redirect_view, name="usersredirect"),
-    path("users/update/", view=user_update_view, name="usersupdate"),
-    path("users/<str:username>/", view=user_detail_view, name="usersdetail"),
+
     path('accounts/', include('django.contrib.auth.urls')),
     path('about', TemplateView.as_view(template_name='about.html'), name='about'),
     path('about_test',
          MarkdownView.as_view(extra_context={'title': 'About Us',
                                              'markdown_file': 'about.md'}),
          name='about_test'),
-    # url(r'^admin/', admin.site.urls),
     path('signup/', UserCreateView.as_view(), name='signup'),
     path('users/<int:pk>/', UserDetailView.as_view(), name='user_detail'),
-    # path('users/(?P<userid>\d+)/$', search.views.user_detail, name='user_detail'),
-    path('users/<int:pk>/edit/', UpdateUserView.as_view(), name='user_update'),
+    path('users/<int:pk>/edit/', UserUpdateView.as_view(), name='user_update'),
     path('password_reset_form/', auth_views.PasswordChangeView.as_view()),
+    path("users/redirect/", view=UserRedirectView.as_view(), name="usersredirect"),
     path('logout/',
          auth_views.LogoutView.as_view(template_name='registration/logout.html'),
          name='logout'),

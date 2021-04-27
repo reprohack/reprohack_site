@@ -1,32 +1,63 @@
 {% load static %}
-<nav class="navbar navbar-expand-md navbar-light bg-info">
-    <a class="navbar-brand" href="#">
-        <img src="{% static 'reprohack/images/reprohack_logo_sm.png' %}" width = "40" height = "40"
-        class="d-inline-block align-top">
-        Welcome</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapseLinks"
-        aria-expanded="false" aria-label="Toggle Navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-    <div class="collapse navbar-collapse" id='navbar-collapseLinks'>
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item {{ home_page }}">
-                <a class="nav-link" href="{% url 'index' %}">Home</a>
-            </li>
-            <li class="nav-item {{ event_list }}">
-                <a class="nav-link" href="{% url 'event_list' %}">Event list</a>
-            </li>
-            <li class="nav-item {{ event_new }}">
-                <a class="nav-link" href="{% url 'event_new' %}">Event new</a>
-            </li>
-            <li>
-                <a href="{% url 'event_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
-            </li>
-        </ul>
-    </div>
-  </nav>
+    <!-- header-start -->
+    <header>
+        <div class="header-area ">
+            <div id="sticky-header" class="main-header-area">
+                <div class="container-fluid p-0">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col-xl-2 col-lg-2">
+                            <div class="logo-img">
+                                <a href="{% url 'index' %}">
+                                    <img src="{% static 'images/reprohack_logo_sm.png' %}" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 col-lg-7">
+                            <div class="main-menu  d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li><a class="active" href="{% url 'index' %}">home</a></li>
+                                       <li><a href="{% url 'event_list' %}">Events</a></li>
+                                       <li><a href="{% url 'paper_list' %}">Papers</a></li>
+                                        <li><a href="{% url 'about' %}">About</a></li>
 
-
-        <!----{% if user.is_authenticated %}---->
-
-       <!----{% endif %}---->
+                                        <li><a href="contact.html">Resources</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-2 d-none d-lg-block">
+                            <div class="log_chat_area d-flex justify-content-around align-items-center">
+                                {% if user.is_authenticated %}
+                                <a href="{{ user.get_absolute_url }}">
+                                    <i class="flaticon-user"></i>
+                                    <span>{{ user.get_username }}</span>
+                                </a>
+                                <div class="live_chat_btn">
+                                    <a class="boxed_btn_orange" href="{% url 'logout' %}">
+                                        <i class="fa fa-paper"></i>
+                                        <span>Logout</span>
+                                    </a>
+                                </div>
+                                {% else %}
+                                    <a href="{% url 'signup' %}">
+                                        <i class="flaticon-user"></i>
+                                        <span>Sign up </span>
+                                    </a>
+                                <div class="live_chat_btn">
+                                    <a class="boxed_btn_orange" href="{% url 'login' %}">
+                                        <i class="fa fa-paper"></i>
+                                        <span>Login</span>
+                                    </a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>

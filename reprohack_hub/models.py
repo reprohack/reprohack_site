@@ -22,7 +22,7 @@ from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models import CharField
-
+from djgeojson.fields import PointField
 
 
 from django.db.models.signals import post_save
@@ -84,7 +84,7 @@ class User(AbstractUser):
             str: URL for user detail.
 
         """
-        return reverse("usersdetail", kwargs={"username": self.username})
+        return reverse("user_detail", kwargs={"pk": self.pk})
 
 
 
@@ -123,13 +123,13 @@ class Event(models.Model):
     # venue = models.ForeignKey(Venue, on_delete=models.SET_NULL, null=True)
     description = MarkdownxField(_('Venue description (eg. entrance, '
                                    'parking etc.)'))
-    location = models.CharField(max_length=200)  # Location name?
+    # location = models.CharField(max_length=200)  # Location name?
     address1 = models.CharField(max_length=200)
     address2 = models.CharField(max_length=200, blank=True, null=True)
     city = models.CharField(max_length=60)
     postcode = models.CharField(max_length=15)
     country = CountryField()
-    # geom = models.PointField(blank=True, null=True)
+    geom = PointField(blank=True, null=True)
     registration_url = models.URLField()
 
     submission_date = models.DateTimeField(auto_now_add=True)
@@ -182,9 +182,9 @@ class Paper(models.Model):
     # submitter details
     # submitter = models.ForeignKey(User, on_delete=models.CASCADE)
     # authorship details
-    authors_and_submitters = models.ManyToManyField(User,
-                                                    through="AuthorsAndSubmitters",
-                                                    through_fields=('paper', 'user'),)
+    # authors_and_submitters = models.ManyToManyField(User,
+    #                                                 through="AuthorsAndSubmitters",
+    #                                                 through_fields=('paper', 'user'), null=True)
     # authorship = models.BooleanField(default=True)
     #
     # authors = models.ManyToManyField(Author,

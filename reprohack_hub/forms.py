@@ -8,7 +8,7 @@ from crispy_forms.bootstrap import InlineRadios
 
 from django.contrib.auth import forms, get_user_model
 from django.core.exceptions import ValidationError
-
+from leaflet.forms.widgets import LeafletWidget
 
 from .models import Event, Paper, Review
 
@@ -25,7 +25,7 @@ class EventForm(ModelForm):
     class Meta:
         model = Event
         exclude = ['submission_date', 'creator', ]
-        # widgets = {'geom': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS)}
+        widgets = {'geom': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS)}
 
     def __init__(self, *args, **kwargs):
         self.creator = kwargs.pop('creator')
@@ -43,7 +43,7 @@ class EventForm(ModelForm):
                 css_class='form-row',
             ),
             # 'venue',
-            'venue_description',
+            'description',
             'address1',
             'address2',
             Row(
@@ -52,7 +52,7 @@ class EventForm(ModelForm):
                 Column('country', css_class='form-group col-md-3 mb-0'),
             ),
             'registration_url',
-            # 'geom',
+            'geom',
         )
 
 
@@ -203,15 +203,12 @@ class ReviewForm(ModelForm):
 
 # --------------- USER PROFILE ---------------------- #
 
-class ProfileForm(ModelForm):
-    class Meta:
-        model = get_user_model()
-        fields = ('bio', 'affiliation', 'location', 'twitter', 'github', 'orcid')
-
 
 class UserChangeForm(forms.UserChangeForm):
     class Meta(forms.UserChangeForm.Meta):
         model = get_user_model()
+        exclude = ["password", "id_password"]
+        fields = ['name', 'email', 'bio', 'affiliation', 'location', 'twitter', 'github', 'orcid']
 
 
 class UserCreationForm(forms.UserCreationForm):
