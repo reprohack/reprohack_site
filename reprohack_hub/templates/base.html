@@ -65,16 +65,15 @@
     {% block javascript %}
 
       <!-- Bootstrap JS and its dependencies-->
-      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+      <script src="{% static 'js/vendor/jquery.js' %}"></script>
+      <script src="{% static 'js/vendor/bootstrap.js' %}"></script>
+      <script src="{% static 'js/vendor/popper.js' %}"></script>
       <!-- Your stuff: Third-party javascript libraries go here -->
       <script src="{% static 'js/vendor/modernizr-3.5.0.min.js' %}"></script>
       <script src="{% static 'js/vendor/owl.carousel.min.js' %}"></script>
       <script src="{% static 'js/vendor/isotope.pkgd.min.js' %}"></script>
       <script src="{% static 'js/vendor/ajax-form.js' %}"></script>
-      <script src="{% static 'js/vendor/waypoints.min.js' %}"></script>
+{#      <script src="{% static 'js/vendor/waypoints.min.js' %}"></script>#}
       <script src="{% static 'js/vendor/jquery.counterup.min.js' %}"></script>
       <script src="{% static 'js/vendor/imagesloaded.pkgd.min.js' %}"></script>
       <script src="{% static 'js/vendor/scrollIt.js' %}"></script>
@@ -85,6 +84,7 @@
       <script src="{% static 'js/vendor/jquery.magnific-popup.min.js' %}"></script>
       <script src="{% static 'js/vendor/plugins.js' %}"></script>
       <script src="{% static 'js/vendor/gijgo.min.js' %}"></script>
+
 
       <!--contact js-->
       <script src="{% static 'js/vendor/contact.js' %}"></script>
@@ -107,6 +107,7 @@
               z-index: 1;
           }
         </style>
+        <script src="{% static 'js/vendor/leaflet.awesome-markers.min.js' %}"></script>
         <script type="text/javascript">
           var today = new Date();
           var futureMarker = L.AwesomeMarkers.icon({
@@ -128,13 +129,16 @@
               }
           function map_init(map, options) {
 
+            map.scrollWheelZoom = false
+
 
              var Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
                   attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
                   subdomains: 'abcd',
                   minZoom: 1,
                   maxZoom: 16,
-                  ext: 'jpg'
+                  ext: 'jpg',
+
                   }).addTo(map);
 
               var Stamen_TonerHybrid = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-hybrid/{z}/{x}/{y}{r}.{ext}', {
@@ -143,6 +147,7 @@
                   minZoom: 0,
                   maxZoom: 20,
                   ext: 'png'
+
               }).addTo(map);
 
 

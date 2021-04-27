@@ -30,7 +30,7 @@ function pathsConfig(appName) {
 
     bootstrapSass: `${vendorsRoot}/bootstrap/scss`,
     vendorsJs: [
-      `${vendorsRoot}/jquery/dist/jquery.slim.js`,
+      `${vendorsRoot}/jquery/dist/jquery.js`,
       `${vendorsRoot}/popper.js/dist/umd/popper.js`,
       `${vendorsRoot}/bootstrap/dist/js/bootstrap.js`,
     ],
@@ -42,6 +42,7 @@ function pathsConfig(appName) {
     fonts: `${this.app}/static/fonts`,
     images: `${this.app}/static/images`,
     js: `${this.app}/static/js`,
+    jsVendors: `${this.app}/static/js/vendor`
   }
 }
 
@@ -62,7 +63,7 @@ function styles() {
       cssnano({ preset: 'default' })   // minify result
   ]
 
-  return src(`${paths.sass}/project.scss`)
+  return src(`${paths.sass}/style.scss`)
     .pipe(sass({
       includePaths: [
 
@@ -90,12 +91,12 @@ function scripts() {
 // Vendor Javascript minification
 function vendorScripts() {
   return src(paths.vendorsJs)
-    .pipe(concat('vendors.js'))
-    .pipe(dest(paths.js))
+    // .pipe(concat('vendors.js'))
+    .pipe(dest(paths.jsVendors))
     .pipe(plumber()) // Checks for errors
     .pipe(uglify()) // Minifies the js
     .pipe(rename({ suffix: '.min' }))
-    .pipe(dest(paths.js))
+    .pipe(dest(paths.jsVendors))
 }
 
 
@@ -153,7 +154,7 @@ const generateAssets = parallel(
   styles,
   scripts,
   vendorScripts,
-  imgCompression
+  // imgCompression
 )
 
 // Set up dev environment

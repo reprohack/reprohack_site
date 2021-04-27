@@ -295,6 +295,7 @@ LEAFLET_CONFIG = {
     'DEFAULT_ZOOM': 2,
     'MIN_ZOOM': 1,
     'MAX_ZOOM': 18,
+    "SCROLL_WHEEL_ZOOM": False,
 }
 
 MARKDOWNX_MARKDOWNIFY_FUNCTION = 'markdownx.utils.markdownify'
