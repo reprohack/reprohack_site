@@ -164,5 +164,4 @@ const dev = parallel(
 )
 
 exports.default = series(generateAssets, dev)
-exports["generate-assets"] = generateAssets
-exports["dev"] = dev
+exports["build"] = generateAssets

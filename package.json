@@ -27,7 +27,8 @@
     "last 2 versions"
   ],
   "scripts": {
-    "dev": "gulp",
-    "build": "gulp generate-assets"
+    "serve:assets": "gulp",
+    "build:assets": "gulp build",
+    "build": "build:assets"
   }
 }

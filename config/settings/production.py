@@ -4,30 +4,16 @@ from .base import env
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = env("DJANGO_SECRET_KEY")
+SECRET_KEY = env(
+    "DJANGO_SECRET_KEY",
+    default="H24KNzpdYTZshQu2c6PO5rw1hbjrKWQNADP2TxiQaZdusZxTkTydy2toJa5dWtrs",
+)
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["reprohack.org"])
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["reprohack.org", "0.0.0.0", "localhost", "127.0.0.1"])
 
-# DATABASES
-# ------------------------------------------------------------------------------
-DATABASES["default"] = env.db("DATABASE_URL")  # noqa F405
-DATABASES["default"]["ATOMIC_REQUESTS"] = True  # noqa F405
-DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa F405
 
-# CACHES
-# ------------------------------------------------------------------------------
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": env("REDIS_URL"),
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            # Mimicing memcache behavior.
-            # http://jazzband.github.io/django-redis/latest/#_memcached_exceptions_behavior
-            "IGNORE_EXCEPTIONS": True,
-        },
-    }
-}
+
+
 
 # SECURITY
 # ------------------------------------------------------------------------------
@@ -87,31 +73,31 @@ EMAIL_SUBJECT_PREFIX = env(
 )
 
 # Anymail
-# https://anymail.readthedocs.io/en/stable/installation/#installing-anymail
-INSTALLED_APPS += ["anymail"]  # noqa F405
-# https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-# https://anymail.readthedocs.io/en/stable/installation/#anymail-settings-reference
-# https://anymail.readthedocs.io/en/stable/esps/mailgun/
-EMAIL_BACKEND = env("EMAIL_BACKEND", default="anymail.backends.mailgun.EmailBackend")
-
-ANYMAIL = {
-    "MAILGUN_API_KEY": env("MAILGUN_API_KEY", default=""),
-    "MAILGUN_SENDER_DOMAIN": env("MAILGUN_DOMAIN", default=""),
-    "MAILGUN_API_URL": env("MAILGUN_API_URL", default="https://api.mailgun.net/v3"),
-}
-# Only used if override the choice to use AnyMail/MailGun
-# and opt to use the default smtp.Emailbackend instead,
-# which is why some of the defaults are empty strings.
-EMAIL_HOST = env("DJANGO_EMAIL_HOST", default="")
-EMAIL_HOST_USER = env("DJANGO_EMAIL_USER", default="")
-EMAIL_HOST_PASSWORD = env("DJANGO_EMAIL_HOST_PASSWORD", default="")  # could be a Google App Password
-EMAIL_PORT = env("DJANGO_EMAIL_PORT", default=587)
-EMAIL_USE_TLS = env("DJANGO_EMAIL_USE_TLS", default=True)
+# # https://anymail.readthedocs.io/en/stable/installation/#installing-anymail
+# INSTALLED_APPS += ["anymail"]  # noqa F405
+# # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
+# # https://anymail.readthedocs.io/en/stable/installation/#anymail-settings-reference
+# # https://anymail.readthedocs.io/en/stable/esps/mailgun/
+# EMAIL_BACKEND = env("EMAIL_BACKEND", default="anymail.backends.mailgun.EmailBackend")
+#
+# ANYMAIL = {
+#     "MAILGUN_API_KEY": env("MAILGUN_API_KEY", default=""),
+#     "MAILGUN_SENDER_DOMAIN": env("MAILGUN_DOMAIN", default=""),
+#     "MAILGUN_API_URL": env("MAILGUN_API_URL", default="https://api.mailgun.net/v3"),
+# }
+# # Only used if override the choice to use AnyMail/MailGun
+# # and opt to use the default smtp.Emailbackend instead,
+# # which is why some of the defaults are empty strings.
+# EMAIL_HOST = env("DJANGO_EMAIL_HOST", default="")
+# EMAIL_HOST_USER = env("DJANGO_EMAIL_USER", default="")
+# EMAIL_HOST_PASSWORD = env("DJANGO_EMAIL_HOST_PASSWORD", default="")  # could be a Google App Password
+# EMAIL_PORT = env("DJANGO_EMAIL_PORT", default=587)
+# EMAIL_USE_TLS = env("DJANGO_EMAIL_USE_TLS", default=True)
 
 # ADMIN
 # ------------------------------------------------------------------------------
 # Django Admin URL regex.
-ADMIN_URL = env("DJANGO_ADMIN_URL")
+# ADMIN_URL = env("DJANGO_ADMIN_URL")
 
 # django-compressor
 # ------------------------------------------------------------------------------
