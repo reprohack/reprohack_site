@@ -22,7 +22,6 @@ from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models import CharField
-from djgeojson.fields import PointField
 
 
 from django.db.models.signals import post_save
@@ -129,8 +128,9 @@ class Event(models.Model):
     city = models.CharField(max_length=60)
     postcode = models.CharField(max_length=15)
     country = CountryField()
-    geom = PointField(blank=True, null=True)
     registration_url = models.URLField()
+    lat = models.FloatField(blank=True, null=True)
+    long = models.FloatField(blank=True, null=True)
 
     submission_date = models.DateTimeField(auto_now_add=True)
     # remote = models.BooleanField(default=False)

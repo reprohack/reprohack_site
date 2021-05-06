@@ -8,7 +8,6 @@ from crispy_forms.bootstrap import InlineRadios
 
 from django.contrib.auth import forms, get_user_model
 from django.core.exceptions import ValidationError
-from leaflet.forms.widgets import LeafletWidget
 
 from .models import Event, Paper, Review
 
@@ -25,7 +24,8 @@ class EventForm(ModelForm):
     class Meta:
         model = Event
         exclude = ['submission_date', 'creator', ]
-        widgets = {'geom': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS)}
+        # TODO: Replace this!!
+        # widgets = {'geom': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS)}
 
     def __init__(self, *args, **kwargs):
         self.creator = kwargs.pop('creator')
@@ -52,7 +52,7 @@ class EventForm(ModelForm):
                 Column('country', css_class='form-group col-md-3 mb-0'),
             ),
             'registration_url',
-            'geom',
+            # 'geom', Replace this field!
         )
 
 

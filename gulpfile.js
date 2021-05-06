@@ -4,6 +4,7 @@
 
 // Gulp and package
 const { src, dest, parallel, series, watch } = require('gulp')
+const gncd = require('gulp-npm-copy-deps')
 const pjson = require('./package.json')
 
 // Plugins
@@ -33,6 +34,7 @@ function pathsConfig(appName) {
       `${vendorsRoot}/jquery/dist/jquery.js`,
       `${vendorsRoot}/popper.js/dist/umd/popper.js`,
       `${vendorsRoot}/bootstrap/dist/js/bootstrap.js`,
+      `${vendorsRoot}/leaflet/dist/leaflet.js`,
     ],
 
     app: this.app,
@@ -51,6 +53,10 @@ var paths = pathsConfig()
 ////////////////////////////////
 // Tasks
 ////////////////////////////////
+
+function copyNpmDependencies(){
+  return gncd('./','./reprohack_hub/static/vendor');
+}
 
 // Styles autoprefixing and minification
 function styles() {
@@ -151,9 +157,11 @@ function watchPaths() {
 
 // Generate all assets
 const generateAssets = parallel(
-  styles,
+  copyNpmDependencies,
+    styles,
   scripts,
-  vendorScripts,
+  // vendorScripts,
+
   // imgCompression
 )
 

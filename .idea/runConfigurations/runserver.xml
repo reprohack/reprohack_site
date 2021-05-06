@@ -12,22 +12,15 @@
     <option name="IS_MODULE_SDK" value="true" />
     <option name="ADD_CONTENT_ROOTS" value="true" />
     <option name="ADD_SOURCE_ROOTS" value="true" />
-    <PathMappingSettings>
-      <option name="pathMappings">
-        <list>
-          <mapping local-root="$PROJECT_DIR$" remote-root="/app" />
-        </list>
-      </option>
-    </PathMappingSettings>
     <option name="launchJavascriptDebuger" value="false" />
     <option name="port" value="8000" />
-    <option name="host" value="0.0.0.0" />
+    <option name="host" value="127.0.0.1" />
     <option name="additionalOptions" value="" />
     <option name="browserUrl" value="" />
     <option name="runTestServer" value="false" />
     <option name="runNoReload" value="false" />
     <option name="useCustomRunCommand" value="false" />
     <option name="customRunCommand" value="" />
-    <method />
+    <method v="2" />
   </configuration>
 </component>

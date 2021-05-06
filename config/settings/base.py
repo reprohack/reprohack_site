@@ -70,8 +70,6 @@ DJANGO_APPS = [
     # "django.contrib.humanize", # Handy template tags
     "django.contrib.admin",
     "django.forms",
-    # custom
-    "django.contrib.gis",
 
 ]
 THIRD_PARTY_APPS = [
@@ -82,12 +80,8 @@ THIRD_PARTY_APPS = [
     "django_extensions",
 ]
 
+# Your stuff: custom apps go here
 LOCAL_APPS = [
-    # Your stuff: custom apps go here
-    "leaflet",
-    "jsonfield",
-    "djgeojson",
-    # "geocoder",
     "taggit",
     "markdownx",
     "django_countries",

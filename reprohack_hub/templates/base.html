@@ -1,4 +1,4 @@
-{% load static i18n compress leaflet_tags  geojson_tags%}<!DOCTYPE html>
+{% load static i18n compress%}<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -12,26 +12,29 @@
 
     {% block css %}
 
-    <!-- Latest compiled and minified Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
 
     <!-- Your stuff: Third-party CSS libraries go here -->
-    <link rel='stylesheet' href="{% static 'css/owl.carousel.min.css'%}">
-    <link rel='stylesheet' href="{% static 'css/magnific-popup.css'%}">
-    <link rel='stylesheet' href="{% static 'css/font-awesome.min.css'%}">
-    <link rel='stylesheet' href="{% static 'css/themify-icons.css'%}">
-    <link rel='stylesheet' href="{% static 'css/nice-select.css'%}">
-    <link rel='stylesheet' href="{% static 'css/flaticon.css'%}">
-    <link rel='stylesheet' href="{% static 'css/gijgo.css'%}">
-    <link rel='stylesheet' href="{% static 'css/animate.css'%}">
-    <link rel='stylesheet' href="{% static 'css/slicknav.css'%}">
+      <link rel='stylesheet' href="{% static 'vendor/node_modules/bootstrap/dist/css/bootstrap.min.css'%}">
+      <link rel='stylesheet' href="{% static 'vendor/node_modules/leaflet/dist/leaflet.css'%}">
+    <link rel='stylesheet' href="{% static 'vendor/css/owl.carousel.min.css'%}">
+    <link rel='stylesheet' href="{% static 'vendor/css/magnific-popup.css'%}">
+    <link rel='stylesheet' href="{% static 'vendor/css/font-awesome.min.css'%}">
+    <link rel='stylesheet' href="{% static 'vendor/css/themify-icons.css'%}">
+    <link rel='stylesheet' href="{% static 'vendor/css/nice-select.css'%}">
+    <link rel='stylesheet' href="{% static 'vendor/css/flaticon.css'%}">
+    <link rel='stylesheet' href="{% static 'vendor/css/gijgo.css'%}">
+    <link rel='stylesheet' href="{% static 'vendor/css/animate.css'%}">
+    <link rel='stylesheet' href="{% static 'vendor/css/slicknav.css'%}">
+
     {% compress css %}
     <!-- This file stores project-specific CSS -->
     <link href="{% static 'css/style.css'%}" rel='stylesheet'>
 
     {% endcompress %}
     {% endblock %}
+
+  <script src="{% static 'vendor/node_modules/jquery/dist/jquery.min.js' %}"></script>
+      <script src="{% static 'vendor/node_modules/bootstrap/dist/js/bootstrap.min.js' %}"></script>
 
   </head>
 
@@ -65,108 +68,108 @@
     {% block javascript %}
 
       <!-- Bootstrap JS and its dependencies-->
-      <script src="{% static 'js/vendor/jquery.js' %}"></script>
-      <script src="{% static 'js/vendor/bootstrap.js' %}"></script>
-      <script src="{% static 'js/vendor/popper.js' %}"></script>
+
+      <script src="{% static 'vendor/node_modules/@popperjs/core/dist/umd/popper.min.js' %}"></script>
       <!-- Your stuff: Third-party javascript libraries go here -->
-      <script src="{% static 'js/vendor/modernizr-3.5.0.min.js' %}"></script>
-      <script src="{% static 'js/vendor/owl.carousel.min.js' %}"></script>
-      <script src="{% static 'js/vendor/isotope.pkgd.min.js' %}"></script>
-      <script src="{% static 'js/vendor/ajax-form.js' %}"></script>
-{#      <script src="{% static 'js/vendor/waypoints.min.js' %}"></script>#}
-      <script src="{% static 'js/vendor/jquery.counterup.min.js' %}"></script>
-      <script src="{% static 'js/vendor/imagesloaded.pkgd.min.js' %}"></script>
-      <script src="{% static 'js/vendor/scrollIt.js' %}"></script>
-      <script src="{% static 'js/vendor/jquery.scrollUp.min.js' %}"></script>
-      <script src="{% static 'js/vendor/wow.min.js' %}"></script>
-      <script src="{% static 'js/vendor/nice-select.min.js' %}"></script>
-      <script src="{% static 'js/vendor/jquery.slicknav.min.js' %}"></script>
-      <script src="{% static 'js/vendor/jquery.magnific-popup.min.js' %}"></script>
-      <script src="{% static 'js/vendor/plugins.js' %}"></script>
-      <script src="{% static 'js/vendor/gijgo.min.js' %}"></script>
+      <script src="{% static 'vendor/js/modernizr-3.5.0.min.js' %}"></script>
+      <script src="{% static 'vendor/js/owl.carousel.min.js' %}"></script>
+      <script src="{% static 'vendor/js/isotope.pkgd.min.js' %}"></script>
+      <script src="{% static 'vendor/js/ajax-form.js' %}"></script>
+{#      <script src="{% static 'vendor/js/waypoints.min.js' %}"></script>#}
+      <script src="{% static 'vendor/js/jquery.counterup.min.js' %}"></script>
+      <script src="{% static 'vendor/js/imagesloaded.pkgd.min.js' %}"></script>
+      <script src="{% static 'vendor/js/scrollIt.js' %}"></script>
+      <script src="{% static 'vendor/js/jquery.scrollUp.min.js' %}"></script>
+      <script src="{% static 'vendor/js/wow.min.js' %}"></script>
+      <script src="{% static 'vendor/js/nice-select.min.js' %}"></script>
+      <script src="{% static 'vendor/js/jquery.slicknav.min.js' %}"></script>
+      <script src="{% static 'vendor/js/jquery.magnific-popup.min.js' %}"></script>
+      <script src="{% static 'vendor/js/plugins.js' %}"></script>
+      <script src="{% static 'vendor/js/gijgo.min.js' %}"></script>
+      <script src="{% static 'vendor/node_modules/leaflet/dist/leaflet.js' %}"></script>
 
 
       <!--contact js-->
-      <script src="{% static 'js/vendor/contact.js' %}"></script>
-      <script src="{% static 'js/vendor/jquery.ajaxchimp.min.js' %}"></script>
-      <script src="{% static 'js/vendor/jquery.form.js' %}"></script>
-      <script src="{% static 'js/vendor/jquery.validate.min.js' %}"></script>
-      <script src="{% static 'js/vendor/mail-script.js' %}"></script>
+      <script src="{% static 'vendor/js/contact.js' %}"></script>
+      <script src="{% static 'vendor/js/jquery.ajaxchimp.min.js' %}"></script>
+      <script src="{% static 'vendor/js/jquery.form.js' %}"></script>
+      <script src="{% static 'vendor/js/jquery.validate.min.js' %}"></script>
+      <script src="{% static 'vendor/js/mail-script.js' %}"></script>
 
 
       <!-- place project specific Javascript in this file -->
-      {% compress js %}
-      {% block leaflet %}
-        {% leaflet_css plugins="forms" %}
-        {% leaflet_js plugins="forms" %}
-
-        <style>
-          .leaflet-container {
-              height: 500px;
-              width: 100%;
-              z-index: 1;
-          }
-        </style>
-        <script src="{% static 'js/vendor/leaflet.awesome-markers.min.js' %}"></script>
-        <script type="text/javascript">
-          var today = new Date();
-          var futureMarker = L.AwesomeMarkers.icon({
-                  icon: 'play',
-                  markerColor: 'violet'
-              });
-
-          var pastMarker = L.AwesomeMarkers.icon({
-              icon: 'play',
-              markerColor: 'green'
-          });
-
-
-          function markerOnClick(e)
-              {
-              var latLngs = [e.target.getLatLng()];
-              var markerBounds = L.latLngBounds(latLngs);
-              map.fitBounds(markerBounds);
-              }
-          function map_init(map, options) {
-
-            map.scrollWheelZoom = false
-
-
-             var Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
-                  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                  subdomains: 'abcd',
-                  minZoom: 1,
-                  maxZoom: 16,
-                  ext: 'jpg',
-
-                  }).addTo(map);
-
-              var Stamen_TonerHybrid = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-hybrid/{z}/{x}/{y}{r}.{ext}', {
-                  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                  subdomains: 'abcd',
-                  minZoom: 0,
-                  maxZoom: 20,
-                  ext: 'png'
-
-              }).addTo(map);
-
-
-
-              L.geoJson({{ event_list| geojsonfeature:"title,date,city" | safe}}, {
-                      onEachFeature: function (feature, layer) {
-                          layer.bindPopup('<h4>'+feature.properties.title+'</h4><br><div class="date">'+feature.properties.date+'</div><p>'+feature.properties.city+'</p>');
-                          }
-                      }).on('click', markerOnClick).addTo(map);
-          }
-        </script>
-      {% endblock leaflet %}
-
-      <script src="{% static 'js/main.js' %}"></script>
-      <script> $(document).ready(function () {
-              $('.dateinput').datepicker({ format: "yyyy/mm/dd" });
-          });
-      </script>
-      {% endcompress %}
+{#      {% compress js %}#}
+{#      {% block leaflet %}#}
+{#        {% leaflet_css plugins="forms" %}#}
+{#        {% leaflet_js plugins="forms" %}#}
+{##}
+{#        <style>#}
+{#          .leaflet-container {#}
+{#              height: 500px;#}
+{#              width: 100%;#}
+{#              z-index: 1;#}
+{#          }#}
+{#        </style>#}
+{#        <script src="{% static 'js/vendor/leaflet.awesome-markers.min.js' %}"></script>#}
+{#        <script type="text/javascript">#}
+{#          var today = new Date();#}
+{#          var futureMarker = L.AwesomeMarkers.icon({#}
+{#                  icon: 'play',#}
+{#                  markerColor: 'violet'#}
+{#              });#}
+{##}
+{#          var pastMarker = L.AwesomeMarkers.icon({#}
+{#              icon: 'play',#}
+{#              markerColor: 'green'#}
+{#          });#}
+{##}
+{##}
+{#          function markerOnClick(e)#}
+{#              {#}
+{#              var latLngs = [e.target.getLatLng()];#}
+{#              var markerBounds = L.latLngBounds(latLngs);#}
+{#              map.fitBounds(markerBounds);#}
+{#              }#}
+{#          function map_init(map, options) {#}
+{##}
+{#            map.scrollWheelZoom = false#}
+{##}
+{##}
+{#             var Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {#}
+{#                  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',#}
+{#                  subdomains: 'abcd',#}
+{#                  minZoom: 1,#}
+{#                  maxZoom: 16,#}
+{#                  ext: 'jpg',#}
+{##}
+{#                  }).addTo(map);#}
+{##}
+{#              var Stamen_TonerHybrid = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-hybrid/{z}/{x}/{y}{r}.{ext}', {#}
+{#                  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',#}
+{#                  subdomains: 'abcd',#}
+{#                  minZoom: 0,#}
+{#                  maxZoom: 20,#}
+{#                  ext: 'png'#}
+{##}
+{#              }).addTo(map);#}
+{##}
+{##}
+{##}
+{#              L.geoJson({{ event_list| geojsonfeature:"title,date,city" | safe}}, {#}
+{#                      onEachFeature: function (feature, layer) {#}
+{#                          layer.bindPopup('<h4>'+feature.properties.title+'</h4><br><div class="date">'+feature.properties.date+'</div><p>'+feature.properties.city+'</p>');#}
+{#                          }#}
+{#                      }).on('click', markerOnClick).addTo(map);#}
+{#          }#}
+{#        </script>#}
+{#      {% endblock leaflet %}#}
+{##}
+{#      <script src="{% static 'js/main.js' %}"></script>#}
+{#      <script> $(document).ready(function () {#}
+{#              $('.dateinput').datepicker({ format: "yyyy/mm/dd" });#}
+{#          });#}
+{#      </script>#}
+{#      {% endcompress %}#}
 
     {% endblock javascript %}
   </body>

@@ -13,7 +13,7 @@ RUN wget \
     && rm -f Miniconda3-latest-Linux-x86_64.sh
 RUN conda --version
 
-RUN conda install -c conda-forge libgdal
+#RUN conda install -c conda-forge libgdal
 
 # Getting node
 RUN conda install -c conda-forge nodejs

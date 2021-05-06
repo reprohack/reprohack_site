@@ -1,6 +1,0 @@
-[client]
-host = db
-database = reprohack
-user = root
-password = 123.456
-default-character-set = utf8
