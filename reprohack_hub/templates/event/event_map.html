@@ -1,0 +1,65 @@
+<div id="map" style="height: 30rem; width: 100%"></div>
+<script>
+
+    var eventLocations = [
+      {% for event in object_list %}
+        {% if event.lat and event.long %}
+      {
+        lat: {{ event.lat }},
+        long: {{ event.long }},
+        title: "{{ event.title }}",
+      },
+        {% endif %}
+      {% endfor %}
+      {% if event %}
+        {
+        lat: {{ event.lat }},
+        long: {{ event.long }},
+        title: "{{ event.title }}",
+      },
+      {% endif %}
+    ];
+
+
+  $(document).ready(function () {
+    var map = L.map('map').setView([51.505, -0.09], 13);
+
+    var Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+      attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      subdomains: 'abcd',
+      minZoom: 1,
+      maxZoom: 16,
+      ext: 'jpg',
+
+    }).addTo(map);
+
+    var Stamen_TonerHybrid = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-hybrid/{z}/{x}/{y}{r}.{ext}', {
+      attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      subdomains: 'abcd',
+      minZoom: 0,
+      maxZoom: 20,
+      ext: 'png'
+
+    }).addTo(map);
+
+    let markers = []
+
+    for(var i in eventLocations){
+      var event = eventLocations[i];
+      let marker = L.marker([event.lat, event.long]).addTo(map)
+            .bindPopup(event.title);
+
+      markers.push(marker);
+    }
+
+    if(markers.length > 0){
+      let latlngs = [];
+      for(let i in markers){
+        latlngs.push(markers[i].getLatLng());
+      }
+      let markerBounds = L.latLngBounds(latlngs);
+      map.fitBounds(markerBounds);
+    }
+
+  })
+</script>

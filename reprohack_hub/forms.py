@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, Widget, TextInput
 from django.utils.translation import gettext_lazy as _
 
 from crispy_forms.helper import FormHelper
@@ -12,23 +12,18 @@ from django.core.exceptions import ValidationError
 from .models import Event, Paper, Review
 
 # -------- Event -------- #
-LEAFLET_WIDGET_ATTRS = {
-    'DEFAULT_CENTER': (6.0, 45.0),
-    'DEFAULT_ZOOM': 5,
-    'MIN_ZOOM': 3,
-    'MAX_ZOOM': 18,
-}
+class MapInput(Widget):
+    template_name = "event/map_input_widget.html"
+
 
 
 class EventForm(ModelForm):
     class Meta:
         model = Event
-        exclude = ['submission_date', 'creator', ]
-        # TODO: Replace this!!
-        # widgets = {'geom': LeafletWidget(attrs=LEAFLET_WIDGET_ATTRS)}
+        exclude = ['submission_date', 'creator']
+        widgets = {'event_coordinates': MapInput()}
 
     def __init__(self, *args, **kwargs):
-        self.creator = kwargs.pop('creator')
         super(EventForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
@@ -52,7 +47,7 @@ class EventForm(ModelForm):
                 Column('country', css_class='form-group col-md-3 mb-0'),
             ),
             'registration_url',
-            # 'geom', Replace this field!
+            'event_coordinates',
         )
 
 

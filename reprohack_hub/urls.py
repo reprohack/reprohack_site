@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from djgeojson.views import GeoJSONLayerView
 from .models import Event
-from .views import (EventCreate, EventUpdate, EventDetail, EventList, EventMap,
+from .views import (EventCreate, EventUpdate, EventDetail, EventList, IndexView,
                     PaperCreate, PaperUpdate, PaperDetail, PaperList,
                     ReviewCreate, ReviewDetail, ReviewUpdate, ReviewList,
                     UserDetailView, UserUpdateView, UserCreateView, UserRedirectView, MarkdownView)
@@ -30,8 +30,8 @@ urlpatterns = [
     path('logout/',
          auth_views.LogoutView.as_view(template_name='registration/logout.html'),
          name='logout'),
-    path('', EventMap.as_view(), name='index'),
-    path('', EventMap.as_view(), name='home'),
+    path('', IndexView.as_view(), name='index'),
+    path('', IndexView.as_view(), name='home'),
     path('event/', EventList.as_view(), name='event_list'),
     path('event/<int:pk>/', EventDetail.as_view(), name='event_detail'),
     path('event/<int:pk>/edit/', EventUpdate.as_view(), name='event_edit'),

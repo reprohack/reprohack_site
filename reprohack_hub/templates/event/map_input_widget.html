@@ -1,0 +1,34 @@
+<input id="{{ widget.attrs.id }}" name="{{ widget.name }}"
+       {% if widget.value %}value="{{ widget.value }}"{% endif %} hidden>
+<div id="{{ widget.attrs.id }}_map_input" style="height: 30rem; width: 100%"></div>
+<script>
+  $(document).ready(function () {
+
+    let widget_edit_id = "{{ widget.attrs.id }}";
+    let map_input_id = "{{ widget.attrs.id }}_map_input";
+    let marker = null;
+
+    let map = L.map(map_input_id).setView([51.505, -0.09], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    function addOrSetMarker(latlng){
+      if(!marker){
+        marker = L.marker([latlng.lat, latlng.lng]).addTo(map);
+      }
+      else{
+        marker.setLatLng(latlng);
+      }
+      map.flyTo(latlng);
+      $("#"+widget_edit_id).val(latlng.lat+","+latlng.lng)
+    }
+
+    map.on('click', function (e){
+      addOrSetMarker(e.latlng);
+    });
+
+
+  })
+</script>

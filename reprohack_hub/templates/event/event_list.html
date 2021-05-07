@@ -1,41 +1,41 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% load leaflet_tags %}
-{% load geojson_tags %}
 
 {% block content %}
-<div class="bradcam_area breadcam_bg overlay2">
+  <div class="bradcam_area breadcam_bg overlay2">
     <h3>Events</h3>
     <br>
     <a href="{% url 'event_new' %}" class="boxed_btn">Submit an event!</a>
-</div>
-<div class="whole-wrap">
+  </div>
+  <div class="whole-wrap">
     <div class="container box_1170">
-        <div class="section-top-border">
-            <h1>Upcoming ReproHacks</h1>
-            <br>
-            <div class="row">
-                {% leaflet_map "event_list" callback="map_init" %}
-            </div>
-             <br>
-            {% for event in event_list %}
-            <div class="event">
-             <div class="card">
-                    <div class="card-body">
-                            <h3 class="card-title"><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
-                            <h6 class="card-subtitle mb-2 text-muted">
-                                <div class="date">
-                                    {{ event.date }}
-                                </div>
-                            </h6>
-                            <p class="card-text"></p>
-            </div>
-            </div>
-            </div>
-            <br>
-            {% endfor %}
+      <div class="section-top-border">
+        <h1>Upcoming ReproHacks</h1>
+        <br>
+        <div class="row">
+          <div class="col">
+            {% include "event/event_map.html" %}
+          </div>
         </div>
+        <br>
+        {% for event in object_list %}
+          <div class="event">
+            <div class="card">
+              <div class="card-body">
+                <h3 class="card-title"><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
+                <h6 class="card-subtitle mb-2 text-muted">
+                  <div class="date">
+                    {{ event.date }}
+                  </div>
+                </h6>
+                <p class="card-text"></p>
+              </div>
+            </div>
+          </div>
+          <br>
+        {% endfor %}
+      </div>
     </div>
-</div>
+  </div>
 {% endblock %}

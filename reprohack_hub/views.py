@@ -33,6 +33,18 @@ User = get_user_model()
 logger = logging.getLogger(__name__)
 
 
+
+class IndexView(ListView):
+    model = Event
+    template_name = "index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["now"] = timezone.now()
+        return context
+
+# ----- Events ----- #
+
 class EventCreate(LoginRequiredMixin, CreateView):
     model = Event
     form_class = EventForm
@@ -51,18 +63,14 @@ class EventCreate(LoginRequiredMixin, CreateView):
             )
         )
         try:
-            self.object.geom = Point(google(address).latlng[::-1])
+            coord = google(address)
+            self.object.event_coordinates = coord.latlng[::-1]
         except TypeError:
             logger.warning("No coordinates returned for %s", address)
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
 
-
-    def get_form_kwargs(self, *args, **kwargs):
-        kwargs = super().get_form_kwargs(*args, **kwargs)
-        kwargs["creator"] = self.request.user
-        return kwargs
 
 
 class EventUpdate(UpdateView):
@@ -78,7 +86,6 @@ class EventDetail(DetailView):
 
 class EventList(ListView):
     model = Event
-    context_object_name = "event_list"
     template_name = "event/event_list.html"
     paginate_by = 20  # if pagination is desired
 
@@ -88,14 +95,7 @@ class EventList(ListView):
         return context
 
 
-class EventMap(ListView):
-    model = Event
-    template_name = "index.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["now"] = timezone.now()
-        return context
 
 
 # ------ PAPER ------- ##

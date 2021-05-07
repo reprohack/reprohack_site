@@ -129,8 +129,8 @@ class Event(models.Model):
     postcode = models.CharField(max_length=15)
     country = CountryField()
     registration_url = models.URLField()
-    lat = models.FloatField(blank=True, null=True)
-    long = models.FloatField(blank=True, null=True)
+    event_coordinates = models.TextField(blank=True, null=True, )
+
 
     submission_date = models.DateTimeField(auto_now_add=True)
     # remote = models.BooleanField(default=False)
@@ -145,6 +145,22 @@ class Event(models.Model):
     def get_absolute_url(self):
         return reverse('event_detail', args=[self.id])
 
+
+    @property
+    def lat(self):
+        return self.decompress_lat_long(0)
+
+    @property
+    def long(self):
+        return self.decompress_lat_long(1)
+
+    def decompress_lat_long(self, decompressed_value_index):
+        if self.event_coordinates:
+            lat_long_split = self.event_coordinates.split(",")
+            if len(lat_long_split) > 1:
+                return lat_long_split[decompressed_value_index]
+
+        return None
 
 # ---- Papers ---- #
 
