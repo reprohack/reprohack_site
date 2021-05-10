@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load markdown_tags %}
 
 {% block content %}
 <div class="bradcam_area breadcam_bg overlay2">
@@ -14,17 +15,14 @@
                         class="glyphicon glyphicon-pencil"></span></a>
                 {% endif %}
                 <h3>{{ event.title }}</h3>
-                {% if event.date %}
-                <div class="date">
-                    {{ event.date }}
-                </div>
-                {% endif %}
                 <div>
-                    <h5>{{ event.time_start }} - {{ event.time_end }}</h5>
+                    <h5>{{ event.start_time }} - {{ event.end_time }}</h5>
 
-                    <h5>{{ event.location }}, {{ event.address }}</h5>
+                    <h5>{{ event.address }}</h5>
                 </div>
-                <p>{{ event.description|linebreaksbr }}</p>
+
+                <p>{{ event.description | show_markdown | safe}}</p>
+
                 {% include "event/event_map.html" %}
             </div>
         </div>

@@ -1,5 +1,6 @@
 (function ($) {
 "use strict";
+
 // TOP Menu Sticky
 $(window).on('scroll', function () {
 	var scroll = $(window).scrollTop();
@@ -14,7 +15,6 @@ $(window).on('scroll', function () {
 
 
 $(document).ready(function(){
-
 // mobile_menu
 var menu = $('ul#navigation');
 if(menu.length){

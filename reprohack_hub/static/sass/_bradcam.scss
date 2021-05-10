@@ -5,12 +5,11 @@
     background-image: url(../images/bradcam2.png);
 }
 .bradcam_area{
-    padding: 170px;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
     text-align: center;
-    padding: 269px 0 159px 0;
+    padding: 100px 0 159px 0;
     @media #{$mobile_device} {
         padding: 150px 0;
     }

@@ -8,7 +8,11 @@
     let map_input_id = "{{ widget.attrs.id }}_map_input";
     let marker = null;
 
-    let map = L.map(map_input_id).setView([51.505, -0.09], 13);
+    let map = L.map(map_input_id, {
+      center: [51.505, -0.09],
+      zoom: 13,
+      scrollWheelZoom: false,
+    });
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

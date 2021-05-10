@@ -1,3 +1,4 @@
+from django.conf.urls import url
 from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 from django.urls import include, path, re_path
@@ -45,8 +46,5 @@ urlpatterns = [
     path('review/new', ReviewCreate.as_view(), name="review_new"),
     path('review/<int:pk>/', ReviewDetail.as_view(), name="review_detail"),
     path('review/<int:pk>/edit/', ReviewUpdate.as_view(), name="review_edit"),
-    re_path(r'^data.geojson$',
-            GeoJSONLayerView.as_view(model=Event, properties=('title', 'city',
-                                                              'date')),
-            name='data')
+    url(r'^markdownx/', include('markdownx.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

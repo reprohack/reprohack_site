@@ -1,11 +1,12 @@
 .header-area{
-    position: absolute;
+    position: relative;
     left: 0;
     right: 0;
     width: 100%;
     top: 0;
-    z-index: 99;
-    border-bottom: 1px solid rgba(255, 255, 255,.20);
+    z-index: 9999;
+    //border-bottom: 1px solid rgba(255, 255, 255,.20);
+  background: #12725e;
     @media #{$mobile_device} {
         padding-top: 0;
     }

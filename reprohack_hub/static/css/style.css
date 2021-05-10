@@ -553,13 +553,13 @@ h3 {
   top: -32px; }
 
 .header-area {
-  position: absolute;
+  position: relative;
   left: 0;
   right: 0;
   width: 100%;
   top: 0;
-  z-index: 99;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
+  z-index: 9999;
+  background: #12725e; }
   @media (max-width: 767px) {
     .header-area {
       padding-top: 0; } }
@@ -788,10 +788,10 @@ h3 {
         padding-right: 7px; }
 
 .slider_bg_2 {
-  background-image: url(../images/reprohack_banner0.png); }
+  background-image: url(../images/reprohack_banner_no_border.png); }
 
 .slider_area .single_slider {
-  height: 100vh;
+  height: calc(100vh - 92px);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center; }
@@ -1171,12 +1171,11 @@ h3 {
   background-image: url(../images/bradcam2.png); }
 
 .bradcam_area {
-  padding: 170px;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
   text-align: center;
-  padding: 269px 0 159px 0; }
+  padding: 100px 0 159px 0; }
   @media (max-width: 767px) {
     .bradcam_area {
       padding: 150px 0; } }

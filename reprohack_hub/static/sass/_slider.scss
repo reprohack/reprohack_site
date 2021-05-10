@@ -1,9 +1,9 @@
 .slider_bg_2{
-    background-image: url(../images/reprohack_banner0.png);
+    background-image: url(../images/reprohack_banner_no_border.png);
 }
 .slider_area{
     .single_slider{
-        height: 100vh;
+        height: calc(100vh - 92px);
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;

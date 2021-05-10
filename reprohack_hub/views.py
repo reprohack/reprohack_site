@@ -13,7 +13,7 @@ from django.utils import timezone
 from django.utils.module_loading import import_string
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.views.generic.list import ListView
 from geocoder import google
 
@@ -29,6 +29,9 @@ from django.views.generic import DetailView, RedirectView, UpdateView
 User = get_user_model()
 
 # from users.forms import SignUpForm, EditUserForm
+
+# Set markdownify from MARKDOWNX_MARKDOWNIFY_FUNCTION in settings
+markdownify = import_string(settings.MARKDOWNX_MARKDOWNIFY_FUNCTION)
 
 logger = logging.getLogger(__name__)
 
@@ -79,8 +82,9 @@ class EventUpdate(UpdateView):
     template_name = "event/event_edit.html"
 
 
-class EventDetail(DetailView):
+class EventDetail(UpdateView):
     model = Event
+    form_class = EventForm
     template_name = "event/event_detail.html"
 
 
@@ -203,8 +207,7 @@ class ReviewList(LoginRequiredMixin, ListView):
     #     return context
 
 
-# Set markdownify from MARKDOWNX_MARKDOWNIFY_FUNCTION in settings
-markdownify = import_string(settings.MARKDOWNX_MARKDOWNIFY_FUNCTION)
+
 
 
 class MarkdownView(TemplateView):

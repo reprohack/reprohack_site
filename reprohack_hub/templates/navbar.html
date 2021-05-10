@@ -1,7 +1,11 @@
 {% load static %}
+{% url 'index' as index_url %}
+{% url 'event_list' as events_url %}
+{% url 'paper_list' as papers_url %}
+{% url 'about' as about_url %}
     <!-- header-start -->
     <header>
-        <div class="header-area ">
+        <div class="header-area">
             <div id="sticky-header" class="main-header-area">
                 <div class="container-fluid p-0">
                     <div class="row align-items-center no-gutters">
@@ -20,7 +24,6 @@
                                        <li><a href="{% url 'event_list' %}">Events</a></li>
                                        <li><a href="{% url 'paper_list' %}">Papers</a></li>
                                         <li><a href="{% url 'about' %}">About</a></li>
-
                                         <li><a href="contact.html">Resources</a></li>
                                     </ul>
                                 </nav>

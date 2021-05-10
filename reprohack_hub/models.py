@@ -145,6 +145,23 @@ class Event(models.Model):
     def get_absolute_url(self):
         return reverse('event_detail', args=[self.id])
 
+    @property
+    def url(self):
+        return self.get_absolute_url()
+
+    @property
+    def address(self):
+        addr_items = [self.address1, self.address2, self.city, self.postcode, self.country.name]
+
+        used_addr_items = []
+        for addr_item in addr_items:
+            if addr_item and isinstance(addr_item, str) and len(addr_item.strip()) > 0:
+                used_addr_items.append(addr_item.strip())
+
+        return ", ".join(used_addr_items)
+
+
+
 
     @property
     def lat(self):
