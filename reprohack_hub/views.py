@@ -15,7 +15,6 @@ from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.views.generic.list import ListView
-from geocoder import google
 
 # custom
 from .forms import EventForm, PaperForm, ReviewForm, UserChangeForm, UserCreationForm
@@ -57,19 +56,6 @@ class EventCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
-        address = ", ".join(
-            (
-                self.object.address1,
-                self.object.city,
-                self.object.postcode,
-                self.object.country.name,
-            )
-        )
-        try:
-            coord = google(address)
-            self.object.event_coordinates = coord.latlng[::-1]
-        except TypeError:
-            logger.warning("No coordinates returned for %s", address)
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
