@@ -1,7 +1,7 @@
 import logging
 from os import PathLike
 from pathlib import Path
-from typing import Dict
+from typing import Dict, Any, Optional
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.contrib.auth import authenticate, login
@@ -74,18 +74,22 @@ class EventCreate(LoginRequiredMixin, CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-
-
-class EventUpdate(UpdateView):
+class EventUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Event
     form_class = EventForm
     template_name = "event/event_edit.html"
 
+    def test_func(self) -> Optional[bool]:
+        return self.get_object().creator.pk == self.request.user.pk
 
-class EventDetail(UpdateView):
+    def handle_no_permission(self):
+        return redirect('event_detail', pk=self.get_object().pk)
+
+
+class EventDetail(DetailView):
     model = Event
-    form_class = EventForm
     template_name = "event/event_detail.html"
+
 
 
 class EventList(ListView):
@@ -293,6 +297,6 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
     permanent = False
 
     def get_redirect_url(self):
-        return reverse("users:detail", kwargs={"username": self.request.user.username})
+        return reverse("user_detail", kwargs={"pk": self.request.user.pk})
 
 

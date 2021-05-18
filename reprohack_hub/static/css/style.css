@@ -1182,18 +1182,22 @@ h3 {
   @media (min-width: 768px) and (max-width: 991px) {
     .bradcam_area {
       padding: 150px 0; } }
-  .bradcam_area h3 {
+  .bradcam_area h1 {
     font-size: 60px;
     color: #fff;
     font-weight: 400;
     margin-bottom: 0;
     text-transform: capitalize; }
     @media (max-width: 767px) {
-      .bradcam_area h3 {
+      .bradcam_area h1 {
         font-size: 30px; } }
     @media (min-width: 768px) and (max-width: 991px) {
-      .bradcam_area h3 {
+      .bradcam_area h1 {
         font-size: 40px; } }
+    .bradcam_area h1 a {
+      font-size: 40px;
+      color: #fff;
+      text-decoration: underline; }
 
 .bradcam_area2 {
   background-size: cover;

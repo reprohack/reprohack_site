@@ -58,7 +58,6 @@ class PaperForm(ModelForm):
         exclude = ['submission_date', 'creator', ]
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user')
         super(PaperForm, self).__init__(*args, **kwargs)
         # self.email = self.cleaned_data['email']
 
@@ -72,6 +71,7 @@ class PaperForm(ModelForm):
         self.helper.add_input(Submit('submit', 'Submit paper'))
         self.helper.layout = Layout(
             HTML('<h2>Paper details<h2>'),
+            'event',
             'title',
             'citation_txt',
             'citation_bib',
@@ -150,7 +150,7 @@ class ReviewForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ReviewForm, self).__init__(*args, **kwargs)
-        self.fields['paper'].queryset = Paper.objects.filter(available=True)
+        # self.fields['paper'].queryset = Paper.objects.filter(available=True)
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Submit review'))

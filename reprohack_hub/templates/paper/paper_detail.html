@@ -2,16 +2,19 @@
 {% load static %}
 
 {% block content %}
-<div class="bradcam_area breadcam_bg overlay2"></div>
+<div class="bradcam_area breadcam_bg overlay2">
+
+                <h1>{{ paper.title }}
+{% if user.is_authenticated %}
+                <a class="btn btn-default" href="{% url 'paper_edit' pk=paper.pk %}"><i class="bi-pencil-fill"></i></a>
+                {% endif %}
+                </h1>
+</div>
 <div class="whole-wrap">
     <div class="container box_1170">
         <div class="section-top-border">
             <div class="paper">
-                {% if user.is_authenticated %}
-                <a class="btn btn-default" href="{% url 'paper_edit' pk=paper.pk %}"><span
-                        class="glyphicon glyphicon-pencil"></span></a>
-                {% endif %}
-                <h3>{{ paper.title }}</h3>
+
                 <div>
                     <h5>{{ paper.citation_txt }} - {{ paper.time_end }}</h5>
 
@@ -21,6 +24,8 @@
                 Why should we reproduce your paper?
                 <p>{{ paper.why|linebreaksbr }}</p>
                 <p>{{ paper.focus|linebreaksbr }}</p>
+              <p>Associated event</p>
+              {{ paper.event }}
             </div>
         </div>
     </div>

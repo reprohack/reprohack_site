@@ -16,7 +16,7 @@
     @media #{$tablet_device} {
         padding: 150px 0;
     }
-    h3{
+    h1{
         font-size: 60px;
         color: #fff;
         font-weight: 400;
@@ -28,6 +28,13 @@
         @media #{$tablet_device} {
             font-size: 40px;
         }
+
+      a{
+        font-size: 40px;
+        color: #fff;
+        text-decoration: underline;
+
+      }
     }
 }
 .bradcam_area2{

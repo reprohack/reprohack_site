@@ -1,15 +1,39 @@
-<input id="{{ widget.attrs.id }}" name="{{ widget.name }}"
+<div style="position: relative">
+  <button id="clear_map_input_btn" class="btn btn-danger" style="position: absolute; right: 1rem; top: 1rem; z-index: 999999">Clear marker</button>
+  <input id="{{ widget.attrs.id }}" name="{{ widget.name }}"
        {% if widget.value %}value="{{ widget.value }}"{% endif %} hidden>
-<div id="{{ widget.attrs.id }}_map_input" style="height: 30rem; width: 100%"></div>
+  <div id="{{ widget.attrs.id }}_map_input" style="height: 30rem; width: 100%"></div>
+
+
+</div>
+
 <script>
+
+  function convertStrToLatlng(value){
+    if(value && value.length > 0 ){
+      const latlngSplit = value.trim().split(",");
+      return L.latLng(latlngSplit);
+    }
+
+  }
+
   $(document).ready(function () {
 
     let widget_edit_id = "{{ widget.attrs.id }}";
     let map_input_id = "{{ widget.attrs.id }}_map_input";
+    let inputWidget = $("#"+widget_edit_id);
+    let clearMarkerBtn = $("#clear_map_input_btn");
     let marker = null;
 
+
+    let latlng = convertStrToLatlng(inputWidget.val());
+    let center = [51.505, -0.09]
+    if(latlng){
+      center = latlng;
+    }
+
     let map = L.map(map_input_id, {
-      center: [51.505, -0.09],
+      center: center,
       zoom: 13,
       scrollWheelZoom: false,
     });
@@ -19,18 +43,38 @@
     }).addTo(map);
 
     function addOrSetMarker(latlng){
-      if(!marker){
+      if(latlng){
+        if(!marker){
         marker = L.marker([latlng.lat, latlng.lng]).addTo(map);
       }
       else{
         marker.setLatLng(latlng);
       }
       map.flyTo(latlng);
-      $("#"+widget_edit_id).val(latlng.lat+","+latlng.lng)
+      inputWidget.val(latlng.lat+","+latlng.lng)
+      }
+      else{
+        if(marker)
+        {
+          map.removeLayer(marker)
+          marker = null
+        }
+        inputWidget.val("")
+      }
+
     }
 
     map.on('click', function (e){
       addOrSetMarker(e.latlng);
+    });
+
+    if(latlng){
+      addOrSetMarker(latlng);
+    }
+
+    clearMarkerBtn.on("click", function (e){
+      addOrSetMarker(null);
+      e.preventDefault();
     });
 
 

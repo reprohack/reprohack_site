@@ -1,0 +1,31 @@
+# Runs frontend, backend and integration testing
+name: CI
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          auto-activate-base: false
+          activate-environment: "annotation-tool"
+          environment-file: environment.yml
+      - name: Use Node.js v14
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Install npm packages
+        run: npm install
+      - name: Run backend test
+        run: npm run test:backend
+      - name: Run frontend test
+        run: npm run test:frontend
+      - name: Run integration test
+        run: npm run test:integration
+

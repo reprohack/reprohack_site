@@ -24,7 +24,7 @@ urlpatterns = [
                                              'markdown_file': 'about.md'}),
          name='about_test'),
     path('signup/', UserCreateView.as_view(), name='signup'),
-    path('users/<int:pk>/', UserDetailView.as_view(), name='user_detail'),
+    path('users/<int:pk>', UserDetailView.as_view(), name='user_detail'),
     path('users/<int:pk>/edit/', UserUpdateView.as_view(), name='user_update'),
     path('password_reset_form/', auth_views.PasswordChangeView.as_view()),
     path("users/redirect/", view=UserRedirectView.as_view(), name="usersredirect"),
