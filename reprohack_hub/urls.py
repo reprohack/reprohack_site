@@ -4,7 +4,6 @@ from django.contrib.auth import views as auth_views
 from django.urls import include, path, re_path
 from django.conf.urls.static import static
 from django.conf import settings
-from djgeojson.views import GeoJSONLayerView
 from .models import Event
 from .views import (EventCreate, EventUpdate, EventDetail, EventList, IndexView,
                     PaperCreate, PaperUpdate, PaperDetail, PaperList,
