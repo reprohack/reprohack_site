@@ -2,12 +2,10 @@ from django.contrib import admin
 from django.contrib.auth import admin as auth_admin
 from django.contrib.auth import get_user_model
 from reprohack_hub.forms import UserChangeForm, UserCreationForm
-from leaflet.admin import LeafletGeoAdmin
 
 # Register your models here.
 from .models import Event, Paper, Review
 
-admin.site.register(Event, LeafletGeoAdmin)
 admin.site.register(Paper)
 admin.site.register(Review)
 
