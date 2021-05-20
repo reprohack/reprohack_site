@@ -50,37 +50,59 @@ The default values of these settings are located at `config/settings/secret_defa
 
 ### Running the development server
 
+Run the development server with the following command:
+
+```bash
+npm run serve
+```
+
+The app can then be accessed from `http://127.0.0.1:8000`. The app uses the `config.settings.local` config by default.
 
 
+#### Running processes separately
 
+The `npm run serve` runs two commands in parallel:
 
-### Admin panel
+* `npm run serve:site` - Runs the django's development serve`
+* `npm run serve:assets` - Monitors and builds javascript and scss assets with gulp
 
-The admin panel can be used 
+It may be useful to only run `npm run serve:assets` on its own while running the django app through an IDE of
+your choice for debugging.
 
+Run `npm run` to see the full list of commands.
 
-### Setting up your users
-* To create a **normal user account**, just go to Sign Up and fill out the form. Once you submit it, you'll 
-  see a "Verify Your E-mail Address" page. Go to your console to see a simulated email verification message. 
-  Copy the link into your browser. Now the user's email should be verified and ready to go.
-
-* To create an **superuser account**, use this command 
-  ```bash
-  $ python manage.py createsuperuser
-  ``
+### Creating normal users
+To create a **normal user account**, just go to Sign Up and fill out the form. Once you submit it, you'll 
+see a "Verify Your E-mail Address" page. Go to your console to see a simulated email verification message. 
+Copy the link into your browser. Now the user's email should be verified and ready to go.
+ 
 
 For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on 
 Firefox (or similar), so that you can see how the site behaves for both kinds of users.
 
+### Creating a superuser
+
+To create an **superuser account**, use this command 
+
+```bash
+python manage.py createsuperuser
+```
+
+Only the superuser is allowed to log into the admin panel (see next section).
+
+### Admin panel
+
+The admin panel can be access at `/admin` e.g. for the local development server `http://127.0.0.1:8000/admin`.
+
+The panel can be used to browse and edit your database.  
+
 
 ### Testing
 
-#### Running tests with py.test
+The `pytest` library is used for testing. Run the following command:
 
-Run the following command:
-
-```bash
-pytest
+```
+npm run test
 ```
 
 #### Type checks
@@ -107,25 +129,55 @@ The following are steps for deploying on python anywhere.
 
 * App setting is located at `config/settings/pythonanywhere.py`
 
-### Configuration (`secret.py`): IMPORTANT!
-
-You must create a 'secret' python settings file for storing information that should not be public at:
-
-```
-config/settings/secret.py
-```
-
-The default values of these settings are located at `config/settings/secret_default.py`.
-
 ### Installation: Python anywhere
 
 **Instructions for installing a FRESH copy of the app on pythonanywhere.**
+
+#### On Pythonanywhere web GUI: Creating a web app
+
+* Log in to pythonanywhere
+* Go to the `Web` section
+* Click on `Add a new web app`
+* Select Manual app
+* On the web app configuration page, set:
+  * Source code `/home/reprohacks/reprohack_site`
+  * Working directory `/home/reprohacks/reprohack_site`
+  * WSGI Configuraiton file, click on the link and set according to the next section
+  * Virtualenv `/home/reprohacks/reprohack_site/.virtualenv`
+  * Static files set URL as `/static/` and directory `/home/reprohacks/reprohack_site/`
+* Set up the database by clicking on the `Databases` section
+  * Press `create database`
+  * You'll need to set a password
+  * Create a database named `reprohack`
+  
+
+#### On Pythonanywhere web GUI: Setting up WSGI file for the webapp
+
+```python
+import os
+import sys
+
+# add your project directory to the sys.path
+project_home = '/home/reprohacks/reprohack_site'
+if project_home not in sys.path:
+    sys.path.insert(0, project_home)
+
+# set environment variable to tell django where your settings.py is
+os.environ['DJANGO_SETTINGS_MODULE'] = 'config.settings.pythonanywhere'
+
+
+# serve django via WSGI
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+```
+
+#### Installing the app from github repository
 
 Python anywhere already comes with `Python 3.8` installed, so we can use virtualenv instead. Installation of node
 on the server is not as javascript dependencies are copied to django's static folder and is tracked through version 
 control.
 
-After logging into pythonanywhere console or ssh into pythonanywhere: 
+Access pythonanywhere's bash console or ssh into pythonanywhere, then run the following: 
 
 ```bash
 # Make sure we're in the home folder
@@ -148,12 +200,8 @@ pip install requirements/production.txt
 ```
 
 You will then need to create a secrets setting file at `config/settings/secret.py`, copy the 
-contents of `config/settings/secret_default.py` and use that as the basis.
-
-A mysql database can be set up through the pythonanywhere gui. Add the settings such as `USERNAME`, `PASSWORD` etc. 
-to the `secret.py`.
-
-
+contents of `config/settings/secret_default.py` and use that as the basis. Add the settings such as `MYSQL_USERNAME`,
+`MYSQL_PASSWORD` etc. to the `secret.py`.
 
 Once all the above has been set up, we then need to build a 
 ```
@@ -163,27 +211,6 @@ Once all the above has been set up, we then need to build a
 # Collect the static assets into /staticfiles folder
 ./manage.py collectstatic
 ```
-
-### WSGI file for the webapp
-
-```python
-import os
-import sys
-
-# add your project directory to the sys.path
-project_home = '/home/reprohacks/reprohack_site'
-if project_home not in sys.path:
-    sys.path.insert(0, project_home)
-
-# set environment variable to tell django where your settings.py is
-os.environ['DJANGO_SETTINGS_MODULE'] = 'config.settings.pythonanywhere'
-
-
-# serve django via WSGI
-from django.core.wsgi import get_wsgi_application
-application = get_wsgi_application()
-```
-
 
 
 ## Host Your Own

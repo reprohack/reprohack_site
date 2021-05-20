@@ -1,3 +1,6 @@
+# Ignore secret settings file
+secret.py
+
 # Ignore sqlite
 *.sqlite
 
