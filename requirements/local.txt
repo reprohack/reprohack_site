@@ -1,7 +1,5 @@
 -r ./base.txt
 
-
-
 # Testing
 # ------------------------------------------------------------------------------
 django-stubs==1.6.0  # https://github.com/typeddjango/django-stubs

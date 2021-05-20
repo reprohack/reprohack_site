@@ -14,18 +14,15 @@ jobs:
         with:
           auto-update-conda: true
           auto-activate-base: false
-          activate-environment: "annotation-tool"
-          environment-file: environment.yml
+          python-version: "3.8"
+      - name: Install python dependencies
+        run: pip install -r requirements/local.txt
       - name: Use Node.js v14
         uses: actions/setup-node@v2
         with:
           node-version: '14'
       - name: Install npm packages
         run: npm install
-      - name: Run backend test
-        run: npm run test:backend
-      - name: Run frontend test
-        run: npm run test:frontend
-      - name: Run integration test
-        run: npm run test:integration
+      - name: Run test
+        run: npm run test
 

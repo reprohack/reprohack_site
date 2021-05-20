@@ -8,7 +8,7 @@ from factory import Faker, Sequence, SubFactory, post_generation
 from factory.django import DjangoModelFactory
 
 from reprohack_hub.models import Event, Paper, Review
-from typing import Any, Sequence
+from typing import Any, Sequence as TypingSequence
 
 from django.contrib.auth import get_user_model
 
@@ -24,7 +24,7 @@ class UserFactory(DjangoModelFactory):
     def password(
         self,
         create: bool,  # pylint: disable=[unused-argument]
-        extracted: Sequence[Any],
+        extracted: TypingSequence[Any],
         **kwargs
     ):  # pylint: disable=[unused-argument]
         password = (

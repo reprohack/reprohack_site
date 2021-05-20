@@ -78,7 +78,6 @@ THIRD_PARTY_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "django_extensions",
 ]
 
 # Your stuff: custom apps go here
