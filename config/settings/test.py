@@ -2,7 +2,7 @@
 With these settings, tests run faster.
 """
 
-from .base import *  # noqa
+from .base import *
 
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#test-runner
