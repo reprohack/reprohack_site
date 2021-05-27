@@ -7,7 +7,6 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login
 from django.utils.translation import gettext as _
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.gis.geos import Point
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.utils import timezone
