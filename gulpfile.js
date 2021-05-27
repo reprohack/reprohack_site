@@ -4,6 +4,7 @@
 
 // Gulp and package
 const { src, dest, parallel, series, watch } = require('gulp')
+const gncd = require('gulp-npm-copy-deps')
 const pjson = require('./package.json')
 
 // Plugins
@@ -30,9 +31,10 @@ function pathsConfig(appName) {
 
     bootstrapSass: `${vendorsRoot}/bootstrap/scss`,
     vendorsJs: [
-      `${vendorsRoot}/jquery/dist/jquery.slim.js`,
+      `${vendorsRoot}/jquery/dist/jquery.js`,
       `${vendorsRoot}/popper.js/dist/umd/popper.js`,
       `${vendorsRoot}/bootstrap/dist/js/bootstrap.js`,
+      `${vendorsRoot}/leaflet/dist/leaflet.js`,
     ],
 
     app: this.app,
@@ -42,6 +44,7 @@ function pathsConfig(appName) {
     fonts: `${this.app}/static/fonts`,
     images: `${this.app}/static/images`,
     js: `${this.app}/static/js`,
+    jsVendors: `${this.app}/static/js/vendor`
   }
 }
 
@@ -50,6 +53,10 @@ var paths = pathsConfig()
 ////////////////////////////////
 // Tasks
 ////////////////////////////////
+
+function copyNpmDependencies(){
+  return gncd('./','./reprohack_hub/static/vendor');
+}
 
 // Styles autoprefixing and minification
 function styles() {
@@ -62,7 +69,7 @@ function styles() {
       cssnano({ preset: 'default' })   // minify result
   ]
 
-  return src(`${paths.sass}/project.scss`)
+  return src(`${paths.sass}/style.scss`)
     .pipe(sass({
       includePaths: [
 
@@ -79,7 +86,7 @@ function styles() {
 
 // Javascript minification
 function scripts() {
-  return src(`${paths.js}/project.js`)
+  return src(`${paths.js}/main.js`)
     .pipe(plumber()) // Checks for errors
     .pipe(uglify()) // Minifies the js
     .pipe(rename({ suffix: '.min' }))
@@ -90,12 +97,12 @@ function scripts() {
 // Vendor Javascript minification
 function vendorScripts() {
   return src(paths.vendorsJs)
-    .pipe(concat('vendors.js'))
-    .pipe(dest(paths.js))
+    // .pipe(concat('vendors.js'))
+    .pipe(dest(paths.jsVendors))
     .pipe(plumber()) // Checks for errors
     .pipe(uglify()) // Minifies the js
     .pipe(rename({ suffix: '.min' }))
-    .pipe(dest(paths.js))
+    .pipe(dest(paths.jsVendors))
 }
 
 
@@ -150,10 +157,12 @@ function watchPaths() {
 
 // Generate all assets
 const generateAssets = parallel(
-  styles,
+  copyNpmDependencies,
+    styles,
   scripts,
-  vendorScripts,
-  imgCompression
+  // vendorScripts,
+
+  // imgCompression
 )
 
 // Set up dev environment
@@ -163,5 +172,4 @@ const dev = parallel(
 )
 
 exports.default = series(generateAssets, dev)
-exports["generate-assets"] = generateAssets
-exports["dev"] = dev
+exports["build"] = generateAssets

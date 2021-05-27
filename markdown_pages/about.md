@@ -16,4 +16,4 @@ supported the running of a series of ReproHacks
 
 ### ReproHack Team
 
-![ReproHack Team](/static/reprohack/images/reprohack_ladies.png)
+![ReproHack Team](/static/images/reprohack_ladies.png)

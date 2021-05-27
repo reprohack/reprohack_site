@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<!-- bradcam_area_start -->
+<div class="bradcam_area breadcam_bg overlay2">
+  <h1>
+    User profile
+     <a class="btn btn-default" href="{% url 'user_update' username=user.username %}"><i class="bi-pencil-fill"></i> </a>
+  </h1>
+</div>
+<!-- bradcam_area_end -->
+<div class="whole-wrap">
+  <div class="container mt-3 mb-3">
+    <div class="row">
+      <div class="col-md-10">
+
+        <h4><i class="bi-person-fill"></i>
+          {{ user.username }} </h4>
+
+
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+        {{ user.email }}
+        {{ user.first_name }}
+        {{ user.last_name }}
+        {{ user.orcid_id }}
+        <i class="ti-twitter-alt"></i>{{ user.twitter }}
+        <i class="fa fa-github"></i>{{ user.github }}
+        </div>
+      </div>
+
+
+  </div>
+</div>
+{% endblock %}

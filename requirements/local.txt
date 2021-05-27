@@ -1,12 +1,7 @@
 -r ./base.txt
 
-Werkzeug==1.0.1 # https://github.com/pallets/werkzeug
-ipdb==0.13.4  # https://github.com/gotcha/ipdb
-psycopg2==2.8.6 --no-binary psycopg2  # https://github.com/psycopg/psycopg2
-
 # Testing
 # ------------------------------------------------------------------------------
-mypy==0.782  # https://github.com/python/mypy
 django-stubs==1.6.0  # https://github.com/typeddjango/django-stubs
 pytest==6.1.1  # https://github.com/pytest-dev/pytest
 pytest-sugar==0.9.4  # https://github.com/Frozenball/pytest-sugar
@@ -34,3 +29,5 @@ django-debug-toolbar==2.2  # https://github.com/jazzband/django-debug-toolbar
 django-extensions==3.0.9  # https://github.com/django-extensions/django-extensions
 django-coverage-plugin==1.8.0  # https://github.com/nedbat/django_coverage_plugin
 pytest-django==3.10.0  # https://github.com/pytest-dev/pytest-django
+
+

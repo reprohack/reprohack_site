@@ -1,0 +1,80 @@
+<div id="map" style="height: 30rem; width: 100%"></div>
+<script>
+
+
+
+
+  $(document).ready(function () {
+
+    var eventLocations = [
+      {% for event in object_list %}
+        {% if event.lat and event.long %}
+      {
+        latlng: L.latLng({{ event.lat }}, {{ event.long }}),
+        title: "{{ event.title }}",
+        url: "{{ event.url }}",
+      },
+        {% endif %}
+      {% endfor %}
+      {% if event and event.lat and event.long %}
+        {
+        latlng: L.latLng({{ event.lat }}, {{ event.long }}),
+        title: "{{ event.title }}",
+          url: "{{ event.url }}",
+      },
+      {% endif %}
+    ];
+
+    let eventBounds = null;
+    if(eventLocations.length > 1){
+      let latlngs = [];
+      for(let i in eventLocations){
+        latlngs.push(eventLocations[i].latlng);
+      }
+      eventBounds = L.latLngBounds(latlngs);
+    }
+
+    let mapConfig = {
+      zoom: 7,
+      scrollWheelZoom: false,
+    }
+
+    let map = L.map('map', mapConfig);
+    if(eventBounds){
+      map.fitBounds(eventBounds);
+    }
+    else if(eventLocations.length > 0){
+      map.setView(eventLocations[0].latlng, mapConfig.zoom);
+    }
+    else{
+      map.setView([51.505, -0.09], mapConfig.zoom);
+    }
+
+    // Add map layers
+    let Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+      attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      subdomains: 'abcd',
+      minZoom: 1,
+      maxZoom: 16,
+      ext: 'jpg',
+
+    }).addTo(map);
+
+    let Stamen_TonerHybrid = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-hybrid/{z}/{x}/{y}{r}.{ext}', {
+      attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      subdomains: 'abcd',
+      minZoom: 0,
+      maxZoom: 20,
+      ext: 'png'
+
+    }).addTo(map);
+
+    // Add markers
+    for(let i in eventLocations){
+      let event = eventLocations[i];
+      let marker = L.marker(event.latlng).addTo(map)
+            .bindPopup(`<a href="${event.url}">${event.title}</a>`);
+    }
+
+  })
+</script>
