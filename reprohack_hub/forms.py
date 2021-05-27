@@ -205,6 +205,12 @@ class UserChangeForm(forms.UserChangeForm):
         exclude = ["password", "id_password"]
         fields = ['name', 'email', 'bio', 'affiliation', 'location', 'twitter', 'github', 'orcid']
 
+    def __init__(self, *args, **kwargs):
+        super(UserChangeForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Save'))
+
 
 class UserCreationForm(forms.UserCreationForm):
 
@@ -213,7 +219,7 @@ class UserCreationForm(forms.UserCreationForm):
     )
 
     class Meta(forms.UserCreationForm.Meta):
-        fields = ('first_name', "last_name", 'username', 'email', 'password1', 'password2')
+        fields = ('first_name', "last_name", 'username', 'email', 'password1', 'password2', 'affiliation', 'twitter', 'github', 'orcid')
         model = get_user_model()
 
     def clean_username(self):
@@ -241,6 +247,7 @@ class UserCreationForm(forms.UserCreationForm):
             Row(
                 Column('password1', css_class='form-group col-md-6 mb-0'),
                 Column('password2', css_class='form-group col-md-6 mb-0')
-            )
+            ),
+            'affiliation', 'twitter', 'github', 'orcid',
 
         )

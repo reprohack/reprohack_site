@@ -39,7 +39,6 @@ def test_paper_save(user: User) -> None:
     test_title: str = "A Title"
     paper: Paper = Paper(title=test_title,)
     paper.save()
-    paper.authors_and_submitters.add(user)
     assert str(paper) == test_title
     assert paper.get_absolute_url() == f"/paper/{paper.id}/"
 

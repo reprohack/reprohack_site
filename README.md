@@ -35,6 +35,15 @@ conda install -c conda-forge nodejs
 pip install -r requirements/local.txt
 
 # Install node dependencies
+npm install
+```
+
+#### The conda environment must be activated every session
+The conda environment must be re-activate after every session, e.g. when you open a new terminal. The following 
+line of code must be run again to re-activate your conda environment:
+
+```
+source activate reprohack
 ```
 
 ### Configuration (`secret.py`): IMPORTANT!

@@ -5,6 +5,7 @@ from typing import Dict, Any, Optional
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.contrib.auth import authenticate, login
+from django.utils.translation import gettext as _
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.gis.geos import Point
 from django.http import HttpResponseRedirect
@@ -242,7 +243,7 @@ class UserCreateView(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class UserDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+class UserDetailView(LoginRequiredMixin, DetailView):
 
     model = User
     template_name = "registration/user_detail.html"
@@ -262,10 +263,11 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     template_name = "registration/user_update.html"
 
     def get_success_url(self):
-        return reverse("users:detail", kwargs={"username": self.request.user.username})
+        return reverse("user_redirect")
 
     def get_object(self):
-        return User.objects.get(username=self.request.user.username)
+        return User.objects.get(pk=self.request.user.pk)
+
 
     def form_valid(self, form):
         messages.add_message(
@@ -283,6 +285,6 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
     permanent = False
 
     def get_redirect_url(self):
-        return reverse("user_detail", kwargs={"pk": self.request.user.pk})
+        return reverse("user_detail", kwargs={"username": self.request.user.username})
 
 
