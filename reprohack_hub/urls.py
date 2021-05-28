@@ -11,9 +11,6 @@ from .views import (EventCreate, EventUpdate, EventDetail, EventList, IndexView,
                     UserDetailView, UserUpdateView, UserCreateView, UserRedirectView, MarkdownView)
 
 
-
-
-
 urlpatterns = [
 
     path('accounts/', include('django.contrib.auth.urls')),
@@ -22,13 +19,19 @@ urlpatterns = [
          MarkdownView.as_view(extra_context={'title': 'About Us',
                                              'markdown_file': 'about.md'}),
          name='about_test'),
+    path('ways-to-reprohack',
+         MarkdownView.as_view(extra_context={'title': 'Ways to ReproHack!',
+                                             'markdown_file': 'ways-to-reprohack.md'}),
+         name='ways-to-reprohack'),
     path('signup/', UserCreateView.as_view(), name='signup'),
     path('users/<str:username>/', UserDetailView.as_view(), name='user_detail'),
-    path('users/<str:username>/edit/', UserUpdateView.as_view(), name='user_update'),
+    path('users/<str:username>/edit/',
+         UserUpdateView.as_view(), name='user_update'),
     path('password_reset_form/', auth_views.PasswordChangeView.as_view()),
     path("users/redirect/", view=UserRedirectView.as_view(), name="user_redirect"),
     path('logout/',
-         auth_views.LogoutView.as_view(template_name='registration/logout.html'),
+         auth_views.LogoutView.as_view(
+             template_name='registration/logout.html'),
          name='logout'),
     path('', IndexView.as_view(), name='index'),
     path('', IndexView.as_view(), name='home'),
