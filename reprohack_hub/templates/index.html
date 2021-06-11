@@ -136,18 +136,46 @@
           </div>
           <div class="section-top-border">
             <h2>Many Ways to ReproHack</h2>
+
+            <h5>For more details, check out our <a href="{% url 'ways-to-reprohack' %}">7 Flavours of ReproHack guidelines </a></h5>
             <div class="row">
 
-              <img src="{% static 'images/workflow.png' %}" alt="" width="80%">
+              <img src="{% static 'images/workflow.png' %}" alt="" width="100%">
             </div>
+            <br>
             <div class="row">
               <div class="col">
-                <h2>ReproHack Map!</h2>
+                <h2>ReproHack Event Map</h2>
+                <h3> Find an event near you! </h3>
                 {% include "event/event_map.html" %}
 
               </div>
-
-
+            </div>
+              <div class="row">
+                <div class="col">
+                <br>
+                  <h2>Sponsors</h2>
+                    <div class="row">
+                      <div class="col-xl-4 col-md-4 col-lg-4">
+                        <a href="https://n8cir.org.uk/">
+                          <img src="{% static 'images/2020_11_10_cir_cmyk.png' %}" alt=" N8 CIR Logo" width="100%">
+                        </a>
+                        <p> The support of the N8 Centre of Excellence for Computationally Intensive Research (N8 CIR) funded by the N8 research partnership (Universities of Durham, Lancaster, Leeds, Liverpool, Manchester, Newcastle, Sheffield and York) is gratefully acknowledged.</p>
+                      </div>
+                      <div class="col-xl-4 col-md-4 col-lg-4">
+                        <a href="https://www.software.ac.uk/">
+                          <img src="{% static 'images/SSILogo4Citations.png' %}" alt="Software Sustainability Institute Logo" width="100%">
+                        </a>
+                        <p> The support of the EPSRC, BBSRC and ESRC supported Software Sustainability Institute is gratefully acknowledged. </p>
+                      </div>
+                      <div class="col-xl-4 col-lg-4 col-md-4">
+                        <a href="https://rse.shef.ac.uk/">
+                          <img src="{% static 'images/tuos_rse_logo.png' %}" alt="The University of Sheffield Research Software Engineering Team Logo" width="100%">
+                        </a>
+                        <p> The support of the University of Sheffield RSE team is gratefully acknowledged. </p>
+                      </div>
+                    </div>
+                </div>
             </div>
           </div>
         </div>
