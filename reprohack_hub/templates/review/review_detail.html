@@ -18,6 +18,10 @@
                 <div>
                     <h4>Submitted by {{ review.reviewers.first }}</h4>
                 </div>
+            {% for rv in review.paperreviewer_set.all %}
+              {{ rv.user.username }}
+              {{ rv.lead_reviewer }}
+            {% endfor %}
             </div>
         </div>
     </div>
