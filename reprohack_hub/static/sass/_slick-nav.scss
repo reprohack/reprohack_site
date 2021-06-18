@@ -24,13 +24,20 @@
         right: 0;
         margin: auto;
         top: 11px;
+        li::before {
+            border: none;
+            background: none;
+        }
         a{
+	        color: #2E004B;
+            font-family: $font1;
             &:hover{
                 background: transparent;
-                color: #4A3600;
+                color: #25735D;
             }
             &.active{
-                color: #4A3600;
+                color: #2E004B;
+                font-weight: 700;
             }
             i{
                 @media #{$mobile_device} {
@@ -103,3 +110,4 @@
 	margin-top: -5px;
     top: -32px;
 }
+

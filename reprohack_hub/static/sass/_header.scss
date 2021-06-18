@@ -84,6 +84,7 @@
             ul{
                 li{
                     display: inline-block;
+                    list-style: none;
                     position: relative;
                     margin-right: 50px;
                     @media #{$mid_device} {
@@ -91,6 +92,10 @@
                     }
                     @media #{$large_device} {
                         margin-right: 15px;
+                    }
+                    &::before {
+                        border: none;
+                        background: none;
                     }
                     a{
                         color: #fff;
