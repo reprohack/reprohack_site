@@ -270,19 +270,29 @@ del {
   color: #ff5e13; }
 
 h1 {
-  font-size: 36px; }
+  font-size: 36px;
+  margin-top: 1em;
+  margin-bottom: 0.5; }
 
 h2 {
-  font-size: 30px; }
+  font-size: 30px;
+  margin-top: 1em;
+  margin-bottom: 0.5; }
 
 h3 {
-  font-size: 24px; }
+  font-size: 24px;
+  margin-top: 0.7em;
+  margin-bottom: 0.3; }
 
 h4 {
-  font-size: 18px; }
+  font-size: 18px;
+  margin-top: 0.7em;
+  margin-bottom: 0.3; }
 
 h5 {
-  font-size: 16px; }
+  font-size: 16px;
+  margin-top: 0.5em;
+  margin-bottom: 0.2; }
 
 h6 {
   font-size: 14px; }
@@ -330,6 +340,10 @@ ol {
     ol li span {
       font-weight: 300;
       color: #828bb2; }
+
+a {
+  color: #2E004B;
+  font-weight: 600; }
 
 .button-area {
   background: #fff; }
@@ -4200,7 +4214,9 @@ strong {
 blockquote {
   padding: 30px 50px 30px 30px;
   background: #f9f9ff;
-  border-left: 2px solid #ff5e13; }
+  border-left: 2px solid #ff5e13;
+  font-style: italic;
+  font-size: 2.5em; }
 
 /*
 ul li {
