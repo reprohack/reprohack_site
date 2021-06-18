@@ -8,11 +8,11 @@ from .models import Event
 from .views import (EventCreate, EventUpdate, EventDetail, EventList, IndexView,
                     PaperCreate, PaperUpdate, PaperDetail, PaperList,
                     ReviewCreate, ReviewDetail, ReviewUpdate, ReviewList,
-                    UserDetailView, UserUpdateView, UserCreateView, UserRedirectView, MarkdownView)
+                    UserDetailView, UserUpdateView, UserCreateView, UserRedirectView, MarkdownView,
+                    UserSearchEndpointView)
 
 
 urlpatterns = [
-
     path('accounts/', include('django.contrib.auth.urls')),
     path('about',
          MarkdownView.as_view(extra_context={'title': 'About Us',
@@ -52,6 +52,7 @@ urlpatterns = [
          UserUpdateView.as_view(), name='user_update'),
     path('password_reset_form/', auth_views.PasswordChangeView.as_view()),
     path("users/redirect/", view=UserRedirectView.as_view(), name="user_redirect"),
+    path("user_search", view=UserSearchEndpointView.as_view()),
     path('logout/',
          auth_views.LogoutView.as_view(
              template_name='registration/logout.html'),

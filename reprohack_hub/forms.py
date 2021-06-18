@@ -1,6 +1,10 @@
-from django.forms import ModelForm, Widget, TextInput
-from django.utils.translation import gettext_lazy as _
+import logging
+import json
+from typing import Any, Optional, Dict, Union, Type, Sequence
 
+from django.forms import Field as DFField, ModelForm, Widget, TextInput, RadioSelect, CharField
+from django.forms.models import ModelChoiceField
+from django.utils.translation import gettext_lazy as _
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit, Row, Column, HTML, Field
 from crispy_forms.bootstrap import InlineRadios
@@ -9,7 +13,10 @@ from crispy_forms.bootstrap import InlineRadios
 from django.contrib.auth import forms, get_user_model
 from django.core.exceptions import ValidationError
 
-from .models import Event, Paper, Review
+from .models import Event, Paper, Review, PaperReviewer
+
+logger = logging.getLogger(__name__)
+
 
 # -------- Event -------- #
 class MapInput(Widget):
@@ -56,6 +63,10 @@ class PaperForm(ModelForm):
     class Meta:
         model = Paper
         exclude = ['submission_date', 'creator', ]
+        widgets = {
+            'title': TextInput(),
+            'review_availability': RadioSelect(),
+        }
 
     def __init__(self, *args, **kwargs):
         super(PaperForm, self).__init__(*args, **kwargs)
@@ -65,7 +76,7 @@ class PaperForm(ModelForm):
         # self.fields['contact'].label = "I can be contacted by participants"
 
         # self.fields['feedback'].label = "I wish to received feedback on reproductions"
-        self.fields['public'].label = "I wish to receive feedback on reproductions"
+
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Submit paper'))
@@ -73,6 +84,8 @@ class PaperForm(ModelForm):
             HTML('<h2>Paper details<h2>'),
             'event',
             'title',
+            'authors',
+
             'citation_txt',
             'citation_bib',
             'doi',
@@ -92,49 +105,29 @@ class PaperForm(ModelForm):
                      ),
                      ),
             Field('tools', label="Useful Software Skills"),
-            HTML('<h3>Submitter contact details<h3>'),
-            Row(
-                Column(css_class='form-group col-md-4 mb-0'),
-                css_class='form-row',
-            ),
-            Fieldset("Authorship details",
-                     # Row(
-                     #     Column('authorship', label="I am corresponding author",
-                     #            css_class='form-group col-md-6 mb-0'),
-                     #     Column('author_first_name',
-                     #            css_class='form-group col-md-3 mb-0'),
-                     #     Column('author_last_name',
-                     #            css_class='form-group col-md-3 mb-0'),
-                     #     Column('author_email',
-                     #            css_class='form-group col-md-6 mb-0'),
-                     #     css_class='form-row',
-                     # ),
-                     Row(
-                         Column('public', label="Feedback can be published",
-                                css_class='form-group col-md-6 mb-0'),
-                         css_class='form-row',
-                     ),
-                     ),
+            Fieldset("Permissions",
+                     "review_availability",
+                     "public_reviews",
+                     "email_review")
         )
 
-    # def clean(self):
-    #     authorship = self.cleaned_data.get('authorship')
 
-    #     if authorship:
-    #         self.cleaned_data['author_user'] = self.user
-    #     else:
-    #         self.cleaned_data['author_user'] = ""
-    #         self.fields_required(['author_first_name'])
-    #         self.fields_required(['author_last_name'])
-    #         self.fields_required(['author_email'])
-    #     return self.cleaned_data
+class MuWidget(Widget):
 
-    # def fields_required(self, fields):
-    #     for field in fields:
-    #         if not self.cleaned_data.get(field, ''):
-    #             msg = forms.ValidationError("This field is required.")
-    #             self.add_error(field, msg)
+    template_name = "review/reviewers_select.html"
 
+    def get_context(self, name: str, value: Any, attrs):
+        context = super().get_context(name, value, attrs)
+        context["user"] = self.user
+        return context
+
+
+class MuField(DFField):
+    instance = None
+    widget = MuWidget
+
+    def clean(self, value):
+        return value
 
 class ReviewForm(ModelForm):
 
@@ -144,18 +137,23 @@ class ReviewForm(ModelForm):
         * Test the query of available papers with respect to event.
     """
 
+    reviewers = MuField()
+
     class Meta:
         model = Review
-        exclude = ['reviewers', ]
+        exclude = ['reviewers']
+
 
     def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
         super(ReviewForm, self).__init__(*args, **kwargs)
-        # self.fields['paper'].queryset = Paper.objects.filter(available=True)
+        self.fields["reviewers"].widget.user = self.user
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Submit review'))
         self.helper.layout = Layout(
             # HTML('<h2>ReproHack Author Feedback Form</h2>'),
+            'reviewers',
             'event',
             'paper',
             HTML(f"<h3>{_('Reproducibility')}</h3>"),
@@ -193,7 +191,39 @@ class ReviewForm(ModelForm):
             )),
             'reusability_suggestions',
             'general_comments',
+            Fieldset(_("Permissions"),
+                     "public_review"
+                     )
         )
+
+    def clean(self) -> Dict[str, Any]:
+        # user = self.user
+        # raise ValidationError(f"Test returning error message", code='invalid')
+        return super().clean()
+
+    def save(self, commit: bool = ...) -> Any:
+        save_result = super().save(commit)
+        review = self.instance
+
+        try:
+
+            reviewers_data_str = self.cleaned_data["reviewers"]
+            reviewers_data = json.loads(reviewers_data_str)
+
+            review.reviewers.clear()
+            for reviewer_obj in reviewers_data:
+                user = get_user_model().objects.get(username=reviewer_obj["username"])
+                review.reviewers.add(user, through_defaults={"lead_reviewer": reviewer_obj["lead"]})
+            review.save()
+
+        except Exception as e:
+            logger.exception("Trying to save an invalid reviewers list")
+
+
+        return save_result
+
+
+
 
 
 # --------------- USER PROFILE ---------------------- #

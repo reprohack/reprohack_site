@@ -2,24 +2,79 @@
 {% load static %}
 
 {% block content %}
-<div class="bradcam_area breadcam_bg overlay2">
-  <h3>Review of {{ review.paper }}</h3>
-    <br>
-</div>
-<div class="whole-wrap">
+
+  <div class="bradcam_area breadcam_bg overlay2">
+    <h1>Review of {{ review.paper }}
+      {% if is_reviewer %}
+        <a class="btn btn-default" href="{% url 'review_edit' pk=review.pk %}"><i class="bi-pencil"></i> </a>
+      {% endif %}
+    </h1>
+
+  </div>
+  <div class="whole-wrap">
     <div class="container box_1170">
-        <div class="section-top-border">
-            <div class="review">
-                {% if user.is_authenticated %}
-                <a class="btn btn-default" href="{% url 'review_edit' pk=review.pk %}"><span
-                        class="glyphicon glyphicon-pencil">review</span></a>
-                {% endif %}
-                <h3>{{ review }}</h3>
-                <div>
-                    <h4>Submitted by {{ review.reviewers.first }}</h4>
-                </div>
-            </div>
+      <div class="section-top-border">
+        <div class="review">
+          <div>
+            <h4>Paper reviewed: <a href="{{ review.paper.get_absolute_url }}">{{ review.paper.title }}</a></h4>
+          </div>
+
+          <div>
+            <h4>Submitted by {{ review.reviewers.first }}</h4>
+          </div>
+        {%  if  review.get_lead_reviewers  %}
+          <div>
+            <h4>Lead reviewer</h4>
+            {% for rv in review.get_lead_reviewers %}
+              {{ rv.username }}
+
+            {% endfor %}
+
+          </div>
+        {% endif %}
+        {% if review.get_normal_reviewers  %}
+          <div>
+
+            <h4>Review team members</h4>
+            {% for rv in review.get_normal_reviewers %}
+              {{ rv.username }}
+
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div>
+          <h4>Details</h4>
+          <h5>Reproducibility</h5>
+          {{ review.reproducibility_outcome }}<br/>
+          {{ review.reproducibility_rating }}<br/>
+          {{ review.reproducibility_description }}<br/>
+          {{ review.familiarity_with_method }}<br/>
+          {{ review.operating_system }}<br/>
+          {{ review.software_installed }}<br/>
+          {{ review.software_used }}<br/>
+          {{ review.challenges }}<br/>
+          {{ review.advantages }}<br/>
+          {{ review.comments_and_suggestions }}<br/>
+          <h5>Documentation</h5>
+          {{ review.documentation_rating }}<br/>
+          {{ review.documentation_cons }}<br/>
+          {{ review.documentation_pros }}<br/>
+          {{ review.method_familiarity_rating }}<br/>
+          {{ review.transparency_suggestions }}<br/>
+          <h5>Reusability</h5>
+          {{ review.method_reusability_rating }}<br/>
+          {{ review.data_permissive_license }}<br/>
+          {{ review.code_permissive_license }}<br/>
+          {{ review.reusability_suggestions }}<br/>
+          {{ review.general_comments }}<br/>
+          <h5>Permissions</h5>
+          Review is open to public: {{ review.public_review }}<br/>
+
         </div>
+
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 {% endblock %}

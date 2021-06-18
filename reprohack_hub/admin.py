@@ -6,6 +6,7 @@ from reprohack_hub.forms import UserChangeForm, UserCreationForm
 # Register your models here.
 from .models import Event, Paper, Review
 
+admin.site.register(Event)
 admin.site.register(Paper)
 admin.site.register(Review)
 

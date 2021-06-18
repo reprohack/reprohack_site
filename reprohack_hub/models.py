@@ -7,6 +7,7 @@ Todo:
 
 from datetime import datetime
 
+from django.contrib.auth import get_user_model
 from django_countries.fields import CountryField
 
 from markdownx.models import MarkdownxField
@@ -20,7 +21,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, AnonymousUser
 from django.db.models import CharField
 
 
@@ -184,6 +185,11 @@ class Event(models.Model):
 
 class Paper(models.Model):
 
+    class ReviewAvailability(models.TextChoices):
+        ALL = 'ALL', _('Allowed for reviews in any events')
+        EVENT_ONLY = 'EVT_ONLY', _('Only allowed to review for associated event')
+        ARCHIVE = 'ARCHIVE', _('Archive the paper, reviews are not allowed')
+
     """A paper to reproduce.
 
     Todo:
@@ -194,13 +200,11 @@ class Paper(models.Model):
         * Consider shifting contact boolean to AuthorsAndSubmitters
     """
 
-    # id = models.AutoField(primary_key=True)
-    title = models.CharField(_("Paper Title"), max_length=200)
-    # events = models.ManyToManyField(Event, null=True, blank=True)
+    title = models.TextField(_("Paper Title"))
+    authors = models.TextField(_("Authors"))
     event = models.ForeignKey(Event, null=True, blank=True,
                               on_delete=models.SET_NULL)
-    available = models.BooleanField(_("Allow for review in any events"),
-                                    default=True)
+
     citation_txt = models.TextField(max_length=300)
     doi = models.CharField(_("DOI (eg. 10.1000/xyz123)"), max_length=200,)
     description = models.TextField(max_length=400)
@@ -212,27 +216,24 @@ class Paper(models.Model):
     extra_url = models.URLField()
     tools = TaggableManager()
     citation_bib = models.TextField()
-    # submitter details
-    # submitter = models.ForeignKey(User, on_delete=models.CASCADE)
-    # authorship details
-    # authors_and_submitters = models.ManyToManyField(User,
-    #                                                 through="AuthorsAndSubmitters",
-    #                                                 through_fields=('paper', 'user'), null=True)
-    # authorship = models.BooleanField(default=True)
-    #
-    # authors = models.ManyToManyField(Author,
-    #                                  verbose_name="paper author(s)")
-    # author_user = models.ForeignKey(
-    #     User, on_delete=models.CASCADE, related_name='+', blank=True, null=True)
-    public = models.BooleanField(default=True)
-    # feedback = models.BooleanField(default=True)
-    submission_date = models.DateTimeField(auto_now_add=True)
-    archived = models.BooleanField(_("Removed from any reviews"), default=False,
-                                   blank=True)
 
-    # def submit(self):
-    #     self.submission_date = get_time_zone.now()
-    #     self.save()
+    submission_date = models.DateTimeField(auto_now_add=True)
+    review_availability = models.CharField(_("Paper review permission"),
+                                           choices=ReviewAvailability.choices,
+                                           default=ReviewAvailability.ALL,
+                                           max_length=20)
+    public_reviews = models.BooleanField(_("Make reviews public"), default=True)
+    email_review = models.BooleanField(_("Send me an email when a review is received"), default=True)
+    submitter = models.ForeignKey(get_user_model(), default=None, null=True, blank=True, on_delete=models.SET_NULL)
+
+    def get_reviews_viewable_by_user(self, user):
+        reviews_list = []
+        for review in self.review_set.all():
+            if review.is_viewable_by_user(user):
+                reviews_list.append(review)
+
+        return reviews_list
+
 
     def __str__(self):
         return self.title
@@ -266,6 +267,7 @@ class AuthorsAndSubmitters(models.Model):
     #     return f"{self.user} {self.paper}"
 
 
+
 class Review(models.Model):
 
     """A review of a Paper from either an individual or a group.
@@ -288,22 +290,19 @@ class Review(models.Model):
         * Change choice widget for ratings (like google form)
     """
 
-    FULLY_REPRODUCIBLE = 'y'
-    PARTIALLY_REPRODUCIBLE = 'p'
-    NOT_REPRODUCIBLE = 'n'
-    REPRODUCIBILITY_OUTCOME_CHOICES = [
-        (FULLY_REPRODUCIBLE, _('Fully Reproducible')),
-        (PARTIALLY_REPRODUCIBLE, 'Partially Reproducible'),
-        (NOT_REPRODUCIBLE, 'Not Reproducible')
-    ]
-    LINUX = 'linux'
-    MACOS = 'macOS'
-    WINDOWS = 'windows'
-    OPERATING_SYSTEM_OPTIONS = [
-        (LINUX, 'Linux/FreeBSD or other Open Source Operating system'),
-        (MACOS, 'Apple Operating System'),
-        (WINDOWS, 'Windows Operating System')
-    ]
+    class ReproducibilityOutcomes(models.TextChoices):
+        FULLY_REPRODUCIBLE = 'y', _('Fully Reproducible'),
+        PARTIALLY_REPRODUCIBLE = 'p', _('Partially Reproducible'),
+        NOT_REPRODUCIBLE = 'n', _('Not Reproducible')
+
+
+    class OperatingSystems(models.TextChoices):
+        LINUX = 'linux', _('Linux/FreeBSD or other Open Source Operating system')
+        MACOS = 'macOS', _('Apple Operating System')
+        WINDOWS = 'windows', _('Windows Operating System')
+
+
+
     RATING_CHOICES = [(x, x) for x in range(RATING_MIN, RATING_MAX + 1)]
 
     # id = models.AutoField(primary_key=True)
@@ -318,8 +317,8 @@ class Review(models.Model):
     paper = models.ForeignKey(Paper, on_delete=models.SET_NULL, null=True)
     reproducibility_outcome = models.CharField(_("Did you manage to reproduce it?"),
                                                max_length=1,
-                                               choices=REPRODUCIBILITY_OUTCOME_CHOICES,
-                                               default=NOT_REPRODUCIBLE)
+                                               choices=ReproducibilityOutcomes.choices,
+                                               default=ReproducibilityOutcomes.NOT_REPRODUCIBLE)
     reproducibility_rating = models.IntegerField(
         _("How much of the paper did you manage to reproduce?"),
         default=RATING_DEFAULT,
@@ -336,7 +335,7 @@ class Review(models.Model):
                                                  "the paper."))
     operating_system = models.CharField(_("Which type of operating system were you "
                                           "working in?"), max_length=7,
-                                        choices=OPERATING_SYSTEM_OPTIONS)
+                                        choices=OperatingSystems.choices)
     operating_system_detail = models.CharField(_("What operating system were you "
                                                  "using (eg. Ubuntu 14.04.6 LTS, "
                                                  "macOS 10.15 or Windows 10 Pro)?"),
@@ -393,6 +392,9 @@ class Review(models.Model):
     submission_date = models.DateTimeField(auto_now_add=True)
     # contact email should be included in user accounts,
 
+    public_review = models.BooleanField(_("Allow this review to be made public"), default=True)
+
+
     def __str__(self):
         """Default display of review.
 
@@ -403,18 +405,58 @@ class Review(models.Model):
                 str(self.get_lead_reviewers().first()))
 
     def get_lead_reviewers(self):
-        return self.reviewers.filter(paperreviewer__lead_reviewer=True)
+        res = self.reviewers.filter(paperreviewer__lead_reviewer=True)
+        return res
+
+    def get_normal_reviewers(self):
+        return self.reviewers.filter(paperreviewer__lead_reviewer=False)
 
     def get_absolute_url(self):
         return reverse('review_detail', args=[self.id])
 
+    def is_viewable_by_user(self, user):
+        # If public then viewable by everyone
+        if self.public_review:
+            return True
+
+        # Otherwise you'd have to be logged in
+        if isinstance(user, AnonymousUser):
+            return False
+
+        # Viewable by all reviweres
+        for reviewer in self.reviewers.all():
+            if reviewer.pk == user.pk:
+                return True
+
+        # And by the paper submitter
+        if self.paper.submitter.pk == user.pk:
+            return True
+
+        return False
+
+    def is_editable_by_user(self, user):
+
+
+        # Have to be logged in
+        if isinstance(user, AnonymousUser):
+            return False
+
+        # Viewable by all reviweres
+        for reviewer in self.reviewers.all():
+            if reviewer.pk == user.pk:
+                return True
+
+        return False
+
+
 
 class PaperReviewer(models.Model):
-
-    """A group of paper reviewers."""
+    """
+    A group of paper reviewers.
+    """
 
     review = models.ForeignKey(Review, on_delete=models.SET_NULL, null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     lead_reviewer = models.BooleanField(default=True)
 
 
