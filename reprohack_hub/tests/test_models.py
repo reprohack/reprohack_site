@@ -52,7 +52,7 @@ def test_review_save(user: User) -> None:
     review: Review = Review(
         paper=paper,
         reproducibility_rating=7,
-        operating_system=Review.LINUX,
+        operating_system=Review.OperatingSystems.LINUX,
         documentation_rating=3,
         method_familiarity_rating=10,
         method_reusability_rating=0,
@@ -60,6 +60,6 @@ def test_review_save(user: User) -> None:
         code_permissive_license=True,
     )
     review.save()
-    review.reviewers.add(user)
+    review.reviewers.add(user, through_defaults={"lead_reviewer": True})
     assert str(review) == f"Review of '{test_title}' by {user}"
     assert review.get_absolute_url() == f"/review/{review.id}/"

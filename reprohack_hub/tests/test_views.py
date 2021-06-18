@@ -103,6 +103,7 @@ def test_create_review(client: Client, user: User, review: Review) -> None:
     assert user not in review.reviewers.all()
     # Create a new review from similar data to test setting author
     review_dict = model_to_dict(review)
+    review_dict["reviewers"] = '[{"username":"'+user.username+'", "lead": false}]'
     client.force_login(user)
     response = client.post(reverse("review_new"), review_dict, follow=True)
     assert response.status_code == 200

@@ -401,7 +401,7 @@ class Review(models.Model):
         Todo:
             * Consider adding reviewer list or 'et al.'.
         """
-        return (f"{self.pk} Review of '{self.paper}' by " +
+        return (f"Review of '{self.paper}' by " +
                 str(self.get_lead_reviewers().first()))
 
     def get_lead_reviewers(self):

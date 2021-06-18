@@ -67,7 +67,7 @@ class ReviewFactory(DjangoModelFactory):
     paper = SubFactory(PaperFactory)
     event = SubFactory(EventFactory)
     reproducibility_rating = 7
-    operating_system = Review.LINUX
+    operating_system = Review.OperatingSystems.LINUX
     documentation_rating = 3
     method_familiarity_rating = 10
     method_reusability_rating = 0

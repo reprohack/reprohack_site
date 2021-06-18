@@ -1,3 +1,4 @@
+import logging
 import json
 from typing import Any, Optional, Dict, Union, Type, Sequence
 
@@ -13,6 +14,8 @@ from django.contrib.auth import forms, get_user_model
 from django.core.exceptions import ValidationError
 
 from .models import Event, Paper, Review, PaperReviewer
+
+logger = logging.getLogger(__name__)
 
 
 # -------- Event -------- #
@@ -202,14 +205,20 @@ class ReviewForm(ModelForm):
         save_result = super().save(commit)
         review = self.instance
 
-        reviewers_data_str = self.cleaned_data["reviewers"]
-        reviewers_data = json.loads(reviewers_data_str)
+        try:
 
-        review.reviewers.clear()
-        for reviewer_obj in reviewers_data:
-            user = get_user_model().objects.get(username=reviewer_obj["username"])
-            review.reviewers.add(user, through_defaults={"lead_reviewer": reviewer_obj["lead"]})
-        review.save()
+            reviewers_data_str = self.cleaned_data["reviewers"]
+            reviewers_data = json.loads(reviewers_data_str)
+
+            review.reviewers.clear()
+            for reviewer_obj in reviewers_data:
+                user = get_user_model().objects.get(username=reviewer_obj["username"])
+                review.reviewers.add(user, through_defaults={"lead_reviewer": reviewer_obj["lead"]})
+            review.save()
+
+        except Exception as e:
+            logger.exception("Trying to save an invalid reviewers list")
+
 
         return save_result
 
