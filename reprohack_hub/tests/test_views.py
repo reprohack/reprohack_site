@@ -23,6 +23,7 @@ from reprohack_hub.views import (
 
 pytestmark = pytest.mark.django_db
 
+
 class TestUserUpdateView:
     """
     TODO:
@@ -89,10 +90,9 @@ class TestUserRedirectView:
 #             user_detail_view(request, username="username")
 
 
-
 def test_markdown_page(client: Client) -> None:
     """Test markdown rendering."""
-    response = client.get(reverse("about_test"))
+    response = client.get(reverse("about"))
     assert response.status_code == 200
     assert "<h3>ReproHack History</h3>" in response.content.decode()
 
