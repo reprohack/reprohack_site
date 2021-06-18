@@ -21,7 +21,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, AnonymousUser
 from django.db.models import CharField
 
 
@@ -226,6 +226,15 @@ class Paper(models.Model):
     email_review = models.BooleanField(_("Send me an email when a review is received"), default=True)
     submitter = models.ForeignKey(get_user_model(), default=None, null=True, blank=True, on_delete=models.SET_NULL)
 
+    def get_reviews_viewable_by_user(self, user):
+        reviews_list = []
+        for review in self.review_set.all():
+            if review.is_viewable_by_user(user):
+                reviews_list.append(review)
+
+        return reviews_list
+
+
     def __str__(self):
         return self.title
 
@@ -396,10 +405,49 @@ class Review(models.Model):
                 str(self.get_lead_reviewers().first()))
 
     def get_lead_reviewers(self):
-        return self.reviewers.filter(paperreviewer__lead_reviewer=True)
+        res = self.reviewers.filter(paperreviewer__lead_reviewer=True)
+        return res
+
+    def get_normal_reviewers(self):
+        return self.reviewers.filter(paperreviewer__lead_reviewer=False)
 
     def get_absolute_url(self):
         return reverse('review_detail', args=[self.id])
+
+    def is_viewable_by_user(self, user):
+        # If public then viewable by everyone
+        if self.public_review:
+            return True
+
+        # Otherwise you'd have to be logged in
+        if isinstance(user, AnonymousUser):
+            return False
+
+        # Viewable by all reviweres
+        for reviewer in self.reviewers.all():
+            if reviewer.pk == user.pk:
+                return True
+
+        # And by the paper submitter
+        if self.paper.submitter.pk == user.pk:
+            return True
+
+        return False
+
+    def is_editable_by_user(self, user):
+
+
+        # Have to be logged in
+        if isinstance(user, AnonymousUser):
+            return False
+
+        # Viewable by all reviweres
+        for reviewer in self.reviewers.all():
+            if reviewer.pk == user.pk:
+                return True
+
+        return False
+
 
 
 class PaperReviewer(models.Model):

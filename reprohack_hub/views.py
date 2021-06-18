@@ -131,6 +131,11 @@ class PaperDetail(DetailView):
     model = Paper
     template_name = "paper/paper_detail.html"
 
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["reviews"] = self.get_object().get_reviews_viewable_by_user(self.request.user)
+        return context
+
 
 class PaperList(ListView):
     model = Paper
@@ -173,6 +178,16 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
 class ReviewDetail(LoginRequiredMixin, DetailView):
     model = Review
     template_name = "review/review_detail.html"
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        is_reviewer = False
+        for reviewer in self.get_object().reviewers.all():
+            if self.request.user.pk == reviewer.pk:
+                is_reviewer = True
+                break
+        context['is_reviewer'] = is_reviewer
+        return context
 
 
 class ReviewUpdate(LoginRequiredMixin, UpdateView):
