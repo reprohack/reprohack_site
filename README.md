@@ -245,6 +245,16 @@ git pull
 ```
 
 
+#### CI/CD From Github
+
+The CI script automatically deploys from github repository when pushed to `dev` or `master` branches (should be `master` 
+only when) the site goes into production.
+
+The deployment uses github secret variables to ssh into the pythonanywhere instance and call the `deploy.sh` script.
+
+It might be necessary to go to the pythonanywhere dashboard and reload the app manually depending on the scope of the
+code changes.
+
 ## Host Your Own
 
 Note: When hosting the page on the internet, you will need to add the `hostname` to the Django settings.

@@ -12,3 +12,5 @@ git pull
 # Collect the static assets into /staticfiles folder
 ./manage.py collectstatic
 
+# Force pythonanywhere to reload app
+touch /var/www/reprohacks_eu_pythonanywhere_com_wsgi.py
