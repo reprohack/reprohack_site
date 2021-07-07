@@ -8,19 +8,14 @@ jobs:
       run:
         shell: bash -l {0}
     steps:
-      - name: Test echo secret host
-        env:
-          host: '${{ secrets.SSH_HOST }}'
-          username: '${{ secrets.SSH_USERNAME }}'
-          privateKey: '${{ secrets.SSH_PRIVATE_KEY }}'
-        run: ssh -t $username@$host './testhack.sh'
       - name: executing remote ssh commands using ssh key
-        uses: garygrossgarten/github-action-ssh@release
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
-          command: "./testhack.sh"
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: whoami
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - uses: conda-incubator/setup-miniconda@v2
