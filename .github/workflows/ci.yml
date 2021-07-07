@@ -11,8 +11,9 @@ jobs:
       - name: Test echo secret host
         env:
           host: '${{ secrets.SSH_HOST }}'
-          host2: random value
-        run: echo $host >> secret.txt && echo $host2 >> secret.txt && cat secret.txt
+          username: '${{ secrets.SSH_USERNAME }}'
+          privateKey: '${{ secrets.SSH_PRIVATE_KEY }}'
+        run: ssh $username@$host
       - name: executing remote ssh commands using ssh key
         uses: garygrossgarten/github-action-ssh@release
         with:
