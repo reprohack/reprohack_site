@@ -212,9 +212,32 @@ You will then need to create a secrets setting file at `config/settings/secret.p
 contents of `config/settings/secret_default.py` and use that as the basis. Add the settings such as `MYSQL_USERNAME`,
 `MYSQL_PASSWORD` etc. to the `secret.py`.
 
-Once all the above has been set up, we then need to build a 
+Once all the above has been set up, we then need to update the database and ensure that static resources 
+are gathered into the static folder:
+
 ```
-# Build the database (
+
+# Build the database
+./manage.py migrate
+
+# Collect the static assets into /staticfiles folder
+./manage.py collectstatic
+```
+
+
+#### Updating the app after installation
+
+If the source code of the app has been updated, to make it reflect on the server,
+run the `deploy.sh` file which runs the following command:
+
+```bash
+# Activate the virtual environment
+source .virtualenv/bin/activate
+
+# Pull the update from git
+git pull
+
+# Make sure the databae is updated
 ./manage.py migrate
 
 # Collect the static assets into /staticfiles folder
