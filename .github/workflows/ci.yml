@@ -8,6 +8,10 @@ jobs:
       run:
         shell: bash -l {0}
     steps:
+      - name: Test echo secret host
+        env:
+          host: ${{ secrets.SSH_HOST }}
+        run: echo $host
       - name: executing remote ssh commands using ssh key
         uses: garygrossgarten/github-action-ssh@release
         with:
