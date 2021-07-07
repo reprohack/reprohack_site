@@ -9,12 +9,12 @@ jobs:
         shell: bash -l {0}
     steps:
       - name: executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@master
+        uses: garygrossgarten/github-action-ssh@release
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: "./testhack.sh"
+          privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+          command: "./testhack.sh"
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - uses: conda-incubator/setup-miniconda@v2
