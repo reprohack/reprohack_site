@@ -13,7 +13,7 @@ jobs:
           host: '${{ secrets.SSH_HOST }}'
           username: '${{ secrets.SSH_USERNAME }}'
           privateKey: '${{ secrets.SSH_PRIVATE_KEY }}'
-        run: ssh $username@$host
+        run: ssh -t $username@$host './testhack.sh'
       - name: executing remote ssh commands using ssh key
         uses: garygrossgarten/github-action-ssh@release
         with:
