@@ -10,9 +10,9 @@ jobs:
     steps:
       - name: Test echo secret host
         env:
-          host: ${{ secrets.SSH_HOST }}
+          host: '${{ secrets.SSH_HOST }}'
           host2: random value
-        run: echo ${{ secrets.SSH_HOST }} && echo $host2
+        run: echo $host && echo $host2
       - name: executing remote ssh commands using ssh key
         uses: garygrossgarten/github-action-ssh@release
         with:
