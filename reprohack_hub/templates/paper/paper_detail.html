@@ -9,6 +9,8 @@
         <a class="btn btn-default" href="{% url 'paper_edit' pk=paper.pk %}"><i class="bi-pencil-fill"></i></a>
       {% endif %}
     </h1>
+
+    <a href="{% url 'review_new' paperid=paper.pk %}" class="boxed_btn">Review this paper</a>
   </div>
   <div class="whole-wrap">
     <div class="container box_1170">
@@ -16,31 +18,32 @@
         <div class="paper">
           <div>
             <h4>Submitted by <a href="{{ paper.submitter.get_absolute_url }}">{{ paper.submitter.username }}</a></h4>
-            <div><span>Submission date:</span> {{ paper.submission_date }} </div>
+
           </div>
+          <div class="detail_text"><span class="detail_header">Submission date:</span> {{ paper.submission_date }} </div>
 
-          <div><span>Authors:</span> {{ paper.authors }}</div>
-          <div><span>Citation text:</span> {{ paper.citation_txt }}</div>
-          <div><span>Citation bib:</span> {{ paper.citation_bib }}</div>
-          <div><span>DOI:</span> <a href="{{ paper.doi }}">{{ paper.doi }}</a></div>
+          <div class="detail_text"><span class="detail_header">Authors:</span> {{ paper.authors }}</div>
+          <div class="detail_text"><span class="detail_header">Citation text:</span> {{ paper.citation_txt }}</div>
+          <div class="detail_text"><span class="detail_header">Citation bib:</span> {{ paper.citation_bib }}</div>
+          <div class="detail_text"><span class="detail_header">DOI:</span> <a href="{{ paper.doi }}">{{ paper.doi }}</a></div>
 
 
-          <div>Description</div>
-          <div>{{ paper.description|linebreaksbr }}</div>
+          <div class="detail_header">Description</div>
+          <div class="detail_text">{{ paper.description|linebreaksbr }}</div>
 
-          <div>Why should we reproduce your paper?</div>
-          <div>{{ paper.why }}</div>
+          <div class="detail_header">Why should we reproduce your paper?</div>
+          <div class="detail_text">{{ paper.why }}</div>
 
-          <div>The focus of the paper</div>
-          <div>{{ paper.focus }}</div>
+          <div class="detail_header">The focus of the paper</div>
+          <div class="detail_text">{{ paper.focus }}</div>
 
-          <div><span>Paper URL:</span> <a href="{{ paper.paper_url }}">{{ paper.paper_url }}</a></div>
-          <div><span>Data URL:</span> <a href="{{ paper.paper_url }}">{{ paper.data_url }}</a></div>
-          <div><span>Code URL:</span> <a href="{{ paper.paper_url }}">{{ paper.code_url }}</a></div>
-          <div><span>Extra URL:</span> <a href="{{ paper.paper_url }}">{{ paper.extra_url }}</a></div>
+          <div class="detail_text"><span class="detail_header">Paper URL:</span> <a href="{{ paper.paper_url }}">{{ paper.paper_url }}</a></div>
+          <div class="detail_text"><span class="detail_header">Data URL:</span> <a href="{{ paper.paper_url }}">{{ paper.data_url }}</a></div>
+          <div class="detail_text"><span class="detail_header">Code URL:</span> <a href="{{ paper.paper_url }}">{{ paper.code_url }}</a></div>
+          <div class="detail_text"><span class="detail_header">Extra URL:</span> <a href="{{ paper.paper_url }}">{{ paper.extra_url }}</a></div>
 
-          <div>Associated event</div>
-          <div>
+          <div class="detail_header">Associated event</div>
+          <div class="detail_text">
             {{ paper.event }}
 
           </div>

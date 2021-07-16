@@ -174,6 +174,24 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
         return context
 
+    def get_initial(self):
+
+        form_initial = {}
+
+        serialized = [{"username": self.request.user.username, "lead": True}]
+
+        form_initial["reviewers"] = json.dumps(serialized)
+
+        # Sets the default initial paper if specified
+        if "paperid" in self.kwargs:
+            paper = Paper.objects.get(pk=self.kwargs["paperid"])
+            if paper:
+                form_initial["paper"] = paper
+                if paper.event:
+                    form_initial["event"] = paper.event
+
+        return form_initial
+
 
 class ReviewDetail(DetailView):
     model = Review

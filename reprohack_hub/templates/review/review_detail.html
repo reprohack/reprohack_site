@@ -26,7 +26,7 @@
           <div>
             <h4>Lead reviewer</h4>
             {% for rv in review.get_lead_reviewers %}
-              {{ rv.username }}
+              <a href="{{ rv.get_absolute_url }}">{{ rv.username }}</a>
 
             {% endfor %}
 
@@ -37,39 +37,113 @@
 
             <h4>Review team members</h4>
             {% for rv in review.get_normal_reviewers %}
-              {{ rv.username }}
+              <a href="{{ rv.get_absolute_url }}">{{ rv.username }}</a>
 
             {% endfor %}
           </div>
         {% endif %}
 
         <div>
-          <h4>Details</h4>
-          <h5>Reproducibility</h5>
-          {{ review.reproducibility_outcome }}<br/>
-          {{ review.reproducibility_rating }}<br/>
-          {{ review.reproducibility_description }}<br/>
-          {{ review.familiarity_with_method }}<br/>
-          {{ review.operating_system }}<br/>
-          {{ review.software_installed }}<br/>
-          {{ review.software_used }}<br/>
-          {{ review.challenges }}<br/>
-          {{ review.advantages }}<br/>
-          {{ review.comments_and_suggestions }}<br/>
-          <h5>Documentation</h5>
-          {{ review.documentation_rating }}<br/>
-          {{ review.documentation_cons }}<br/>
-          {{ review.documentation_pros }}<br/>
-          {{ review.method_familiarity_rating }}<br/>
-          {{ review.transparency_suggestions }}<br/>
-          <h5>Reusability</h5>
-          {{ review.method_reusability_rating }}<br/>
-          {{ review.data_permissive_license }}<br/>
-          {{ review.code_permissive_license }}<br/>
-          {{ review.reusability_suggestions }}<br/>
-          {{ review.general_comments }}<br/>
-          <h5>Permissions</h5>
-          Review is open to public: {{ review.public_review }}<br/>
+          <h3>Details</h3>
+          <h4>Reproducibility</h4>
+          <div class="detail_header">
+            Reproducibility outcome
+          </div>
+          <div class="detail_text">
+            {{ review.reproducibility_outcome }}
+          </div>
+
+          <div class="detail_header">
+            Reproducibility rating
+          </div>
+          <div class="detail_text">
+            {{ review.reproducibility_rating }}
+          </div>
+
+          <div class="detail_header">
+            Reproducibility description
+          </div>
+          <div class="detail_text">
+            {{ review.reproducibility_description }}
+          </div>
+
+          <div class="detail_header">
+            Familiarity with methods
+          </div>
+          <div class="detail_text">
+            {{ review.familiarity_with_method }}
+          </div>
+
+          <div class="detail_header">Operating system</div>
+          <div class="detail_text">
+            {{ review.operating_system }}
+          </div>
+
+          <div class="detail_header">Software installed</div>
+          <div class="detail_text">
+            {{ review.software_installed }}
+          </div>
+
+          <div class="detail_header">Software used</div>
+          <div class="detail_text">
+            {{ review.software_used }}
+          </div>
+
+          <div class="detail_header">Challenges</div>
+          <div class="detail_text">
+            {{ review.challenges }}
+          </div>
+
+          <div class="detail_header">Advantages</div>
+          <div class="detail_text">
+            {{ review.advantages }}
+          </div>
+
+          <div class="detail_header">Comments and Suggestions</div>
+          <div class="detail_text">
+            {{ review.comments_and_suggestions }}
+          </div>
+
+          <h4>Documentation</h4>
+
+          <div class="detail_header">Documentation rating</div>
+          <div class="detail_text">
+            {{ review.documentation_rating }}
+          </div>
+
+          <div class="detail_header">Documentation cons</div>
+          <div class="detail_text">{{ review.documentation_cons }}</div>
+
+          <div class="detail_header">Documentation pros</div>
+          <div class="detail_text">{{ review.documentation_pros }}</div>
+
+          <div class="detail_header">Familiarity rating</div>
+          <div class="detail_text">{{ review.method_familiarity_rating }}</div>
+
+          <div class="detail_header">Transparency suggestions</div>
+          <div class="detail_text">{{ review.transparency_suggestions }}</div>
+
+          <h4>Reusability</h4>
+
+          <div class="detail_header">Reusability rating</div>
+          <div class="detail_text">{{ review.method_reusability_rating }}</div>
+
+          <div class="detail_header">Data license</div>
+          <div class="detail_text">{{ review.data_permissive_license }}</div>
+
+          <div class="detail_header">Code license</div>
+          <div class="detail_text">{{ review.code_permissive_license }}</div>
+
+          <div class="detail_header">Reusability suggestions</div>
+          <div class="detail_text">{{ review.reusability_suggestions }}</div>
+
+          <div class="detail_header">General comments</div>
+          <div class="detail_text">{{ review.general_comments }}</div>
+
+
+
+
+
 
         </div>
 
