@@ -3,6 +3,7 @@
 {% url 'event_list' as events_url %}
 {% url 'paper_list' as papers_url %}
 {% url 'about' as about_url %}
+{% url 'resources' as resources_url %}
     <!-- header-start -->
     <header>
         <div class="header-area">
@@ -25,7 +26,7 @@
                                        <li><a href="{% url 'paper_list' %}">Papers</a></li>
                                       <li><a href="{% url 'review_list' %}">Reviews</a></li>
                                         <li><a href="{% url 'about' %}">About</a></li>
-                                        <li><a href="contact.html">Resources</a></li>
+                                        <li><a href="{% url 'resources' %}">Resources</a></li>
                                     </ul>
                                 </nav>
                             </div>
