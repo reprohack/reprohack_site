@@ -14,18 +14,36 @@
     <div class="container box_1170">
       <div class="section-top-border">
         <div class="paper">
-
           <div>
-            <h5>{{ paper.citation_txt }} - {{ paper.time_end }}</h5>
-
-            <h4>Submitted by {{ paper.user }}, @ {{ paper.twitter }}</h4>
+            <h4>Submitted by <a href="{{ paper.submitter.get_absolute_url }}">{{ paper.submitter.username }}</a></h4>
+            <div><span>Submission date:</span> {{ paper.submission_date }} </div>
           </div>
-          <p>{{ paper.description|linebreaksbr }}</p>
-          Why should we reproduce your paper?
-          <p>{{ paper.why|linebreaksbr }}</p>
-          <p>{{ paper.focus|linebreaksbr }}</p>
-          <p>Associated event</p>
-          {{ paper.event }}
+
+          <div><span>Authors:</span> {{ paper.authors }}</div>
+          <div><span>Citation text:</span> {{ paper.citation_txt }}</div>
+          <div><span>Citation bib:</span> {{ paper.citation_bib }}</div>
+          <div><span>DOI:</span> <a href="{{ paper.doi }}">{{ paper.doi }}</a></div>
+
+
+          <div>Description</div>
+          <div>{{ paper.description|linebreaksbr }}</div>
+
+          <div>Why should we reproduce your paper?</div>
+          <div>{{ paper.why }}</div>
+
+          <div>The focus of the paper</div>
+          <div>{{ paper.focus }}</div>
+
+          <div><span>Paper URL:</span> <a href="{{ paper.paper_url }}">{{ paper.paper_url }}</a></div>
+          <div><span>Data URL:</span> <a href="{{ paper.paper_url }}">{{ paper.data_url }}</a></div>
+          <div><span>Code URL:</span> <a href="{{ paper.paper_url }}">{{ paper.code_url }}</a></div>
+          <div><span>Extra URL:</span> <a href="{{ paper.paper_url }}">{{ paper.extra_url }}</a></div>
+
+          <div>Associated event</div>
+          <div>
+            {{ paper.event }}
+
+          </div>
 
           {% if reviews %}
             <h4 class="mt-3">Paper reviews</h4>
@@ -34,7 +52,8 @@
 
                 <li class="list-group-item">
                   <a href="{% url 'review_detail' pk=review.pk %}">
-                    Review by {% for reviewer in review.reviewers.all %}{{ reviewer.username }}, {% endfor %}, {{ review.submission_date }}
+                    Review by {% for reviewer in review.reviewers.all %}{{ reviewer.username }}
+                    , {% endfor %}, {{ review.submission_date }}
                   </a>
                 </li>
               {% endfor %}

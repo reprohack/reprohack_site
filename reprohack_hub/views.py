@@ -175,7 +175,7 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
         return context
 
 
-class ReviewDetail(LoginRequiredMixin, DetailView):
+class ReviewDetail(DetailView):
     model = Review
     template_name = "review/review_detail.html"
 
@@ -221,7 +221,7 @@ class ReviewUpdate(LoginRequiredMixin, UpdateView):
         }
 
 
-class ReviewList(LoginRequiredMixin, ListView):
+class ReviewList(ListView):
     """Present a list of 20 reviews.
 
     Todo:
