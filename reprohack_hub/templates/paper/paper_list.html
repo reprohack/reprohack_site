@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
+
   <div class="bradcam_area breadcam_bg overlay2">
     <h3>Papers</h3>
     <br>
@@ -12,12 +12,37 @@
     <div class="container box_1170">
       <div class="section-top-border">
         <h2>Browse ReproHack papers</h2>
+
+      <form  method="get">
+        <input type="hidden" name="tags" value="{{ tags }}">
+        <input type="text" class="form-control" placeholder="Search papers..." name="search" value="{{ search }}"/>
+        <input type="submit" class="btn-primary btn" value="Search"/>
+
+        <div>
+        {% for tag in tags_list %}
+          <a href="?search={{ search }}&tags={{ tag.new_state }}" class="{% if tag.selected %}badge-primary{% else %}badge-secondary{% endif %} badge">{{ tag.name }}</a>
+        {% endfor %}
+        <a href="?search={{ search }}&tags={{ all_tags }}" class="badge-primary badge">All tags</a>
+        <a href="?search={{ search }}&tags=" class="badge-primary badge">Clear tags</a>
+      </div>
+      </form>
+
+
+
+
+
         {% for paper in object_list %}
           <div class="paper">
             <h3><a href="{{ paper.get_absolute_url }}">{{ paper.title }}</a></h3>
             <h5>Authors: {{ paper.authors }}</h5>
             <h5>DOI: <a href="{{ paper.doi }}">{{ paper.doi }}</a></h5>
             <h5>Submitted by <a href="{{ paper.submitter.get_absolute_url }}">{{ paper.submitter.username }}</a></h5>
+          <div class="detail_text">
+          <span class="detail_header">Tags:</span>
+          {% for tag in paper.tags.all %}
+            <a href="/paper/?tags={{ tag }}" class="badge badge-primary p-1 m-1">{{ tag }}</a>
+          {% endfor %}
+        </div>
           </div>
         {% endfor %}
       </div>
