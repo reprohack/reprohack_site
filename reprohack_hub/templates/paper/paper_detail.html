@@ -10,7 +10,9 @@
       {% endif %}
     </h1>
 
-    <a href="{% url 'review_new' paperid=paper.pk %}" class="boxed_btn">Review this paper</a>
+    {%  if paper.is_available_for_review %}
+        <a href="{% url 'review_new' paperid=paper.pk %}" class="boxed_btn">Review this paper</a>
+     {% endif %}
   </div>
   <div class="whole-wrap">
     <div class="container box_1170">
@@ -42,6 +44,13 @@
           <div class="detail_text"><span class="detail_header">Code URL:</span> <a href="{{ paper.paper_url }}">{{ paper.code_url }}</a></div>
           <div class="detail_text"><span class="detail_header">Extra URL:</span> <a href="{{ paper.paper_url }}">{{ paper.extra_url }}</a></div>
 
+        <div class="detail_text">
+          <span class="detail_header">Tags:</span>
+          {% for tag in paper.tags.all %}
+            {{ tag }}
+          {% endfor %}
+        </div>
+
           <div class="detail_header">Associated event</div>
           <div class="detail_text">
             {{ paper.event }}
@@ -61,7 +70,6 @@
                 </li>
               {% endfor %}
             </ul>
-
           {% endif %}
         </div>
       </div>

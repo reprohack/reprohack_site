@@ -2,27 +2,28 @@
 {% load static %}
 
 {% block content %}
-<div class="bradcam_area breadcam_bg overlay2">
+  <div class="bradcam_area breadcam_bg overlay2">
     <h3>Papers</h3>
     <br>
     <br>
     <a href="{% url 'paper_new' %}" class="boxed_btn">Submit a Paper!</a>
-</div>
-<div class="whole-wrap">
+  </div>
+  <div class="whole-wrap">
     <div class="container box_1170">
-        <div class="section-top-border">
-            <h2>Browse ReproHack papers</h2>
-            {% for paper in object_list %}
-            <div class="paper"></div>
-              <h3><a href="{{ paper.get_absolute_url }}">{{ paper.title }}</a></h3>
-              <h5>Authors: {{ paper.authors }}</h5>
-              <h5>DOI: <a href="{{ paper.doi }}">{{ paper.doi }}</a></h5>
-              <h5>Submitted by <a href="{{ paper.submitter.get_absolute_url }}">{{ paper.submitter.username }}</a></h5>
-
-            <br>
-        </div>
+      <div class="section-top-border">
+        <h2>Browse ReproHack papers</h2>
+        {% for paper in object_list %}
+          <div class="paper">
+            <h3><a href="{{ paper.get_absolute_url }}">{{ paper.title }}</a></h3>
+            <h5>Authors: {{ paper.authors }}</h5>
+            <h5>DOI: <a href="{{ paper.doi }}">{{ paper.doi }}</a></h5>
+            <h5>Submitted by <a href="{{ paper.submitter.get_absolute_url }}">{{ paper.submitter.username }}</a></h5>
+          </div>
         {% endfor %}
+      </div>
+
     </div>
-</div>
-</div>
+  </div>
+
+
 {% endblock %}

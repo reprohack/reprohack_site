@@ -1,0 +1,18 @@
+{% load static i18n compress %}
+<div>
+  <input class="{{ widget.attrs.class }}"
+         name="{{ widget.name }}"
+         id="{{ widget.attrs.id }}"
+         value="{{ widget.value }}"
+         placeholder="Enter tag value and press enter"/>
+</div>
+<script>
+  $(document).ready(function () {
+    let tag_input = new Tagify(document.querySelector("#{{ widget.attrs.id }}"), {
+      originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
+
+    });
+
+  });
+
+</script>

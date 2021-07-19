@@ -108,7 +108,7 @@ class PaperCreate(LoginRequiredMixin, CreateView):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
         self.object.save()
-        # self.object.save_m2m()
+        form.save_m2m()
         print(form.errors)
         return HttpResponseRedirect(self.get_success_url())
 
@@ -125,6 +125,18 @@ class PaperUpdate(UpdateView):
     model = Paper
     form_class = PaperForm
     template_name = "paper/paper_edit.html"
+
+    def form_valid(self, form):
+        object = form.save(commit=False)
+        object.save()
+        # self.object.tags.clear()
+        # self.object.tags.set(form.data["tags"], clear=True)
+        # self.object.tags.save()
+        # self.object.save()
+        form.save_m2m()
+
+        print(form.errors)
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class PaperDetail(DetailView):

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load markdown_tags %}
 
 {% block content %}
 
@@ -64,7 +65,7 @@
             Reproducibility description
           </div>
           <div class="detail_text">
-            {{ review.reproducibility_description }}
+            {{ review.reproducibility_description | show_markdown | safe  }}
           </div>
 
           <div class="detail_header">
