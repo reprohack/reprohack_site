@@ -59,6 +59,22 @@ class EventForm(ModelForm):
 
 
 # -------- Paper -------- #
+
+class TagWidget(Widget):
+    template_name = "paper/tag_input.html"
+
+    def format_value(self, value):
+        """
+        Convert taggit's tag manger objects to plain comma separated text
+        :param value:
+        :return:
+        """
+        if value:
+            return ",".join([tag.name for tag in value])
+
+        return ""
+
+
 class PaperForm(ModelForm):
     class Meta:
         model = Paper
@@ -66,16 +82,11 @@ class PaperForm(ModelForm):
         widgets = {
             'title': TextInput(),
             'review_availability': RadioSelect(),
+            'tags': TagWidget(),
         }
 
     def __init__(self, *args, **kwargs):
         super(PaperForm, self).__init__(*args, **kwargs)
-        # self.email = self.cleaned_data['email']
-
-        # self.fields['authorship'].label = "I am the corresponding author"
-        # self.fields['contact'].label = "I can be contacted by participants"
-
-        # self.fields['feedback'].label = "I wish to received feedback on reproductions"
 
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
@@ -104,7 +115,7 @@ class PaperForm(ModelForm):
                          css_class='form-row',
                      ),
                      ),
-            Field('tools', label="Useful Software Skills"),
+            Field('tags', label="Useful Software Skills"),
             Fieldset("Permissions",
                      "review_availability",
                      "public_reviews",
@@ -128,6 +139,9 @@ class MuField(DFField):
 
     def clean(self, value):
         return value
+
+
+
 
 class ReviewForm(ModelForm):
 
@@ -154,8 +168,8 @@ class ReviewForm(ModelForm):
         self.helper.layout = Layout(
             # HTML('<h2>ReproHack Author Feedback Form</h2>'),
             'reviewers',
-            'event',
             'paper',
+            'event',
             HTML(f"<h3>{_('Reproducibility')}</h3>"),
             'reproducibility_outcome',
             InlineRadios('reproducibility_rating'),

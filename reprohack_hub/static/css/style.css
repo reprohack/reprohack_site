@@ -4218,6 +4218,12 @@ blockquote {
   font-style: italic;
   font-size: 2.5em; }
 
+.detail_header {
+  font-weight: bold; }
+
+.detail_text {
+  margin-bottom: 1em; }
+
 /*
 ul li {
         position: relative;
@@ -4236,3 +4242,12 @@ ul li {
         }
     }
 */
+/*
+
+The default theme overrides the standard li style so we have to override it again for the
+correct bootstrap pagination styling
+ */
+.pagination li {
+  padding-left: 0px; }
+  .pagination li:before {
+    content: none; }

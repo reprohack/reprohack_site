@@ -33,6 +33,7 @@ class TestUserUpdateView:
         https://github.com/pytest-dev/pytest-django/pull/258
     """
 
+
     def test_get_success_url(self, user: User, rf: RequestFactory):
         view = UserUpdateView()
         request = rf.get("/fake-url/")

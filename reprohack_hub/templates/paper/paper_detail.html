@@ -9,23 +9,53 @@
         <a class="btn btn-default" href="{% url 'paper_edit' pk=paper.pk %}"><i class="bi-pencil-fill"></i></a>
       {% endif %}
     </h1>
+
+    {%  if paper.is_available_for_review %}
+        <a href="{% url 'review_new' paperid=paper.pk %}" class="boxed_btn">Review this paper</a>
+     {% endif %}
   </div>
   <div class="whole-wrap">
     <div class="container box_1170">
       <div class="section-top-border">
         <div class="paper">
-
           <div>
-            <h5>{{ paper.citation_txt }} - {{ paper.time_end }}</h5>
+            <h4>Submitted by <a href="{{ paper.submitter.get_absolute_url }}">{{ paper.submitter.username }}</a></h4>
 
-            <h4>Submitted by {{ paper.user }}, @ {{ paper.twitter }}</h4>
           </div>
-          <p>{{ paper.description|linebreaksbr }}</p>
-          Why should we reproduce your paper?
-          <p>{{ paper.why|linebreaksbr }}</p>
-          <p>{{ paper.focus|linebreaksbr }}</p>
-          <p>Associated event</p>
-          {{ paper.event }}
+          <div class="detail_text"><span class="detail_header">Submission date:</span> {{ paper.submission_date }} </div>
+
+          <div class="detail_text"><span class="detail_header">Authors:</span> {{ paper.authors }}</div>
+          <div class="detail_text"><span class="detail_header">Citation text:</span> {{ paper.citation_txt }}</div>
+          <div class="detail_text"><span class="detail_header">Citation bib:</span> {{ paper.citation_bib }}</div>
+          <div class="detail_text"><span class="detail_header">DOI:</span> <a href="{{ paper.doi }}">{{ paper.doi }}</a></div>
+
+
+          <div class="detail_header">Description</div>
+          <div class="detail_text">{{ paper.description|linebreaksbr }}</div>
+
+          <div class="detail_header">Why should we reproduce your paper?</div>
+          <div class="detail_text">{{ paper.why }}</div>
+
+          <div class="detail_header">The focus of the paper</div>
+          <div class="detail_text">{{ paper.focus }}</div>
+
+          <div class="detail_text"><span class="detail_header">Paper URL:</span> <a href="{{ paper.paper_url }}">{{ paper.paper_url }}</a></div>
+          <div class="detail_text"><span class="detail_header">Data URL:</span> <a href="{{ paper.paper_url }}">{{ paper.data_url }}</a></div>
+          <div class="detail_text"><span class="detail_header">Code URL:</span> <a href="{{ paper.paper_url }}">{{ paper.code_url }}</a></div>
+          <div class="detail_text"><span class="detail_header">Extra URL:</span> <a href="{{ paper.paper_url }}">{{ paper.extra_url }}</a></div>
+
+        <div class="detail_text">
+          <span class="detail_header">Tags:</span>
+          {% for tag in paper.tags.all %}
+            <a href="" class="badge badge-primary">{{ tag }}</a>
+          {% endfor %}
+        </div>
+
+          <div class="detail_header">Associated event</div>
+          <div class="detail_text">
+            {{ paper.event }}
+
+          </div>
 
           {% if reviews %}
             <h4 class="mt-3">Paper reviews</h4>
@@ -34,12 +64,12 @@
 
                 <li class="list-group-item">
                   <a href="{% url 'review_detail' pk=review.pk %}">
-                    Review by {% for reviewer in review.reviewers.all %}{{ reviewer.username }}, {% endfor %}, {{ review.submission_date }}
+                    Review by {% for reviewer in review.reviewers.all %}{{ reviewer.username }}
+                    , {% endfor %}, {{ review.submission_date }}
                   </a>
                 </li>
               {% endfor %}
             </ul>
-
           {% endif %}
         </div>
       </div>

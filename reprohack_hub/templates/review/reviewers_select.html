@@ -1,4 +1,4 @@
-{% load static i18n compress %}<!DOCTYPE html>
+{% load static i18n compress %}
 <div>
   <input type="hidden" name="{{ widget.name }}" id="{{ widget.name }}" value="{{ widget.value }}"/>
   <div id="reviewEditor" class="mb-2"></div>
@@ -117,11 +117,11 @@
     this.render = function () {
       //Clear first
       reviewEditElem.html("");
-      let ul = $("<ul class='list-group'></ul>");
+      let ul = $("<div class='list-group'></div>");
       reviewEditElem.append(ul);
       for (let i in data) {
         let user = data[i];
-        let li = $("<li class='list-group-item d-flex'></li>");
+        let li = $("<div class='list-group-item d-flex'></div>");
         li.html(`<div class="mr-auto">${user.username}</div>`);
 
         if (user.lead) {

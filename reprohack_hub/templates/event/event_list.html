@@ -11,7 +11,9 @@
   <div class="whole-wrap">
     <div class="container box_1170">
       <div class="section-top-border">
-        <h1>Upcoming ReproHacks</h1>
+      <div class="row">
+        <div class="col-sm-9">
+          <h1>Upcoming ReproHacks</h1>
         <br>
         <div class="row">
           <div class="col">
@@ -19,22 +21,48 @@
           </div>
         </div>
         <br>
-        {% for event in object_list %}
-          <div class="event">
-            <div class="card">
-              <div class="card-body">
-                <h3 class="card-title"><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
-                <h6 class="card-subtitle mb-2 text-muted">
-                  <div class="date">
-                    {{ event.date }}
+        <ul>
+          {% for event in object_list %}
+            <li class="event">
+
+              <h3 class="card-title"><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
+              <h6 class="card-subtitle mb-2 text-muted">
+                <div class="date">
+                  {{ event.date }}
+                </div>
+              </h6>
+            </li>
+          {% endfor %}
+
+        </ul>
+
+
+        {# Pagination #}
+        {% include "misc/pagination.html" %}
+
+        </div>
+      <div class="col-sm-3">
+        <h4>Search for events</h4>
+            <form method="get">
+              <div class="mb-4">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search events..." name="search"
+                         value="{{ search }}"/>
+                  <div class="input-group-append">
+                    <button type="submit" class="btn-primary btn"><i class="bi-search m-0 p-0"
+                                                                     style="font-size: 0.7em"></i> Search
+                    </button>
                   </div>
-                </h6>
-                <p class="card-text"></p>
+                </div>
+
               </div>
-            </div>
-          </div>
-          <br>
-        {% endfor %}
+            </form>
+
+      </div>
+      </div>
+
+
+
       </div>
     </div>
   </div>
