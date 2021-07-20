@@ -89,9 +89,21 @@ class EventList(ListView):
     template_name = "event/event_list.html"
     paginate_by = 20  # if pagination is desired
 
+    def get_queryset(self) -> QuerySet:
+        search_string = self.request.GET.get("search")
+
+        result = Event.objects.all()
+
+        if search_string and len(search_string) > 0:
+            result = result.filter(title__contains=search_string)
+
+
+        return result
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["now"] = timezone.now()
+        context["search"] = self.request.GET.get("search", "")
         return context
 
 
@@ -181,6 +193,7 @@ class PaperList(ListView):
         context["tags"] = tags
         context["now"] = timezone.now()
 
+        # Building tags representation
         selected_tags = []
         if tags and len(tags) > 0:
             selected_tags = tags.split(",")
@@ -209,8 +222,22 @@ class PaperList(ListView):
 
 
 
+
         return context
 
+
+class PaperTagSearchEndpointView(View):
+
+    def get(self, request):
+        tag_search = request.GET.get("tag")
+        if tag_search:
+            search_result = Paper.tags.filter(name__contains=tag_search)
+            response = [tag.name for tag in search_result]
+        else:
+            search_result = Paper.tags.all()
+            response = [tag.name for tag in search_result]
+
+        return JsonResponse(response, safe=False)
 
 # ----- Reviews ----- #
 

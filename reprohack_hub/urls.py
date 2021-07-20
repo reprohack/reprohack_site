@@ -9,7 +9,7 @@ from .views import (EventCreate, EventUpdate, EventDetail, EventList, IndexView,
                     PaperCreate, PaperUpdate, PaperDetail, PaperList,
                     ReviewCreate, ReviewDetail, ReviewUpdate, ReviewList,
                     UserDetailView, UserUpdateView, UserCreateView, UserRedirectView, MarkdownView,
-                    UserSearchEndpointView)
+                    UserSearchEndpointView, PaperTagSearchEndpointView)
 
 
 urlpatterns = [
@@ -67,6 +67,7 @@ urlpatterns = [
     path('paper/<int:pk>/', PaperDetail.as_view(), name='paper_detail'),
     path('paper/<int:pk>/edit/', PaperUpdate.as_view(), name='paper_edit'),
     path('paper/new/', PaperCreate.as_view(), name='paper_new'),
+    path('paper/tags_search/', PaperTagSearchEndpointView.as_view(), name='paper_tags_search'),
     path('review/', ReviewList.as_view(), name="review_list"),
     path('review/new', ReviewCreate.as_view(), name="review_new"),
     path('review/new/<int:paperid>', ReviewCreate.as_view(), name="review_new"),

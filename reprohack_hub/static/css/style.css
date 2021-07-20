@@ -4242,3 +4242,12 @@ ul li {
         }
     }
 */
+/*
+
+The default theme overrides the standard li style so we have to override it again for the
+correct bootstrap pagination styling
+ */
+.pagination li {
+  padding-left: 0px; }
+  .pagination li:before {
+    content: none; }
