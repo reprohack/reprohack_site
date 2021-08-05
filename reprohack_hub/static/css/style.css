@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600,600i,700|Poppins:200,300,400,500,500i,600,700,800&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600,600i,700|Poppins:200,300,400,500,500i,600,700,800&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
 .flex-center-start {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1691,6 +1692,56 @@ a {
   right: 0;
   margin-top: -5px;
   top: -32px; }
+
+.timeline .event {
+  font-size: 1em;
+  line-height: 1.75em;
+  border-top: 3px solid;
+  -o-border-image: linear-gradient(to right, #743ad5 0%, #d53a9d 100%);
+     border-image: -webkit-gradient(linear, left top, right top, from(#743ad5), to(#d53a9d));
+     border-image: linear-gradient(to right, #743ad5 0%, #d53a9d 100%);
+  border-image-slice: 1;
+  border-width: 3px;
+  margin: 0;
+  padding: 40px;
+  counter-increment: section;
+  position: relative;
+  color: #34435E; }
+  .timeline .event:before {
+    content: counter(section);
+    position: absolute;
+    border-radius: 50%;
+    padding: 10px;
+    height: 1.25em;
+    width: 1.25em;
+    background-color: #34435E;
+    text-align: center;
+    line-height: 1.25em;
+    color: #ffffff;
+    font-size: 1em; }
+
+.timeline .event:nth-child(odd) {
+  border-right: 3px solid;
+  padding-left: 0; }
+  .timeline .event:nth-child(odd):before {
+    left: 100%;
+    margin-left: -20px; }
+
+.timeline .event:nth-child(even) {
+  border-left: 3px solid;
+  padding-right: 0; }
+  .timeline .event:nth-child(even):before {
+    right: 100%;
+    margin-right: -20px; }
+
+.timeline .event:first-child {
+  border-top: 0;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0; }
+
+.timeline .event:last-child {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0; }
 
 .slider_bg_2 {
   background-image: url(../images/reprohack_banner_no_border.png); }
