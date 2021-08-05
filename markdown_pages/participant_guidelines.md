@@ -46,8 +46,35 @@ more\!
 If provided, use the event to track of discussions and take collaborative notes on the
 event [**hackpad**](https://hackmd.io/link-to-copy-of-hackpad/edit)
 
-As all ReproHack events, we strive to make this event open and inclusive
-to all. As such the event is governed by the [ReproHack Code of
-Conduct](https://github.com/reprohack/reprohack-hq/blob/master/CODE_OF_CONDUCT.md)
-and you should read it before participating. By participating, you are
-expected to uphold this code.
+
+## Tips for Reviewing
+
+
+### Overall ReproHack Objectives
+
+1. **Practical Experience in Reproducibility**
+
+3. **Giving feedback to Authors**
+
+5. **Thinking more broadly about opportunities and challenges associated with Research Reprodicibility**
+
+<img src="/static/images/1728_TURI_Book sprint_7 community_040619.jpg" width=50%>
+
+
+### Special considerations when Reviewing
+
+In addition to the **[ReproHack Code of Conduct](code-of-conduct.html)** 
+
+
+
+### Additional Considerations
+
+- #### Reproducibility is hard!
+- #### Submitting authors are incredibly brave!
+
+### Thank you Authors!
+
+- #### Without them there would be no ReproHack.
+- #### Show gratitude and appreciation for their efforts. `r emo::ji("pray")` 
+- #### Constructive criticism only please!
+
