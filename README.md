@@ -62,15 +62,19 @@ include username and passwords that should not be tracked by version control.
 
 ##### E-mail using SMTP
 SMTP is supported as standard in Django, add the following configurations with your own details
-to the `secret.py` settings file:
+to the appropriate settings and `secret.py` settings file:
 
-```python
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'myserver.com'
-EMAIL_PORT = 22
-EMAIL_HOST_USER = 'username'
-EMAIL_HOST_PASSWORD = 'password'
-```
+1. In the appropriate settings file, e.g. `config/settings/base.py` set the `EMAIL_BACKEND` variable to `gmailapi_backend.mail.GmailBackend`:
+  ```
+  EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+  ```
+1. Ensure the `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_HOST_USER`, and `EMAIL_HOST_PASSWORD` is uncommented.
+
+1. Add the created credentials and tokens to the `secret.py` as shown below:
+  ```
+  SECRET_EMAIL_HOST_USER = 'username'
+  SECRET_EMAIL_HOST_PASSWORD = 'password'
+  ```
 
 ##### E-mail using Google API
 The [django-gmailapi-backend](https://github.com/dolfim/django-gmailapi-backend) library
@@ -94,12 +98,16 @@ This package includes the script linked in the documentation above, which simpli
     --client_secret="<client_secret>" \
     --scope="https://www.googleapis.com/auth/gmail.send"
   ```
-1. Add the created credentials and tokens to the `secret.py` as shown below:
+1. In the appropriate settings file, e.g. `config/settings/base.py` set the `EMAIL_BACKEND` variable to `gmailapi_backend.mail.GmailBackend`:
   ```
   EMAIL_BACKEND = 'gmailapi_backend.mail.GmailBackend'
-  GMAIL_API_CLIENT_ID = 'google_assigned_id'
-  GMAIL_API_CLIENT_SECRET = 'google_assigned_secret'
-  GMAIL_API_REFRESH_TOKEN = 'google_assigned_token'
+  ```
+
+1. Add the created credentials and tokens to the `secret.py` as shown below:
+  ```
+  SECRET_GMAIL_API_CLIENT_ID = 'your_google_assigned_id'
+  SECRET_GMAIL_API_CLIENT_SECRET = 'your_google_assigned_secret'
+  SECRET_GMAIL_API_REFRESH_TOKEN = 'your_google_assigned_token'
   ```
 
 ### Running the development server

@@ -131,6 +131,7 @@ class Event(models.Model):
     country = CountryField()
     registration_url = models.URLField()
     event_coordinates = models.TextField(blank=True, null=True, )
+    is_initial_upload = models.BooleanField(default=False)
 
 
     submission_date = models.DateTimeField(auto_now_add=True)
@@ -225,6 +226,7 @@ class Paper(models.Model):
     public_reviews = models.BooleanField(_("Make reviews public"), default=True)
     email_review = models.BooleanField(_("Send me an email when a review is received"), default=True)
     submitter = models.ForeignKey(get_user_model(), default=None, null=True, blank=True, on_delete=models.SET_NULL)
+    is_initial_upload = models.BooleanField(default=False)
 
     @property
     def is_available_for_review(self):
@@ -399,6 +401,7 @@ class Review(models.Model):
     # contact email should be included in user accounts,
 
     public_review = models.BooleanField(_("Allow this review to be made public"), default=True)
+    is_initial_upload = models.BooleanField(default=False)
 
 
     def __str__(self):

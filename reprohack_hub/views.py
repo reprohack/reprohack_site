@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Dict, Any, Optional, Type
 import json
 from django import http
+from django.core import mail
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.contrib.auth import authenticate, login
@@ -11,6 +12,8 @@ from django.core.exceptions import ValidationError
 from django.db.models import QuerySet
 from django.forms.models import BaseModelForm
 from django.http.response import JsonResponse
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from django.utils.translation import gettext as _
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect
@@ -30,6 +33,8 @@ from .models import Event, Paper, Review
 from django.contrib import messages
 from django.urls import reverse
 from django.views.generic import DetailView, RedirectView, UpdateView
+
+from .utils import send_mail_from_template
 
 User = get_user_model()
 
@@ -249,6 +254,8 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
 
     # success_url = "review/???pk???"
 
+
+
     def get_form_kwargs(self, *args, **kwargs):
         kwargs = super(ReviewCreate, self).get_form_kwargs(*args, **kwargs)
         # Insert user into form for validation
@@ -256,10 +263,28 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
         return kwargs
 
     def form_valid(self, form):
-        # self.object = form.save(commit=False)
-        # self.object = form.save()
-        sent_data = form.cleaned_data
-        return super().form_valid(form)
+        response = super().form_valid(form)
+
+
+        review = self.object
+        paper = review.paper
+
+        paper_title = paper.title
+        paper_submitter_email = paper.submitter.email
+
+        mail_context = {
+            "paper_title": paper_title
+        }
+
+        send_mail_from_template(subject=f"Your paper \"{paper_title}\" has a new review.",
+                                template_name="mail/review_created.html",
+                                context=mail_context,
+                                from_email=settings.EMAIL_ADMIN_ADDRESS,
+                                recipient_list=[paper_submitter_email]
+                                )
+
+
+        return response
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -198,7 +198,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 # FIXTURES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#fixture-dirs
-FIXTURE_DIRS = (str(APPS_DIR / "fixtures"),)
+# FIXTURE_DIRS = (str(APPS_DIR / "fixtures"),)
 
 # SECURITY
 # ------------------------------------------------------------------------------
@@ -214,10 +214,37 @@ X_FRAME_OPTIONS = "DENY"
 # EMAIL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+"""
+# Email Configuration - Specify e-mail backend here
+# https://docs.djangoproject.com/en/3.2/topics/email/
+# django-gmailapi-backend (https://github.com/dolfim/django-gmailapi-backend) is used for sending
+# emails though Google's API. See README.md for more details.
+# USERNAME, PASSWORD AND SECRET TOKENS SHOULD BE PLACED INSIDE secret.py
+"""
+EMAIL_BACKEND = 'gmailapi_backend.mail.GmailBackend'
+GMAIL_API_CLIENT_ID = SECRET_GMAIL_API_CLIENT_ID
+GMAIL_API_CLIENT_SECRET = SECRET_GMAIL_API_CLIENT_SECRET
+GMAIL_API_REFRESH_TOKEN = SECRET_GMAIL_API_REFRESH_TOKEN
+
+"""
+Send e-mail through standard SMTP serer. See [https://github.com/dolfim/django-gmailapi-backend](https://github.com/dolfim/django-gmailapi-backend)
+for full list of configuration parameters.
+
+Uncomment below to enable settings
+"""
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'myserver.com'
+# EMAIL_PORT = 22
+# EMAIL_HOST_USER = SECRET_EMAIL_HOST_USER
+# EMAIL_HOST_PASSWORD = SECRET_EMAIL_HOST_PASSWORD
+
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
 EMAIL_TIMEOUT = 5
+EMAIL_ADMIN_ADDRESS = "reprohack-hub@sheffield.ac.uk"
+
+
 
 # ADMIN
 # ------------------------------------------------------------------------------
@@ -273,8 +300,10 @@ INSTALLED_APPS += ["compressor"]
 STATICFILES_FINDERS += ["compressor.finders.CompressorFinder"]
 
 
-# Your stuff...
+# Reprohack app settings
 # ------------------------------------------------------------------------------
 
 
 MARKDOWNX_MARKDOWNIFY_FUNCTION = 'markdownx.utils.markdownify'
+
+
