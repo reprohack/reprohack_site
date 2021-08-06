@@ -33,7 +33,6 @@ class TestUserUpdateView:
         https://github.com/pytest-dev/pytest-django/pull/258
     """
 
-
     def test_get_success_url(self, user: User, rf: RequestFactory):
         view = UserUpdateView()
         request = rf.get("/fake-url/")
@@ -93,9 +92,9 @@ class TestUserRedirectView:
 
 def test_markdown_page(client: Client) -> None:
     """Test markdown rendering."""
-    response = client.get(reverse("test"))
+    response = client.get(reverse("resources"))
     assert response.status_code == 200
-    assert "<h3>Test Page</h3>" in response.content.decode()
+    assert "<h2>For Organisers</h2>" in response.content.decode()
 
 
 def test_create_review(client: Client, user: User, review: Review) -> None:
