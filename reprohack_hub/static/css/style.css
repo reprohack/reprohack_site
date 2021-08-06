@@ -2805,8 +2805,6 @@ ul li {
             border-radius: 50%;
         }
     }
-*/
-/*
 
 The default theme overrides the standard li style so we have to override it again for the
 correct bootstrap pagination styling
