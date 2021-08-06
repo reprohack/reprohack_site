@@ -8,6 +8,7 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
+from django.db.models import QuerySet
 from django.forms.models import BaseModelForm
 from django.http.response import JsonResponse
 from django.utils.translation import gettext as _
@@ -88,9 +89,21 @@ class EventList(ListView):
     template_name = "event/event_list.html"
     paginate_by = 20  # if pagination is desired
 
+    def get_queryset(self) -> QuerySet:
+        search_string = self.request.GET.get("search")
+
+        result = Event.objects.all()
+
+        if search_string and len(search_string) > 0:
+            result = result.filter(title__contains=search_string)
+
+
+        return result
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["now"] = timezone.now()
+        context["search"] = self.request.GET.get("search", "")
         return context
 
 
@@ -108,7 +121,7 @@ class PaperCreate(LoginRequiredMixin, CreateView):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
         self.object.save()
-        # self.object.save_m2m()
+        form.save_m2m()
         print(form.errors)
         return HttpResponseRedirect(self.get_success_url())
 
@@ -126,6 +139,18 @@ class PaperUpdate(UpdateView):
     form_class = PaperForm
     template_name = "paper/paper_edit.html"
 
+    def form_valid(self, form):
+        object = form.save(commit=False)
+        object.save()
+        # self.object.tags.clear()
+        # self.object.tags.set(form.data["tags"], clear=True)
+        # self.object.tags.save()
+        # self.object.save()
+        form.save_m2m()
+
+        print(form.errors)
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class PaperDetail(DetailView):
     model = Paper
@@ -142,11 +167,77 @@ class PaperList(ListView):
     template_name = "paper/paper_list.html"
     paginate_by = 20  # if pagination is desired
 
+    def get_queryset(self) -> QuerySet:
+        search_string = self.request.GET.get("search")
+        tags = self.request.GET.get("tags")
+
+        result = None
+
+        if tags and len(tags) > 0:
+            tag_split = tags.split(",")
+            result = Paper.objects.filter(tags__name__in=tag_split).distinct()
+        else:
+            result = Paper.objects.all()
+
+        if search_string and len(search_string) > 0:
+            result = result.filter(title__contains=search_string)
+
+
+        return result
+
     def get_context_data(self, **kwargs):
+        search_string = self.request.GET.get("search", "")
+        tags = self.request.GET.get("tags", "")
         context = super().get_context_data(**kwargs)
+        context["search"] = search_string
+        context["tags"] = tags
         context["now"] = timezone.now()
+
+        # Building tags representation
+        selected_tags = []
+        if tags and len(tags) > 0:
+            selected_tags = tags.split(",")
+
+        all_tags = Paper.tags.all()
+
+        tags_list = []
+        for tag in all_tags:
+            tags_list.append({
+                "name": tag.name,
+                "selected": tag.name in selected_tags
+            })
+
+        for tag in tags_list:
+            new_selected = selected_tags.copy()
+            if tag["name"] in new_selected:
+                new_selected.remove(tag["name"])
+            else:
+                new_selected.append(tag["name"])
+
+            tag["new_state"] = ",".join(new_selected)
+
+        context["tags_list"] = tags_list
+        context["all_tags"] = ",".join([tag.name for tag in all_tags])
+
+
+
+
+
         return context
 
+
+class PaperTagSearchEndpointView(View):
+
+    def get(self, request):
+        tag_search = request.GET.get("tag")
+        if tag_search:
+            search_result = Paper.tags.filter(name__contains=tag_search)
+            response = [tag.name for tag in search_result]
+        else:
+            search_result = Paper.tags.all()
+            response = [tag.name for tag in search_result]
+
+        return JsonResponse(response, safe=False)
 
 # ----- Reviews ----- #
 
@@ -174,8 +265,26 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
         return context
 
+    def get_initial(self):
 
-class ReviewDetail(LoginRequiredMixin, DetailView):
+        form_initial = {}
+
+        serialized = [{"username": self.request.user.username, "lead": True}]
+
+        form_initial["reviewers"] = json.dumps(serialized)
+
+        # Sets the default initial paper if specified
+        if "paperid" in self.kwargs:
+            paper = Paper.objects.get(pk=self.kwargs["paperid"])
+            if paper:
+                form_initial["paper"] = paper
+                if paper.event:
+                    form_initial["event"] = paper.event
+
+        return form_initial
+
+
+class ReviewDetail(DetailView):
     model = Review
     template_name = "review/review_detail.html"
 
@@ -221,7 +330,7 @@ class ReviewUpdate(LoginRequiredMixin, UpdateView):
         }
 
 
-class ReviewList(LoginRequiredMixin, ListView):
+class ReviewList(ListView):
     """Present a list of 20 reviews.
 
     Todo:

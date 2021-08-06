@@ -1,0 +1,41 @@
+{% load static i18n compress %}
+<div>
+  <input class="{{ widget.attrs.class }}"
+         name="{{ widget.name }}"
+         id="{{ widget.attrs.id }}"
+         value="{{ widget.value }}"
+         placeholder="Enter tag value and press enter"/>
+</div>
+<script>
+  $(document).ready(function () {
+    let controller = null;
+
+    let tag_input = new Tagify(document.querySelector("#{{ widget.attrs.id }}"), {
+      originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(','),
+      whitelist: [],
+    });
+
+    function onInput(e) {
+      let value = e.detail.value;
+      tag_input.whitelist = null; // reset the whitelist
+
+      // https://developer.mozilla.org/en-US/docs/Web/API/AbortController/abort
+      controller && controller.abort();
+      controller = new AbortController();
+
+      // show loading animation and hide the suggestions dropdown
+      tag_input.loading(true).dropdown.hide();
+
+      fetch('/paper/tags_search/?tag=' + value, {signal: controller.signal})
+              .then(RES => RES.json())
+              .then(function (newWhitelist) {
+                tag_input.whitelist = newWhitelist // update inwhitelist Array in-place
+                tag_input.loading(false).dropdown.show(value) // render the suggestions dropdown
+              });
+    }
+
+    tag_input.on('input', onInput);
+
+  });
+
+</script>
