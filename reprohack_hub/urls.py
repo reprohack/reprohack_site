@@ -14,10 +14,6 @@ from .views import (EventCreate, EventUpdate, EventDetail, EventList, IndexView,
 
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
-    path('about',
-         MarkdownView.as_view(extra_context={'title': 'About Us',
-                                             'markdown_file': 'about.md'}),
-         name='about'),
     path('resources',
          MarkdownView.as_view(extra_context={'title': 'Resources',
                                              'markdown_file': 'resources.md'}),
@@ -73,4 +69,6 @@ urlpatterns = [
     path('review/<int:pk>/', ReviewDetail.as_view(), name="review_detail"),
     path('review/<int:pk>/edit/', ReviewUpdate.as_view(), name="review_edit"),
     url(r'^markdownx/', include('markdownx.urls')),
+    path('about', TemplateView.as_view(
+        template_name='about.html'), name='about'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
