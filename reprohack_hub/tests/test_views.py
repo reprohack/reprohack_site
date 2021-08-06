@@ -33,7 +33,6 @@ class TestUserUpdateView:
         https://github.com/pytest-dev/pytest-django/pull/258
     """
 
-
     def test_get_success_url(self, user: User, rf: RequestFactory):
         view = UserUpdateView()
         request = rf.get("/fake-url/")
@@ -93,9 +92,9 @@ class TestUserRedirectView:
 
 def test_markdown_page(client: Client) -> None:
     """Test markdown rendering."""
-    response = client.get(reverse("about"))
+    response = client.get(reverse("resources"))
     assert response.status_code == 200
-    assert "<h3>ReproHack History</h3>" in response.content.decode()
+    assert "<h2>For Organisers</h2>" in response.content.decode()
 
 
 def test_create_review(client: Client, user: User, review: Review) -> None:
@@ -104,7 +103,8 @@ def test_create_review(client: Client, user: User, review: Review) -> None:
     assert user not in review.reviewers.all()
     # Create a new review from similar data to test setting author
     review_dict = model_to_dict(review)
-    review_dict["reviewers"] = '[{"username":"'+user.username+'", "lead": false}]'
+    review_dict["reviewers"] = '[{"username":"' + \
+        user.username+'", "lead": false}]'
     client.force_login(user)
     response = client.post(reverse("review_new"), review_dict, follow=True)
     assert response.status_code == 200

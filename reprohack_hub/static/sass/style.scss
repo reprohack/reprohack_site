@@ -8,7 +8,7 @@
 @import 'btn';
 @import 'section_title';
 @import 'slick-nav.scss';
-
+@import 'timeline.scss';
 
 
 
@@ -16,8 +16,8 @@
 // slider
 @import 'slider';
 
-// about
-@import 'about';
+// about//
+// @import 'about';
 
 // footer
 @import 'footer';
@@ -26,11 +26,11 @@
 @import 'bradcam';
 
 // latest_blog
-@import 'latest_blog';
+// @import 'latest_blog';
 
 // nesletter
-@import 'nesletter';
-// nesletter
+// @import 'nesletter';
+// faq
 @import 'faq';
 
 // bradcam
@@ -38,7 +38,7 @@
 // bradcam
 @import 'team';
 // bradcam
-@import 'course_details';
+// // // @import 'course_details';
 
 // bradcam
 @import 'testmonial';
@@ -56,11 +56,11 @@
 
 
 // blog
-@import 'blog';
+// @import 'blog';
 
 
 // blog part
-@import 'blog_part';
+// @import 'blog_part';
 
 // header
 
@@ -73,7 +73,7 @@
 // project specific CSS goes here
 
 ////////////////////////////////
-		//Variables//
+//Variables//
 ////////////////////////////////
 
 // Alert colors
@@ -86,7 +86,7 @@ $dark-pink: #eed3d7;
 $red: #b94a48;
 
 ////////////////////////////////
-		//Alerts//
+//Alerts//
 ////////////////////////////////
 
 // bootstrap alert CSS, translated to the django-standard levels of
@@ -105,15 +105,15 @@ $red: #b94a48;
 }
 
 strong {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 blockquote {
-    padding: 30px 50px 30px 30px;
-    background: #f9f9ff;
-    border-left: 2px solid $primary;
-    font-style: italic;
-    font-size: 2.5em;
+  padding: 30px 50px 30px 30px;
+  background: #f9f9ff;
+  border-left: 2px solid $primary;
+  font-style: italic;
+  font-size: 2.5em;
 }
 
 .detail_header {
@@ -143,9 +143,6 @@ ul li {
             border-radius: 50%;
         }
     }
-*/
-
-/*
 
 The default theme overrides the standard li style so we have to override it again for the
 correct bootstrap pagination styling
@@ -153,10 +150,10 @@ correct bootstrap pagination styling
 .pagination {
   li {
     padding-left: 0px;
+
     &:before {
       content: none;
 
     }
   }
 }
-
