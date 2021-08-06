@@ -25,10 +25,13 @@ TO DO
     with R, rOpenSci Community Call](https://vimeo.com/351259131)
 - **Blogpost**: [Reproducibility Hackathon Netherlands – the
     aftermath](https://www.software.ac.uk/blog/2020-01-15-reproducibility-hackathon-netherlands-aftermath)
+- **Blogpost**: [Hacking for reproducible science](https://openworking.wordpress.com/2019/12/05/hacking-for-reproducible-science/)
 - **Blogpost**: [N8 CIR ReproHack Northern Tour -
     Winter 2020](https://n8cir.org.uk/news/reprohacks/) 
+- **Blogpost**: [Remote ReproHacking](https://openworking.wordpress.com/2020/08/05/remote-reprohacking/)
 - **Keynote Talk**: [UseR2020 Computational Reproducibility: from theory to practice](https://www.youtube.com/watch?v=KHMW8fV2NXo)
-
+- **Podcast**: [Code For Thought: It's All About Reproducibility](https://podcasts.apple.com/au/podcast/its-all-about-reproducibility/id1548426989?i=1000511061690)
+- **Blogpost**: [Open Access Week: the first ReproHack ♻ @ UCL](https://blogs.ucl.ac.uk/open-access/2020/11/17/open-access-week-the-first-reprohack-%e2%99%bb-ucl/)
 
 ## General
 
