@@ -87,7 +87,7 @@ p {
   font-size: 16px;
   font-weight: 300;
   line-height: 28px;
-  color: #919191;
+  color: #212529;
   margin-bottom: 13px;
   font-family: "Crimson Text", serif; }
 
@@ -1711,13 +1711,13 @@ a {
     content: counter(section);
     position: absolute;
     border-radius: 50%;
-    padding: 10px;
+    padding: 25px;
     height: 1.25em;
     width: 1.25em;
     background-color: #34435E;
     text-align: center;
     line-height: 1.25em;
-    color: #ffffff;
+    color: #34435E;
     font-size: 1em; }
 
 .timeline .event:nth-child(odd) {
@@ -2677,7 +2677,7 @@ a {
         z-index: 11; }
         .our_team_member .single_team .thumb .social_link a {
           margin: 0 10px;
-          font-size: 20px;
+          font-size: 30px;
           color: #ddd; }
           .our_team_member .single_team .thumb .social_link a:hover {
             color: #fff; }
