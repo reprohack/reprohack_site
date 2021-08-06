@@ -214,7 +214,7 @@ class Paper(models.Model):
     code_url = models.URLField()
     data_url = models.URLField()
     extra_url = models.URLField()
-    tools = TaggableManager()
+    tags = TaggableManager(_("Tags"), help_text="")
     citation_bib = models.TextField()
 
     submission_date = models.DateTimeField(auto_now_add=True)
@@ -226,6 +226,10 @@ class Paper(models.Model):
     email_review = models.BooleanField(_("Send me an email when a review is received"), default=True)
     submitter = models.ForeignKey(get_user_model(), default=None, null=True, blank=True, on_delete=models.SET_NULL)
 
+    @property
+    def is_available_for_review(self):
+        return self.review_availability != self.ReviewAvailability.ARCHIVE
+
     def get_reviews_viewable_by_user(self, user):
         reviews_list = []
         for review in self.review_set.all():
@@ -233,6 +237,8 @@ class Paper(models.Model):
                 reviews_list.append(review)
 
         return reviews_list
+
+
 
 
     def __str__(self):
@@ -326,7 +332,7 @@ class Review(models.Model):
                     MaxValueValidator(RATING_MAX)],
         choices=RATING_CHOICES,
     )
-    reproducibility_description = models.TextField(_("Briefly describe the "
+    reproducibility_description = MarkdownxField(_("Briefly describe the "
                                                      "procedure followed/tools "
                                                      "used to reproduce it."),)
     familiarity_with_method = models.TextField(_("Briefly describe your "
@@ -416,7 +422,7 @@ class Review(models.Model):
 
     def is_viewable_by_user(self, user):
         # If public then viewable by everyone
-        if self.public_review:
+        if self.public_review and self.paper.public_reviews:
             return True
 
         # Otherwise you'd have to be logged in

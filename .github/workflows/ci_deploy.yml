@@ -1,14 +1,10 @@
-# Runs frontend, backend and integration testing
+# Runs frontend, backend, integration testing and deploy to the live site
 name: CI
 on:
   push:
     branches:
-      - '*'
-      - '!master'
-      - '!dev'
-  pull_request:
-    branches:
-      - '*'
+      - 'master'
+      - 'dev'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -33,4 +29,18 @@ jobs:
         run: npm install
       - name: Run test
         run: npm run test
-
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - name: Deploy to live server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: "cd reprohack_site && ./deploy.sh"
