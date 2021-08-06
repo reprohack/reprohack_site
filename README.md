@@ -56,6 +56,51 @@ config/settings/secret.py
 
 The default values of these settings are located at `config/settings/secret_default.py`.
 
+#### Sending E-mail 
+It's recommended to specify e-mail configurations inside the `secrets.py` settings file. As these settings will
+include username and passwords that should not be tracked by version control.
+
+##### E-mail using SMTP
+SMTP is supported as standard in Django, add the following configurations with your own details
+to the `secret.py` settings file:
+
+```python
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'myserver.com'
+EMAIL_PORT = 22
+EMAIL_HOST_USER = 'username'
+EMAIL_HOST_PASSWORD = 'password'
+```
+
+##### E-mail using Google API
+The [django-gmailapi-backend](https://github.com/dolfim/django-gmailapi-backend) library
+has been added to allow sending of mail through Google's API as sending through SMTP is disabled as standard.
+
+Unlike with SMTP, Google's API requires OAuth authentication which means a project and a credential has to be 
+created through Google's cloud console.
+
+* More information on the Gmail API: [https://developers.google.com/gmail/api/guides/sending](https://developers.google.com/gmail/api/guides/sending)
+* OAuth credentials for sending emails: [https://github.com/google/gmail-oauth2-tools/wiki/OAuth2DotPyRunThrough](https://github.com/google/gmail-oauth2-tools/wiki/OAuth2DotPyRunThrough)
+
+This package includes the script linked in the documentation above, which simplifies the setup of the API credentials. The following outlines the key steps:
+
+1. Create a project in the Google developer console, [https://console.cloud.google.com/](https://console.cloud.google.com/)
+1. Enable the Gmail API
+1. Create OAuth 2.0 credentials, you'll likely want to create a `Desktop` 
+1. Create a valid refresh_token using the helper script included in the package:
+  ```bash
+  gmail_oauth2 --generate_oauth2_token \
+    --client_id="<client_id>" \
+    --client_secret="<client_secret>" \
+    --scope="https://www.googleapis.com/auth/gmail.send"
+  ```
+1. Add the created credentials and tokens to the `secret.py` as shown below:
+  ```
+  EMAIL_BACKEND = 'gmailapi_backend.mail.GmailBackend'
+  GMAIL_API_CLIENT_ID = 'google_assigned_id'
+  GMAIL_API_CLIENT_SECRET = 'google_assigned_secret'
+  GMAIL_API_REFRESH_TOKEN = 'google_assigned_token'
+  ```
 
 ### Running the development server
 
