@@ -15,6 +15,24 @@
 TO DO
 
 
+## Blogs / Presentations on ReproHacks
+
+- **Blogpost**: [ReproHacking at Opencon London 2017
+ Doathon](https://rse.shef.ac.uk/blog/opencon-london/)
+- **Blogpost**: [Reprohacking at CarpentryConnect
+    Manchester 2019](https://software.ac.uk/blog/2019-08-07-reprohacking-carpentryconnect-manchester-2019)
+- **Community Call**: Section on ReproHack on [Reproducible Research
+    with R, rOpenSci Community Call](https://vimeo.com/351259131)
+- **Blogpost**: [Reproducibility Hackathon Netherlands – the
+    aftermath](https://www.software.ac.uk/blog/2020-01-15-reproducibility-hackathon-netherlands-aftermath)
+- **Blogpost**: [Hacking for reproducible science](https://openworking.wordpress.com/2019/12/05/hacking-for-reproducible-science/)
+- **Blogpost**: [N8 CIR ReproHack Northern Tour -
+    Winter 2020](https://n8cir.org.uk/news/reprohacks/) 
+- **Blogpost**: [Remote ReproHacking](https://openworking.wordpress.com/2020/08/05/remote-reprohacking/)
+- **Keynote Talk**: [UseR2020 Computational Reproducibility: from theory to practice](https://www.youtube.com/watch?v=KHMW8fV2NXo)
+- **Podcast**: [Code For Thought: It's All About Reproducibility](https://podcasts.apple.com/au/podcast/its-all-about-reproducibility/id1548426989?i=1000511061690)
+- **Blogpost**: [Open Access Week: the first ReproHack ♻ @ UCL](https://blogs.ucl.ac.uk/open-access/2020/11/17/open-access-week-the-first-reprohack-%e2%99%bb-ucl/)
+
 ## General
 
 - [The Turing Way](https://the-turing-way.netlify.app/welcome): The Turing Way is an open source community-driven guide to reproducible, ethical, inclusive and collaborative data science. The goal is to provide all the information that data scientists in academia, industry, government and the third sector need at the start of their projects to ensure that they are easy to reproduce and reuse at the end.
