@@ -87,7 +87,6 @@ class User(AbstractUser):
         return reverse("user_detail", kwargs={"username": self.username})
 
 
-
 def default_event_start(hour: int = DEFAULT_EVENT_START_HOUR) -> datetime:
     """Return next default start time."""
     return next_x_hour(hour)
@@ -133,7 +132,6 @@ class Event(models.Model):
     event_coordinates = models.TextField(blank=True, null=True, )
     is_initial_upload = models.BooleanField(default=False)
 
-
     submission_date = models.DateTimeField(auto_now_add=True)
     # remote = models.BooleanField(default=False)
 
@@ -153,7 +151,8 @@ class Event(models.Model):
 
     @property
     def address(self):
-        addr_items = [self.address1, self.address2, self.city, self.postcode, self.country.name]
+        addr_items = [self.address1, self.address2,
+                      self.city, self.postcode, self.country.name]
 
         used_addr_items = []
         for addr_item in addr_items:
@@ -161,9 +160,6 @@ class Event(models.Model):
                 used_addr_items.append(addr_item.strip())
 
         return ", ".join(used_addr_items)
-
-
-
 
     @property
     def lat(self):
@@ -188,7 +184,8 @@ class Paper(models.Model):
 
     class ReviewAvailability(models.TextChoices):
         ALL = 'ALL', _('Allowed for reviews in any events')
-        EVENT_ONLY = 'EVT_ONLY', _('Only allowed to review for associated event')
+        EVENT_ONLY = 'EVT_ONLY', _(
+            'Only allowed to review for associated event')
         ARCHIVE = 'ARCHIVE', _('Archive the paper, reviews are not allowed')
 
     """A paper to reproduce.
@@ -207,25 +204,29 @@ class Paper(models.Model):
                               on_delete=models.SET_NULL)
 
     citation_txt = models.TextField(max_length=300)
-    doi = models.CharField(_("DOI (eg. 10.1000/xyz123)"), max_length=200,)
+    doi = models.CharField(_("DOI (eg. 10.1000/xyz123)"),
+                           max_length=200, null=True, blank=True)
     description = models.TextField(max_length=400)
     why = models.TextField(max_length=400)
     focus = models.TextField(max_length=400)
     paper_url = models.URLField()
     code_url = models.URLField()
-    data_url = models.URLField()
-    extra_url = models.URLField()
+    data_url = models.URLField(null=True, blank=True)
+    extra_url = models.URLField(null=True, blank=True)
     tags = TaggableManager(_("Tags"), help_text="")
-    citation_bib = models.TextField()
+    citation_bib = models.TextField(null=True, blank=True)
 
     submission_date = models.DateTimeField(auto_now_add=True)
     review_availability = models.CharField(_("Paper review permission"),
                                            choices=ReviewAvailability.choices,
                                            default=ReviewAvailability.ALL,
                                            max_length=20)
-    public_reviews = models.BooleanField(_("Make reviews public"), default=True)
-    email_review = models.BooleanField(_("Send me an email when a review is received"), default=True)
-    submitter = models.ForeignKey(get_user_model(), default=None, null=True, blank=True, on_delete=models.SET_NULL)
+    public_reviews = models.BooleanField(
+        _("Make reviews public"), default=True)
+    email_review = models.BooleanField(
+        _("Send me an email when a review is received"), default=True)
+    submitter = models.ForeignKey(get_user_model(
+    ), default=None, null=True, blank=True, on_delete=models.SET_NULL)
     is_initial_upload = models.BooleanField(default=False)
 
     @property
@@ -239,9 +240,6 @@ class Paper(models.Model):
                 reviews_list.append(review)
 
         return reviews_list
-
-
-
 
     def __str__(self):
         return self.title
@@ -275,7 +273,6 @@ class AuthorsAndSubmitters(models.Model):
     #     return f"{self.user} {self.paper}"
 
 
-
 class Review(models.Model):
 
     """A review of a Paper from either an individual or a group.
@@ -303,13 +300,11 @@ class Review(models.Model):
         PARTIALLY_REPRODUCIBLE = 'p', _('Partially Reproducible'),
         NOT_REPRODUCIBLE = 'n', _('Not Reproducible')
 
-
     class OperatingSystems(models.TextChoices):
-        LINUX = 'linux', _('Linux/FreeBSD or other Open Source Operating system')
+        LINUX = 'linux', _(
+            'Linux/FreeBSD or other Open Source Operating system')
         MACOS = 'macOS', _('Apple Operating System')
         WINDOWS = 'windows', _('Windows Operating System')
-
-
 
     RATING_CHOICES = [(x, x) for x in range(RATING_MIN, RATING_MAX + 1)]
 
@@ -335,8 +330,8 @@ class Review(models.Model):
         choices=RATING_CHOICES,
     )
     reproducibility_description = MarkdownxField(_("Briefly describe the "
-                                                     "procedure followed/tools "
-                                                     "used to reproduce it."),)
+                                                   "procedure followed/tools "
+                                                   "used to reproduce it."),)
     familiarity_with_method = models.TextField(_("Briefly describe your "
                                                  "familiarity with the "
                                                  "procedure/tools used by "
@@ -400,9 +395,9 @@ class Review(models.Model):
     submission_date = models.DateTimeField(auto_now_add=True)
     # contact email should be included in user accounts,
 
-    public_review = models.BooleanField(_("Allow this review to be made public"), default=True)
+    public_review = models.BooleanField(
+        _("Allow this review to be made public"), default=True)
     is_initial_upload = models.BooleanField(default=False)
-
 
     def __str__(self):
         """Default display of review.
@@ -445,7 +440,6 @@ class Review(models.Model):
 
     def is_editable_by_user(self, user):
 
-
         # Have to be logged in
         if isinstance(user, AnonymousUser):
             return False
@@ -458,7 +452,6 @@ class Review(models.Model):
         return False
 
 
-
 class PaperReviewer(models.Model):
     """
     A group of paper reviewers.
@@ -467,6 +460,3 @@ class PaperReviewer(models.Model):
     review = models.ForeignKey(Review, on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     lead_reviewer = models.BooleanField(default=True)
-
-
-
