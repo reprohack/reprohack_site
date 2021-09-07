@@ -102,7 +102,6 @@ class EventList(ListView):
         if search_string and len(search_string) > 0:
             result = result.filter(title__contains=search_string)
 
-
         return result
 
     def get_context_data(self, **kwargs):
@@ -163,7 +162,8 @@ class PaperDetail(DetailView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["reviews"] = self.get_object().get_reviews_viewable_by_user(self.request.user)
+        context["reviews"] = self.get_object(
+        ).get_reviews_viewable_by_user(self.request.user)
         return context
 
 
@@ -186,7 +186,6 @@ class PaperList(ListView):
 
         if search_string and len(search_string) > 0:
             result = result.filter(title__contains=search_string)
-
 
         return result
 
@@ -224,10 +223,6 @@ class PaperList(ListView):
         context["tags_list"] = tags_list
         context["all_tags"] = ",".join([tag.name for tag in all_tags])
 
-
-
-
-
         return context
 
 
@@ -254,8 +249,6 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
 
     # success_url = "review/???pk???"
 
-
-
     def get_form_kwargs(self, *args, **kwargs):
         kwargs = super(ReviewCreate, self).get_form_kwargs(*args, **kwargs)
         # Insert user into form for validation
@@ -264,7 +257,6 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-
 
         review = self.object
         paper = review.paper
@@ -276,13 +268,12 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
             "paper_title": paper_title
         }
 
-        send_mail_from_template(subject=f"Your paper \"{paper_title}\" has a new review.",
+        send_mail_from_template(subject=f"[REPROHACK_HUB] Your paper \"{paper_title}\" has a new review.",
                                 template_name="mail/review_created.html",
                                 context=mail_context,
                                 from_email=settings.EMAIL_ADMIN_ADDRESS,
                                 recipient_list=[paper_submitter_email]
                                 )
-
 
         return response
 
@@ -435,6 +426,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     template_name = "registration/user_detail.html"
     slug_field = "username"
     slug_url_kwarg = "username"
+    #user_reviews = Review.objects.all().filter(user=self. request.user)
 
     def test_func(self):
         return self.request.user.pk == self.get_object().pk

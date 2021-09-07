@@ -50,7 +50,8 @@ DATABASES = {
 }
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", "reprohacks.eu.pythonanywhere.com", "reprohack.org"]
+ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1",
+                 "reprohacks.eu.pythonanywhere.com", "reprohack.org"]
 
 # URLS
 # ------------------------------------------------------------------------------
@@ -245,7 +246,6 @@ EMAIL_TIMEOUT = 5
 EMAIL_ADMIN_ADDRESS = "reprohack-hub@sheffield.ac.uk"
 
 
-
 # ADMIN
 # ------------------------------------------------------------------------------
 # Django Admin URL.
@@ -305,5 +305,3 @@ STATICFILES_FINDERS += ["compressor.finders.CompressorFinder"]
 
 
 MARKDOWNX_MARKDOWNIFY_FUNCTION = 'markdownx.utils.markdownify'
-
-
