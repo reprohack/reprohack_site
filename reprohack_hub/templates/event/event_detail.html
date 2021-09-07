@@ -4,47 +4,47 @@
 
 {% block content %}
 
-  <div class="bradcam_area breadcam_bg overlay2">
-    <h1>
-      {{ event.title }}
-      {% if user.pk == event.creator.pk %}
-        <a class="btn btn-default" href="{% url 'event_edit' pk=event.pk %}"><i class="bi-pencil"></i> </a>
-      {% endif %}
+<div class="bradcam_area breadcam_bg overlay2">
+  <h1>
+    {{ event.title }}
+    {% if user.pk == event.creator.pk %}
+    <a class="btn btn-default" href="{% url 'event_edit' pk=event.pk %}"><i class="bi-pencil"></i> </a>
+    {% endif %}
 
-    </h1>
-  </div>
-  <div class="whole-wrap">
-    <div class="container box_1170">
-      <div class="section-top-border">
-        <div class="event">
+  </h1>
+</div>
+<div class="whole-wrap">
+  <div class="container box_1170">
+    <div class="section-top-border">
+      <div class="event">
 
-          <h4>created by: {{ event.creator.username }}</h4>
+        <h4>created by: {{ event.creator.username }}</h4>
 
-          <div>
-            <h5>{{ event.start_time }} - {{ event.end_time }}</h5>
+        <div>
+          <h5>{{ event.start_time }} - {{ event.end_time }}</h5>
 
-            <h5>{{ event.address }}</h5>
-          </div>
-
-          <p>{{ event.description | show_markdown | safe }}</p>
-
-
-          {% include "event/event_map.html" %}
-
-
-          <p>Associated papers</p>
-          {% if event.paper_set.count > 0 %}
-            <ul>
-              {% for paper in event.paper_set.all %}
-                <li>{{ paper }}</li>
-              {% endfor %}
-            </ul>
-          {% else %}
-            No associated papers
-
-          {% endif %}
+          <h5>{{ event.address }}</h5>
         </div>
+
+        <p>{{ event.description | show_markdown | safe }}</p>
+
+
+        {% include "event/event_map.html" %}
+
+
+        <h4>Associated papers</h4>
+        {% if event.paper_set.count > 0 %}
+        <ul>
+          {% for paper in event.paper_set.all %}
+          <li>{{ paper }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        No associated papers
+
+        {% endif %}
       </div>
     </div>
   </div>
+</div>
 {% endblock %}
