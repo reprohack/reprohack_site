@@ -6,23 +6,32 @@
 {% block content %}
 <!-- bradcam_area_start -->
 <div class="bradcam_area breadcam_bg overlay2">
-    <h1>ReproHack Papers</h1>
+  <h1>ReproHack Papers</h1>
 </div>
 <!-- bradcam_area_end -->
-<h1>ReproHack Papers</h1>
-<h3> Submit your paper now!</h3>
+
 <div class="content container">
-    <div class="row">
-        <div class="col-md-8">
-            {% block paper-form %}
-            {% endblock %}
-<div class="paper-form" method="POST">
+  <h1>ReproHack Papers</h1>
+  <p>We're putting together a database of papers from which participants can choose to reproduce at our ReproHack
+    events. We're looking for papers for which both DATA and CODE are available.
+    Papers do not necessarily need to be published. Submitting your paper at the pre-print stage is perfectly
+    acceptable.
+  </p>
+  <p>
+    For more details, please visit our <a href="{% url 'author_guidelines' %}"> guidelines for authors</a>
+  </p>
+  <h3> Submit your paper now!</h3>
+  <div class="row">
+    <div class="col-md-8">
+      {% block paper-form %}
+      {% endblock %}
+      <div class="paper-form" method="POST">
 
-  {% csrf_token %}
-  {% crispy form %}
+        {% csrf_token %}
+        {% crispy form %}
 
-</div>
-</div>
-</div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

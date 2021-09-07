@@ -203,18 +203,23 @@ class Paper(models.Model):
     event = models.ForeignKey(Event, null=True, blank=True,
                               on_delete=models.SET_NULL)
 
-    citation_txt = models.TextField(max_length=300)
+    citation_txt = models.TextField(_(
+        "Citation: full citation of the paper as text"), max_length=300)
     doi = models.CharField(_("DOI (eg. 10.1000/xyz123)"),
                            max_length=200, null=True, blank=True)
-    description = models.TextField(max_length=400)
-    why = models.TextField(max_length=400)
-    focus = models.TextField(max_length=400)
+    description = models.TextField(
+        _("Short Description of the paper"), max_length=400)
+    why = models.TextField(
+        _("Why someone attempt to reproduce this paper?"), max_length=400)
+    focus = models.TextField(
+        _("What should reviewers focus on?"), null=True, blank=True, max_length=400)
     paper_url = models.URLField()
     code_url = models.URLField()
     data_url = models.URLField(null=True, blank=True)
     extra_url = models.URLField(null=True, blank=True)
     tags = TaggableManager(_("Tags"), help_text="")
-    citation_bib = models.TextField(null=True, blank=True)
+    citation_bib = models.TextField(_(
+        "BibTex reference: paper reference in BibTex format"), null=True, blank=True)
 
     submission_date = models.DateTimeField(auto_now_add=True)
     review_availability = models.CharField(_("Paper review permission"),
