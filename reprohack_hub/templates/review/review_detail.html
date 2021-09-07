@@ -4,141 +4,174 @@
 
 {% block content %}
 
-  <div class="bradcam_area breadcam_bg overlay2">
-    <h1>Review of {{ review.paper }}
-      {% if is_reviewer %}
-        <a class="btn btn-default" href="{% url 'review_edit' pk=review.pk %}"><i class="bi-pencil"></i> </a>
-      {% endif %}
-    </h1>
+<div class="bradcam_area breadcam_bg overlay2">
+  <h1>Review of
+    <br>
+    <oblique> "{{ review.paper }}"</oblique>
+    {% if is_reviewer %}
+    <a class="btn btn-default" href="{% url 'review_edit' pk=review.pk %}"><i class="bi-pencil"></i> </a>
+    {% endif %}
 
-  </div>
-  <div class="whole-wrap">
-    <div class="container box_1170">
-      <div class="section-top-border">
-        <div class="review">
-          <div>
-            <h4>Paper reviewed: <a href="{{ review.paper.get_absolute_url }}">{{ review.paper.title }}</a></h4>
-          </div>
+  </h1>
 
-          <div>
-            <h4>Submitted by {{ review.reviewers.first }}</h4>
-          </div>
-        {%  if  review.get_lead_reviewers  %}
-          <div>
-            <h4>Lead reviewer</h4>
-            {% for rv in review.get_lead_reviewers %}
-              <a href="{{ rv.get_absolute_url }}">{{ rv.username }}</a>
-
-            {% endfor %}
-
-          </div>
-        {% endif %}
-        {% if review.get_normal_reviewers  %}
-          <div>
-
-            <h4>Review team members</h4>
-            {% for rv in review.get_normal_reviewers %}
-              <a href="{{ rv.get_absolute_url }}">{{ rv.username }}</a>
-
-            {% endfor %}
-          </div>
-        {% endif %}
+</div>
+<div class="whole-wrap">
+  <div class="container box_1170">
+    <div class="section-top-border">
+      <div class="review">
+        <div>
+          <h3>Paper reviewed: <a href="{{ review.paper.get_absolute_url }}">{{ review.paper.title }}</a></h3>
+        </div>
 
         <div>
-          <h3>Details</h3>
-          <h4>Reproducibility</h4>
+          <h4>Submitted by {{ review.reviewers.first }}</h4> {{review.submission_date}}
+        </div>
+        {%  if  review.get_lead_reviewers  %}
+        <div>
+          <h4>Lead reviewer</h4>
+          {% for rv in review.get_lead_reviewers %}
+          <a href="{{ rv.get_absolute_url }}">{{ rv.username }}</a>
+
+          {% endfor %}
+
+        </div>
+        {% endif %}
+        {% if review.get_normal_reviewers  %}
+        <div>
+
+          <h4>Review team members</h4>
+          {% for rv in review.get_normal_reviewers %}
+          <a href="{{ rv.get_absolute_url }}">{{ rv.username }}</a>
+
+          {% endfor %}
+        </div>
+        {% endif %}
+        <div>
+          <hr>
+          <h2>Review Body</h2>
+          <h3>Reproducibility</h3>
           <div class="detail_header">
-            Reproducibility outcome
+            Did you manage to reproduce it?
           </div>
           <div class="detail_text">
-            {{ review.reproducibility_outcome }}
+            {{ review.get_reproducibility_outcome_display }}
           </div>
 
           <div class="detail_header">
             Reproducibility rating
           </div>
-          <div class="detail_text">
-            {{ review.reproducibility_rating }}
+          How much of the paper did you manage to reproduce?
+          <div class="container-scores">
+            <div class="scores" style="width:{{ review.reproducibility_rating }}0%;">
+              {{ review.reproducibility_rating }} / 10
+            </div>
           </div>
 
           <div class="detail_header">
-            Reproducibility description
+            Briefly describe the procedure followed/tools used to reproduce it
           </div>
           <div class="detail_text">
             {{ review.reproducibility_description | show_markdown | safe  }}
           </div>
 
           <div class="detail_header">
-            Familiarity with methods
+            Briefly describe your familiarity with the procedure/tools used by the paper.
           </div>
           <div class="detail_text">
             {{ review.familiarity_with_method }}
           </div>
 
-          <div class="detail_header">Operating system</div>
+          <div class="detail_header">Which type of operating system were you working in?</div>
           <div class="detail_text">
-            {{ review.operating_system }}
+            {{ review.get_operating_system_display }}
           </div>
 
-          <div class="detail_header">Software installed</div>
+          <div class="detail_header">What additional software did you need to install?</div>
           <div class="detail_text">
             {{ review.software_installed }}
           </div>
 
-          <div class="detail_header">Software used</div>
+          <div class="detail_header">What software did you use</div>
           <div class="detail_text">
             {{ review.software_used }}
           </div>
 
-          <div class="detail_header">Challenges</div>
+          <div class="detail_header">What were the main challenges you ran into (if any)?</div>
           <div class="detail_text">
             {{ review.challenges }}
           </div>
 
-          <div class="detail_header">Advantages</div>
+          <div class="detail_header">What were the positive features of this approach?</div>
           <div class="detail_text">
             {{ review.advantages }}
           </div>
 
-          <div class="detail_header">Comments and Suggestions</div>
+          <div class="detail_header">Any other comments/suggestions on the reproducibility approach?</div>
           <div class="detail_text">
             {{ review.comments_and_suggestions }}
           </div>
-
-          <h4>Documentation</h4>
+          <br>
+          <h3>Documentation</h3>
 
           <div class="detail_header">Documentation rating</div>
-          <div class="detail_text">
-            {{ review.documentation_rating }}
+          How well was the material documented?
+          <div class="container-scores">
+            <div class="scores" style="width:{{ review.documentation_rating }}0%;">
+              {{ review.documentation_rating }} / 10
+            </div>
           </div>
 
-          <div class="detail_header">Documentation cons</div>
+          <div class="detail_header">How could the documentation be improved?</div>
           <div class="detail_text">{{ review.documentation_cons }}</div>
 
-          <div class="detail_header">Documentation pros</div>
+          <div class="detail_header">What do you like about the documentation?</div>
           <div class="detail_text">{{ review.documentation_pros }}</div>
 
-          <div class="detail_header">Familiarity rating</div>
-          <div class="detail_text">{{ review.method_familiarity_rating }}</div>
-
-          <div class="detail_header">Transparency suggestions</div>
+          <div class="detail_header">After attempting to reproduce, how familiar do you feel with the code and methods
+            used in the paper?</div>
+          <div class="container-scores">
+            <div class="scores" style="width:{{ review.method_familiarity_rating }}0%;">
+              {{ review.method_familiarity_rating }} / 10
+            </div>
+          </div>
+          <div class="detail_header">Any suggestions on how the analysis could be made more transparent?</div>
           <div class="detail_text">{{ review.transparency_suggestions }}</div>
+          <br>
 
-          <h4>Reusability</h4>
-
+          <h3>Reusability</h3>
           <div class="detail_header">Reusability rating</div>
-          <div class="detail_text">{{ review.method_reusability_rating }}</div>
+          Rate the project on reusability of the material
+          <div class="container-scores">
+            <div class="scores" style="width:{{ review.method_reusability_rating }}0%;">
+              {{ review.method_reusability_rating }} / 10
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="detail_header">
+                Permissive Data license included: &nbsp; {% if review.data_permissive_license  %}
+                <i class="fa fa-check-square"></i>
+                {% else %} <i class="fa fa-times"></i>
+                {% endif %}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="detail_header">
+                Permissive Code license included: &nbsp; {% if review.code_permissive_license  %}
+                <i class="fa fa-check-square"></i>
+                {% else %} <i class="fa fa-times"></i>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <br>
 
-          <div class="detail_header">Data license</div>
-          <div class="detail_text">{{ review.data_permissive_license }}</div>
-
-          <div class="detail_header">Code license</div>
-          <div class="detail_text">{{ review.code_permissive_license }}</div>
-
-          <div class="detail_header">Reusability suggestions</div>
+          <div class="detail_header">Any suggestions on how the project could be more reusable?</div>
           <div class="detail_text">{{ review.reusability_suggestions }}</div>
 
-          <div class="detail_header">General comments</div>
+          <br>
+          <br>
+          <div class="detail_header">Any final comments</div>
           <div class="detail_text">{{ review.general_comments }}</div>
 
 
@@ -148,8 +181,8 @@
 
         </div>
 
-        </div>
       </div>
     </div>
   </div>
+</div>
 {% endblock %}

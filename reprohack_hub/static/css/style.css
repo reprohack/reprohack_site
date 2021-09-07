@@ -273,17 +273,17 @@ del {
 h1 {
   font-size: 36px;
   margin-top: 1em;
-  margin-bottom: 0.5; }
+  margin-bottom: 1.5em; }
 
 h2 {
   font-size: 30px;
-  margin-top: 1em;
-  margin-bottom: 0.5; }
+  margin-top: 1.5em;
+  margin-bottom: 1.3em; }
 
 h3 {
   font-size: 24px;
-  margin-top: 0.7em;
-  margin-bottom: 0.3; }
+  margin-top: 1.4em;
+  margin-bottom: 1.2em; }
 
 h4 {
   font-size: 18px;
@@ -2780,13 +2780,16 @@ blockquote {
   background: #f9f9ff;
   border-left: 2px solid #ff5e13;
   font-style: italic;
-  font-size: 2.5em; }
+  font-size: 1.5em; }
 
 .detail_header {
-  font-weight: bold; }
+  font-weight: bold;
+  margin-bottom: 0.3em;
+  font-size: 1.1em; }
 
 .detail_text {
-  margin-bottom: 1em; }
+  margin-bottom: 2em;
+  margin-left: 1em; }
 
 /*
 ul li {
@@ -2813,3 +2816,26 @@ correct bootstrap pagination styling
   padding-left: 0px; }
   .pagination li:before {
     content: none; }
+
+.container-scores {
+  width: 100%;
+  /* Full width */
+  background-color: #dbdbdb;
+  /* Grey background */
+  border-radius: 5px;
+  margin-left: 1em;
+  margin-right: 1em; }
+
+.scores {
+  text-align: right;
+  /* Right-align text */
+  padding-top: 10px;
+  /* Add top padding */
+  padding-bottom: 10px;
+  /* Add bottom padding */
+  color: white;
+  /* White text color */
+  background-color: #04AA6D;
+  border-radius: 5px;
+  padding-right: 10px;
+  margin-bottom: 15px; }

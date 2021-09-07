@@ -113,15 +113,18 @@ blockquote {
   background: #f9f9ff;
   border-left: 2px solid $primary;
   font-style: italic;
-  font-size: 2.5em;
+  font-size: 1.5em;
 }
 
 .detail_header {
   font-weight: bold;
+  margin-bottom: 0.3em;
+  font-size: 1.1em;
 }
 
 .detail_text {
-  margin-bottom: 1em;
+  margin-bottom: 2em;
+  margin-left: 1em;
 
 }
 
@@ -156,4 +159,30 @@ correct bootstrap pagination styling
 
     }
   }
+}
+
+
+.container-scores {
+  width: 100%;
+  /* Full width */
+  background-color: $gray-color1;
+  /* Grey background */
+  border-radius: 5px;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.scores {
+  text-align: right;
+  /* Right-align text */
+  padding-top: 10px;
+  /* Add top padding */
+  padding-bottom: 10px;
+  /* Add bottom padding */
+  color: white;
+  /* White text color */
+  background-color: #04AA6D;
+  border-radius: 5px;
+  padding-right: 10px;
+  margin-bottom: 15px;
 }
