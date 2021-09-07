@@ -230,8 +230,8 @@ class Paper(models.Model):
         _("Make reviews public"), default=True)
     email_review = models.BooleanField(
         _("Send me an email when a review is received"), default=True)
-    submitter = models.ForeignKey(get_user_model(
-    ), default=None, null=True, blank=True, on_delete=models.SET_NULL)
+    submitter = models.ForeignKey(
+        User, default=None, null=True, blank=True, on_delete=models.SET_NULL)
     is_initial_upload = models.BooleanField(default=False)
 
     @property
@@ -308,7 +308,7 @@ class Review(models.Model):
     class OperatingSystems(models.TextChoices):
         LINUX = 'linux', _(
             'Linux/FreeBSD or other Open Source Operating system')
-        MACOS = 'macOS', _('Apple Operating System')
+        MACOS = 'macOS', _('Apple Operating System (macOS)')
         WINDOWS = 'windows', _('Windows Operating System')
 
     RATING_CHOICES = [(x, x) for x in range(RATING_MIN, RATING_MAX + 1)]
