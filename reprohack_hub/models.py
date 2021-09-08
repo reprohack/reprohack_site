@@ -23,12 +23,15 @@ from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.contrib.auth.models import AbstractUser, AnonymousUser
 from django.db.models import CharField
-
+from django.conf import settings
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+import os
+
 from reprohack_hub.utils import next_x_hour
+
 
 RATING_MIN = 0
 RATING_MAX = 10
@@ -97,6 +100,14 @@ def default_event_end(hour: int = DEFAULT_EVENT_END_HOUR) -> datetime:
     return next_x_hour(hour, default_event_start())
 
 
+def get_default_description():
+    description_file = open(os.path.join(settings.STATIC_ROOT,
+                                         'txt/event-description-default.md'))
+    description_text = description_file.read()
+    description_file.close()
+    return description_text
+
+
 class Event(models.Model):
 
     """An event to organise reproducing Paper results.
@@ -120,8 +131,8 @@ class Event(models.Model):
 
     # location
     # venue = models.ForeignKey(Venue, on_delete=models.SET_NULL, null=True)
-    description = MarkdownxField(_('Venue description (eg. entrance, '
-                                   'parking etc.)'))
+    description = MarkdownxField(_('Event Description. We provide a markdown template but feel free to customise'),
+                                 default=get_default_description)
     # location = models.CharField(max_length=200)  # Location name?
     address1 = models.CharField(max_length=200)
     address2 = models.CharField(max_length=200, blank=True, null=True)
@@ -145,11 +156,11 @@ class Event(models.Model):
     def get_absolute_url(self):
         return reverse('event_detail', args=[self.id])
 
-    @property
+    @ property
     def url(self):
         return self.get_absolute_url()
 
-    @property
+    @ property
     def address(self):
         addr_items = [self.address1, self.address2,
                       self.city, self.postcode, self.country.name]
@@ -161,11 +172,11 @@ class Event(models.Model):
 
         return ", ".join(used_addr_items)
 
-    @property
+    @ property
     def lat(self):
         return self.decompress_lat_long(0)
 
-    @property
+    @ property
     def long(self):
         return self.decompress_lat_long(1)
 
@@ -231,7 +242,7 @@ class Paper(models.Model):
     email_review = models.BooleanField(
         _("Send me an email when a review is received"), default=True)
     submitter = models.ForeignKey(
-        User, default=None, null=True, blank=True, on_delete=models.SET_NULL)
+        get_user_model(), default=None, null=True, blank=True, on_delete=models.SET_NULL)
     is_initial_upload = models.BooleanField(default=False)
 
     @property
@@ -308,7 +319,7 @@ class Review(models.Model):
     class OperatingSystems(models.TextChoices):
         LINUX = 'linux', _(
             'Linux/FreeBSD or other Open Source Operating system')
-        MACOS = 'macOS', _('Apple Operating System (macOS)')
+        MACOS = 'macOS', _('Apple Operating System (macOSX)')
         WINDOWS = 'windows', _('Windows Operating System')
 
     RATING_CHOICES = [(x, x) for x in range(RATING_MIN, RATING_MAX + 1)]
