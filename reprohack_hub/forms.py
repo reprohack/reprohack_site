@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit, Row, Column, HTML, Field
 from crispy_forms.bootstrap import InlineRadios
+from datetimewidget.widgets import DateTimeWidget
 # from leaflet.forms.widgets import LeafletWidget
 
 from django.contrib.auth import forms, get_user_model
@@ -23,12 +24,16 @@ class MapInput(Widget):
     template_name = "event/map_input_widget.html"
 
 
-
 class EventForm(ModelForm):
     class Meta:
         model = Event
         exclude = ['submission_date', 'creator']
-        widgets = {'event_coordinates': MapInput()}
+        widgets = {'event_coordinates': MapInput(),
+                   'start_time': DateTimeWidget(attrs={'id': "start_time"},
+                                                usel10n=True, bootstrap_version=3),
+                   'end_time': DateTimeWidget(attrs={'id': "end_time"},
+                                              usel10n=True, bootstrap_version=3),
+                   }
 
     def __init__(self, *args, **kwargs):
         super(EventForm, self).__init__(*args, **kwargs)
@@ -141,8 +146,6 @@ class MuField(DFField):
         return value
 
 
-
-
 class ReviewForm(ModelForm):
 
     """A form to review papers.
@@ -156,7 +159,6 @@ class ReviewForm(ModelForm):
     class Meta:
         model = Review
         exclude = ['reviewers']
-
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
@@ -226,18 +228,16 @@ class ReviewForm(ModelForm):
 
             review.reviewers.clear()
             for reviewer_obj in reviewers_data:
-                user = get_user_model().objects.get(username=reviewer_obj["username"])
-                review.reviewers.add(user, through_defaults={"lead_reviewer": reviewer_obj["lead"]})
+                user = get_user_model().objects.get(
+                    username=reviewer_obj["username"])
+                review.reviewers.add(user, through_defaults={
+                                     "lead_reviewer": reviewer_obj["lead"]})
             review.save()
 
         except Exception as e:
             logger.exception("Trying to save an invalid reviewers list")
 
-
         return save_result
-
-
-
 
 
 # --------------- USER PROFILE ---------------------- #
@@ -247,7 +247,8 @@ class UserChangeForm(forms.UserChangeForm):
     class Meta(forms.UserChangeForm.Meta):
         model = get_user_model()
         exclude = ["password", "id_password"]
-        fields = ['name', 'email', 'bio', 'affiliation', 'location', 'twitter', 'github', 'orcid']
+        fields = ['name', 'email', 'bio', 'affiliation',
+                  'location', 'twitter', 'github', 'orcid']
 
     def __init__(self, *args, **kwargs):
         super(UserChangeForm, self).__init__(*args, **kwargs)
@@ -263,7 +264,8 @@ class UserCreationForm(forms.UserCreationForm):
     )
 
     class Meta(forms.UserCreationForm.Meta):
-        fields = ('first_name', "last_name", 'username', 'email', 'password1', 'password2', 'affiliation', 'twitter', 'github', 'orcid')
+        fields = ('first_name', "last_name", 'username', 'email', 'password1',
+                  'password2', 'affiliation', 'twitter', 'github', 'orcid')
         model = get_user_model()
 
     def clean_username(self):

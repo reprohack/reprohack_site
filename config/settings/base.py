@@ -79,6 +79,7 @@ THIRD_PARTY_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "datetimewidget",
 ]
 
 # Your stuff: custom apps go here
