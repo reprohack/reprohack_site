@@ -1,23 +1,37 @@
 ## Before the event
 
-- **Select Event type**: There are multiple ways to organize a Reprohack, depending on who is your target audience. Check the following flowchart or have a look at our [7 Reprohack Flavours Guide!](ways-to-reprohack)
+### **Select Event type**: 
+
+There are multiple ways to organize a Reprohack, depending on who is your target audience. Check the following flowchart or have a look at our [7 Reprohack Flavours Guide!](ways-to-reprohack)
   
   <img src="/static/images/workflow.png" width=70%>
 
+### **Create materials associated with event**: 
 
-- [Register your event](event/new/) to the ReproHack Hub. This will create a page for your event and place it on the ReproHack map. When registering your event, the event decription is pre-populated with some general text to act as a concise but informative landing page for your event. Feel free to with any event specific details.
+You will need the relevant URLs when submitting your event (although you can always edit your event with this information at a later date)
 
-- **Set up registration**: The hub does not have functionality for managing registrations so you will need to use [Eventbrite](https://www.eventbrite.co.uk/) or a similar platform for for that purpose. 
+  - **Set up registration**: The hub does not have functionality for managing registrations so you will need to use [Eventbrite](https://www.eventbrite.co.uk/) or a similar platform for for that purpose. 
+  - **Event Hackpad** (eg etherpad, hack.md, googledoc  for collaborative notetaking at the event (optional). We strongly recommend having an event hackpad. Not only does it provide a place for participants to take collabotative notes of their experiences (useful during feedback sessions) but it also provides a space for them to register the papers they are working on so others can see them and perhaps join forces. You can use the [hackmd.io hackpad template](hackpad_template) we provide if you wish. This hackpad also contains a **template agenda for the day**. Feel free to customise as you wish.
+  - **Introductory Slides**: Use this to introduce your participants to the platform / building, run the ice breaker, remind them of good conduct during the event and introduce tips for reviewing. You can use the [hackmd.io introductory slides](intro_slides_template) we provide as a template for welcoming all participants. Customise with details of your event.
 
-- **Promote your event** to potential authors. An event is always a good opprotunity to publicise to more authors and reach out to authors form specific domains, institutions, conference attendees or any other focus your event might have.  
+### Register Your Event!
+
+[Register your event](event/new/) on the ReproHack Hub. This will create a page for your event and place it on the ReproHack map. 
+
+When registering your event, the **event decription is pre-populated with some general text in markdown format** to act as a concise but informative landing page for your event. Feel free to edit and customise with any event specific details. 
+
+Additionally, once a valid registration is supplied, a registration button linking to that page will appear on your event page.
+
+
+### **Promote your event** 
+
+- **To potential authors**. An event is always a good opprotunity to publicise to more authors and reach out to authors form specific domains, institutions, conference attendees or any other focus your event might have.  
+
+- **To potential participants**. 
   
-- **Create an event hackpad** (eg etherpad, hack.md, googledoc) for collaborative notetaking at the event (optional)
-    + you can use this [hackmd.io template](https://hackmd.io/@annakrystalli/reprohack-hackpad-template/edit) if you wish. This hackpad also contains a **template agenda for the day**.
+- **Make use of social media**. Twitter in particular can be a great way to advertise your event. Try to use relevant hash tags and ask your communities to spread the word. Feel free to include @ReproHack in any tweets and we'll happily retweet and signal boost!
 
 
-
-- **Create Introductory Slides**: Use this to introduce your participants to the platform / building, run the ice breaker, remind them of good conduct during the event and introduce tips for reviewing
-  - You can use these [introductory slides]() as a template for welcoming all participants.
 
 
     
