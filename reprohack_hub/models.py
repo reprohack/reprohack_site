@@ -210,27 +210,39 @@ class Paper(models.Model):
     """
 
     title = models.TextField(_("Paper Title"))
-    authors = models.TextField(_("Authors"))
-    event = models.ForeignKey(Event, null=True, blank=True,
+    authors = models.TextField(
+        _("Paper Authors"),
+        help_text=_("Please separate authors names with commas"))
+    event = models.ForeignKey(Event, help_text=_("Associated Event (leave blank if general submission)"), null=True, blank=True,
                               on_delete=models.SET_NULL)
 
     citation_txt = models.TextField(_(
-        "Citation: full citation of the paper as text"), max_length=300)
+        "Reference"), max_length=1000,
+        help_text=_("Full reference of the paper in text format"))
     doi = models.CharField(_("DOI (eg. 10.1000/xyz123)"),
                            max_length=200, null=True, blank=True)
     description = models.TextField(
-        _("Short Description of the paper"), max_length=400)
+        _("Short Description of the paper"), max_length=2000,
+        help_text=_("Include a description of analysis and reproducibility approach (e.g. programming language etc)"))
     why = models.TextField(
-        _("Why someone attempt to reproduce this paper?"), max_length=400)
+        _("Why someone attempt to reproduce this paper?"), max_length=2000,
+        help_text=_("Help motivate potential reviewers to select your paper!"))
     focus = models.TextField(
-        _("What should reviewers focus on?"), null=True, blank=True, max_length=400)
-    paper_url = models.URLField()
-    code_url = models.URLField()
-    data_url = models.URLField(null=True, blank=True)
-    extra_url = models.URLField(null=True, blank=True)
-    tags = TaggableManager(_("Tags"), help_text="")
+        _("What should reviewers focus on?"), help_text=_("Optional. Use to point reviewers to specific difficulties or particular areas you want feedback on"),
+        null=True, blank=True, max_length=1000)
+    paper_url = models.URLField(_("Paper URL"), help_text=_(
+        "Ideally to an Open Access version of your paper"))
+    code_url = models.URLField(_("Code or Repository URL"), help_text=_(
+        "If all materials are present in a single repository, provide the URL here."))
+    data_url = models.URLField(null=True, blank=True, help_text=_(
+        "Optional"))
+    extra_url = models.URLField(null=True, blank=True, help_text=_(
+        "Optional"))
+    tags = TaggableManager(
+        _("Tags"), help_text="Help make your papers findable through a search. Include tags of the reserach domain, programming languages used or any other relevant tools (e.g. Docker, HPC)")
     citation_bib = models.TextField(_(
-        "BibTex reference: paper reference in BibTex format"), null=True, blank=True)
+        "BibTex Paper reference"),
+        help_text=_("BibTeX Format Paper Description"), null=True, blank=True)
 
     submission_date = models.DateTimeField(auto_now_add=True)
     review_availability = models.CharField(_("Paper review permission"),
@@ -238,7 +250,7 @@ class Paper(models.Model):
                                            default=ReviewAvailability.ALL,
                                            max_length=20)
     public_reviews = models.BooleanField(
-        _("Make reviews public"), default=True)
+        _("Make reviews public"), default=True, help_text=_("Only reviews that have also been set to public by reviewers will be visible to others"))
     email_review = models.BooleanField(
         _("Send me an email when a review is received"), default=True)
     submitter = models.ForeignKey(

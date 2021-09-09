@@ -87,6 +87,12 @@ class PaperForm(ModelForm):
         widgets = {
             'title': TextInput(),
             'review_availability': RadioSelect(),
+            'authors': TextInput(attrs={'style': 'height:6em'}),
+            'citation_txt': TextInput(attrs={'style': 'height:8rem'}),
+            'citation_bib': TextInput(attrs={'style': 'height:12rem'}),
+            'description': TextInput(attrs={'style': 'height:18rem'}),
+            'why': TextInput(attrs={'style': 'height:18rem'}),
+            'focus': TextInput(attrs={'style': 'height:12rem'}),
             'tags': TagWidget(),
         }
 
@@ -123,7 +129,7 @@ class PaperForm(ModelForm):
             Field('tags', label="Useful Software Skills"),
             Fieldset("Permissions",
                      "review_availability",
-                     "public_reviews",
+                     Field("public_reviews"),
                      "email_review")
         )
 
