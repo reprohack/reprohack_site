@@ -195,7 +195,7 @@ class ReviewForm(ModelForm):
             HTML(f"<h3>{_('Reproducibility')}</h3>"),
             'reproducibility_outcome',
             InlineRadios('reproducibility_rating'),
-            'reproducibility_description',
+            Field('reproducibility_description', css_class="md-large-box"),
             'familiarity_with_method',
             Fieldset(_("Operating System"),
                      Row(
