@@ -377,15 +377,20 @@ class Review(models.Model):
                                                  "macOS 10.15 or Windows 10 Pro)?"),
                                                max_length=100)
     software_installed = MarkdownxField(_("What additional software did you need "
-                                          "to install?"))
-    software_used = MarkdownxField(_("What software did you use?"))
+                                          "to install?"),
+                                        help_text=_("Markdown field"))
+    software_used = MarkdownxField(_("What software did you use?"),
+                                   help_text=_("Markdown field"))
     challenges = MarkdownxField(_("What were the main challenges you ran "
-                                  "into (if any)?"))
+                                  "into (if any)?"),
+                                help_text=_("Markdown field"))
     advantages = MarkdownxField(_("What were the positive features of "
-                                  "this approach?"))
+                                  "this approach?"),
+                                help_text=_("Markdown field"))
     comments_and_suggestions = MarkdownxField(_("Any other comments/suggestions "
                                                 "on the reproducibility approach?"),
-                                              blank=True, default="")
+                                              blank=True, default="",
+                                              help_text=_("Markdown field"))
     documentation_rating = models.IntegerField(
         _("How well was the material documented?"),
         default=RATING_DEFAULT,
@@ -394,9 +399,11 @@ class Review(models.Model):
         choices=RATING_CHOICES,
     )
     documentation_cons = MarkdownxField(_("How could the documentation "
-                                          "be improved?"))
+                                          "be improved?"),
+                                        help_text=_("Markdown field"))
     documentation_pros = MarkdownxField(_("What do you like about the "
-                                          "documentation?"))
+                                          "documentation?"),
+                                        help_text=_("Markdown field"))
     method_familiarity_rating = models.IntegerField(
         _("After attempting to reproduce, how familiar do you feel with "
           "the code and methods used in the paper?"),
@@ -408,6 +415,7 @@ class Review(models.Model):
     transparency_suggestions = MarkdownxField(
         _("Any suggestions on how the analysis could be made more "
           "transparent?"),
+        help_text=_("Markdown field"),
         blank=True, default=""
     )
     method_reusability_rating = models.IntegerField(  # Reusability?
@@ -426,8 +434,10 @@ class Review(models.Model):
     reusability_suggestions = MarkdownxField(_("Any suggestions on how "
                                                "the project could be "
                                                "more reusable?"),
+                                             help_text=_("Markdown field"),
                                              blank=True, default="")
     general_comments = MarkdownxField(_("Any final comments?"),
+                                      help_text=_("Markdown field"),
                                       blank=True, default="")
     submission_date = models.DateTimeField(auto_now_add=True)
     # contact email should be included in user accounts,
