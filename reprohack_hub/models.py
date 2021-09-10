@@ -340,7 +340,7 @@ class Review(models.Model):
     RATING_CHOICES = [(x, x) for x in range(RATING_MIN, RATING_MAX + 1)]
 
     # id = models.AutoField(primary_key=True)
-    event = models.ForeignKey(Event,
+    event = models.ForeignKey(Event, help_text=_("Is the review associated with an Event? (leave blank if not)"),
                               on_delete=models.SET_NULL,
                               null=True, blank=True)
     # Lead reviewer...?
@@ -362,11 +362,13 @@ class Review(models.Model):
     )
     reproducibility_description = MarkdownxField(_("Briefly describe the "
                                                    "procedure followed/tools "
-                                                   "used to reproduce it."),)
-    familiarity_with_method = models.TextField(_("Briefly describe your "
-                                                 "familiarity with the "
-                                                 "procedure/tools used by "
-                                                 "the paper."))
+                                                   "used to reproduce it."),
+                                                 help_text=_("Markdown field"))
+    familiarity_with_method = MarkdownxField(_("Briefly describe your "
+                                               "familiarity with the "
+                                               "procedure/tools used by "
+                                               "the paper."),
+                                             help_text=_("Markdown field"))
     operating_system = models.CharField(_("Which type of operating system were you "
                                           "working in?"), max_length=7,
                                         choices=OperatingSystems.choices)
@@ -374,15 +376,16 @@ class Review(models.Model):
                                                  "using (eg. Ubuntu 14.04.6 LTS, "
                                                  "macOS 10.15 or Windows 10 Pro)?"),
                                                max_length=100)
-    software_installed = models.TextField(_("What additional software did you need "
-                                            "to install?"))
-    software_used = models.TextField(_("What software did you use?"))
-    challenges = models.TextField(_("What were the main challenges you ran "
-                                    "into (if any)?"))
-    advantages = models.TextField(_("What were the positive features of "
-                                    "this approach?"))
-    comments_and_suggestions = models.TextField(_("Any other comments/suggestions "
-                                                  "on the reproducibility approach?"))
+    software_installed = MarkdownxField(_("What additional software did you need "
+                                          "to install?"))
+    software_used = MarkdownxField(_("What software did you use?"))
+    challenges = MarkdownxField(_("What were the main challenges you ran "
+                                  "into (if any)?"))
+    advantages = MarkdownxField(_("What were the positive features of "
+                                  "this approach?"))
+    comments_and_suggestions = MarkdownxField(_("Any other comments/suggestions "
+                                                "on the reproducibility approach?"),
+                                              blank=True, default="")
     documentation_rating = models.IntegerField(
         _("How well was the material documented?"),
         default=RATING_DEFAULT,
@@ -390,10 +393,10 @@ class Review(models.Model):
                     MaxValueValidator(RATING_MAX)],
         choices=RATING_CHOICES,
     )
-    documentation_cons = models.TextField(_("How could the documentation "
-                                            "be improved?"))
-    documentation_pros = models.TextField(_("What do you like about the "
-                                            "documentation?"))
+    documentation_cons = MarkdownxField(_("How could the documentation "
+                                          "be improved?"))
+    documentation_pros = MarkdownxField(_("What do you like about the "
+                                          "documentation?"))
     method_familiarity_rating = models.IntegerField(
         _("After attempting to reproduce, how familiar do you feel with "
           "the code and methods used in the paper?"),
@@ -402,9 +405,10 @@ class Review(models.Model):
                     MaxValueValidator(RATING_MAX)],
         choices=RATING_CHOICES,
     )
-    transparency_suggestions = models.TextField(
+    transparency_suggestions = MarkdownxField(
         _("Any suggestions on how the analysis could be made more "
-          "transparent?")
+          "transparent?"),
+        blank=True, default=""
     )
     method_reusability_rating = models.IntegerField(  # Reusability?
         _("Rate the project on reusability of the material."),
@@ -419,15 +423,18 @@ class Review(models.Model):
                                                     "for DATA included"))
     code_permissive_license = models.BooleanField(_("Permissive license "
                                                     "for CODE included"))
-    reusability_suggestions = models.TextField(_("Any suggestions on how "
-                                                 "the project could be "
-                                                 "more reusable?"))
-    general_comments = models.TextField(_("Any final comments:"))
+    reusability_suggestions = MarkdownxField(_("Any suggestions on how "
+                                               "the project could be "
+                                               "more reusable?"),
+                                             blank=True, default="")
+    general_comments = MarkdownxField(_("Any final comments?"),
+                                      blank=True, default="")
     submission_date = models.DateTimeField(auto_now_add=True)
     # contact email should be included in user accounts,
 
     public_review = models.BooleanField(
-        _("Allow this review to be made public"), default=True)
+        _("Allow this review to be made public"), default=True,
+        help_text=_("Only reviews on papers that have also been set to receive public reviews by authors will be visible to others"))
     is_initial_upload = models.BooleanField(default=False)
 
     def __str__(self):
