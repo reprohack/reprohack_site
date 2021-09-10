@@ -80,6 +80,7 @@ THIRD_PARTY_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "datetimewidget",
+    "django_toggle_switch_widget",
 ]
 
 # Your stuff: custom apps go here

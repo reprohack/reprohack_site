@@ -2,13 +2,14 @@ import logging
 import json
 from typing import Any, Optional, Dict, Union, Type, Sequence
 
-from django.forms import Field as DFField, ModelForm, Widget, TextInput, RadioSelect, CharField
+from django.forms import Field as DFField, ModelForm, Widget, TextInput, RadioSelect, CharField, NumberInput
 from django.forms.models import ModelChoiceField
 from django.utils.translation import gettext_lazy as _
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit, Row, Column, HTML, Field
-from crispy_forms.bootstrap import InlineRadios
+from crispy_forms.bootstrap import InlineRadios, StrictButton
 from datetimewidget.widgets import DateTimeWidget
+from django_toggle_switch_widget.widgets import DjangoToggleSwitchWidget
 # from leaflet.forms.widgets import LeafletWidget
 
 from django.contrib.auth import forms, get_user_model
@@ -39,7 +40,10 @@ class EventForm(ModelForm):
         super(EventForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Submit event'))
+        self.helper.add_input(
+            #StrictButton('Submit event', css_class="btn-success")
+            Submit('submit', 'Submit event', css_class="boxed_btn")
+        )
         self.helper.layout = Layout(
             'title',
             'host',
@@ -86,7 +90,7 @@ class PaperForm(ModelForm):
         exclude = ['submission_date', 'creator', ]
         widgets = {
             'title': TextInput(),
-            'review_availability': RadioSelect(),
+            # 'review_availability': RadioSelect(),
             'authors': TextInput(attrs={'style': 'height:6em'}),
             'citation_txt': TextInput(attrs={'style': 'height:8rem'}),
             'citation_bib': TextInput(attrs={'style': 'height:12rem'}),
@@ -94,6 +98,9 @@ class PaperForm(ModelForm):
             'why': TextInput(attrs={'style': 'height:18rem'}),
             'focus': TextInput(attrs={'style': 'height:12rem'}),
             'tags': TagWidget(),
+            'archive': DjangoToggleSwitchWidget(round=True, klass="django-toggle-switch-success"),
+            'email_review': DjangoToggleSwitchWidget(round=True, klass="django-toggle-switch-success"),
+            'public_reviews': DjangoToggleSwitchWidget(round=True, klass="django-toggle-switch-success"),
         }
 
     def __init__(self, *args, **kwargs):
@@ -101,7 +108,8 @@ class PaperForm(ModelForm):
 
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Submit paper'))
+        self.helper.add_input(
+            Submit('submit', 'Submit paper', css_class="boxed_btn"))
         self.helper.layout = Layout(
             HTML('<h2>Paper details<h2>'),
             'event',
@@ -127,9 +135,12 @@ class PaperForm(ModelForm):
                      ),
                      ),
             Field('tags', label="Useful Software Skills"),
-            Fieldset("Permissions",
+            Fieldset("Review Availability",
                      "review_availability",
-                     Field("public_reviews"),
+                     "archive"),
+            Fieldset("Review Visibility",
+                     Field("public_reviews"), type=""),
+            Fieldset("Notifications",
                      "email_review")
         )
 
@@ -165,6 +176,7 @@ class ReviewForm(ModelForm):
     class Meta:
         model = Review
         exclude = ['reviewers']
+        widgets = {'documentation_rating': NumberInput()}
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
@@ -172,7 +184,8 @@ class ReviewForm(ModelForm):
         self.fields["reviewers"].widget.user = self.user
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Submit review'))
+        self.helper.add_input(
+            Submit('submit', 'Submit Review', css_class="boxed_btn"))
         self.helper.layout = Layout(
             # HTML('<h2>ReproHack Author Feedback Form</h2>'),
             'reviewers',
@@ -260,7 +273,7 @@ class UserChangeForm(forms.UserChangeForm):
         super(UserChangeForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Save'))
+        self.helper.add_input(Submit('submit', 'Save', css_class="boxed_btn"))
 
 
 class UserCreationForm(forms.UserCreationForm):
@@ -288,7 +301,8 @@ class UserCreationForm(forms.UserCreationForm):
         super(UserCreationForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Sign up'))
+        self.helper.add_input(
+            Submit('submit', 'Sign up', css_class="boxed_btn"))
         self.helper.layout = Layout(
             Row(
                 Column('first_name', css_class='form-group col-md-5 mb-0'),

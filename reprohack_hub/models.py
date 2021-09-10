@@ -194,10 +194,9 @@ class Event(models.Model):
 class Paper(models.Model):
 
     class ReviewAvailability(models.TextChoices):
-        ALL = 'ALL', _('Allowed for reviews in any events')
+        ALL = 'ALL', _('Available for review at any event')
         EVENT_ONLY = 'EVT_ONLY', _(
-            'Only allowed to review for associated event')
-        ARCHIVE = 'ARCHIVE', _('Archive the paper, reviews are not allowed')
+            'Only available for review at associated event')
 
     """A paper to reproduce.
 
@@ -249,8 +248,12 @@ class Paper(models.Model):
                                            choices=ReviewAvailability.choices,
                                            default=ReviewAvailability.ALL,
                                            max_length=20)
+    archive = models.BooleanField(
+        _("Archive Paper"), default=False,
+        help_text=_("The paper will no longer be available for review"))
     public_reviews = models.BooleanField(
-        _("Make reviews public"), default=True, help_text=_("Only reviews that have also been set to public by reviewers will be visible to others"))
+        _("Make reviews public"), default=True,
+        help_text=_("Only reviews that have also been set to public by reviewers will be visible to others"))
     email_review = models.BooleanField(
         _("Send me an email when a review is received"), default=True)
     submitter = models.ForeignKey(
@@ -259,7 +262,7 @@ class Paper(models.Model):
 
     @property
     def is_available_for_review(self):
-        return self.review_availability != self.ReviewAvailability.ARCHIVE
+        return self.review_availability != self.archive
 
     def get_reviews_viewable_by_user(self, user):
         reviews_list = []
@@ -293,7 +296,7 @@ class AuthorsAndSubmitters(models.Model):
     submitted = models.BooleanField(default=True)
 
     def clean(self):
-        if not self.author and not self.submitter:
+        if not self.author and not self.paper.submitter:
             raise ValidationError(_('Users must be either an author or '
                                     'submitter or both.'))
 

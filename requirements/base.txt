@@ -22,4 +22,5 @@ django-countries==6.1.3  # https://github.com/SmileyChris/django-countries
 django-timezone-field # Why?
 django-gmailapi-backend
 django-datetime-widget2==0.9.5 #https://pypi.org/project/django-datetime-widget2/
+django-toggle-switch-widget==0.1.1 https://pypi.org/project/django-toggle-switch-widget/
 
