@@ -207,8 +207,8 @@ label.django-toggle-switch+label.custom-control-label::before {
 
 .custom-control-input:checked~.custom-control-label::before {
   color: #fff;
-  border-color: $reprohack-green-light;
-  background-color: $btn_bg;
+  border-color: $reprohack-green-dark;
+  background-color: $reprohack-green-light;
 }
 
 .markdownx-preview {
@@ -216,37 +216,3 @@ label.django-toggle-switch+label.custom-control-label::before {
   padding: 1em;
   border-radius: 0.5rem;
 }
-
-/*
-
-.btn-primary {
-  color: $primary-color;
-  background-color: $primary-color-light;
-  border: 2px solid $primary-color;
-
-  &:focus {
-    color: #fff;
-    background-color: $btn_bg;
-    border: 2px solid $primary-color;
-  }
-
-  &:hover {
-    background: $primary-color;
-    color: #fff !important;
-    border: 2px solid $primary-color;
-  }
-
-  &:active {
-    background-color: $btn_bg;
-    color: $red !important;
-    border: 1px solid $btn_bg;
-  }
-
-  &:visited {
-    color: $primary-color;
-    background-color: $primary-color-light;
-    border: 2px solid $primary-color;
-  }
-}
-
-*/
