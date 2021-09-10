@@ -222,8 +222,14 @@ input:checked+.django-toggle-switch-slider {
   background-color: $reprohack-green-light !important;
 }
 
-/*
-.django-toggle-switch-slider {
-  background-color: $reprohack-green-light;
+.md-large-box {
+  height: 26rem !important;
 }
-*/
+
+.md-medium-box {
+  height: 18rem;
+}
+
+.md-small-box {
+  height: 12rem;
+}

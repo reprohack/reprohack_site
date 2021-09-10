@@ -2897,8 +2897,14 @@ label.django-toggle-switch + label.custom-control-label::before {
 input:checked + .django-toggle-switch-slider {
   background-color: #02CC98 !important; }
 
-/*
-.django-toggle-switch-slider {
-  background-color: $reprohack-green-light;
-}
-*/
+.md-large-box {
+  height: 416px !important;
+  height: 26rem !important; }
+
+.md-medium-box {
+  height: 288px;
+  height: 18rem; }
+
+.md-small-box {
+  height: 192px;
+  height: 12rem; }
