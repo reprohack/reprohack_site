@@ -2892,3 +2892,13 @@ label.django-toggle-switch + label.custom-control-label::before {
   background-color: #7d32ff06;
   padding: 1em;
   border-radius: 0.5rem; }
+
+.django-toggle-switch-success input:checked + .django-toggle-switch-slider,
+input:checked + .django-toggle-switch-slider {
+  background-color: #02CC98 !important; }
+
+/*
+.django-toggle-switch-slider {
+  background-color: $reprohack-green-light;
+}
+*/

@@ -176,7 +176,8 @@ class ReviewForm(ModelForm):
     class Meta:
         model = Review
         exclude = ['reviewers']
-        widgets = {'documentation_rating': NumberInput()}
+        widgets = {'public_review': DjangoToggleSwitchWidget(
+            round=True, klass="django-toggle-switch-success")}
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
