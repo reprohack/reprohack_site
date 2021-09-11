@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600,600i,700|Poppins:200,300,400,500,500i,600,700,800&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600,600i,700|Poppins:200,300,400,500,500i,600,700,800&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,600,600i,700|Lora:400,400i,600,600i,700|Poppins:200,300,400,500,500i,600,700,800&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,600,600i,700|Lora:400,400i,600,600i,700|Poppins:200,300,400,500,500i,600,700,800&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
 .flex-center-start {
   display: -webkit-box;
@@ -34,7 +34,7 @@
 
 /* 1. Theme default css */
 body {
-  font-family: "Crimson Text", serif;
+  font-family: "Roboto", sans-serif;
   font-size: 17.6px;
   font-size: 1.1rem;
   font-weight: normal;
@@ -98,7 +98,7 @@ p {
   line-height: 28px;
   color: #212529;
   margin-bottom: 13px;
-  font-family: "Crimson Text", serif; }
+  font-family: "Roboto", sans-serif; }
 
 label {
   color: #7e7e7e;
@@ -1607,7 +1607,7 @@ a {
 
 .section_title p {
   font-size: 17px;
-  font-family: "Crimson Text", serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 400;
   line-height: 28px;
   color: #727272;
@@ -2822,6 +2822,24 @@ blockquote {
   margin-bottom: 2em;
   margin-left: 1em; }
 
+.header_header {
+  font-weight: bold;
+  margin-bottom: 0.3em;
+  font-size: 1.15em; }
+
+.header_text {
+  font-size: 1.1em;
+  margin-bottom: 0.3em; }
+
+.header_italic {
+  font-size: 14.4px;
+  font-size: 0.9rem;
+  margin-bottom: 6.4px;
+  margin-bottom: 0.4rem;
+  margin-top: 6.4px;
+  margin-top: 0.4rem;
+  font-style: italic; }
+
 /*
 ul li {
         position: relative;
@@ -2908,3 +2926,18 @@ input:checked + .django-toggle-switch-slider {
 .md-small-box {
   height: 192px;
   height: 12rem; }
+
+.badge-primary {
+  color: #7c32ff;
+  background-color: #7d32ff48;
+  border: 1px solid #7c32ff;
+  padding: 6.4px;
+  padding: 0.4rem; }
+  .badge-primary:hover {
+    background: #7c32ff !important;
+    color: #fff !important;
+    border: 1px solid #7c32ff; }
+  .badge-primary:active:focus {
+    background: #7c32ff !important;
+    color: #7d32ff48 !important;
+    border: 1px solid #7c32ff; }

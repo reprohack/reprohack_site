@@ -128,6 +128,23 @@ blockquote {
 
 }
 
+.header_header {
+  font-weight: bold;
+  margin-bottom: 0.3em;
+  font-size: 1.15em;
+}
+
+.header_text {
+  font-size: 1.1em;
+  margin-bottom: 0.3em;
+}
+
+.header_italic {
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+  margin-top: 0.4rem;
+  font-style: italic;
+}
 
 /*
 ul li {
@@ -232,4 +249,23 @@ input:checked+.django-toggle-switch-slider {
 
 .md-small-box {
   height: 12rem;
+}
+
+.badge-primary {
+  color: $primary-color;
+  background-color: $primary-color-light;
+  border: 1px solid $primary-color;
+  padding: 0.4rem;
+
+  &:hover {
+    background: $primary-color !important;
+    color: #fff !important;
+    border: 1px solid $primary-color;
+  }
+
+  &:active:focus {
+    background: $primary-color !important;
+    color: $primary-color-light !important;
+    border: 1px solid $primary-color;
+  }
 }
