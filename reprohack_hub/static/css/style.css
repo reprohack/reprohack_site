@@ -1386,29 +1386,35 @@ a {
     -ms-flex-pack: flex-end; }
     .header-area .log_chat_area .login {
       font-size: 16px;
-      margin-right: 50px;
-      text-transform: capitalize;
-      color: #fff; }
+      font-size: 1rem;
+      margin-right: 32px;
+      margin-right: 2rem;
+      color: #BC9321; }
       @media (min-width: 992px) and (max-width: 1200px) {
         .header-area .log_chat_area .login {
           margin-right: 7px; } }
       .header-area .log_chat_area .login i {
-        color: #fff;
-        padding-right: 12px; }
+        color: #BC9321;
+        padding-right: 12.8px;
+        padding-right: 0.8rem;
+        margin-left: 12.8px;
+        margin-left: 0.8rem; }
       .header-area .log_chat_area .login span {
-        font-size: 16px; }
+        font-size: 16px;
+        font-size: 1rem; }
     .header-area .log_chat_area .live_chat_btn a {
       color: #fff; }
       @media (min-width: 992px) and (max-width: 1200px) {
         .header-area .log_chat_area .live_chat_btn a {
-          padding: 12px 12px;
-          font-size: 13px; } }
+          padding: 0.7rem 0.7rem;
+          font-size: 0.85rem; } }
       @media (min-width: 1200px) and (max-width: 1500px) {
         .header-area .log_chat_area .live_chat_btn a {
-          font-size: 13px;
-          padding: 12px 25px; } }
+          font-size: 0.9;
+          padding: 1.2 1.2; } }
       .header-area .log_chat_area .live_chat_btn a i {
-        padding-right: 7px; }
+        padding-right: 16px;
+        padding-right: 1rem; }
 
 .boxed-btn {
   background: #fff;
@@ -2839,6 +2845,11 @@ blockquote {
   margin-top: 6.4px;
   margin-top: 0.4rem;
   font-style: italic; }
+
+.login-txt {
+  color: #BC9321 !important;
+  font-size: 16px !important;
+  font-size: 1rem !important; }
 
 /*
 ul li {
