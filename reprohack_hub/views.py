@@ -97,7 +97,7 @@ class EventList(ListView):
     def get_queryset(self) -> QuerySet:
         search_string = self.request.GET.get("search")
 
-        result = Event.objects.all()
+        result = Event.objects.all().order_by('start_time')
 
         if search_string and len(search_string) > 0:
             result = result.filter(title__contains=search_string)
@@ -187,7 +187,7 @@ class PaperList(ListView):
         if search_string and len(search_string) > 0:
             result = result.filter(title__contains=search_string)
 
-        return result
+        return result.order_by('-submission_date')
 
     def get_context_data(self, **kwargs):
         search_string = self.request.GET.get("search", "")
