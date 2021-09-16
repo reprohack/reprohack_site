@@ -2895,6 +2895,10 @@ correct bootstrap pagination styling
   margin-bottom: 9.6px !important;
   margin-bottom: 0.6rem !important; }
 
+.sponsors {
+  padding: 16px 9.6px;
+  padding: 1rem 0.6rem; }
+
 .container-scores {
   width: 100%;
   /* Full width */
