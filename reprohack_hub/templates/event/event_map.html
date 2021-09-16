@@ -2,132 +2,181 @@
 
 <div id="map" style="height: 30rem; width: 100%"></div>
 <script>
-
-
-
-
   $(document).ready(function () {
 
-    var greenMarker = L.AwesomeMarkers.icon({
-      icon: 'asterisk',
-      markerColor: 'green',
-      prefix: 'fa',
-      });
+        var greenMarker = L.AwesomeMarkers.icon({
+          icon: 'asterisk',
+          markerColor: 'green',
+          prefix: 'fa',
+        });
 
-    var orangeMarker = L.AwesomeMarkers.icon({
-      icon: 'asterisk',
-      markerColor: 'orange',
-      prefix: 'fa',
-      className: 'awesome-marker leaflet-pin'
-      });
+        var orangeMarker = L.AwesomeMarkers.icon({
+          icon: 'asterisk',
+          markerColor: 'orange',
+          prefix: 'fa',
+          className: 'awesome-marker leaflet-pin'
+        });
 
-    var eventLocations = [
-      {% for event in object_list %}
-        {% if event.lat and event.long %}
-      {
-        latlng: L.latLng({{ event.lat }}, {{ event.long }}),
-        title: "{{ event.title }}",
-        url: "{{ event.url }}",
-        start: "{{ event.start_time }}",
-        end: "{{ event.end_time }}",
-        {% if event.end_time > now %}
-          icon: greenMarker,
-        {% else %}
-          icon: orangeMarker,
-        {% endif %}
-      },
-        {% endif %}
-      {% endfor %}
-      {% if event and event.lat and event.long %}
-        {
-        latlng: L.latLng({{ event.lat }}, {{ event.long }}),
-        title: "{{ event.title }}",
-          url: "{{ event.url }}",
-          start: "{{ event.start_time }}", 
-          end: "{{ event.end_time }}",
-          {% if event.end_time > now %}
+        var eventLocations = [{
+            %
+            for event in object_list %
+          } {
+            %
+            if event.lat and event.long %
+          } {
+            latlng: L.latLng({
+              {
+                event.lat
+              }
+            }, {
+              {
+                event.long
+              }
+            }),
+            title: "{{ event.title }}",
+            url: "{{ event.url }}",
+            start: "{{ event.start_time }}",
+            end: "{{ event.end_time }}",
+            {
+              %
+              if event.end_time > now %
+            }
             icon: greenMarker,
-          {% else %}
+            {
+              %
+              else %
+            }
             icon: orangeMarker,
-          {% endif %}
+            {
+              %
+              endif %
+            }
+          },
+          {
+            %
+            endif %
+          } {
+            %
+            endfor %
+          } {
+            %
+            if event and event.lat and event.long %
+          } {
+            latlng: L.latLng({
+              {
+                event.lat
+              }
+            }, {
+              {
+                event.long
+              }
+            }),
+            title: "{{ event.title }}",
+            url: "{{ event.url }}",
+            start: "{{ event.start_time }}",
+            end: "{{ event.end_time }}",
+            {
+              %
+              if event.end_time > now %
+            }
+            icon: greenMarker,
+            {
+              %
+              else %
+            }
+            icon: orangeMarker,
+            {
+              %
+              endif %
+            }
 
-      {% endif %}
-    ];
+            {
+              %
+              endif %
+            }
+          ];
 
 
-    let eventBounds = null;
-    if(eventLocations.length > 1){
-      let latlngs = [];
-      for(let i in eventLocations){
-        latlngs.push(eventLocations[i].latlng);
-      }
-      eventBounds = L.latLngBounds(latlngs).pad(0.13);
-    }
+          let eventBounds = null;
+          if (eventLocations.length > 1) {
+            let latlngs = [];
+            for (let i in eventLocations) {
+              latlngs.push(eventLocations[i].latlng);
+            }
+            eventBounds = L.latLngBounds(latlngs).pad(0.13);
+          }
 
-    let mapConfig = {
-      zoom: 7,
-      scrollWheelZoom: false,
-    }
+          let mapConfig = {
+            zoom: 7,
+            scrollWheelZoom: false,
+          }
 
-    let map = L.map('map', mapConfig);
-    if(eventBounds){
-      map.fitBounds(eventBounds);
-    }
-    else if(eventLocations.length > 0){
-      map.setView(eventLocations[0].latlng, mapConfig.zoom);
-    }
-    else{
-      map.setView([51.505, -0.09], mapConfig.zoom);
-    }
+          let map = L.map('map', mapConfig);
+          if (eventBounds) {
+            map.fitBounds(eventBounds);
+          } else if (eventLocations.length > 0) {
+            map.setView(eventLocations[0].latlng, mapConfig.zoom);
+          } else {
+            map.setView([51.505, -0.09], mapConfig.zoom);
+          }
 
-    // Add map layers
-    let Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
-      attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      subdomains: 'abcd',
-      minZoom: 1,
-      maxZoom: 16,
-      ext: 'jpg',
+          // Add map layers
+          let Stamen_Watercolor = L.tileLayer(
+            'https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+              attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+              subdomains: 'abcd',
+              minZoom: 1,
+              maxZoom: 16,
+              ext: 'jpg',
 
-    }).addTo(map);
+            }).addTo(map);
 
-    let Stamen_TonerHybrid = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-hybrid/{z}/{x}/{y}{r}.{ext}', {
-      attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      subdomains: 'abcd',
-      minZoom: 0,
-      maxZoom: 20,
-      ext: 'png'
+          let Stamen_TonerHybrid = L.tileLayer(
+            'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-hybrid/{z}/{x}/{y}{r}.{ext}', {
+              attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+              subdomains: 'abcd',
+              minZoom: 0,
+              maxZoom: 20,
+              ext: 'png'
 
-    }).addTo(map);
+            }).addTo(map);
 
-    // Add markers
+          // Add markers
 
-for(let i in eventLocations){ let event = eventLocations[i]; 
-  let marker = L.marker(event.latlng, {icon: event.icon}).addTo(map) 
-  .bindPopup(`<a href="${event.url}">${event.title}</a><br>${event.start} - ${event.end}`);
-}
+          for (let i in eventLocations) {
+            let event = eventLocations[i];
+            let marker = L.marker(event.latlng, {
+                icon: event.icon
+              }).addTo(map)
+              .bindPopup(`<a href="${event.url}">${event.title}</a><br>${event.start} - ${event.end}`);
+          }
 
-function getColor(d) { 
-  return d === 'Upcoming' ? "#6CA625" : 
-         d === 'Passed' ? "#EB902D" : 
-         '#FFEDA0'; } 
+          function getColor(d) {
+            return d === 'Upcoming' ? "#6CA625" :
+              d === 'Past' ? "#EB902D" :
+              '#FFEDA0';
+          }
 
-var legend = L.control({position: 'bottomright'}); 
+          var legend = L.control({
+            position: 'bottomright'
+          });
 
-legend.onAdd = function (map) { 
-  var div = L.DomUtil.create('div', 'info legend'), 
-      categories = ["Upcoming", 'Passed'], 
-      labels = [];  
-for (var i = 0; i < categories.length; i++) { 
-  div.innerHTML +=
-  labels.push(
-      '<i style="background:' + getColor(categories[i]) + '"></i>' + 
-      (categories[i] ? categories[i] : '+')); 
-    } 
-    div.innerHTML = labels.join('<br>');
-    return div;
-};
-  
-  legend.addTo(map);
+          legend.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'info legend'),
+              categories = ["Upcoming", 'Past'],
+              labels = [];
+            for (var i = 0; i < categories.length; i++) {
+              div.innerHTML +=
+                labels.push(
+                  '<i style="background:' + getColor(categories[i]) + '"></i>' +
+                  (categories[i] ? categories[i] : '+'));
+            }
+            div.innerHTML = labels.join('<br>');
+            return div;
+          };
 
-  })
+          legend.addTo(map);
+
+        })
+
 </script>
