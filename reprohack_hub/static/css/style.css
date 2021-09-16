@@ -2919,7 +2919,7 @@ correct bootstrap pagination styling
   margin-bottom: 15px; }
 
 pre {
-  background-color: #2e004b14;
+  background-color: #2E004B14;
   border-color: #2E004B;
   border-style: solid;
   border-width: 2px;
@@ -2978,19 +2978,26 @@ input:checked + .django-toggle-switch-slider {
 
 .info {
   padding: 6px 8px;
-  font: 14px/16px Arial, Helvetica, sans-serif;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-size: 1rem;
   background: white;
   background: rgba(255, 255, 255, 0.8);
   -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
           box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   border-radius: 5px; }
+  .info .circle {
+    line-height: 22.4px;
+    line-height: 1.4rem;
+    border-radius: 50%; }
 
 .info h4 {
   margin: 0 0 5px;
   color: #777; }
 
 .legend {
-  line-height: 18px;
+  line-height: 22.4px;
+  line-height: 1.4rem;
   color: #555; }
 
 .legend i {
@@ -2999,3 +3006,11 @@ input:checked + .django-toggle-switch-slider {
   float: left;
   margin-right: 8px;
   opacity: 0.7; }
+
+.leaflet-popup-content {
+  font-family: "Roboto", sans-serif; }
+  .leaflet-popup-content a {
+    font-size: 20.8px;
+    font-size: 1.3rem;
+    color: #2E004B;
+    font-family: "Poppins", sans-serif; }
