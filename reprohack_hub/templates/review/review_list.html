@@ -13,10 +13,10 @@
       <h1>Recent Reviews</h1>
       <ul>
         {% for review in reviews_list reversed %}
-        <li class="review mb-4">
-          <div>
+        <li class="review mb-4 card">
+          <h3>
             <a href="{{ review.get_absolute_url }}">{{ review }}</a>
-          </div>
+          </h3>
           <div>
             By: {% for reviewer in review.reviewers.all %}<a
               href="{{ reviewer.get_absolute_url }}">{{ reviewer.username }}</a> {% endfor %}

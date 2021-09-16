@@ -74,7 +74,7 @@
       <h2 class="mb-30">Ways to participate</h2>
       <div class="row">
         <div class="col-md-4">
-          <div class="card" style="width: 18rem;">
+          <div class="card">
             <div class="card-body">
               <h3 class="card-title">Propose a paper</h3>
               <h6 class="card-subtitle mb-2 text-muted">You’ve put a lot of effort into making your work
@@ -87,12 +87,14 @@
                   <li>Opportunity to engage others with your research.</li>
                 </ul>
               </p>
+              <div class="button-wrap">
               <a href="{% url 'paper_new' %}" class="boxed_btn">Submit paper!</a>
+              </div>
             </div>
           </div>
         </div>
         <div class="col-md-4">
-          <div class="card" style="width: 18rem;">
+          <div class="card">
             <div class="card-body">
               <h3 class="card-title">Reproduce</h3>
               <h6 class="card-subtitle mb-2 text-muted">Join a ReproHack and get working with other
@@ -106,7 +108,9 @@
                   <li>Inspiration to work more openly.</li>
                 </ul>
               </p>
+              <div class="button-wrap">
               <a href="{% url 'event_list' %}" class="boxed_btn">Join an event!</a>
+              </div>
             </div>
           </div>
         </div>
@@ -128,7 +132,9 @@
                   </li>
                 </ul>
               </p>
+              <div class="button-wrap">
               <a href="{% url 'event_new' %}" class="boxed_btn">Submit an event!</a>
+              </div>
             </div>
           </div>
         </div>

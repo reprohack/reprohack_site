@@ -2893,7 +2893,14 @@ correct bootstrap pagination styling
 
 .card {
   margin-bottom: 9.6px !important;
-  margin-bottom: 0.6rem !important; }
+  margin-bottom: 0.6rem !important;
+  border-radius: 0.5rem;
+  -webkit-box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.2); }
+  .card .button-wrap {
+    margin-top: 32px;
+    margin-top: 2rem;
+    text-align: center; }
 
 .sponsors {
   padding: 16px 9.6px;
