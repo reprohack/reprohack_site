@@ -29,14 +29,14 @@
             background: none;
         }
         a{
-	        color: #2E004B;
+	        color: $reprohack-purple;
             font-family: $font1;
             &:hover{
                 background: transparent;
                 color: #25735D;
             }
             &.active{
-                color: #2E004B;
+                color: $reprohack-purple;
                 font-weight: 700;
             }
             i{
