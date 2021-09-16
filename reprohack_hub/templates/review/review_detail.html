@@ -78,7 +78,7 @@
             Briefly describe your familiarity with the procedure/tools used by the paper.
           </div>
           <div class="detail_text">
-            {{ review.familiarity_with_method }}
+            {{ review.familiarity_with_method | show_markdown | safe }}
           </div>
 
           <div class="detail_header">Which type of operating system were you working in?</div>
@@ -88,27 +88,27 @@
 
           <div class="detail_header">What additional software did you need to install?</div>
           <div class="detail_text">
-            {{ review.software_installed }}
+            {{ review.software_installed | show_markdown | safe }}
           </div>
 
           <div class="detail_header">What software did you use</div>
           <div class="detail_text">
-            {{ review.software_used }}
+            {{ review.software_used | show_markdown | safe }}
           </div>
 
           <div class="detail_header">What were the main challenges you ran into (if any)?</div>
           <div class="detail_text">
-            {{ review.challenges }}
+            {{ review.challenges | show_markdown | safe }}
           </div>
 
           <div class="detail_header">What were the positive features of this approach?</div>
           <div class="detail_text">
-            {{ review.advantages }}
+            {{ review.advantages | show_markdown | safe }}
           </div>
 
           <div class="detail_header">Any other comments/suggestions on the reproducibility approach?</div>
           <div class="detail_text">
-            {{ review.comments_and_suggestions }}
+            {{ review.comments_and_suggestions | show_markdown | safe  }}
           </div>
           <br>
           <h3>Documentation</h3>
@@ -122,10 +122,10 @@
           </div>
 
           <div class="detail_header">How could the documentation be improved?</div>
-          <div class="detail_text">{{ review.documentation_cons }}</div>
+          <div class="detail_text">{{ review.documentation_cons | show_markdown | safe }}</div>
 
           <div class="detail_header">What do you like about the documentation?</div>
-          <div class="detail_text">{{ review.documentation_pros }}</div>
+          <div class="detail_text">{{ review.documentation_pros | show_markdown | safe }}</div>
 
           <div class="detail_header">After attempting to reproduce, how familiar do you feel with the code and methods
             used in the paper?</div>
@@ -135,7 +135,7 @@
             </div>
           </div>
           <div class="detail_header">Any suggestions on how the analysis could be made more transparent?</div>
-          <div class="detail_text">{{ review.transparency_suggestions }}</div>
+          <div class="detail_text">{{ review.transparency_suggestions | show_markdown | safe }}</div>
           <br>
 
           <h3>Reusability</h3>
@@ -167,12 +167,12 @@
           <br>
 
           <div class="detail_header">Any suggestions on how the project could be more reusable?</div>
-          <div class="detail_text">{{ review.reusability_suggestions }}</div>
+          <div class="detail_text">{{ review.reusability_suggestions | show_markdown | safe }}</div>
 
           <br>
           <br>
           <div class="detail_header">Any final comments</div>
-          <div class="detail_text">{{ review.general_comments }}</div>
+          <div class="detail_text">{{ review.general_comments | show_markdown | safe }}</div>
 
 
 
