@@ -2891,6 +2891,10 @@ correct bootstrap pagination styling
   .pagination li:before {
     content: none; }
 
+.card {
+  margin-bottom: 9.6px !important;
+  margin-bottom: 0.6rem !important; }
+
 .container-scores {
   width: 100%;
   /* Full width */
@@ -2967,6 +2971,7 @@ input:checked + .django-toggle-switch-slider {
     color: #7d32ff48 !important;
     border: 1px solid #7c32ff; }
 
+/* MAP STYLES */
 .leaflet-pin {
   opacity: 0.75;
   z-index: 99; }

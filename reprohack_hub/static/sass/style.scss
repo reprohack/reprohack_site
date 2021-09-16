@@ -205,6 +205,10 @@ correct bootstrap pagination styling
   }
 }
 
+.card {
+  margin-bottom: 0.6rem !important;
+}
+
 
 .container-scores {
   width: 100%;
@@ -296,6 +300,8 @@ input:checked+.django-toggle-switch-slider {
     border: 1px solid $primary-color;
   }
 }
+
+/* MAP STYLES */
 
 .leaflet-pin {
   opacity: 0.75;
