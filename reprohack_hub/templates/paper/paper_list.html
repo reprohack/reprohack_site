@@ -1,93 +1,92 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-  <div class="bradcam_area breadcam_bg overlay2">
-    <h1>Papers</h1>
+<div class="bradcam_area breadcam_bg overlay2">
+  <h1>Papers</h1>
 
-    <br>
-    <br>
-    <a href="{% url 'paper_new' %}" class="boxed_btn">Submit a Paper!</a>
-  </div>
-  <div class="whole-wrap">
-    <div class="container box_1170">
-      <div class="section-top-border">
+  <br>
+  <br>
+  <a href="{% url 'paper_new' %}" class="boxed_btn">Submit a Paper!</a>
+</div>
+<div class="whole-wrap">
+  <div class="container box_1170">
+    <div class="section-top-border">
 
 
-        <div class="row">
-          <div class="col-sm-9">
-            <h2 class="mb-4">Browse ReproHack papers</h2>
+      <div class="row">
+        <div class="col-sm-9">
+          <h2 class="mb-4">Browse ReproHack papers</h2>
           <ul>
             {% for paper in object_list %}
-              <li class="paper">
-                <h3><a href="{{ paper.get_absolute_url }}">{{ paper.title }}</a></h3>
-                <h5>Authors: {{ paper.authors }}</h5>
-                <h5>DOI: <a href="{{ paper.doi }}">{{ paper.doi }}</a></h5>
-                <h5>Submitted by <a href="{{ paper.submitter.get_absolute_url }}">{{ paper.submitter.username }}</a>
-                </h5>
-                <div class="detail_text">
-                  <span class="detail_header">Tags:</span>
-                  {% for tag in paper.tags.all %}
-                    <a href="/paper/?tags={{ tag }}" class="badge badge-primary p-1 m-1">{{ tag }}</a>
-                  {% endfor %}
-                </div>
-              </li>
+            <li class="paper card">
+              <h3><a href="{{ paper.get_absolute_url }}">{{ paper.title }}</a></h3>
+              <h5>Authors: {{ paper.authors }}</h5>
+              <h5>DOI: <a href="{{ paper.doi }}">{{ paper.doi }}</a></h5>
+              <h5>Submitted by <a href="{{ paper.submitter.get_absolute_url }}">{{ paper.submitter.username }}</a>
+              </h5>
+              <div class="detail_text">
+                <span class="detail_header">Tags:</span>
+                {% for tag in paper.tags.all %}
+                <a href="/paper/?tags={{ tag }}" class="badge badge-primary p-1 m-1">{{ tag }}</a>
+                {% endfor %}
+              </div>
+            </li>
             {% endfor %}
           </ul>
 
 
-            {# Pagination #}
-            {% include "misc/pagination.html" %}
+          {# Pagination #}
+          {% include "misc/pagination.html" %}
 
 
-
-          </div>
-
-          <div class="col-sm-3">
-            <h4>Search for papers</h4>
-            <form method="get">
-              <div class="mb-4">
-                <input type="hidden" name="tags" value="{{ tags }}">
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search papers..." name="search"
-                         value="{{ search }}"/>
-                  <div class="input-group-append">
-                    <button type="submit" class="btn-primary btn"><i class="bi-search m-0 p-0"
-                                                                     style="font-size: 0.7em"></i> Search
-                    </button>
-                  </div>
-                </div>
-
-              </div>
-
-
-              <h4>Filter by tags</h4>
-              <div>
-                {% for tag in tags_list %}
-                  <a href="?search={{ search }}&tags={{ tag.new_state }}"
-                     class="{% if tag.selected %}badge-primary{% else %}badge-secondary{% endif %} badge"
-                     title="{% if tag.selected %}Remove tag: {{ tag.name }}{% else %}Add tag: {{ tag.name }}{% endif %}"
-                  >
-                    {{ tag.name }}
-                  </a>
-                {% endfor %}
-                <a href="?search={{ search }}&tags={{ all_tags }}" class="badge-success badge" title="Select all tags">
-                  <i class="bi-plus"></i> All tags
-                </a>
-                <a href="?search={{ search }}&tags=" class="badge-warning badge" title="Clear all tags">
-                  <i class="bi-dash"></i> Clear tags
-                </a>
-              </div>
-            </form>
-
-          </div>
 
         </div>
 
+        <div class="col-sm-3">
+          <h4>Search for papers</h4>
+          <form method="get">
+            <div class="mb-4">
+              <input type="hidden" name="tags" value="{{ tags }}">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search papers..." name="search"
+                  value="{{ search }}" />
+                <div class="input-group-append">
+                  <button type="submit" class="btn-primary btn"><i class="bi-search m-0 p-0"
+                      style="font-size: 0.7em"></i> Search
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+
+            <h4>Filter by tags</h4>
+            <div>
+              {% for tag in tags_list %}
+              <a href="?search={{ search }}&tags={{ tag.new_state }}"
+                class="{% if tag.selected %}badge-primary{% else %}badge-secondary{% endif %} badge"
+                title="{% if tag.selected %}Remove tag: {{ tag.name }}{% else %}Add tag: {{ tag.name }}{% endif %}">
+                {{ tag.name }}
+              </a>
+              {% endfor %}
+              <a href="?search={{ search }}&tags={{ all_tags }}" class="badge-success badge" title="Select all tags">
+                <i class="bi-plus"></i> All tags
+              </a>
+              <a href="?search={{ search }}&tags=" class="badge-warning badge" title="Clear all tags">
+                <i class="bi-dash"></i> Clear tags
+              </a>
+            </div>
+          </form>
+
+        </div>
 
       </div>
 
+
     </div>
+
   </div>
+</div>
 
 
 {% endblock %}
