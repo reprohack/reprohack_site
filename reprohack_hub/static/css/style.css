@@ -2865,6 +2865,14 @@ blockquote {
   font-size: 16px !important;
   font-size: 1rem !important; }
 
+.login-txt-nav {
+  padding-top: 8px;
+  padding-top: 0.5rem;
+  text-transform: lowercase;
+  font-size: 24px !important;
+  font-size: 1.5rem !important;
+  font-weight: 600; }
+
 /*
 ul li {
         position: relative;
