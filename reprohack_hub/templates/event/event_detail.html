@@ -55,7 +55,7 @@
         <p>{{ event.description | show_markdown | safe }}</p>
 
 
-        {% include "event/event_map.html" %}
+        {% include "event/event_map_single.html" %}
 
 
         <h2>Associated papers</h2>
@@ -63,7 +63,7 @@
         <ul>
           {% for paper in event.paper_set.all %}
           <li><a href="{% url 'paper_detail' pk=paper.event.pk %}">
-          {{ paper }} </a> </li>
+              {{ paper }} </a> </li>
           {% endfor %}
         </ul>
         {% else %}
