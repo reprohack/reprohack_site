@@ -6,17 +6,17 @@
   <div class="single_slider d-flex align-items-center justify-content-center slider_bg_2">
     <div class="container">
       <div class="row align-items-center justify-content-center">
-        <div class="col-xl-4 col-md-4">
+        <div class="col-8 d-sm-none d-md-block col-md-4 ">
           <div class="illastrator_png">
             <img src="{% static 'images/reprohack-graphic.png' %}" alt="" width=100%>
           </div>
         </div>
-        <div class="col-xl-8 col-md-8">
+        <div class="col-md-8">
           <div class="slider_info">
             <h1>ReproHack </h1>
-            <h3> Building Communities of Practice <br>
+            <h3> Building <br> Communities of Practice <br>
               in Reproducibility</h3>
-            <a href="{% url 'event_list' %}" class="boxed_btn">Find an event near you!</a>
+            <a href="{% url 'event_list' %}" class="boxed_btn_orange">Find an event near you!</a>
           </div>
         </div>
       </div>
@@ -73,7 +73,7 @@
     <div class="section-top-border">
       <h2 class="mb-30">Ways to participate</h2>
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-lg-4">
           <div class="card">
             <div class="card-body">
               <h3 class="card-title">Propose a paper</h3>
@@ -88,12 +88,12 @@
                 </ul>
               </p>
               <div class="button-wrap">
-              <a href="{% url 'paper_new' %}" class="boxed_btn">Submit paper!</a>
+                <a href="{% url 'paper_new' %}" class="boxed_btn">Submit paper!</a>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-lg-4">
           <div class="card">
             <div class="card-body">
               <h3 class="card-title">Reproduce</h3>
@@ -109,13 +109,13 @@
                 </ul>
               </p>
               <div class="button-wrap">
-              <a href="{% url 'event_list' %}" class="boxed_btn">Join an event!</a>
+                <a href="{% url 'event_list' %}" class="boxed_btn">Join an event!</a>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="card" style="width: 18rem;">
+        <div class="col-lg-4">
+          <div class="card">
             <div class="card-body">
               <h3 class="card-title">Organise an event</h3>
               <h6 class="card-subtitle mb-2 text-muted">Help create a practical learning space</h6>
@@ -133,7 +133,7 @@
                 </ul>
               </p>
               <div class="button-wrap">
-              <a href="{% url 'event_new' %}" class="boxed_btn">Submit an event!</a>
+                <a href="{% url 'event_new' %}" class="boxed_btn">Submit an event!</a>
               </div>
             </div>
           </div>
@@ -167,7 +167,7 @@
                   </a>
                   <p class="sponsors"> The support of the <strong>N8 Centre of Excellence for Computationally Intensive
                       Research
-                    (N8 CIR)</strong> funded
+                      (N8 CIR)</strong> funded
                     by the N8 research partnership (Universities of Durham, Lancaster, Leeds, Liverpool, Manchester,
                     Newcastle, Sheffield and York) is gratefully acknowledged.</p>
                 </div>
@@ -178,7 +178,7 @@
                   </a>
                   <p class="sponsors"> The support of the EPSRC, BBSRC and ESRC supported <strong>Software
                       Sustainability
-                    Institute</strong> is gratefully
+                      Institute</strong> is gratefully
                     acknowledged. </p>
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-4">
