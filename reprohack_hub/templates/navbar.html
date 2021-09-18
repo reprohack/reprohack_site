@@ -31,7 +31,7 @@
                   <li class="d-block d-lg-none">
                     <a href="{% url 'logout' %}"><strong>Logout</strong></a>
                   </li>
-                  <hr>
+                  <hr class="d-block d-lg-none">
                   {% else %}
                   <li class="d-block d-lg-none">
                     <a href="{% url 'login' %}"><strong>Login</strong></a>
@@ -39,7 +39,7 @@
                   <li class="d-block d-lg-none">
                     <a href="{% url 'signup' %}"><strong>Sign Up</strong></a>
                   </li>
-                  <hr>
+                  <hr class="d-block d-lg-none">
                   {% endif %}
                   <li><a class="active" href="{% url 'index' %}">home</a></li>
                   <li><a href="{% url 'event_list' %}">Events</a></li>
