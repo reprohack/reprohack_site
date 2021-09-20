@@ -7,7 +7,10 @@ source .virtualenv/bin/activate
 # Pull the update from git
 git pull
 
-# Make sure the databae is updated
+# Make sure virtualenv is updated with an changes to dependencies
+pip install -r requirements/production.txt
+
+# Make sure the database is updated
 ./manage.py migrate
 
 # Collect the static assets into /staticfiles folder
