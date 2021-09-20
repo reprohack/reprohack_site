@@ -123,7 +123,7 @@ class PaperCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.user = self.request.user
+        self.object.submitter = self.request.user
         self.object.save()
         form.save_m2m()
         print(form.errors)
