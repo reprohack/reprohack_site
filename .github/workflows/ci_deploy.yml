@@ -1,10 +1,9 @@
 # Runs frontend, backend, integration testing and deploy to the live site
-name: CI
+name: CI_DEPLOY
 on:
   push:
     branches:
       - 'master'
-      - 'dev'
 jobs:
   build:
     runs-on: ubuntu-latest
