@@ -7,7 +7,7 @@
 <div class="bradcam_area breadcam_bg overlay2">
   <h1>
     User profile
-     <a class="btn btn-default" href="{% url 'user_update' username=user.username %}"><i class="bi-pencil-fill"></i> </a>
+    <a class="btn btn-default" href="{% url 'user_update' username=user.username %}"><i class="bi-pencil-fill"></i> </a>
   </h1>
 </div>
 <!-- bradcam_area_end -->
@@ -16,22 +16,46 @@
     <div class="row">
       <div class="col-md-10">
 
-        <h4><i class="bi-person-fill"></i>
-          {{ user.username }} </h4>
-
+        <h2><i class="bi-person-fill"></i>
+          {{ user.username }} </h2>
+        <hr>
 
       </div>
     </div>
     <div class="row">
-        <div class="col-md-10">
-        {{ user.email }}
-        {{ user.first_name }}
-        {{ user.last_name }}
-        {{ user.orcid_id }}
-        <i class="ti-twitter-alt"></i>{{ user.twitter }}
-        <i class="fa fa-github"></i>{{ user.github }}
-        </div>
+      <div class="col-md-3">
+        <strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}
+        <br>
+        <strong>Affiliation:</strong> {{ user.affiliation }}
+        <br>
+        <strong>Location:</strong> {{ user.location }}
+        <br>
+        <strong>Email:</strong> {{ user.email }}
+        <br>
+        <a href="https://twitter.com/{{ user.twitter }}">
+          <i class="ti-twitter-alt"></i> {{ user.twitter }}</a>
+        <br>
+        <a href="https://github.com/{{ user.github }}">
+          <i class="fa fa-github"></i> {{ user.github }}</a>
+        <br>
+        <a href="https://orcid.org/{{ user.orcid }}">
+          <i class="fab fa-orcid"></i> {{ user.orcid }}</a>
+        <br>
+        <br>
+        {{ user.bio }}
+
       </div>
+      <div class="col-md-3">
+        <h4> Papers </h4>
+      </div>
+      <div class="col-md-3">
+        <h4> Reviews </h4>
+
+      </div>
+      <div class="col-md-3">
+        <h4> Events </h4>
+      </div>
+    </div>
 
 
   </div>

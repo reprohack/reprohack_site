@@ -2,12 +2,14 @@ import logging
 import json
 from typing import Any, Optional, Dict, Union, Type, Sequence
 
-from django.forms import Field as DFField, ModelForm, Widget, TextInput, RadioSelect, CharField
+from django.forms import Field as DFField, ModelForm, Widget, TextInput, RadioSelect, CharField, NumberInput
 from django.forms.models import ModelChoiceField
 from django.utils.translation import gettext_lazy as _
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit, Row, Column, HTML, Field
-from crispy_forms.bootstrap import InlineRadios
+from crispy_forms.bootstrap import InlineRadios, StrictButton
+from datetimewidget.widgets import DateTimeWidget
+from django_toggle_switch_widget.widgets import DjangoToggleSwitchWidget
 # from leaflet.forms.widgets import LeafletWidget
 
 from django.contrib.auth import forms, get_user_model
@@ -23,18 +25,25 @@ class MapInput(Widget):
     template_name = "event/map_input_widget.html"
 
 
-
 class EventForm(ModelForm):
     class Meta:
         model = Event
         exclude = ['submission_date', 'creator']
-        widgets = {'event_coordinates': MapInput()}
+        widgets = {'event_coordinates': MapInput(),
+                   'start_time': DateTimeWidget(attrs={'id': "start_time"},
+                                                usel10n=True, bootstrap_version=3),
+                   'end_time': DateTimeWidget(attrs={'id': "end_time"},
+                                              usel10n=True, bootstrap_version=3),
+                   }
 
     def __init__(self, *args, **kwargs):
         super(EventForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Submit event'))
+        self.helper.add_input(
+            #StrictButton('Submit event', css_class="btn-success")
+            Submit('submit', 'Submit event', css_class="boxed_btn")
+        )
         self.helper.layout = Layout(
             'title',
             'host',
@@ -81,8 +90,17 @@ class PaperForm(ModelForm):
         exclude = ['submission_date', 'creator', ]
         widgets = {
             'title': TextInput(),
-            'review_availability': RadioSelect(),
+            # 'review_availability': RadioSelect(),
+            'authors': TextInput(attrs={'style': 'height:6em'}),
+            'citation_txt': TextInput(attrs={'style': 'height:8rem'}),
+            'citation_bib': TextInput(attrs={'style': 'height:12rem'}),
+            'description': TextInput(attrs={'style': 'height:18rem'}),
+            'why': TextInput(attrs={'style': 'height:18rem'}),
+            'focus': TextInput(attrs={'style': 'height:12rem'}),
             'tags': TagWidget(),
+            'archive': DjangoToggleSwitchWidget(round=True, klass="django-toggle-switch-success"),
+            'email_review': DjangoToggleSwitchWidget(round=True, klass="django-toggle-switch-success"),
+            'public_reviews': DjangoToggleSwitchWidget(round=True, klass="django-toggle-switch-success"),
         }
 
     def __init__(self, *args, **kwargs):
@@ -90,7 +108,8 @@ class PaperForm(ModelForm):
 
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Submit paper'))
+        self.helper.add_input(
+            Submit('submit', 'Submit paper', css_class="boxed_btn"))
         self.helper.layout = Layout(
             HTML('<h2>Paper details<h2>'),
             'event',
@@ -116,9 +135,12 @@ class PaperForm(ModelForm):
                      ),
                      ),
             Field('tags', label="Useful Software Skills"),
-            Fieldset("Permissions",
+            Fieldset("Review Availability",
                      "review_availability",
-                     "public_reviews",
+                     "archive"),
+            Fieldset("Review Visibility",
+                     Field("public_reviews"), type=""),
+            Fieldset("Notifications",
                      "email_review")
         )
 
@@ -141,8 +163,6 @@ class MuField(DFField):
         return value
 
 
-
-
 class ReviewForm(ModelForm):
 
     """A form to review papers.
@@ -156,7 +176,8 @@ class ReviewForm(ModelForm):
     class Meta:
         model = Review
         exclude = ['reviewers']
-
+        widgets = {'public_review': DjangoToggleSwitchWidget(
+            round=True, klass="django-toggle-switch-success")}
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
@@ -164,7 +185,8 @@ class ReviewForm(ModelForm):
         self.fields["reviewers"].widget.user = self.user
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Submit review'))
+        self.helper.add_input(
+            Submit('submit', 'Submit Review', css_class="boxed_btn"))
         self.helper.layout = Layout(
             # HTML('<h2>ReproHack Author Feedback Form</h2>'),
             'reviewers',
@@ -173,7 +195,7 @@ class ReviewForm(ModelForm):
             HTML(f"<h3>{_('Reproducibility')}</h3>"),
             'reproducibility_outcome',
             InlineRadios('reproducibility_rating'),
-            'reproducibility_description',
+            Field('reproducibility_description', css_class="md-large-box"),
             'familiarity_with_method',
             Fieldset(_("Operating System"),
                      Row(
@@ -226,18 +248,16 @@ class ReviewForm(ModelForm):
 
             review.reviewers.clear()
             for reviewer_obj in reviewers_data:
-                user = get_user_model().objects.get(username=reviewer_obj["username"])
-                review.reviewers.add(user, through_defaults={"lead_reviewer": reviewer_obj["lead"]})
+                user = get_user_model().objects.get(
+                    username=reviewer_obj["username"])
+                review.reviewers.add(user, through_defaults={
+                                     "lead_reviewer": reviewer_obj["lead"]})
             review.save()
 
         except Exception as e:
             logger.exception("Trying to save an invalid reviewers list")
 
-
         return save_result
-
-
-
 
 
 # --------------- USER PROFILE ---------------------- #
@@ -247,13 +267,14 @@ class UserChangeForm(forms.UserChangeForm):
     class Meta(forms.UserChangeForm.Meta):
         model = get_user_model()
         exclude = ["password", "id_password"]
-        fields = ['name', 'email', 'bio', 'affiliation', 'location', 'twitter', 'github', 'orcid']
+        fields = ['name', 'email', 'bio', 'affiliation',
+                  'location', 'twitter', 'github', 'orcid']
 
     def __init__(self, *args, **kwargs):
         super(UserChangeForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Save'))
+        self.helper.add_input(Submit('submit', 'Save', css_class="boxed_btn"))
 
 
 class UserCreationForm(forms.UserCreationForm):
@@ -263,7 +284,8 @@ class UserCreationForm(forms.UserCreationForm):
     )
 
     class Meta(forms.UserCreationForm.Meta):
-        fields = ('first_name', "last_name", 'username', 'email', 'password1', 'password2', 'affiliation', 'twitter', 'github', 'orcid')
+        fields = ('first_name', "last_name", 'username', 'email', 'password1',
+                  'password2', 'affiliation', 'twitter', 'github', 'orcid')
         model = get_user_model()
 
     def clean_username(self):
@@ -280,7 +302,8 @@ class UserCreationForm(forms.UserCreationForm):
         super(UserCreationForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', 'Sign up'))
+        self.helper.add_input(
+            Submit('submit', 'Sign up', css_class="boxed_btn"))
         self.helper.layout = Layout(
             Row(
                 Column('first_name', css_class='form-group col-md-5 mb-0'),

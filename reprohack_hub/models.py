@@ -23,12 +23,15 @@ from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.contrib.auth.models import AbstractUser, AnonymousUser
 from django.db.models import CharField
-
+from django.conf import settings
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+import os
+
 from reprohack_hub.utils import next_x_hour
+
 
 RATING_MIN = 0
 RATING_MAX = 10
@@ -87,7 +90,6 @@ class User(AbstractUser):
         return reverse("user_detail", kwargs={"username": self.username})
 
 
-
 def default_event_start(hour: int = DEFAULT_EVENT_START_HOUR) -> datetime:
     """Return next default start time."""
     return next_x_hour(hour)
@@ -96,6 +98,14 @@ def default_event_start(hour: int = DEFAULT_EVENT_START_HOUR) -> datetime:
 def default_event_end(hour: int = DEFAULT_EVENT_END_HOUR) -> datetime:
     """Return next default start time."""
     return next_x_hour(hour, default_event_start())
+
+
+def get_default_description():
+    description_file = open(os.path.join(settings.STATIC_ROOT,
+                                         'txt/event-description-default.md'))
+    description_text = description_file.read()
+    description_file.close()
+    return description_text
 
 
 class Event(models.Model):
@@ -121,8 +131,8 @@ class Event(models.Model):
 
     # location
     # venue = models.ForeignKey(Venue, on_delete=models.SET_NULL, null=True)
-    description = MarkdownxField(_('Venue description (eg. entrance, '
-                                   'parking etc.)'))
+    description = MarkdownxField(_('Event Description. We provide a markdown template but feel free to customise'),
+                                 default=get_default_description)
     # location = models.CharField(max_length=200)  # Location name?
     address1 = models.CharField(max_length=200)
     address2 = models.CharField(max_length=200, blank=True, null=True)
@@ -131,7 +141,7 @@ class Event(models.Model):
     country = CountryField()
     registration_url = models.URLField()
     event_coordinates = models.TextField(blank=True, null=True, )
-
+    is_initial_upload = models.BooleanField(default=False)
 
     submission_date = models.DateTimeField(auto_now_add=True)
     # remote = models.BooleanField(default=False)
@@ -146,13 +156,14 @@ class Event(models.Model):
     def get_absolute_url(self):
         return reverse('event_detail', args=[self.id])
 
-    @property
+    @ property
     def url(self):
         return self.get_absolute_url()
 
-    @property
+    @ property
     def address(self):
-        addr_items = [self.address1, self.address2, self.city, self.postcode, self.country.name]
+        addr_items = [self.address1, self.address2,
+                      self.city, self.postcode, self.country.name]
 
         used_addr_items = []
         for addr_item in addr_items:
@@ -161,14 +172,11 @@ class Event(models.Model):
 
         return ", ".join(used_addr_items)
 
-
-
-
-    @property
+    @ property
     def lat(self):
         return self.decompress_lat_long(0)
 
-    @property
+    @ property
     def long(self):
         return self.decompress_lat_long(1)
 
@@ -186,9 +194,9 @@ class Event(models.Model):
 class Paper(models.Model):
 
     class ReviewAvailability(models.TextChoices):
-        ALL = 'ALL', _('Allowed for reviews in any events')
-        EVENT_ONLY = 'EVT_ONLY', _('Only allowed to review for associated event')
-        ARCHIVE = 'ARCHIVE', _('Archive the paper, reviews are not allowed')
+        ALL = 'ALL', _('Available for review at any event')
+        EVENT_ONLY = 'EVT_ONLY', _(
+            'Only available for review at associated event')
 
     """A paper to reproduce.
 
@@ -201,34 +209,60 @@ class Paper(models.Model):
     """
 
     title = models.TextField(_("Paper Title"))
-    authors = models.TextField(_("Authors"))
-    event = models.ForeignKey(Event, null=True, blank=True,
+    authors = models.TextField(
+        _("Paper Authors"),
+        help_text=_("Please separate authors names with commas"))
+    event = models.ForeignKey(Event, help_text=_("Associated Event (leave blank if general submission)"), null=True, blank=True,
                               on_delete=models.SET_NULL)
 
-    citation_txt = models.TextField(max_length=300)
-    doi = models.CharField(_("DOI (eg. 10.1000/xyz123)"), max_length=200,)
-    description = models.TextField(max_length=400)
-    why = models.TextField(max_length=400)
-    focus = models.TextField(max_length=400)
-    paper_url = models.URLField()
-    code_url = models.URLField()
-    data_url = models.URLField()
-    extra_url = models.URLField()
-    tags = TaggableManager(_("Tags"), help_text="")
-    citation_bib = models.TextField()
+    citation_txt = models.TextField(_(
+        "Reference"), max_length=1000,
+        help_text=_("Full reference of the paper in text format"))
+    doi = models.CharField(_("DOI (eg. 10.1000/xyz123)"),
+                           max_length=200, null=True, blank=True)
+    description = models.TextField(
+        _("Short Description of the paper"), max_length=2000,
+        help_text=_("Include a description of analysis and reproducibility approach (e.g. programming language etc)"))
+    why = models.TextField(
+        _("Why someone attempt to reproduce this paper?"), max_length=2000,
+        help_text=_("Help motivate potential reviewers to select your paper!"))
+    focus = models.TextField(
+        _("What should reviewers focus on?"), help_text=_("Optional. Use to point reviewers to specific difficulties or particular areas you want feedback on"),
+        null=True, blank=True, max_length=1000)
+    paper_url = models.URLField(_("Paper URL"), help_text=_(
+        "Ideally to an Open Access version of your paper"))
+    code_url = models.URLField(_("Code or Repository URL"), help_text=_(
+        "If all materials are present in a single repository, provide the URL here."))
+    data_url = models.URLField(null=True, blank=True, help_text=_(
+        "Optional"))
+    extra_url = models.URLField(null=True, blank=True, help_text=_(
+        "Optional"))
+    tags = TaggableManager(
+        _("Tags"), help_text="Help make your papers findable through a search. Include tags of the reserach domain, programming languages used or any other relevant tools (e.g. Docker, HPC)")
+    citation_bib = models.TextField(_(
+        "BibTex Paper reference"),
+        help_text=_("BibTeX Format Paper Description"), null=True, blank=True)
 
     submission_date = models.DateTimeField(auto_now_add=True)
     review_availability = models.CharField(_("Paper review permission"),
                                            choices=ReviewAvailability.choices,
                                            default=ReviewAvailability.ALL,
                                            max_length=20)
-    public_reviews = models.BooleanField(_("Make reviews public"), default=True)
-    email_review = models.BooleanField(_("Send me an email when a review is received"), default=True)
-    submitter = models.ForeignKey(get_user_model(), default=None, null=True, blank=True, on_delete=models.SET_NULL)
+    archive = models.BooleanField(
+        _("Archive Paper"), default=False,
+        help_text=_("The paper will no longer be available for review"))
+    public_reviews = models.BooleanField(
+        _("Make reviews public"), default=True,
+        help_text=_("Only reviews that have also been set to public by reviewers will be visible to others"))
+    email_review = models.BooleanField(
+        _("Send me an email when a review is received"), default=True)
+    submitter = models.ForeignKey(
+        get_user_model(), default=None, null=True, blank=True, on_delete=models.SET_NULL)
+    is_initial_upload = models.BooleanField(default=False)
 
     @property
     def is_available_for_review(self):
-        return self.review_availability != self.ReviewAvailability.ARCHIVE
+        return self.review_availability != self.archive
 
     def get_reviews_viewable_by_user(self, user):
         reviews_list = []
@@ -237,9 +271,6 @@ class Paper(models.Model):
                 reviews_list.append(review)
 
         return reviews_list
-
-
-
 
     def __str__(self):
         return self.title
@@ -265,13 +296,12 @@ class AuthorsAndSubmitters(models.Model):
     submitted = models.BooleanField(default=True)
 
     def clean(self):
-        if not self.author and not self.submitter:
+        if not self.author and not self.paper.submitter:
             raise ValidationError(_('Users must be either an author or '
                                     'submitter or both.'))
 
     # def __str__(self):
     #     return f"{self.user} {self.paper}"
-
 
 
 class Review(models.Model):
@@ -301,18 +331,16 @@ class Review(models.Model):
         PARTIALLY_REPRODUCIBLE = 'p', _('Partially Reproducible'),
         NOT_REPRODUCIBLE = 'n', _('Not Reproducible')
 
-
     class OperatingSystems(models.TextChoices):
-        LINUX = 'linux', _('Linux/FreeBSD or other Open Source Operating system')
-        MACOS = 'macOS', _('Apple Operating System')
+        LINUX = 'linux', _(
+            'Linux/FreeBSD or other Open Source Operating system')
+        MACOS = 'macOS', _('Apple Operating System (macOSX)')
         WINDOWS = 'windows', _('Windows Operating System')
-
-
 
     RATING_CHOICES = [(x, x) for x in range(RATING_MIN, RATING_MAX + 1)]
 
     # id = models.AutoField(primary_key=True)
-    event = models.ForeignKey(Event,
+    event = models.ForeignKey(Event, help_text=_("Is the review associated with an Event? (leave blank if not)"),
                               on_delete=models.SET_NULL,
                               null=True, blank=True)
     # Lead reviewer...?
@@ -333,12 +361,14 @@ class Review(models.Model):
         choices=RATING_CHOICES,
     )
     reproducibility_description = MarkdownxField(_("Briefly describe the "
-                                                     "procedure followed/tools "
-                                                     "used to reproduce it."),)
-    familiarity_with_method = models.TextField(_("Briefly describe your "
-                                                 "familiarity with the "
-                                                 "procedure/tools used by "
-                                                 "the paper."))
+                                                   "procedure followed/tools "
+                                                   "used to reproduce it."),
+                                                 help_text=_("Markdown field"))
+    familiarity_with_method = MarkdownxField(_("Briefly describe your "
+                                               "familiarity with the "
+                                               "procedure/tools used by "
+                                               "the paper."),
+                                             help_text=_("Markdown field"))
     operating_system = models.CharField(_("Which type of operating system were you "
                                           "working in?"), max_length=7,
                                         choices=OperatingSystems.choices)
@@ -346,15 +376,21 @@ class Review(models.Model):
                                                  "using (eg. Ubuntu 14.04.6 LTS, "
                                                  "macOS 10.15 or Windows 10 Pro)?"),
                                                max_length=100)
-    software_installed = models.TextField(_("What additional software did you need "
-                                            "to install?"))
-    software_used = models.TextField(_("What software did you use?"))
-    challenges = models.TextField(_("What were the main challenges you ran "
-                                    "into (if any)?"))
-    advantages = models.TextField(_("What were the positive features of "
-                                    "this approach?"))
-    comments_and_suggestions = models.TextField(_("Any other comments/suggestions "
-                                                  "on the reproducibility approach?"))
+    software_installed = MarkdownxField(_("What additional software did you need "
+                                          "to install?"),
+                                        help_text=_("Markdown field"))
+    software_used = MarkdownxField(_("What software did you use?"),
+                                   help_text=_("Markdown field"))
+    challenges = MarkdownxField(_("What were the main challenges you ran "
+                                  "into (if any)?"),
+                                help_text=_("Markdown field"))
+    advantages = MarkdownxField(_("What were the positive features of "
+                                  "this approach?"),
+                                help_text=_("Markdown field"))
+    comments_and_suggestions = MarkdownxField(_("Any other comments/suggestions "
+                                                "on the reproducibility approach?"),
+                                              blank=True, default="",
+                                              help_text=_("Markdown field"))
     documentation_rating = models.IntegerField(
         _("How well was the material documented?"),
         default=RATING_DEFAULT,
@@ -362,10 +398,12 @@ class Review(models.Model):
                     MaxValueValidator(RATING_MAX)],
         choices=RATING_CHOICES,
     )
-    documentation_cons = models.TextField(_("How could the documentation "
-                                            "be improved?"))
-    documentation_pros = models.TextField(_("What do you like about the "
-                                            "documentation?"))
+    documentation_cons = MarkdownxField(_("How could the documentation "
+                                          "be improved?"),
+                                        help_text=_("Markdown field"))
+    documentation_pros = MarkdownxField(_("What do you like about the "
+                                          "documentation?"),
+                                        help_text=_("Markdown field"))
     method_familiarity_rating = models.IntegerField(
         _("After attempting to reproduce, how familiar do you feel with "
           "the code and methods used in the paper?"),
@@ -374,9 +412,11 @@ class Review(models.Model):
                     MaxValueValidator(RATING_MAX)],
         choices=RATING_CHOICES,
     )
-    transparency_suggestions = models.TextField(
+    transparency_suggestions = MarkdownxField(
         _("Any suggestions on how the analysis could be made more "
-          "transparent?")
+          "transparent?"),
+        help_text=_("Markdown field"),
+        blank=True, default=""
     )
     method_reusability_rating = models.IntegerField(  # Reusability?
         _("Rate the project on reusability of the material."),
@@ -391,15 +431,21 @@ class Review(models.Model):
                                                     "for DATA included"))
     code_permissive_license = models.BooleanField(_("Permissive license "
                                                     "for CODE included"))
-    reusability_suggestions = models.TextField(_("Any suggestions on how "
-                                                 "the project could be "
-                                                 "more reusable?"))
-    general_comments = models.TextField(_("Any final comments:"))
+    reusability_suggestions = MarkdownxField(_("Any suggestions on how "
+                                               "the project could be "
+                                               "more reusable?"),
+                                             help_text=_("Markdown field"),
+                                             blank=True, default="")
+    general_comments = MarkdownxField(_("Any final comments?"),
+                                      help_text=_("Markdown field"),
+                                      blank=True, default="")
     submission_date = models.DateTimeField(auto_now_add=True)
     # contact email should be included in user accounts,
 
-    public_review = models.BooleanField(_("Allow this review to be made public"), default=True)
-
+    public_review = models.BooleanField(
+        _("Allow this review to be made public"), default=True,
+        help_text=_("Only reviews on papers that have also been set to receive public reviews by authors will be visible to others"))
+    is_initial_upload = models.BooleanField(default=False)
 
     def __str__(self):
         """Default display of review.
@@ -442,7 +488,6 @@ class Review(models.Model):
 
     def is_editable_by_user(self, user):
 
-
         # Have to be logged in
         if isinstance(user, AnonymousUser):
             return False
@@ -455,7 +500,6 @@ class Review(models.Model):
         return False
 
 
-
 class PaperReviewer(models.Model):
     """
     A group of paper reviewers.
@@ -464,6 +508,3 @@ class PaperReviewer(models.Model):
     review = models.ForeignKey(Review, on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     lead_reviewer = models.BooleanField(default=True)
-
-
-

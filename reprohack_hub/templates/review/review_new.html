@@ -6,27 +6,25 @@
 {% block content %}
 <!-- bradcam_area_start -->
 <div class="bradcam_area breadcam_bg overlay2">
-    <h1>ReproHack Review</h1>
+  <h1>Submit Review</h1>
 </div>
 <!-- bradcam_area_end -->
 <div class="whole-wrap">
-    <div class="container box_1170">
-        <div class="section-top-border">
-            <h1>ReproHack Review</h1>
-            <h3> Submit your review now!</h3>
-        </div>
+  <div class="container box_1170">
+    <div class="section-top-border">
     </div>
-    <div class="content container">
-        <div class="row">
-            <div class="col-md-10">
-                {% block event-form %}
-                {% endblock %}
-                <div class="review-form" method="POST">
-                    {% csrf_token %}
-                    {% crispy form %}
-                </div>
-            </div>
+  </div>
+  <div class="content container">
+    <div class="row">
+      <div class="col-md-10">
+        {% block event-form %}
+        {% endblock %}
+        <div class="review-form" method="POST">
+          {% csrf_token %}
+          {% crispy form %}
         </div>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}

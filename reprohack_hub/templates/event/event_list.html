@@ -3,67 +3,93 @@
 
 
 {% block content %}
-  <div class="bradcam_area breadcam_bg overlay2">
-    <h1>Events</h1>
-    <br>
-    <a href="{% url 'event_new' %}" class="boxed_btn">Submit an event!</a>
-  </div>
-  <div class="whole-wrap">
-    <div class="container box_1170">
-      <div class="section-top-border">
+<div class="bradcam_area breadcam_bg overlay2">
+  <h1>Events</h1>
+  <br>
+  <a href="{% url 'event_new' %}" class="boxed_btn">Submit an event!</a>
+</div>
+<div class="whole-wrap">
+  <div class="container box_1170">
+    <div class="section-top-border">
       <div class="row">
         <div class="col-sm-9">
-          <h1>Upcoming ReproHacks</h1>
-        <br>
-        <div class="row">
-          <div class="col">
-            {% include "event/event_map.html" %}
+          <br>
+          <div class="row">
+            <div class="col">
+              {% include "event/event_map.html" %}
+            </div>
           </div>
-        </div>
-        <br>
-        <ul>
-          {% for event in object_list %}
-            <li class="event">
+          <br>
 
+
+          <h1>Upcoming Events</h1>
+          <ul>
+            {% for event in object_list %}
+            {% if event.end_time >= now %}
+            <li class="event card">
               <h3 class="card-title"><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
-              <h6 class="card-subtitle mb-2 text-muted">
-                <div class="date">
-                  {{ event.date }}
-                </div>
-              </h6>
+              <h4> {{ event.city }}, {{ event.country }} </h4>
+              <div class="date">
+                <i class="bi-clock"></i>
+                {{ event.start_time }} - {{ event.end_time }} (TZ: {{ event.time_zone }})
+              </div>
             </li>
-          {% endfor %}
+            {% else %}
+            {% endif %}
+            {% endfor %}
 
-        </ul>
+          </ul>
 
 
-        {# Pagination #}
-        {% include "misc/pagination.html" %}
+          {# Pagination #}
+          {% include "misc/pagination.html" %}
+
+          <h1>Past Events</h1>
+          <ul>
+            {% for event in object_list reversed %}
+            {% if event.end_time < now %}
+            <li class="event card">
+              <h3 class="card-title"><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
+              <h4> {{ event.city }}, {{ event.country }} </h4>   
+                <div class="date">
+                  <i class="bi-clock"></i>
+                  {{ event.start_time }} - {{ event.end_time }} (TZ: {{ event.time_zone }})
+                </div>
+            </li>
+            {% else %}
+            {% endif %}
+            {% endfor %}
+
+          </ul>
+
+
+          {# Pagination #}
+          {% include "misc/pagination.html" %}
 
         </div>
-      <div class="col-sm-3">
-        <h4>Search for events</h4>
-            <form method="get">
-              <div class="mb-4">
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search events..." name="search"
-                         value="{{ search }}"/>
-                  <div class="input-group-append">
-                    <button type="submit" class="btn-primary btn"><i class="bi-search m-0 p-0"
-                                                                     style="font-size: 0.7em"></i> Search
-                    </button>
-                  </div>
+        <div class="col-sm-3">
+          <h4>Search for events</h4>
+          <form method="get">
+            <div class="mb-4">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search events..." name="search"
+                  value="{{ search }}" />
+                <div class="input-group-append">
+                  <button type="submit" class="btn-primary btn"><i class="bi-search m-0 p-0"
+                      style="font-size: 0.7em"></i> Search
+                  </button>
                 </div>
-
               </div>
-            </form>
 
+            </div>
+          </form>
+
+        </div>
       </div>
-      </div>
 
 
 
-      </div>
     </div>
   </div>
+</div>
 {% endblock %}

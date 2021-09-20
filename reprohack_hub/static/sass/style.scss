@@ -113,18 +113,72 @@ blockquote {
   background: #f9f9ff;
   border-left: 2px solid $primary;
   font-style: italic;
-  font-size: 2.5em;
+  font-size: 1.5em;
 }
 
 .detail_header {
   font-weight: bold;
+  margin-bottom: 0.3em;
+  font-size: 1.1em;
 }
 
 .detail_text {
-  margin-bottom: 1em;
+  margin-bottom: 2em;
+  margin-left: 1em;
 
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  blockquote {
+    font-size: 1em;
+  }
+
+  h1 {
+    font-weight: 700;
+  }
+
+  h2 {
+    font-weight: 600;
+  }
+
+  h3 {
+    font-weight: 500;
+  }
 }
 
+.header_header {
+  font-weight: bold;
+  margin-bottom: 0.3em;
+  font-size: 1.15em;
+}
+
+.header_text {
+  font-size: 1.1em;
+  margin-bottom: 0.3em;
+}
+
+.header_italic {
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+  margin-top: 0.4rem;
+  font-style: italic;
+}
+
+
+.login-txt {
+  color: #BC9321 !important;
+  font-size: 1rem !important;
+}
+
+.login-txt-nav {
+  padding-top: 0.5rem;
+  text-transform: lowercase;
+  font-size: 1.5rem !important;
+  font-weight: 600;
+}
 
 /*
 ul li {
@@ -155,5 +209,163 @@ correct bootstrap pagination styling
       content: none;
 
     }
+  }
+}
+
+.card {
+  margin-bottom: 0.6rem !important;
+  border-radius: 0.5rem;
+  box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.2);
+
+  .button-wrap {
+    margin-top: 2rem;
+    text-align: center;
+  }
+}
+
+.sponsors {
+  padding: 1rem 0.6rem;
+}
+
+
+.container-scores {
+  width: 100%;
+  /* Full width */
+  background-color: $gray-color1;
+  /* Grey background */
+  border-radius: 5px;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.scores {
+  text-align: right;
+  /* Right-align text */
+  padding-top: 10px;
+  /* Add top padding */
+  padding-bottom: 10px;
+  /* Add bottom padding */
+  color: white;
+  /* White text color */
+  background-color: #04AA6D;
+  border-radius: 5px;
+  padding-right: 10px;
+  margin-bottom: 15px;
+}
+
+pre {
+  background-color: $reprohack-purple-transp;
+  border-color: $reprohack-purple;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  padding: 2em;
+
+}
+
+
+label.django-toggle-switch+label.custom-control-label::before {
+  border: none;
+  background-color: transparent;
+}
+
+
+
+.custom-control-input:checked~.custom-control-label::before {
+  color: #fff;
+  border-color: $reprohack-green-dark;
+  background-color: $reprohack-green-light;
+}
+
+.markdownx-preview {
+  background-color: $markdownx-preview-bg;
+  padding: 1em;
+  border-radius: 0.5rem;
+}
+
+.django-toggle-switch-success input:checked+.django-toggle-switch-slider,
+input:checked+.django-toggle-switch-slider {
+  background-color: $reprohack-green-light !important;
+}
+
+.md-large-box {
+  height: 26rem !important;
+}
+
+.md-medium-box {
+  height: 18rem;
+}
+
+.md-small-box {
+  height: 12rem;
+}
+
+.badge-primary {
+  color: $primary-color;
+  background-color: $primary-color-light;
+  border: 1px solid $primary-color;
+  padding: 0.4rem;
+
+  &:hover {
+    background: $primary-color !important;
+    color: #fff !important;
+    border: 1px solid $primary-color;
+  }
+
+  &:active:focus {
+    background: $primary-color !important;
+    color: $primary-color-light !important;
+    border: 1px solid $primary-color;
+  }
+}
+
+/* MAP STYLES */
+
+.leaflet-pin {
+  opacity: 0.75;
+  z-index: 99;
+}
+
+.info {
+  padding: 6px 8px;
+  font-family: $font2;
+  font-size: 1rem;
+  background: white;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+
+  .circle {
+    line-height: 1.4rem;
+    border-radius: 50%;
+  }
+}
+
+.info h4 {
+  margin: 0 0 5px;
+  color: #777;
+}
+
+.legend {
+  line-height: 1.4rem;
+  color: #555;
+
+}
+
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7;
+}
+
+.leaflet-popup-content {
+  font-family: $font2;
+
+  a {
+    font-size: 1.3rem;
+    color: $reprohack-purple;
+    font-family: $font1;
   }
 }

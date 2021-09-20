@@ -2,40 +2,41 @@
 {% load static %}
 
 {% block content %}
-  <div class="bradcam_area breadcam_bg overlay2">
-    <h1>Reviews</h1>
-    <br>
-    <a href="{% url 'review_new' %}" class="boxed_btn">Submit a review!</a>
-  </div>
-  <div class="whole-wrap">
-    <div class="container box_1170">
-      <div class="section-top-border">
-        <h1>Recent Reviews</h1>
-        <ul>
-          {% for review in reviews_list %}
-            <li class="review mb-4">
-              <div>
-                <a href="{{ review.get_absolute_url }}">{{ review }}</a>
-              </div>
-              <div>
-                By: {% for reviewer in review.reviewers.all %}<a href="{{ reviewer.get_absolute_url }}">{{ reviewer.username }}</a> {% endfor %}
-              </div>
-              <div>
-                <i class="bi-clock"></i> Submitted: {{ review.submission_date }}
-              </div>
+<div class="bradcam_area breadcam_bg overlay2">
+  <h1>Reviews</h1>
+  <br>
+  <a href="{% url 'review_new' %}" class="boxed_btn">Submit a review!</a>
+</div>
+<div class="whole-wrap">
+  <div class="container box_1170">
+    <div class="section-top-border">
+      <h1>Recent Reviews</h1>
+      <ul>
+        {% for review in reviews_list reversed %}
+        <li class="review mb-4 card">
+          <h3>
+            <a href="{{ review.get_absolute_url }}">{{ review }}</a>
+          </h3>
+          <div>
+            By: {% for reviewer in review.reviewers.all %}<a
+              href="{{ reviewer.get_absolute_url }}">{{ reviewer.username }}</a> {% endfor %}
+          </div>
+          <div>
+            <i class="bi-clock"></i> Submitted: {{ review.submission_date }}
+          </div>
 
-            </li>
-          {% endfor %}
+        </li>
+        {% endfor %}
 
-        </ul>
-
-
-        {# Pagination #}
-        {% include "misc/pagination.html" %}
+      </ul>
 
 
-      </div>
+      {# Pagination #}
+      {% include "misc/pagination.html" %}
+
+
     </div>
   </div>
+</div>
 
 {% endblock %}

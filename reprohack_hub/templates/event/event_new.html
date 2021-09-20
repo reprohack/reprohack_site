@@ -6,28 +6,26 @@
 {% block content %}
 <!-- bradcam_area_start -->
 <div class="bradcam_area breadcam_bg overlay2">
-    <h1>ReproHack Events</h1>
+  <h1>Submit Event</h1>
 </div>
 <!-- bradcam_area_end -->
 <div class="whole-wrap">
-    <div class="container box_1170">
-        <div class="section-top-border">
-            <h1>ReproHack Events</h1>
-            <h3> Submit your event now!</h3>
-        </div>
+  <div class="container box_1170">
+    <div class="section-top-border">
+      <h1>Event details</h1>
     </div>
-    <div class="content container">
-        <div class="row">
-            <div class="col-md-10">
-                {% block event-form %}
-                  ddd
-                {% endblock %}
-                <div class="event-form" method="POST">
-                    {% csrf_token %}
-                    {% crispy form %}
-                </div>
-            </div>
+  </div>
+  <div class="content container">
+    <div class="row">
+      <div class="col-md-12">
+        {% block event-form %}
+        {% endblock %}
+        <div class="event-form" method="POST">
+          {% csrf_token %}
+          {% crispy form %}
         </div>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}

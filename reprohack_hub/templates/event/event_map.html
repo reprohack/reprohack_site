@@ -1,3 +1,5 @@
+{% load static %}
+
 <div id="map" style="height: 30rem; width: 100%"></div>
 <script>
 
@@ -6,6 +8,19 @@
 
   $(document).ready(function () {
 
+    var greenMarker = L.AwesomeMarkers.icon({
+      icon: 'asterisk',
+      markerColor: 'green',
+      prefix: 'fa',
+      });
+
+    var orangeMarker = L.AwesomeMarkers.icon({
+      icon: 'asterisk',
+      markerColor: 'orange',
+      prefix: 'fa',
+      className: 'awesome-marker leaflet-pin'
+      });
+
     var eventLocations = [
       {% for event in object_list %}
         {% if event.lat and event.long %}
@@ -13,6 +28,13 @@
         latlng: L.latLng({{ event.lat }}, {{ event.long }}),
         title: "{{ event.title }}",
         url: "{{ event.url }}",
+        start: "{{ event.start_time }}",
+        end: "{{ event.end_time }}",
+        {% if event.end_time > now %}
+          icon: greenMarker,
+        {% else %}
+          icon: orangeMarker,
+        {% endif %}
       },
         {% endif %}
       {% endfor %}
@@ -21,9 +43,17 @@
         latlng: L.latLng({{ event.lat }}, {{ event.long }}),
         title: "{{ event.title }}",
           url: "{{ event.url }}",
-      },
+          start: "{{ event.start_time }}", 
+          end: "{{ event.end_time }}",
+          {% if event.end_time > now %}
+            icon: greenMarker,
+          {% else %}
+            icon: orangeMarker,
+          {% endif %}
+
       {% endif %}
     ];
+
 
     let eventBounds = null;
     if(eventLocations.length > 1){
@@ -31,7 +61,7 @@
       for(let i in eventLocations){
         latlngs.push(eventLocations[i].latlng);
       }
-      eventBounds = L.latLngBounds(latlngs);
+      eventBounds = L.latLngBounds(latlngs).pad(0.13);
     }
 
     let mapConfig = {
@@ -51,30 +81,41 @@
     }
 
     // Add map layers
-    let Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
-      attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    let CartoDB_Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       subdomains: 'abcd',
-      minZoom: 1,
-      maxZoom: 16,
-      ext: 'jpg',
-
-    }).addTo(map);
-
-    let Stamen_TonerHybrid = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-hybrid/{z}/{x}/{y}{r}.{ext}', {
-      attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      subdomains: 'abcd',
-      minZoom: 0,
-      maxZoom: 20,
-      ext: 'png'
-
-    }).addTo(map);
+      maxZoom: 19
+      }).addTo(map);
 
     // Add markers
-    for(let i in eventLocations){
-      let event = eventLocations[i];
-      let marker = L.marker(event.latlng).addTo(map)
-            .bindPopup(`<a href="${event.url}">${event.title}</a>`);
-    }
+
+for(let i in eventLocations){ let event = eventLocations[i]; 
+  let marker = L.marker(event.latlng, {icon: event.icon}).addTo(map) 
+  .bindPopup(`<a href="${event.url}">${event.title}</a><br>${event.start} - ${event.end}`);
+}
+
+function getColor(d) { 
+  return d === 'Upcoming' ? "#6CA625" : 
+         d === 'Past' ? "#EB902D" : 
+         '#FFEDA0'; } 
+
+var legend = L.control({position: 'bottomright'}); 
+
+legend.onAdd = function (map) { 
+  var div = L.DomUtil.create('div', 'info legend'), 
+      categories = ["Upcoming", 'Past'],
+      labels = [];  
+for (var i = 0; i < categories.length; i++) { 
+  div.innerHTML +=
+  labels.push(
+      '<i class="circle" style="background:' + getColor(categories[i]) + '"></i>' +
+      (categories[i] ? categories[i] : '+')); 
+    } 
+    div.innerHTML = labels.join('<br>');
+    return div;
+};
+  
+  legend.addTo(map);
 
   })
 </script>

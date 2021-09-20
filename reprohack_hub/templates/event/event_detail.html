@@ -4,47 +4,74 @@
 
 {% block content %}
 
-  <div class="bradcam_area breadcam_bg overlay2">
-    <h1>
-      {{ event.title }}
-      {% if user.pk == event.creator.pk %}
-        <a class="btn btn-default" href="{% url 'event_edit' pk=event.pk %}"><i class="bi-pencil"></i> </a>
-      {% endif %}
+<div class="bradcam_area breadcam_bg overlay2">
+  <h1>
+    {{ event.title }}
+    {% if user.pk == event.creator.pk %}
+    <a class="btn btn-default" href="{% url 'event_edit' pk=event.pk %}"><i class="bi-pencil"></i> </a>
+    {% endif %}
 
-    </h1>
-  </div>
-  <div class="whole-wrap">
-    <div class="container box_1170">
-      <div class="section-top-border">
-        <div class="event">
-
-          <h4>created by: {{ event.creator.username }}</h4>
-
-          <div>
-            <h5>{{ event.start_time }} - {{ event.end_time }}</h5>
-
-            <h5>{{ event.address }}</h5>
+  </h1>
+</div>
+<div class="whole-wrap">
+  <div class="container box_1170">
+    <div class="section-top-border">
+      <div class="event">
+        <div class="card" style="">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-9">
+                <h3 class="card-title"> {{ event.title }} </h3>
+                <h4 class="card-title"><i class="fa fa-calendar">&nbsp;<i class="flaticon-clock"></i>
+                    &nbsp;&nbsp; </i>{{ event.start_time }} - {{ event.end_time }} ({{ event.time_zone}})</h4>
+                <h5 class="card-title"><i class="fa fa-map-pin"></i> &nbsp;&nbsp; {{ event.address }}
+                </h5>
+                <p class="card-text">
+                  {% if event.host %}
+                  <h5>Host: {{ event.host}}</h5>
+                  {% endif%}
+                </p>
+                <br>
+                <h6 class="card-subtitle mb-2 text-muted">Event submitted by: {{ event.creator.username }} on
+                  {{ event.submission_date }} </h6>
+              </div>
+              <div class="col-md-3" style="align:center;">
+                <br>
+                {% if event.registration_url %}
+                <a href={{ event.registration_url }} class="boxed_btn_orange2" style="font-size: 1.5em;">
+                  Register
+                </a>
+                {% endif%}
+                <br>
+                <br>
+                <a href="https://reprohack-autoinvite.herokuapp.com/">
+                  <img src="https://img.shields.io/badge/slack-join%20us-orange?style=for-the-badge&logo=slack" />
+                </a>
+              </div>
+            </div>
           </div>
-
-          <p>{{ event.description | show_markdown | safe }}</p>
-
-
-          {% include "event/event_map.html" %}
-
-
-          <p>Associated papers</p>
-          {% if event.paper_set.count > 0 %}
-            <ul>
-              {% for paper in event.paper_set.all %}
-                <li>{{ paper }}</li>
-              {% endfor %}
-            </ul>
-          {% else %}
-            No associated papers
-
-          {% endif %}
         </div>
+        <h3> Event Description </h3>
+        <p>{{ event.description | show_markdown | safe }}</p>
+
+
+        {% include "event/event_map_single.html" %}
+
+
+        <h2>Associated papers</h2>
+        {% if event.paper_set.count > 0 %}
+        <ul>
+          {% for paper in event.paper_set.all %}
+          <li><a href="{% url 'paper_detail' pk=paper.event.pk %}">
+              {{ paper }} </a> </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        No associated papers
+
+        {% endif %}
       </div>
     </div>
   </div>
+</div>
 {% endblock %}
