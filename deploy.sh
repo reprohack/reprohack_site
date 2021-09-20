@@ -14,7 +14,7 @@ pip install -r requirements/pythonanywhere.txt
 ./manage.py migrate
 
 # Collect the static assets into /staticfiles folder
-./manage.py collectstatic
+./manage.py collectstatic --noinput
 
 # Compress templates
 ./manage.py compress
