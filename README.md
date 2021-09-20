@@ -258,7 +258,7 @@ python -m virtualenv --python=/usr/bin/python3.8  .virtualenv
 source .virtualenv/bin/activate
 
 # Install python dependencies
-pip install requirements/production.txt
+pip install -r requirements/production.txt
 ```
 
 You will then need to create a secrets setting file at `config/settings/secret.py`, copy the 
