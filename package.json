@@ -38,7 +38,9 @@
     "serve:assets": "gulp",
     "serve": "run-p serve:site serve:assets",
     "build:assets": "gulp build",
+    "build:static": "./manage.py collectstatic --noinput",
     "build": "build:assets",
-    "test": "pytest"
+    "test:pytest": "pytest",
+    "test": "run-s build:static test:pytest"
   }
 }
