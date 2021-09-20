@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig host="ssh.eu.pythonanywhere.com" id="4d67e64b-c848-4cab-a5a4-eca49c237ab5" keyPath="$PROJECT_DIR$/../.ssh/id_rsa" port="22" nameFormat="DESCRIPTIVE" username="reprohacks" />
+    </configs>
+  </component>
+</project>

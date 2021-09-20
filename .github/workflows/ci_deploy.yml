@@ -1,0 +1,46 @@
+# Runs frontend, backend, integration testing and deploy to the live site
+name: CI
+on:
+  push:
+    branches:
+      - 'master'
+      - 'dev'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          auto-activate-base: false
+          python-version: "3.8"
+      - name: Install python dependencies
+        run: pip install -r requirements/local.txt
+      - name: Use Node.js v14
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Install npm packages
+        run: npm install
+      - name: Run test
+        run: npm run test
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - name: Deploy to live server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: "cd reprohack_site && ./deploy.sh"

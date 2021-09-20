@@ -1,0 +1,371 @@
+@import 'varriable.scss';
+@import 'mixins.scss';
+@import 'extend';
+@import 'responsive.scss';
+@import 'reset';
+@import 'elements.scss';
+@import 'header';
+@import 'btn';
+@import 'section_title';
+@import 'slick-nav.scss';
+@import 'timeline.scss';
+
+
+
+
+// slider
+@import 'slider';
+
+// about//
+// @import 'about';
+
+// footer
+@import 'footer';
+
+// bradcam
+@import 'bradcam';
+
+// latest_blog
+// @import 'latest_blog';
+
+// nesletter
+// @import 'nesletter';
+// faq
+@import 'faq';
+
+// bradcam
+@import 'coures';
+// bradcam
+@import 'team';
+// bradcam
+// // // @import 'course_details';
+
+// bradcam
+@import 'testmonial';
+// bradcam
+@import 'popular_courses';
+
+
+
+
+// other pages default
+
+// contact
+@import 'contact';
+
+
+
+// blog
+// @import 'blog';
+
+
+// blog part
+// @import 'blog_part';
+
+// header
+
+
+
+// elements
+
+
+
+// project specific CSS goes here
+
+////////////////////////////////
+//Variables//
+////////////////////////////////
+
+// Alert colors
+
+$white: #fff;
+$mint-green: #d6e9c6;
+$black: #000;
+$pink: #f2dede;
+$dark-pink: #eed3d7;
+$red: #b94a48;
+
+////////////////////////////////
+//Alerts//
+////////////////////////////////
+
+// bootstrap alert CSS, translated to the django-standard levels of
+// debug, info, success, warning, error
+
+.alert-debug {
+  background-color: $white;
+  border-color: $mint-green;
+  color: $black;
+}
+
+.alert-error {
+  background-color: $pink;
+  border-color: $dark-pink;
+  color: $red;
+}
+
+strong {
+  font-weight: bold;
+}
+
+blockquote {
+  padding: 30px 50px 30px 30px;
+  background: #f9f9ff;
+  border-left: 2px solid $primary;
+  font-style: italic;
+  font-size: 1.5em;
+}
+
+.detail_header {
+  font-weight: bold;
+  margin-bottom: 0.3em;
+  font-size: 1.1em;
+}
+
+.detail_text {
+  margin-bottom: 2em;
+  margin-left: 1em;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  blockquote {
+    font-size: 1em;
+  }
+
+  h1 {
+    font-weight: 700;
+  }
+
+  h2 {
+    font-weight: 600;
+  }
+
+  h3 {
+    font-weight: 500;
+  }
+}
+
+.header_header {
+  font-weight: bold;
+  margin-bottom: 0.3em;
+  font-size: 1.15em;
+}
+
+.header_text {
+  font-size: 1.1em;
+  margin-bottom: 0.3em;
+}
+
+.header_italic {
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+  margin-top: 0.4rem;
+  font-style: italic;
+}
+
+
+.login-txt {
+  color: #BC9321 !important;
+  font-size: 1rem !important;
+}
+
+.login-txt-nav {
+  padding-top: 0.5rem;
+  text-transform: lowercase;
+  font-size: 1.5rem !important;
+  font-weight: 600;
+}
+
+/*
+ul li {
+        position: relative;
+        padding-left: 30px;
+        line-height: 1.82em !important;
+        &:before {
+            content: "";
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border: 3px solid $primary;
+            background: $white;
+            top: 4px;
+            left: 0;
+            border-radius: 50%;
+        }
+    }
+
+The default theme overrides the standard li style so we have to override it again for the
+correct bootstrap pagination styling
+ */
+.pagination {
+  li {
+    padding-left: 0px;
+
+    &:before {
+      content: none;
+
+    }
+  }
+}
+
+.card {
+  margin-bottom: 0.6rem !important;
+  border-radius: 0.5rem;
+  box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.2);
+
+  .button-wrap {
+    margin-top: 2rem;
+    text-align: center;
+  }
+}
+
+.sponsors {
+  padding: 1rem 0.6rem;
+}
+
+
+.container-scores {
+  width: 100%;
+  /* Full width */
+  background-color: $gray-color1;
+  /* Grey background */
+  border-radius: 5px;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.scores {
+  text-align: right;
+  /* Right-align text */
+  padding-top: 10px;
+  /* Add top padding */
+  padding-bottom: 10px;
+  /* Add bottom padding */
+  color: white;
+  /* White text color */
+  background-color: #04AA6D;
+  border-radius: 5px;
+  padding-right: 10px;
+  margin-bottom: 15px;
+}
+
+pre {
+  background-color: $reprohack-purple-transp;
+  border-color: $reprohack-purple;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  padding: 2em;
+
+}
+
+
+label.django-toggle-switch+label.custom-control-label::before {
+  border: none;
+  background-color: transparent;
+}
+
+
+
+.custom-control-input:checked~.custom-control-label::before {
+  color: #fff;
+  border-color: $reprohack-green-dark;
+  background-color: $reprohack-green-light;
+}
+
+.markdownx-preview {
+  background-color: $markdownx-preview-bg;
+  padding: 1em;
+  border-radius: 0.5rem;
+}
+
+.django-toggle-switch-success input:checked+.django-toggle-switch-slider,
+input:checked+.django-toggle-switch-slider {
+  background-color: $reprohack-green-light !important;
+}
+
+.md-large-box {
+  height: 26rem !important;
+}
+
+.md-medium-box {
+  height: 18rem;
+}
+
+.md-small-box {
+  height: 12rem;
+}
+
+.badge-primary {
+  color: $primary-color;
+  background-color: $primary-color-light;
+  border: 1px solid $primary-color;
+  padding: 0.4rem;
+
+  &:hover {
+    background: $primary-color !important;
+    color: #fff !important;
+    border: 1px solid $primary-color;
+  }
+
+  &:active:focus {
+    background: $primary-color !important;
+    color: $primary-color-light !important;
+    border: 1px solid $primary-color;
+  }
+}
+
+/* MAP STYLES */
+
+.leaflet-pin {
+  opacity: 0.75;
+  z-index: 99;
+}
+
+.info {
+  padding: 6px 8px;
+  font-family: $font2;
+  font-size: 1rem;
+  background: white;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+
+  .circle {
+    line-height: 1.4rem;
+    border-radius: 50%;
+  }
+}
+
+.info h4 {
+  margin: 0 0 5px;
+  color: #777;
+}
+
+.legend {
+  line-height: 1.4rem;
+  color: #555;
+
+}
+
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7;
+}
+
+.leaflet-popup-content {
+  font-family: $font2;
+
+  a {
+    font-size: 1.3rem;
+    color: $reprohack-purple;
+    font-family: $font1;
+  }
+}

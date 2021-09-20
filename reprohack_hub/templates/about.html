@@ -1,0 +1,275 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- bradcam_area_start -->
+<div class="bradcam_area breadcam_bg overlay2">
+  <h1>About</h1>
+</div>
+<!-- bradcam_area_end -->
+<div class="whole-wrap">
+  <div class="container box_1170">
+    <div class="section-top-border">
+      <!-- our_team_member_start -->
+      <h1>ReproHack Team</h1>
+      <div class="our_team_member">
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-3 col-md-6 col-lg-3">
+              <div class="single_team">
+                <div class="thumb">
+                  <img src={% static "images/team/flor.jpeg" %} alt="">
+                  <div class="social_link">
+                    <a href="https://twitter.com/cantoflor_87?lang=en"><i class="fa fa-twitter"></i></a>
+                  </div>
+                </div>
+                <div class="master_name text-center">
+                  <h3>Florencia D'Andrea</h3>
+                  <p>University of British Columbia</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-lg-3">
+              <div class="single_team">
+                <div class="thumb">
+                  <img src={% static "images/team/Daniela.jpeg" %} alt="">
+                  <div class="social_link">
+                    <a href="https://twitter.com/dgawehns"><i class="fa fa-twitter"></i></a>
+                  </div>
+                </div>
+                <div class="master_name text-center">
+                  <h3>Daniela Gawehns</h3>
+                  <p>Leiden University</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-lg-3">
+              <div class="single_team">
+                <div class="thumb">
+                  <img src={% static "images/team/anna_krystalli.jpg" %} alt="">
+                  <div class="social_link">
+                    <a href="https://twitter.com/annakrystalli"><i class="fa fa-twitter"></i></a>
+                  </div>
+                </div>
+                <div class="master_name text-center">
+                  <h3>Anna Krystalli</h3>
+                  <p>University of Sheffield</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-lg-3">
+              <div class="single_team">
+                <div class="thumb">
+                  <img src={% static "images/team/linda.jpeg" %} alt="">
+                  <div class="social_link">
+                    <a href="https://twitter.com/lindanab1"><i class="fa fa-twitter"></i></a>
+                  </div>
+                </div>
+                <div class="master_name text-center">
+                  <h3>Lind Nab</h3>
+                  <p>LUMC Leiden</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-lg-3">
+              <div class="single_team">
+                <div class="thumb">
+                  <img src={% static "images/team/ricarda.jpeg" %} alt="">
+                  <div class="social_link">
+                    <a href="https://twitter.com/RProppert"><i class="fa fa-twitter"></i></a>
+                  </div>
+                </div>
+                <div class="master_name text-center">
+                  <h3>Ricarda Proppert</h3>
+                  <p>Leiden University</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-lg-3">
+              <div class="single_team">
+                <div class="thumb">
+                  <img src={% static "images/team/Paloma_photo.jpg" %} alt="">
+                  <div class="social_link">
+                    <a href="https://twitter.com/palolili23?lang=en"><i class="fa fa-twitter"></i></a>
+                  </div>
+                </div>
+                <div class="master_name text-center">
+                  <h3>Paloma Rojas Saunero</h3>
+                  <p>Erasmus MC</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- our_team_member_end -->
+      <!-- timeline-area_start -->
+      <h1>ReproHack History</h1>
+      <div class="timeline">
+
+        <div class="event">
+
+          <h3> ReproHacks at OpenCon satellite events </h3>
+
+          ReproHacks started out as part of <a href="https://rse.shef.ac.uk/blog/opencon-london/"> OpenCon satellite
+            events</a> (Berlin
+          2016, London 2017) and inspired by Owen Petchey's <a href="https://github.com/opetchey/RREEBES"> Reproducible
+            Research in Ecology, Evolution, Behaviour, and Environmental Studies</a> course, where students attempt to
+          recreate published results from raw data, over a few
+          months and multiple sessions.
+
+          We only had one day for our ReproHacks though, so we set the challenge to be, to <strong>reproduce a paper
+            from published data AND code</strong>.
+
+        </div>
+
+        <div class="event">
+          <h3> Software Sustainability Institute Fellowship </h3>
+
+          After a short hiatus and as calls for reproducibility increased, the
+          project was resurrected as part of Anna Krystalli's <a
+            href=https://www.software.ac.uk/blog/2019-04-11-announcing-2019-software-sustainability-institute-fellows>
+            2019 Software Sustainability Institute Fellowship </a> which supported the running of a series of
+            ReproHacks, beginning with a session at the <a
+            href=https://software.ac.uk/blog/2019-08-07-reprohacking-carpentryconnect-manchester-2019> CarpentryConnect
+            Manchester</a>. </div> <div class="event">
+            <h3> Leiden ReproHack </h3>
+
+            In the meantime, interest in running such events was picking up with the most comprehensive effort to date
+            being made by a group of RLadies in the Netherlands around a <a
+              href=https://www.universiteitleiden.nl/agenda/2019/11/reprohack-nl> flagship ReproHack at Leiden
+              University</a>. The group had full support of their institution and with much enthusiasm managed to run a
+              highly successful event that garnered the biggest crowd at a ReproHack to date! <br>
+
+              <img src="/static/images/ReprohackPickPapers.jpg" alt="Choosing papers" width=40%><img
+                src="/static/images/Hackathon.jpg" alt="Leiden Reprohack" width=60%>
+        </div>
+
+        <div class="event">
+          <h3> ReproHack Team formation </h3>
+
+          The succesful Leiden event also lead to the <strong>formation of the core team around the project </strong>
+          with the aim of providing support and developing infrastructure to support others in running their own
+          ReproHacks.
+
+          <img src="/static/images/reprohack_core_team.png" alt="ReproHack Core Team" width=100%>
+
+        </div>
+
+        <div class="event">
+          <h3> Support from the N8 CIR & ReproHack Northern Tour </h3>
+
+          <div class="row">
+            <div class="col-xl-3 col-md-6 col-lg-3 col-sm-12">
+              <img src="/static/images/reprohack-webad_N8-01.png" alt="N8 Northern Tour" width=95%>
+            </div>
+            <div class="col-xl-9 col-md-6 col-lg-9 col-sm-12">
+              In early 2020, the project received support from the <a href="https://n8cir.org.uk/news/reprohacks/"> N8
+                Centre of Excellence in Computationally Intensive Research (N8 CIR)</a> to run a <a
+                href="https://n8cir.org.uk/"> <strong>series of ReproHacks across 5 of N8 partner Universities
+                  throughout the North of England </strong> </a>.
+
+              This was a great opportunity to introduce the ReproHack practice to participants across institutions and
+              build interest around the project. Sadly, however, the last events coincided with the start of the COVID19
+              pandemic and the Manchester event had to be abruptly cancelled.
+            </div>
+          </div>
+        </div>
+        <div class="event">
+          <h3> Remote ReproHack </h3>
+
+          <p>The disappointment of having to cut the N8 Northern Tour short though only pushed us to work on an idea
+            we'd been discussing from the start of the project, <strong>running a <a
+                href='https://n8cir.org.uk/events/remote-reprohack/'>remote ReproHack!</a></strong>
+          </p>
+          <p>The event offered us the opportunity to make up for the lost event, but the getting rid of the location
+            constraint allowed us to open the event up to more participants and invite exciting speakers to complement
+            the practical element of the day.
+          </p>
+          <p>Despite the timezone differences, we were <strong>joined by participants and speakers from across Europe
+              and even as far as the US and Japan</strong> and proved that not only would a remote model work but that
+            from some perspectives could even offer a better experience.
+          </p>
+          <img src="/static/images/remote_reprohack_flyer.png" alt="Remote ReproHack" width=80%>
+
+        </div>
+        <div class="event">
+          <h3> ReproHack at LatinR - The first ReproHack in Spanish! </h3>
+          <p>Following the success of the Remote ReproHack and now having a blueprint for a succesfull remote ReproHack
+            event, the next stop was <strong> <a href='https://latin-r.com/blog/reprohack-en'>LatinR 2020</a>, where
+              core team member Florencia D'Andrea took a lead on an
+              event run exclusively in Spanish!</strong>
+          </p>
+          <p>Apart from being another fun and productive event with more <a
+              href='https://www.youtube.com/playlist?list=PL9-E3cL2KgKliN3DFBWfUAUNXco_NOAMQ'>exciting contributions
+              from a variety of speakers</a>, it was also the first example of <a
+              href='https://sheffield-university.shinyapps.io/latinr2020-reprohack-es/'> bilingual materials </a> for
+            running the event.
+          </p>
+          <img src="/static/images/latinR_flyer.png" alt="Remote ReproHack" width=80%>
+
+        </div>
+        <div class="event">
+          <h3> Leiden ReproHack wins the Open Initiatives Trophy at Open Science Festival NL! </h3>
+          <div class="row">
+            <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12">
+              <p>In February 2021, the Leiden ReproHack event went on to win the <strong> <a
+                    href='https://www.universiteitleiden.nl/open-science-community-leiden/news/reprohack-award'>Open
+                    Initiatives Trophy at Open Science Festival NL!</strong>
+              </p>
+              <p>
+                Core Team member <strong>Daniela Gawehns</strong> and one of the organisers of Leiden ReproHack travel
+                to receive the trophy and the €500 prize.
+              </p>
+              <img src="/static/images/daniella_trophy.jpeg" alt="Daniella accepts Open Initiatives trophy"
+                width=100% />
+            </div>
+            <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12">
+              <blockquote class="twitter-tweet">
+                <p lang="en" dir="ltr"><a
+                    href="https://twitter.com/hashtag/OSF2021NL?src=hash&amp;ref_src=twsrc%5Etfw">#OSF2021NL</a>
+                  <br><br>🏆🎇🍾<br><br>The winner of the Open Initiatives Trophy is <a
+                    href="https://twitter.com/dgawehns?ref_src=twsrc%5Etfw">@dgawehns</a> van <a
+                    href="https://twitter.com/ReproHack?ref_src=twsrc%5Etfw">@ReproHack</a> NL<br><br>Congratulations,
+                  also to the runners up <a
+                    href="https://twitter.com/egonwillighagen?ref_src=twsrc%5Etfw">@egonwillighagen</a> and <a
+                    href="https://twitter.com/OSCEindhoven?ref_src=twsrc%5Etfw">@OSCEindhoven</a> <a
+                    href="https://t.co/s6ukCYdxPa">pic.twitter.com/s6ukCYdxPa</a></p>&mdash; Open Science Festival NL
+                (@osf2021nl) <a
+                  href="https://twitter.com/osf2021nl/status/1359888755054813189?ref_src=twsrc%5Etfw">February 11,
+                  2021</a>
+              </blockquote>
+              <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+
+          </div>
+
+        </div>
+        <div class="event">
+          <h3> ReproHack Hub Launch </h3>
+          <p>If you are reading this, it means we've <strong>hit our biggest milestone yet, the development and launch
+              of the ReproHack hub!</strong> We've designed it as a place where the community can coordinate all
+            ReproHack activities. From here, authors will be able to submit papers for review at any time, organisers
+            will be able to register their events though a simple form and partcipants will be able to submit their
+            reviews!
+          </p>
+
+          <p>We hope this will facilitate and help normalise the activity of research code reviewing to the point
+            where
+            one day, it will be so embedded in research culture that we will be obsolete. Until then though, we
+            encourage all those interested in practicing reproducible research to use
+            the hub to organise events, submit papers and submit your reviews. For any feedback on the hub as well as
+            bug reports, feel free to use our <a href='https://github.com/reprohack/reprohack_site/issues'>issue</a>
+            tracker on GitHub or get in touch with us via <a
+              href='https://reprohack-autoinvite.herokuapp.com/'>slack</a>.
+          </p>
+
+        </div>
+      </div>
+      <!-- timeline-area_end -->
+
+    </div>
+  </div>
+</div>
+{% endblock %}

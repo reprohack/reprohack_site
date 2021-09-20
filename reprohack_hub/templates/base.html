@@ -8,84 +8,43 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <![endif]-->
-
-    <link rel="icon" href="{% static 'reprohack/images/reprohack_favicons/favicon.ico' %}">
+    <link rel="icon" href="{% static 'images/reprohack_favicons/favicon.ico' %}">
 
     {% block css %}
-    
-    <!-- Latest compiled and minified Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
+
 
     <!-- Your stuff: Third-party CSS libraries go here -->
-    <link rel='stylesheet' href="{% static 'reprohack/css/owl.carousel.min.css'%}">
-    <link rel='stylesheet' href="{% static 'reprohack/css/magnific-popup.css'%}">
-    <link rel='stylesheet' href="{% static 'reprohack/css/font-awesome.min.css'%}">
-    <link rel="stylesheet" href="{% static 'reprohack/leaflet/leaflet.awesome-markers.css' %}%">
-    <link rel='stylesheet' href="{% static 'reprohack/css/themify-icons.css'%}">
-    <link rel='stylesheet' href="{% static 'reprohack/css/nice-select.css'%}">
-    <link rel='stylesheet' href="{% static 'reprohack/css/flaticon.css'%}">
-    <link rel='stylesheet' href="{% static 'reprohack/css/gijgo.css'%}">
-    <link rel='stylesheet' href="{% static 'reprohack/css/animate.css'%}">
-    <link rel='stylesheet' href="{% static 'reprohack/css/slicknav.css'%}">
+      <link rel='stylesheet' href="{% static 'vendor/node_modules/bootstrap/dist/css/bootstrap.min.css'%}">
+      <link rel='stylesheet' href="{% static 'vendor/node_modules/bootstrap-icons/font/bootstrap-icons.css'%}">
+      <link rel='stylesheet' href="{% static 'vendor/node_modules/leaflet/dist/leaflet.css'%}">
+      <link rel='stylesheet' href="{% static 'vendor/node_modules/leaflet.awesome-markers/dist/leaflet.awesome-markers.css'%}">
+      <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
+    <link rel='stylesheet' href="{% static 'vendor/css/owl.carousel.min.css'%}">
+    <link rel='stylesheet' href="{% static 'vendor/css/magnific-popup.css'%}">
+    <link rel='stylesheet' href="{% static 'vendor/css/font-awesome.min.css'%}">
+    <link rel='stylesheet' href="{% static 'vendor/css/themify-icons.css'%}">
+    <link rel='stylesheet' href="{% static 'vendor/css/nice-select.css'%}">
+    <link rel='stylesheet' href="{% static 'vendor/css/flaticon.css'%}">
+    <link rel='stylesheet' href="{% static 'vendor/css/gijgo.css'%}">
+    <link rel='stylesheet' href="{% static 'vendor/css/animate.css'%}">
+    <link rel='stylesheet' href="{% static 'vendor/css/slicknav.css'%}">
+
     {% compress css %}
     <!-- This file stores project-specific CSS -->
-    <link href="{% static 'reprohack/css/style.css'%}" rel='stylesheet'>
-    
-    <link href="{% static 'css/project.css' %}" rel="stylesheet">
-    
+    <link href="{% static 'css/style.css'%}" rel='stylesheet'>
+
     {% endcompress %}
     {% endblock %}
+
+  <script src="{% static 'vendor/node_modules/jquery/dist/jquery.min.js' %}"></script>
+      <script src="{% static 'vendor/node_modules/bootstrap/dist/js/bootstrap.min.js' %}"></script>
 
   </head>
 
   <body>
+      {% include 'navbar.html' %}
 
-    <div class="mb-1">
-      <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="{% url 'home' %}">ReproHack Hub</a>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'about' %}">About</a>
-            </li>
-            {% if request.user.is_authenticated %}
-              <li class="nav-item">
-                {# URL provided by django-allauth/account/urls.py #}
-                <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
-              </li>
-              <li class="nav-item">
-                {# URL provided by django-allauth/account/urls.py #}
-                <a class="nav-link" href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
-              </li>
-            {% else %}
-              <li class="nav-item">
-                {# URL provided by django-allauth/account/urls.py #}
-                <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>
-              </li>
-              <li class="nav-item">
-                {# URL provided by django-allauth/account/urls.py #}
-                <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% trans "Sign In" %}</a>
-              </li>
-            {% endif %}
-          </ul>
-        </div>
-      </nav>
-
-    </div>
-
-    <div class="container">
+{#    <div class="container">#}
 
       {% if messages %}
           {% for message in messages %}
@@ -97,7 +56,12 @@
         <p>Use this document as a way to quick start any new project.</p>
       {% endblock content %}
 
-    </div> <!-- /container -->
+
+{#    </div>#}
+
+    <!-- footer -->
+    {% include 'footer.html' %}
+    <!-- footer -->
 
     {% block modal %}{% endblock modal %}
 
@@ -105,50 +69,41 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     {% block javascript %}
-      
-      <!-- Bootstrap JS and its dependencies-->
-      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+      <!-- Bootstrap JS and its dependencies-->
+
+      <script src="{% static 'vendor/node_modules/@popperjs/core/dist/umd/popper.min.js' %}"></script>
       <!-- Your stuff: Third-party javascript libraries go here -->
-      <script src="{% static 'reprohack/js/vendor/modernizr-3.5.0.min.js' %}"></script>
-      <script src="{% static 'reprohack/js/owl.carousel.min.js' %}"></script>
-      <script src="{% static 'reprohack/js/isotope.pkgd.min.js' %}"></script>
-      <script src="{% static 'reprohack/js/ajax-form.js' %}"></script>
-      <script src="{% static 'reprohack/js/waypoints.min.js' %}"></script>
-      <script src="{% static 'reprohack/js/jquery.counterup.min.js' %}"></script>
-      <script src="{% static 'reprohack/js/imagesloaded.pkgd.min.js' %}"></script>
-      <script src="{% static 'reprohack/js/scrollIt.js' %}"></script>
-      <script src="{% static 'reprohack/js/jquery.scrollUp.min.js' %}"></script>
-      <script src="{% static 'reprohack/js/wow.min.js' %}"></script>
-      <script src="{% static 'reprohack/js/nice-select.min.js' %}"></script>
-      <script src="{% static 'reprohack/js/jquery.slicknav.min.js' %}"></script>
-      <script src="{% static 'reprohack/js/jquery.magnific-popup.min.js' %}"></script>
-      <script src="{% static 'reprohack/js/plugins.js' %}"></script>
-      <script src="{% static 'reprohack/js/gijgo.min.js' %}"></script>
-      <script src="{% static 'reprohack/leaflet/leaflet.awesome-markers.js' %}"></script>
+      <script src="{% static 'vendor/js/modernizr-3.5.0.min.js' %}"></script>
+      <script src="{% static 'vendor/js/owl.carousel.min.js' %}"></script>
+      <script src="{% static 'vendor/js/isotope.pkgd.min.js' %}"></script>
+      <script src="{% static 'vendor/js/ajax-form.js' %}"></script>
+{#      <script src="{% static 'vendor/js/waypoints.min.js' %}"></script>#}
+      <script src="{% static 'vendor/js/jquery.counterup.min.js' %}"></script>
+      <script src="{% static 'vendor/js/imagesloaded.pkgd.min.js' %}"></script>
+      <script src="{% static 'vendor/js/scrollIt.js' %}"></script>
+      <script src="{% static 'vendor/js/jquery.scrollUp.min.js' %}"></script>
+      <script src="{% static 'vendor/js/wow.min.js' %}"></script>
+      <script src="{% static 'vendor/js/nice-select.min.js' %}"></script>
+      <script src="{% static 'vendor/js/jquery.slicknav.min.js' %}"></script>
+      <script src="{% static 'vendor/js/jquery.magnific-popup.min.js' %}"></script>
+      <script src="{% static 'vendor/js/plugins.js' %}"></script>
+      <script src="{% static 'vendor/js/gijgo.min.js' %}"></script>
+      <script src="{% static 'vendor/node_modules/leaflet/dist/leaflet.js' %}"></script>
+      <script src="{% static 'vendor/node_modules/leaflet.awesome-markers/dist/leaflet.awesome-markers.js' %}"></script>
+      <script src="{% static 'vendor/node_modules/@yaireo/tagify/dist/tagify.min.js'%}"></script>
+      <link rel="stylesheet" href="{% static 'vendor/node_modules/@yaireo/tagify/dist/tagify.css'%}">
+
 
       <!--contact js-->
-      <script src="{% static 'reprohack/js/contact.js' %}"></script>
-      <script src="{% static 'reprohack/js/jquery.ajaxchimp.min.js' %}"></script>
-      <script src="{% static 'reprohack/js/jquery.form.js' %}"></script>
-      <script src="{% static 'reprohack/js/jquery.validate.min.js' %}"></script>
-      <script src="{% static 'reprohack/js/mail-script.js' %}"></script>
-      
+      <script src="{% static 'vendor/js/contact.js' %}"></script>
+      <script src="{% static 'vendor/js/jquery.ajaxchimp.min.js' %}"></script>
+      <script src="{% static 'vendor/js/jquery.form.js' %}"></script>
+      <script src="{% static 'vendor/js/jquery.validate.min.js' %}"></script>
+      <script src="{% static 'vendor/js/mail-script.js' %}"></script>
 
-      <!-- place project specific Javascript in this file -->
-      {% compress js %}
-      <script src="{% static 'js/project.js' %}"></script>
-
-      <script src="{% static 'reprohack/js/main.js' %}"></script>
-      <script> $(document).ready(function () {
-              $('.dateinput').datepicker({ format: "yyyy/mm/dd" });
-          }); 
-      </script>
-      {% endcompress %}
+      <script src="{% static 'js/main.js' %}"></script>
 
     {% endblock javascript %}
   </body>
 </html>
- 

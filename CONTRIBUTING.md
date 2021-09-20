@@ -1,6 +1,6 @@
 # Contributing to reprohack_site
 
-This outlines how to propose a change to reprohack_site. 
+This outlines how to propose a change to reprohack_site.
 
 ### Fixing typos
 
@@ -11,7 +11,7 @@ the GitHub web interface, so long as the changes are made in the _source_ file.
 
 Before you make a substantial pull request, you should always file an issue and
 make sure someone from the team agrees that it’s a problem. If you’ve found a
-bug, create an associated issue and illustrate the bug with a minimal 
+bug, create an associated issue and illustrate the bug with a minimal
 demo.
 
 ### Pull request process
@@ -72,5 +72,3 @@ You don't need to submit a new pull request when you make a change in response t
 Please note that the reprohack_site project is released with a
 [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this
 project you agree to abide by its terms.
-
-

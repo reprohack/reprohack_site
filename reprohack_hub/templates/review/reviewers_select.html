@@ -1,0 +1,166 @@
+{% load static i18n compress %}
+<div>
+  <input type="hidden" name="{{ widget.name }}" id="{{ widget.name }}" value="{{ widget.value }}"/>
+  <div id="reviewEditor" class="mb-2"></div>
+  <div class="input-group mb-2">
+
+    <input class="form-control mr-2" type="text" name="reviewWidgetSearch" id="reviewWidgetSearch" placeholder="Type username here and click add to add a reviewer" style="height: 100%"/>
+
+      <button class="btn btn-primary" style="height: 42px" type="button" id="reviewWidgetSearchAddBtn"><i class='bi-person-plus-fill'></i> Add a reviewer</button>
+
+  </div>
+</div>
+
+
+<script>
+
+  function ReviewWidget(inputId, containerId, searchInputId, addUserBtnId) {
+    let submitterUsername = "{{ user.username }}";
+    let inputElem = $(inputId);
+    let searchElem = $(searchInputId);
+    let addBtnElem = $(addUserBtnId);
+    let data = []
+    let reviewEditElem = $(containerId);
+    let self = this;
+    let tagify = new Tagify(document.querySelector(searchInputId), {whitelist:[], enforceWhitelist: true});
+    let controller = null;
+
+    try{
+      let initialValue = inputElem.val();
+      console.log(initialValue);
+
+      data = JSON.parse(initialValue);
+    }catch (e){
+      data = []
+    }
+
+
+
+    tagify.on('input', onInput);
+
+    addBtnElem.on("click", function (e){
+      let outStr = searchElem.val();
+      if(outStr){
+        let addList = JSON.parse(outStr);
+        for(let i in addList){
+          let username = addList[i].value;
+          self.addUser(username);
+        }
+        searchElem.val("");
+        self.render();
+      }
+      e.preventDefault();
+    });
+
+    function onInput(e) {
+      let value = e.detail.value;
+      tagify.whitelist = null; // reset the whitelist
+
+      // https://developer.mozilla.org/en-US/docs/Web/API/AbortController/abort
+      controller && controller.abort();
+      controller = new AbortController();
+
+      // show loading animation and hide the suggestions dropdown
+      tagify.loading(true).dropdown.hide();
+
+      fetch('/user_search?username=' + value, {signal: controller.signal})
+              .then(RES => RES.json())
+              .then(function (newWhitelist) {
+                tagify.whitelist = newWhitelist // update inwhitelist Array in-place
+                tagify.loading(false).dropdown.show(value) // render the suggestions dropdown
+              });
+    }
+
+
+    this.makeUserLead = function (username) {
+      for (let i in data) {
+        data[i].lead = data[i].username === username;
+      }
+
+      self.serializeData();
+      self.render();
+    }
+
+    this.addUser = function(username, isLead = false){
+      for(let i in data){
+        if(data[i].username === username){
+          return
+        }
+      }
+
+      // If there's no username
+      data.push({
+          username: username,
+          lead: isLead,
+        })
+
+      self.serializeData();
+      self.render();
+    }
+
+    this.removeUser = function (username) {
+      for (let i in data) {
+        if (data[i].username === username) {
+          data.splice(i, 1);
+          break;
+        }
+      }
+
+      self.serializeData();
+      self.render();
+    }
+
+    this.serializeData = function () {
+      inputElem.val(JSON.stringify(data))
+    }
+
+    this.render = function () {
+      //Clear first
+      reviewEditElem.html("");
+      let ul = $("<div class='list-group'></div>");
+      reviewEditElem.append(ul);
+      for (let i in data) {
+        let user = data[i];
+        let li = $("<div class='list-group-item d-flex'></div>");
+        li.html(`<div class="mr-auto">${user.username}</div>`);
+
+        if (user.lead) {
+          let leadBtn = $("<button class='btn btn-success mr-2' disabled title='Lead reviewer'><i class='bi-person-check-fill'></i></button>");
+          li.append(leadBtn);
+        }
+        else{
+          let makeLeadBtn = $("<button class='btn btn-outline-primary mr-2' title='Make lead reviewer'><i class='bi-person-check'></i></button>");
+          makeLeadBtn.on("click", function (e) {
+            self.makeUserLead(user.username);
+            e.preventDefault();
+          })
+          li.append(makeLeadBtn);
+        }
+
+
+
+        let removeBtn = $("<button class='btn btn-danger' title='Remove reviewer'><i class='bi-person-x-fill'></i></button>");
+        if(user.username === submitterUsername){
+          removeBtn.prop("disabled", true);
+          removeBtn.prop("title", "Cannot remove yourself.");
+        }
+        removeBtn.on("click", function (e) {
+          self.removeUser(user.username)
+          e.preventDefault();
+        });
+
+        li.append(removeBtn);
+        ul.append(li);
+      }
+
+    }
+
+    self.render();
+    {#self.addUser(submitterUsername, true);#}
+  }
+
+  $(document).ready(function () {
+    let reviewWidget = new ReviewWidget("#{{ widget.name }}", "#reviewEditor", "#reviewWidgetSearch", "#reviewWidgetSearchAddBtn");
+
+  })
+</script>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="f2f24129-ba21-497c-bbfd-618c82dd11a1" name="reprohack" url="http://reprohacks.eu.pythonanywhere.com ">
+        <fileTransfer rootFolder="/home/reprohacks/reprohack_site" accessType="SFTP" host="ssh.eu.pythonanywhere.com" port="22" sshConfigId="4d67e64b-c848-4cab-a5a4-eca49c237ab5" sshConfig="reprohacks@ssh.eu.pythonanywhere.com:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
