@@ -58,6 +58,7 @@ class EventFactory(DjangoModelFactory):
 
 class PaperFactory(DjangoModelFactory):
     title = Sequence(lambda n: "Paper Title: #%s" % n)
+    submitter = SubFactory(UserFactory)
 
     class Meta:
         model = Paper
