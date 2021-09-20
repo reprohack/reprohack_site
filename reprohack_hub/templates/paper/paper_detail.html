@@ -62,7 +62,11 @@
           <br>
           <h3>Associated event</h3>
           <div class="detail_text">
+            {% if paper.event %}
             <a href="{% url 'event_detail' pk=paper.event.pk %}"> {{ paper.event }}
+              {% else %}
+              No associated event.
+              {% endif %}
           </div>
           {% if reviews %}
           <br>

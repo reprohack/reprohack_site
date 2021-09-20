@@ -40,7 +40,7 @@ class TestUserUpdateView:
 
         view.request = request
 
-        assert view.get_success_url() == f"/users/redirect/"
+        assert view.get_success_url() == f"/user_redirect/"
 
     def test_get_object(self, user: User, rf: RequestFactory):
         view = UserUpdateView()

@@ -123,7 +123,7 @@ class PaperCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.user = self.request.user
+        self.object.submitter = self.request.user
         self.object.save()
         form.save_m2m()
         print(form.errors)
@@ -438,7 +438,8 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     template_name = "registration/user_update.html"
 
     def get_success_url(self):
-        return reverse("user_redirect")
+        res = reverse("user_redirect")
+        return res
 
     def get_object(self):
         return User.objects.get(pk=self.request.user.pk)
@@ -456,5 +457,5 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 class UserRedirectView(LoginRequiredMixin, RedirectView):
     permanent = False
 
-    def get_redirect_url(self):
+    def get_redirect_url(self, *args, **kwargs):
         return reverse("user_detail", kwargs={"username": self.request.user.username})

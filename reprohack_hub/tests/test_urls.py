@@ -21,5 +21,5 @@ def test_update(user: User):
 
 
 def test_redirect():
-    assert reverse("user_redirect") == "/users/redirect/"
+    assert reverse("user_redirect") == "/user_redirect/"
     assert resolve("/users/redirect/").view_name == "user_detail"

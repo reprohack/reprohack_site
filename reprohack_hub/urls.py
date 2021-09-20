@@ -51,11 +51,13 @@ urlpatterns = [
                                              'markdown_file': 'templates/intro-slides-hackmd-template.md'}),
          name='intro_slides_template'),
     path('signup/', UserCreateView.as_view(), name='signup'),
+    path("user_redirect/", view=UserRedirectView.as_view(), name="user_redirect"),
     path('users/<str:username>/', UserDetailView.as_view(), name='user_detail'),
     path('users/<str:username>/edit/',
          UserUpdateView.as_view(), name='user_update'),
+    path('users/<str:username>/password/', auth_views.PasswordChangeView.as_view()),
     path('password_reset_form/', auth_views.PasswordChangeView.as_view()),
-    path("users/redirect/", view=UserRedirectView.as_view(), name="user_redirect"),
+
     path("user_search", view=UserSearchEndpointView.as_view()),
     path('logout/',
          auth_views.LogoutView.as_view(
