@@ -8,7 +8,7 @@ source .virtualenv/bin/activate
 git pull
 
 # Make sure virtualenv is updated with an changes to dependencies
-pip install -r requirements/production.txt
+pip install -r requirements/pythonanywhere.txt
 
 # Make sure the database is updated
 ./manage.py migrate
