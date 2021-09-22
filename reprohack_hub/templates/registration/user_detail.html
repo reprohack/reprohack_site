@@ -47,13 +47,32 @@
       </div>
       <div class="col-md-3">
         <h4> Papers </h4>
+        <ul>
+          {% for paper in papers %}
+            <li><a href="{{ paper.get_absolute_url }}">{{ paper.title }}</a></li>
+        {% endfor %}
+        </ul>
+
+
       </div>
       <div class="col-md-3">
         <h4> Reviews </h4>
+        <ul>
+          {% for review in reviews %}
+            <li><a href="{{ review.get_absolute_url }}">Review of {{ review.paper.title }}</a></li>
+        {% endfor %}
+        </ul>
+
 
       </div>
       <div class="col-md-3">
         <h4> Events </h4>
+        <ul>
+          {% for event in events %}
+            <li><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></li>
+        {% endfor %}
+        </ul>
+
       </div>
     </div>
 
