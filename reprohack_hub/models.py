@@ -261,12 +261,33 @@ class Paper(models.Model):
     is_initial_upload = models.BooleanField(default=False)
 
     @property
+    def num_reviews(self):
+        return self.reviews.count()
+
+    @property
+    def mean_reproducibility_score(self):
+
+        num_reviews = self.num_reviews
+
+        if num_reviews < 1:
+            return 0
+
+        rep_score = 0
+        for review in self.reviews.all():
+            rep_score = rep_score + review.reproducibility_rating
+
+        rep_score = rep_score/num_reviews
+
+        return rep_score
+
+
+    @property
     def is_available_for_review(self):
         return self.review_availability != self.archive
 
     def get_reviews_viewable_by_user(self, user):
         reviews_list = []
-        for review in self.review_set.all():
+        for review in self.reviews.all():
             if review.is_viewable_by_user(user):
                 reviews_list.append(review)
 
@@ -348,7 +369,7 @@ class Review(models.Model):
                                        through="PaperReviewer",
                                        through_fields=('review', 'user'),)
     #
-    paper = models.ForeignKey(Paper, on_delete=models.SET_NULL, null=True)
+    paper = models.ForeignKey(Paper, on_delete=models.SET_NULL, null=True, related_name="reviews")
     reproducibility_outcome = models.CharField(_("Did you manage to reproduce it?"),
                                                max_length=1,
                                                choices=ReproducibilityOutcomes.choices,
