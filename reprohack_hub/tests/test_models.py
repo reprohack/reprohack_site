@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import random
 from datetime import timedelta
 
 import pytest
@@ -8,6 +9,7 @@ from django.utils import timezone
 
 from reprohack_hub.models import Event, Paper, Review
 from reprohack_hub.models import User
+from reprohack_hub.tests.factories import ReviewFactory
 
 pytestmark = pytest.mark.django_db
 
@@ -42,6 +44,29 @@ def test_paper_save(user: User) -> None:
     assert str(paper) == test_title
     assert paper.get_absolute_url() == f"/paper/{paper.id}/"
 
+def test_paper_review_count(user: User):
+    """ Ensure paper outputs correct review count """
+    paper = Paper(title="Test")
+    paper.save()
+    assert paper.num_reviews == 0
+
+    for i in range(20):
+        ReviewFactory(paper=paper)
+        assert paper.num_reviews == i+1
+
+def test_mean_reproducibility_score():
+    """ Ensure paper outputs correct mean reproducibility score """
+    paper = Paper(title="Test")
+    paper.save()
+    assert paper.mean_reproducibility_score == 0
+
+    rand_rating_list = []
+
+    for i in range(20):
+        rand_rating = random.randint(0, 10)
+        rand_rating_list.append(rand_rating)
+        ReviewFactory(paper=paper, reproducibility_rating=rand_rating)
+        assert paper.mean_reproducibility_score == sum(rand_rating_list)/len(rand_rating_list)
 
 def test_review_save(user: User) -> None:
     """Test basic Paper Review save."""

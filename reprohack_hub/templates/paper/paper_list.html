@@ -22,6 +22,10 @@
               <h3><a href="{{ paper.get_absolute_url }}">{{ paper.title }}</a></h3>
               <h5>Authors: {{ paper.authors }}</h5>
               <h5>DOI: <a href="{{ paper.doi }}">{{ paper.doi }}</a></h5>
+              {% if paper.num_reviews > 0 %}
+                <h5>Number of reviews: {{ paper.num_reviews }}</h5>
+                <h5>Mean reproducibility score: {{ paper.mean_reproducibility_score | floatformat:1 }}/10</h5>
+              {% endif %}
               <h5>Submitted by <a href="{{ paper.submitter.get_absolute_url }}">{{ paper.submitter.username }}</a>
               </h5>
               <div class="detail_text">
