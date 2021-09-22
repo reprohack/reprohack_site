@@ -111,6 +111,6 @@ def test_create_review(client: Client, user: User, review: Review) -> None:
     rendered_response = response.render()
     assert review.paper.title in rendered_response.content.decode()
     # Test reviewer is now set for newly created paper review
-    assert user in review.paper.review_set.last().reviewers.all()
+    assert user in review.paper.reviews.last().reviewers.all()
     # Test reviwer still hasn't been set to initial review
     assert user not in review.reviewers.all()
