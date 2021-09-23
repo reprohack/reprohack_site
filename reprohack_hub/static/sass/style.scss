@@ -221,6 +221,11 @@ correct bootstrap pagination styling
     margin-top: 2rem;
     text-align: center;
   }
+
+  &:before {
+    content: none;
+
+  }
 }
 
 .sponsors {

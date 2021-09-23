@@ -2933,6 +2933,8 @@ correct bootstrap pagination styling
     margin-top: 32px;
     margin-top: 2rem;
     text-align: center; }
+  .card:before {
+    content: none; }
 
 .sponsors {
   padding: 16px 9.6px;
