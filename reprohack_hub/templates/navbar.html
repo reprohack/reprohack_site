@@ -24,7 +24,7 @@
                   {% if user.is_authenticated %}
                   <li class="d-block d-lg-none">
                     <a href="{{ user.get_absolute_url }}" class="login-txt-nav">
-                      <i class="flaticon-user login-txt-nav"></i>
+                      <i class="bi-person-fill"></i>
                       <p class="login-txt-nav"> {{ user.get_username }} </p>
                     </a>
                   </li>
@@ -55,7 +55,7 @@
             <div class="log_chat_area d-flex justify-content-around align-items-center">
               {% if user.is_authenticated %}
               <a href="{{ user.get_absolute_url }}" class="login-txt">
-                <i class="flaticon-user login-txt"></i>
+                <i class="bi-person-fill"></i>
                 <span>{{ user.get_username }}</span>
               </a>
               <div class="live_chat_btn">
@@ -65,7 +65,7 @@
               </div>
               {% else %}
               <a href="{% url 'signup' %}" class="login-txt">
-                <i class="flaticon-user login-txt"></i>
+                <i class="bi-person-fill"></i>
                 <span>Sign up </span>
               </a>
               <div class="live_chat_btn">
