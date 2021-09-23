@@ -67,7 +67,7 @@ class EventCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.user = self.request.user
+        self.object.creator = self.request.user
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
