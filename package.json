@@ -2,13 +2,15 @@
   "name": "reprohack_hub",
   "version": "0.1.0",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "@popperjs/core": "^2.9.2",
     "@yaireo/tagify": "^4.3.1",
     "bootstrap": "4.5.3",
     "bootstrap-icons": "^1.5.0",
     "jquery": "3.5.1",
     "leaflet": "^1.7.1",
-    "leaflet.awesome-markers": "2.0.5"
+    "leaflet.awesome-markers": "2.0.5",
+
   },
   "devDependencies": {
     "autoprefixer": "^9.4.7",
@@ -25,7 +27,8 @@
     "gulp-sass": "^4.1.0",
     "gulp-uglify-es": "^2.0.0",
     "npm-run-all": "^4.1.5",
-    "pixrem": "^5.0.0"
+    "pixrem": "^5.0.0",
+    "postcss": "^8.3.7"
   },
   "engines": {
     "node": ">=8"
