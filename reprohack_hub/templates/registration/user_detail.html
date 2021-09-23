@@ -18,12 +18,18 @@
 
         <h2><i class="bi-person-fill"></i>
           {{ user.username }}
+          {% if user.twitter %}
           <a href="https://twitter.com/{{ user.twitter }}">
-            <i class="ti-twitter-alt"></i></a>
+            <i class="fab fa-twitter"></i></a>
+          {% endif %}
+          {% if user.github %}
           <a href="https://github.com/{{ user.github }}">
-            <i class="fa fa-github"></i> </a>
+            <i class="fab fa-github"></i> </a>
+          {% endif %}
+          {% if user.orcid %}
           <a href="https://orcid.org/{{ user.orcid }}">
-            <i class="fa fa-orcid"></i> </a>
+            <i class="fab fa-orcid"></i> </a>
+          {% endif %}
         </h2>
       </div>
     </div>
@@ -66,7 +72,7 @@
         {% endif %}
       </div>
       <div class="col-md-6">
-        <h2> <i class="fa fa-clipboard"></i> Reviews </h2>
+        <h2> <i class="fas fa-clipboard-check"></i> Reviews </h2>
         {% if reviews.count is null %}
         {{ review.get_absolute_url }}
         <ul>
@@ -86,7 +92,7 @@
     <br>
     <div class="row">
       <div class="col-md-6">
-        <h2> <i class="fa fa-calendar"></i>&nbsp; Events </h2>
+        <h2> <i class="far fa-calendar-alt"></i>&nbsp; Events </h2>
         {% if events.count > 0 %}
         <ul>
           {% for event in events %}
