@@ -104,6 +104,10 @@ $red: #b94a48;
   color: $red;
 }
 
+.alert {
+  margin-bottom: 0rem !important;
+}
+
 strong {
   font-weight: bold;
 }
@@ -120,6 +124,7 @@ blockquote {
   font-weight: bold;
   margin-bottom: 0.3em;
   font-size: 1.1em;
+  margin-right: 0.3rem;
 }
 
 .detail_text {
