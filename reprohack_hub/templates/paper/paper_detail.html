@@ -31,6 +31,16 @@
           <div class="header_text">{{ paper.authors }}</div>
           <div class="header_italic"> {{ paper.citation_txt }}</div>
           <a href="{{ paper.doi }}">{{ paper.doi }}</a>
+          {% if paper.num_reviews > 0 %}<br><br>
+          <span class="paper-metric">
+            <strong> <i class="fas fa-check-circle"></i> &nbsp; Mean reproducibility score: </strong>
+            &nbsp;
+            {{ paper.mean_reproducibility_score | floatformat:1 }}/10
+            &nbsp;&nbsp;|&nbsp;&nbsp;
+            <strong><i class="fas fa-recycle"></i> Number of reviews: </strong> &nbsp;
+            {{ paper.num_reviews }}
+          </span>
+          {% endif %}
         </div>
         <br>
         <div class="col-md-10">
@@ -44,15 +54,22 @@
           <div class="detail_text">{{ paper.focus }}</div>
           <br>
           <h3> Resources</h3>
-          <div class="detail_text"><span class="detail_header"><i class="far fa-file-alt"></i>Paper URL:</span> <a
-              href="{{ paper.paper_url }}">{{ paper.paper_url }}</a></div>
-          <div class="detail_text"><span class="detail_header">Data URL:</span> <a
-              href="{{ paper.paper_url }}">{{ paper.data_url }}</a></div>
-          <div class="detail_text"><span class="detail_header">Code URL:</span> <a
-              href="{{ paper.paper_url }}">{{ paper.code_url }}</a></div>
-          <div class="detail_text"><span class="detail_header">Extra URL:</span> <a
-              href="{{ paper.paper_url }}">{{ paper.extra_url }}</a></div>
-
+          {% if paper.paper_url %}
+          <div class="detail_text"><span class="detail_header"><i class="far fa-file-alt"></i> &nbsp; Paper URL:</span>
+            <a href="{{ paper.paper_url }}">{{ paper.paper_url }}</a></div>
+          {% endif%}
+          {% if paper.data_url %}
+          <div class="detail_text"><span class="detail_header"><i class="fas fa-table"></i> &nbsp; Data URL:</span> <a
+              href="{{ paper.data_url }}">{{ paper.data_url }}</a></div>
+          {% endif%}
+          {% if paper.code_url %}
+          <div class="detail_text"><span class="detail_header"> <i class="fas fa-file-code"></i> &nbsp; Code URL:</span>
+            <a href="{{ paper.code_url }}">{{ paper.code_url }}</a></div>
+          {% endif%}
+          {% if paper.extra_url %}
+          <div class="detail_text"><span class="detail_header"> <i class="fas fa-plus"></i> &nbsp; Extra URL:</span> <a
+              href="{{ paper.extra_url }}">{{ paper.extra_url }}</a></div>
+          {% endif%}
           <div class="detail_text">
             <span class="detail_header">Tags:</span>
             {% for tag in paper.tags.all %}
@@ -71,10 +88,10 @@
           {% if reviews %}
           <br>
           <h3>Public reviews</h3>
-          <ul class="list-group">
+          <ul>
             {% for review in reviews %}
 
-            <li class="list-group-item">
+            <li class="card">
               <a href="{% url 'review_detail' pk=review.pk %}">
                 Review by {% for reviewer in review.reviewers.all %}{{ reviewer.username }}
                 , {% endfor %}, {{ review.submission_date }}
