@@ -337,10 +337,12 @@ h6 {
   color: #828bb2; }
 
 ul {
-  margin-left: 30px; }
+  margin-left: 28.8px;
+  margin-left: 1.8rem; }
   ul li {
     position: relative;
-    padding-left: 30px;
+    padding-left: 28.8px;
+    padding-left: 1.8rem;
     line-height: 1.82em !important; }
     ul li:before {
       content: "";
@@ -2832,6 +2834,10 @@ a {
   background-color: #f2dede;
   border-color: #eed3d7;
   color: #b94a48; }
+
+.alert {
+  margin-bottom: 0px !important;
+  margin-bottom: 0rem !important; }
 
 strong {
   font-weight: bold; }
