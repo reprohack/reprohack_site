@@ -89,6 +89,19 @@ class User(AbstractUser):
         """
         return reverse("user_detail", kwargs={"username": self.username})
 
+    def get_related_events(self):
+        return self.created_events.all()
+
+    def get_related_papers(self):
+        return self.submitted_papers.all()
+
+    def get_related_reviews(self):
+        related_reviews = []
+        for paper_reviewer in self.paperreviewer_set.all():
+            related_reviews.append(paper_reviewer.review)
+
+        return related_reviews
+
 
 def default_event_start(hour: int = DEFAULT_EVENT_START_HOUR) -> datetime:
     """Return next default start time."""
@@ -119,7 +132,7 @@ class Event(models.Model):
     """
 
     # id = models.AutoField(primary_key=True)
-    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="created_events")
     host = models.CharField(max_length=200)
     title = models.CharField(_('Event Title'), max_length=200)
     # time
@@ -257,7 +270,8 @@ class Paper(models.Model):
     email_review = models.BooleanField(
         _("Send me an email when a review is received"), default=True)
     submitter = models.ForeignKey(
-        get_user_model(), default=None, null=True, blank=True, on_delete=models.SET_NULL)
+        get_user_model(), default=None, null=True, blank=True, on_delete=models.SET_NULL,
+        related_name="submitted_papers")
     is_initial_upload = models.BooleanField(default=False)
 
     @property
