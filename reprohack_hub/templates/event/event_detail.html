@@ -22,10 +22,15 @@
             <div class="row">
               <div class="col-md-9">
                 <h3 class="card-title"> {{ event.title }} </h3>
-                <h4 class="card-title"><i class="fa fa-calendar">&nbsp;<i class="bi-clock"></i>
+                <h4 class="card-title"><i class="fa fa-calendar">&nbsp;&nbsp;<i class="bi-clock"></i>
                     &nbsp;&nbsp; </i>{{ event.start_time }} - {{ event.end_time }} ({{ event.time_zone}})</h4>
+                {% if event.remote %}
+                <h5 class="card-title"><i class="fas fa-globe"></i> &nbsp;&nbsp; Remote
+                </h5>
+                {% else %}
                 <h5 class="card-title"><i class="fa fa-map-pin"></i> &nbsp;&nbsp; {{ event.address }}
                 </h5>
+                {% endif %}
                 <p class="card-text">
                   {% if event.host %}
                   <h5>Hosted by: {{ event.host}}</h5>
@@ -60,9 +65,9 @@
           <h3> Event Description </h3>
           <p>{{ event.description | show_markdown | safe }}</p>
 
-
+          {% if not event.remote %}
           {% include "event/event_map_single.html" %}
-
+          {% endif %}
 
           <h2>Associated papers</h2>
           {% if event.paper_set.count > 0 %}
