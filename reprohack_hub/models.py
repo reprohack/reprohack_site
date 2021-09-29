@@ -135,6 +135,7 @@ class Event(models.Model):
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="created_events")
     host = models.CharField(max_length=200)
     title = models.CharField(_('Event Title'), max_length=200)
+    contact_email = models.EmailField(blank=True)
     # time
     # date = models.DateField(default=date.today)
     start_time = models.DateTimeField(default=default_event_start)
