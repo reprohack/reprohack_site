@@ -2894,6 +2894,10 @@ blockquote {
   margin: 24px;
   margin: 1.5rem; }
 
+fieldset {
+  margin-top: 48px;
+  margin-top: 3rem; }
+
 .header_header {
   font-weight: bold;
   margin-bottom: 0.3em;

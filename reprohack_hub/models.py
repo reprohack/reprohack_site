@@ -141,20 +141,20 @@ class Event(models.Model):
     start_time = models.DateTimeField(default=default_event_start)
     end_time = models.DateTimeField(default=default_event_end)
     time_zone = TimeZoneField(default='Europe/London')
-    # remote = models.BooleanField(default=False)
+    remote = models.BooleanField(default=False)
 
     # location
     # venue = models.ForeignKey(Venue, on_delete=models.SET_NULL, null=True)
-    description = MarkdownxField(_('Event Description. We provide a markdown template but feel free to customise'),
+    description = MarkdownxField(_('Feel free to customise provided template'),
                                  default=get_default_description)
     # location = models.CharField(max_length=200)  # Location name?
-    address1 = models.CharField(max_length=200)
-    address2 = models.CharField(max_length=200, blank=True, null=True)
-    city = models.CharField(max_length=60)
-    postcode = models.CharField(max_length=15)
-    country = CountryField()
+    address1 = models.CharField(max_length=200, blank=True)
+    address2 = models.CharField(max_length=200, blank=True)
+    city = models.CharField(max_length=60, blank=True)
+    postcode = models.CharField(max_length=15, blank=True)
+    country = CountryField(blank=True)
     registration_url = models.URLField()
-    event_coordinates = models.TextField(blank=True, null=True, )
+    event_coordinates = models.TextField(blank=True, null=True)
     is_initial_upload = models.BooleanField(default=False)
 
     submission_date = models.DateTimeField(auto_now_add=True)

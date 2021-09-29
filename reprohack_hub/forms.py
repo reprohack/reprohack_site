@@ -30,6 +30,7 @@ class EventForm(ModelForm):
         model = Event
         exclude = ['submission_date', 'creator']
         widgets = {'event_coordinates': MapInput(),
+                   'remote': DjangoToggleSwitchWidget(round=True, klass="django-toggle-switch-success"),
                    'start_time': DateTimeWidget(attrs={'id': "start_time"},
                                                 usel10n=True, bootstrap_version=3),
                    'end_time': DateTimeWidget(attrs={'id': "end_time"},
@@ -48,24 +49,28 @@ class EventForm(ModelForm):
             'title',
             'host',
             Field('contact_email'),
-            HTML("<small style='color: #7e7e7e;'>If no email supplied, the email associated with the account submitting the event will be used as contact.</small><br><br><br>"),
+            HTML("<small style='color: #7e7e7e;'>If no email supplied, the email associated with the account submitting the event will be used as contact.</small><br><br><br>"), 
+            'registration_url',
+            Fieldset('Event Time/Date',
             Row(
                 Column('start_time', css_class='form-group col-md-4 mb-0'),
                 Column('end_time', css_class='form-group col-md-4 mb-0'),
                 Column('time_zone', css_class='form-group col-md-4 mb-0'),
                 css_class='form-row',
-            ),
-            # 'venue',
-            'description',
-            'address1',
-            'address2',
-            Row(
-                Column('city', css_class='form-group col-md-6 mb-0'),
-                Column('postcode', css_class='form-group col-md-3 mb-0'),
-                Column('country', css_class='form-group col-md-3 mb-0'),
-            ),
-            'registration_url',
-            'event_coordinates',
+            )),
+            Fieldset(
+                'Event Location',
+                'remote',
+                'address1',
+                'address2',
+                Row(
+                    Column('city', css_class='form-group col-md-6 mb-0'),
+                    Column('postcode', css_class='form-group col-md-3 mb-0'),
+                    Column('country', css_class='form-group col-md-3 mb-0'),
+                ),
+                'event_coordinates'),
+            Fieldset('Event Description',
+            'description'),
         )
 
 
