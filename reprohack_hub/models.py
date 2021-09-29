@@ -153,7 +153,8 @@ class Event(models.Model):
     city = models.CharField(max_length=60, blank=True)
     postcode = models.CharField(max_length=15, blank=True)
     country = CountryField(blank=True)
-    registration_url = models.URLField()
+    registration_url = models.URLField(blank=True)
+    hackpad_url = models.URLField(blank=True)
     event_coordinates = models.TextField(blank=True, null=True)
     is_initial_upload = models.BooleanField(default=False)
 

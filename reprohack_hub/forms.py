@@ -51,6 +51,7 @@ class EventForm(ModelForm):
             Field('contact_email'),
             HTML("<small style='color: #7e7e7e;'>If no email supplied, the email associated with the account submitting the event will be used as contact.</small><br><br><br>"), 
             'registration_url',
+            'hackpad_url',
             Fieldset('Event Time/Date',
             Row(
                 Column('start_time', css_class='form-group col-md-4 mb-0'),
