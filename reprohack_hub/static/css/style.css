@@ -2888,7 +2888,9 @@ blockquote {
       -ms-flex-align: center;
           align-items: center;
   margin: 16px;
-  margin: 1rem; }
+  margin: 1rem;
+  line-height: 40px;
+  line-height: 2.5rem; }
 
 .event-description {
   margin: 24px;
