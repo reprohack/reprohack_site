@@ -28,7 +28,11 @@
             {% if event.end_time >= now %}
             <li class="event card">
               <h3 class="card-title"><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
+              {% if event.remote %}
+              <h4> Remote </h4>
+              {% else %}
               <h4> {{ event.city }}, {{ event.country }} </h4>
+              {% endif %}
               <div class="date">
                 <i class="bi-clock"></i>
                 {{ event.start_time }} - {{ event.end_time }} (TZ: {{ event.time_zone }})
@@ -50,11 +54,11 @@
             {% if event.end_time < now %}
             <li class="event card">
               <h3 class="card-title"><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
-              <h4> {{ event.city }}, {{ event.country }} </h4>   
-                <div class="date">
-                  <i class="bi-clock"></i>
-                  {{ event.start_time }} - {{ event.end_time }} (TZ: {{ event.time_zone }})
-                </div>
+              <h4> {{ event.city }}, {{ event.country }} </h4>
+              <div class="date">
+                <i class="bi-clock"></i>
+                {{ event.start_time }} - {{ event.end_time }} (TZ: {{ event.time_zone }})
+              </div>
             </li>
             {% else %}
             {% endif %}
