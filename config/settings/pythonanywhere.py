@@ -2,7 +2,7 @@ from .production import *
 
 DEBUG = False
 
-ALLOWED_HOSTS += ["reprohacks.eu.pythonanywhere.com", "reprohack.org"]
+ALLOWED_HOSTS += ["reprohacks.eu.pythonanywhere.com", "reprohack.org",  "www.reprohack.org"]
 
 DATABASES = {
     "default": {
