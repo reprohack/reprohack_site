@@ -6,8 +6,8 @@ from django.forms import Field as DFField, ModelForm, Widget, TextInput, RadioSe
 from django.forms.models import ModelChoiceField
 from django.utils.translation import gettext_lazy as _
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, Submit, Row, Column, HTML, Field
-from crispy_forms.bootstrap import InlineRadios, StrictButton
+from crispy_forms.layout import Layout, Fieldset, Submit, Row, Column, HTML, Field, Div
+from crispy_forms.bootstrap import InlineRadios, StrictButton, PrependedText, PrependedAppendedText
 from datetimewidget.widgets import DateTimeWidget
 from django_toggle_switch_widget.widgets import DjangoToggleSwitchWidget
 # from leaflet.forms.widgets import LeafletWidget
@@ -30,6 +30,7 @@ class EventForm(ModelForm):
         model = Event
         exclude = ['submission_date', 'creator']
         widgets = {'event_coordinates': MapInput(),
+                   'remote': DjangoToggleSwitchWidget(round=True, klass="django-toggle-switch-success"),
                    'start_time': DateTimeWidget(attrs={'id': "start_time"},
                                                 usel10n=True, bootstrap_version=3),
                    'end_time': DateTimeWidget(attrs={'id': "end_time"},
@@ -47,23 +48,30 @@ class EventForm(ModelForm):
         self.helper.layout = Layout(
             'title',
             'host',
+            Field('contact_email'),
+            HTML("<small style='color: #7e7e7e;'>If no email supplied, the email associated with the account submitting the event will be used as contact.</small><br><br><br>"), 
+            'registration_url',
+            'hackpad_url',
+            Fieldset('Event Time/Date',
             Row(
                 Column('start_time', css_class='form-group col-md-4 mb-0'),
                 Column('end_time', css_class='form-group col-md-4 mb-0'),
                 Column('time_zone', css_class='form-group col-md-4 mb-0'),
                 css_class='form-row',
-            ),
-            # 'venue',
-            'description',
-            'address1',
-            'address2',
-            Row(
-                Column('city', css_class='form-group col-md-6 mb-0'),
-                Column('postcode', css_class='form-group col-md-3 mb-0'),
-                Column('country', css_class='form-group col-md-3 mb-0'),
-            ),
-            'registration_url',
-            'event_coordinates',
+            )),
+            Fieldset(
+                'Event Location',
+                'remote',
+                'address1',
+                'address2',
+                Row(
+                    Column('city', css_class='form-group col-md-6 mb-0'),
+                    Column('postcode', css_class='form-group col-md-3 mb-0'),
+                    Column('country', css_class='form-group col-md-3 mb-0'),
+                ),
+                'event_coordinates'),
+            Fieldset('Event Description',
+            'description'),
         )
 
 
@@ -267,7 +275,7 @@ class UserChangeForm(forms.UserChangeForm):
     class Meta(forms.UserChangeForm.Meta):
         model = get_user_model()
         exclude = ["password", "id_password"]
-        fields = ['name', 'email', 'bio', 'affiliation',
+        fields = ['first_name', 'last_name', 'email', 'bio', 'affiliation',
                   'location', 'twitter', 'github', 'orcid']
 
     def __init__(self, *args, **kwargs):
@@ -275,7 +283,39 @@ class UserChangeForm(forms.UserChangeForm):
         self.helper = FormHelper(self)
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Save', css_class="boxed_btn"))
-
+        self.helper.layout = Layout(
+            HTML("<h2> Account Details </h2>"),
+            'email',
+            Row(
+                Column('first_name', css_class='form-group col-md-5 mb-0'),
+                Column('last_name', css_class='form-group col-md-7 mb-0')
+            ),
+             Row(
+                Column('password', css_class='form-group col-md-6 mb-0')
+            ),
+            HTML("<h2> Additional Profile Info </h2>"),
+              Row(
+                Column('bio', css_class='form-group col-md-6 mb-0'),
+                Column('affiliation', 'location', css_class='form-group col-md-6 mb-0')
+              ),
+              Fieldset('Social',
+              Row(
+                Column(
+                    PrependedAppendedText('twitter', '@', '<i class="fab fa-twitter"></i>', 
+                    placeholder="username"), css_class='form-group col-md-4 mb-0'
+                ),
+                Column(
+                    PrependedAppendedText('github', '@', '<i class="fab fa-github"></i>', 
+                    placeholder="username"), css_class='form-group col-md-4 mb-0'
+                    ),
+                Column(
+                    PrependedText('orcid', '<i class="fab fa-orcid"></i>', 
+                    placeholder="0000-0000-0000-0000", 
+                    title = 'ORCID ID'), css_class='form-group col-md-4 mb-0'
+                    )
+                )
+              )
+        )
 
 class UserCreationForm(forms.UserCreationForm):
 
@@ -285,7 +325,8 @@ class UserCreationForm(forms.UserCreationForm):
 
     class Meta(forms.UserCreationForm.Meta):
         fields = ('first_name', "last_name", 'username', 'email', 'password1',
-                  'password2', 'affiliation', 'twitter', 'github', 'orcid')
+                  'password2', 'affiliation', 'twitter', 'github', 'orcid', 
+                  'bio', 'location')
         model = get_user_model()
 
     def clean_username(self):
@@ -305,16 +346,38 @@ class UserCreationForm(forms.UserCreationForm):
         self.helper.add_input(
             Submit('submit', 'Sign up', css_class="boxed_btn"))
         self.helper.layout = Layout(
+            HTML("<h2> Account Details </h2>"),
+            'username',
+            'email',
             Row(
                 Column('first_name', css_class='form-group col-md-5 mb-0'),
                 Column('last_name', css_class='form-group col-md-7 mb-0')
             ),
-            'username',
-            'email',
             Row(
                 Column('password1', css_class='form-group col-md-6 mb-0'),
                 Column('password2', css_class='form-group col-md-6 mb-0')
             ),
-            'affiliation', 'twitter', 'github', 'orcid',
+            HTML("<h3> Additional Profile Info </h3>"),
+              Row(
+                Column('bio', css_class='form-group col-md-6 mb-0'),
+                Column('affiliation', 'location', css_class='form-group col-md-6 mb-0')
+              ),
+              Fieldset('Social',
+              Row(
+                Column(
+                    PrependedAppendedText('twitter', '@', '<i class="fab fa-twitter"></i>', 
+                    placeholder="username"), css_class='form-group col-md-4 mb-0'
+                ),
+                Column(
+                    PrependedAppendedText('github', '@', '<i class="fab fa-github"></i>', 
+                    placeholder="username"), css_class='form-group col-md-4 mb-0'
+                    ),
+                Column(
+                    PrependedText('orcid', '<i class="fab fa-orcid"></i>', 
+                    placeholder="0000-0000-0000-0000", 
+                    title = 'ORCID ID'), css_class='form-group col-md-4 mb-0'
+                    )
+                )
+              )
 
         )

@@ -4,6 +4,27 @@
 
 
 {% block content %}
+<script>
+  function Hide() {
+    if (document.getElementById('id_remote').checked) {
+      document.getElementById('div_id_address1').style.display = 'none';
+      document.getElementById('div_id_address2').style.display = 'none';
+      document.getElementById('div_id_city').style.display = 'none';
+      document.getElementById('div_id_postcode').style.display = 'none';
+      document.getElementById('div_id_country').style.display = 'none';
+      document.getElementById('div_id_event_coordinates').style.display = 'none';
+    } else {
+      document.getElementById('div_id_address1').style.display = '';
+      document.getElementById('div_id_address2').style.display = '';
+      document.getElementById('div_id_city').style.display = '';
+      document.getElementById('div_id_postcode').style.display = '';
+      document.getElementById('div_id_country').style.display = '';
+      document.getElementById('div_id_event_coordinates').style.display = '';
+    }
+  };
+
+</script>
+
 <!-- bradcam_area_start -->
 <div class="bradcam_area breadcam_bg overlay2">
   <h1>Submit Event</h1>
@@ -28,4 +49,14 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  window.addEventListener("load", Hide);
+
+</script>
+<script type="text/javascript">
+  var el = document.getElementById("div_id_remote");
+  el.addEventListener("click", Hide);
+
+</script>
 {% endblock %}

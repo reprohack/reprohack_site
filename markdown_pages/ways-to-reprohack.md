@@ -25,18 +25,21 @@
 
 ### 1: Your Team
 
-Options:
+#### Options:
 
 Codecheck each others work (before submission or before sharing code online) 
 
 Codecheck benchmarks (and share the frustration)
 
-Upside: 
-Immediate use
-Use existing facilities
-Could be done before submission
+#### Upside: 
 
-Challenges:
+- Immediate use for your own research
+
+- Use existing facilities
+
+- Could be done before submission
+
+#### Challenges:
 Convincing colleagues can be difficult
 
 
@@ -45,40 +48,39 @@ Convincing colleagues can be difficult
 
 ## 2: Your classroom
 
-Options:
+#### Options:
 
 - Coursework or hand-in assignments
 - Peer reviews amongst students
 - Assignments submitted binder ready
 
-Challenges
-Lots of work beforehand (is it more though?)
+#### Challenges
+More work beforehand, focus might shift from content to skill
 
-Upside 
-Reproducible assignments are easier to handle
-Teaching important research skills along with content
+#### Upside 
+- Reproducible assignments are easier to handle
+- Teaching important research skills along with content
 
 
-**Join the discussion:** #TeachingByReprohacking and the dedicated Teaching Channel on our Slack
+**Join the discussion:** #TeachingByReprohacking on Twitter and the dedicated Teaching Channel on our Slack
 
 
 ---
 
 ## 3: Your institute or faculty
 
-Upsides: 	
-Stay in one domain (more or less broadly)
+#### Upsides: 	
+- Focus on one domain (more or less broadly)
 
-Similar data (size, privacy issues etc) 
+- Similar data (size, privacy issues etc) 
 
-Similar scripting and programming languages
+- Similar scripting and programming languages
 
-Get to know network with peers outside your lab
+- Get to network with peers outside your lab
 
 
-Challenges:
-	Requires a bigger organizing team
-
+#### Challenges:
+Requires a bigger organizing team
 
 
 
@@ -86,18 +88,18 @@ Challenges:
 
 ## 4: Your university
 
-Upsides: 
+#### Upsides: 
 
-Interdisciplinary fun!
+- Interdisciplinary fun!
 
-Share with people with similar enthusiasm!
+- Share with people with similar enthusiasm
 
-Meet people that are in different communities (E.g. ReproducibiliTea)
+- Meet people that are in different communities (E.g. ReproducibiliTea)
 
-Challenges: 
-organize location, finance
-communication across disciplines 
-different levels of skills (Stats, Programming, Open Science things)
+#### Challenges: 
+- organize location, finance
+- communication across disciplines 
+- different levels of skills (Stats, Programming, Open Science things)
 
 
 
@@ -105,44 +107,42 @@ different levels of skills (Stats, Programming, Open Science things)
 
 ## 5: Remote #ReproHack 
 
-Upside: 
+#### Upside: 
 
-Accessibility
-	Expand to international community members
+- Accessibility
+- Expand to international community members
 
-Challenges: 
+#### Challenges: 
 
-Tech - can be expensive
-Tech - can fail
-Special efforts for networking necessary
+- Tech - can be expensive
+- Tech - can fail
+- Special efforts for networking necessary
 
 
 ---
 
 ## 6: #ReproHack at a (un -) conference! 
 
-Upside
+#### Upside
+- Part of a large event 
+- “walk-in” participants
+- within field/ specialty
 
-Part of a large event 
-“walk-in” participants
-	Within field/ specialty
+#### Challenges:
 
-Challenges:
-
-Requires additional preparation, may need to be presented in submission process
+- may need to be presented in submission process
 
 
 ---
 
 ## 7: Mix-and-Match
 
-Options:
-Keep it to one programming language and interdisciplinary
+#### Options:
+- Keep it to one programming language and interdisciplinary
 
-Cluster around one research topic across domains
+- Cluster around one research topic across domains
 
-
-
+- be creative and make this format your own!
 
 ---
 

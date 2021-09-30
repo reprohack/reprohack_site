@@ -104,6 +104,10 @@ $red: #b94a48;
   color: $red;
 }
 
+.alert {
+  margin-bottom: 0rem !important;
+}
+
 strong {
   font-weight: bold;
 }
@@ -120,6 +124,7 @@ blockquote {
   font-weight: bold;
   margin-bottom: 0.3em;
   font-size: 1.1em;
+  margin-right: 0.3rem;
 }
 
 .detail_text {
@@ -148,6 +153,39 @@ blockquote {
     font-weight: 500;
   }
 }
+
+////////////////////////////////
+//Papers views//
+////////////////////////////////
+
+.paper-metric {
+  font-family: $font1;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #555;
+  padding-bottom: 0.6rem;
+
+}
+
+
+
+.contact-box {
+  align-items: center;
+  margin: 1rem;
+  line-height: 2.5rem;
+}
+
+.event-description {
+  margin: 1.5rem;
+}
+
+fieldset {
+  margin-top: 3rem;
+}
+
+////////////////////////////////
+//Details//
+////////////////////////////////
 
 .header_header {
   font-weight: bold;
@@ -220,6 +258,11 @@ correct bootstrap pagination styling
   .button-wrap {
     margin-top: 2rem;
     text-align: center;
+  }
+
+  &:before {
+    content: none;
+
   }
 }
 

@@ -22,13 +22,18 @@
             <div class="row">
               <div class="col-md-9">
                 <h3 class="card-title"> {{ event.title }} </h3>
-                <h4 class="card-title"><i class="fa fa-calendar">&nbsp;<i class="flaticon-clock"></i>
+                <h4 class="card-title"><i class="fa fa-calendar">&nbsp;&nbsp;<i class="bi-clock"></i>
                     &nbsp;&nbsp; </i>{{ event.start_time }} - {{ event.end_time }} ({{ event.time_zone}})</h4>
+                {% if event.remote %}
+                <h5 class="card-title"><i class="fas fa-globe"></i> &nbsp;&nbsp; Remote
+                </h5>
+                {% else %}
                 <h5 class="card-title"><i class="fa fa-map-pin"></i> &nbsp;&nbsp; {{ event.address }}
                 </h5>
+                {% endif %}
                 <p class="card-text">
                   {% if event.host %}
-                  <h5>Host: {{ event.host}}</h5>
+                  <h5>Hosted by: {{ event.host}}</h5>
                   {% endif%}
                 </p>
                 <br>
@@ -47,29 +52,42 @@
                 <a href="https://reprohack-autoinvite.herokuapp.com/">
                   <img src="https://img.shields.io/badge/slack-join%20us-orange?style=for-the-badge&logo=slack" />
                 </a>
+                <div class="contact-box">
+                  <a href="mailto:{{event.contact_email}}">
+                    <i class="fas fa-envelope-square"></i> Contact Host
+                  </a>
+                  <br>
+                  {% if event.hackpad_url %}
+                  <a href={{ event.hackpad_url }}>
+                    <i class="far fa-edit"></i></i> Event Hackpad
+                  </a>
+                  {% endif %}
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <h3> Event Description </h3>
-        <p>{{ event.description | show_markdown | safe }}</p>
+        <div class="event-description">
+          <h3> Event Description </h3>
+          <p>{{ event.description | show_markdown | safe }}</p>
 
+          {% if not event.remote %}
+          {% include "event/event_map_single.html" %}
+          {% endif %}
 
-        {% include "event/event_map_single.html" %}
+          <h2>Associated papers</h2>
+          {% if event.paper_set.count > 0 %}
+          <ul>
+            {% for paper in event.paper_set.all %}
+            <li><a href="{% url 'paper_detail' pk=paper.event.pk %}">
+                {{ paper }} </a> </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          No associated papers
 
-
-        <h2>Associated papers</h2>
-        {% if event.paper_set.count > 0 %}
-        <ul>
-          {% for paper in event.paper_set.all %}
-          <li><a href="{% url 'paper_detail' pk=paper.event.pk %}">
-              {{ paper }} </a> </li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        No associated papers
-
-        {% endif %}
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>

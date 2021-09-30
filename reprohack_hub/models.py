@@ -89,6 +89,19 @@ class User(AbstractUser):
         """
         return reverse("user_detail", kwargs={"username": self.username})
 
+    def get_related_events(self):
+        return self.created_events.all()
+
+    def get_related_papers(self):
+        return self.submitted_papers.all()
+
+    def get_related_reviews(self):
+        related_reviews = []
+        for paper_reviewer in self.paperreviewer_set.all():
+            related_reviews.append(paper_reviewer.review)
+
+        return related_reviews
+
 
 def default_event_start(hour: int = DEFAULT_EVENT_START_HOUR) -> datetime:
     """Return next default start time."""
@@ -119,28 +132,30 @@ class Event(models.Model):
     """
 
     # id = models.AutoField(primary_key=True)
-    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="created_events")
     host = models.CharField(max_length=200)
     title = models.CharField(_('Event Title'), max_length=200)
+    contact_email = models.EmailField(blank=True)
     # time
     # date = models.DateField(default=date.today)
     start_time = models.DateTimeField(default=default_event_start)
     end_time = models.DateTimeField(default=default_event_end)
     time_zone = TimeZoneField(default='Europe/London')
-    # remote = models.BooleanField(default=False)
+    remote = models.BooleanField(default=False)
 
     # location
     # venue = models.ForeignKey(Venue, on_delete=models.SET_NULL, null=True)
-    description = MarkdownxField(_('Event Description. We provide a markdown template but feel free to customise'),
+    description = MarkdownxField(_('Feel free to customise provided template'),
                                  default=get_default_description)
     # location = models.CharField(max_length=200)  # Location name?
-    address1 = models.CharField(max_length=200)
-    address2 = models.CharField(max_length=200, blank=True, null=True)
-    city = models.CharField(max_length=60)
-    postcode = models.CharField(max_length=15)
-    country = CountryField()
-    registration_url = models.URLField()
-    event_coordinates = models.TextField(blank=True, null=True, )
+    address1 = models.CharField(max_length=200, blank=True)
+    address2 = models.CharField(max_length=200, blank=True)
+    city = models.CharField(max_length=60, blank=True)
+    postcode = models.CharField(max_length=15, blank=True)
+    country = CountryField(blank=True)
+    registration_url = models.URLField(blank=True)
+    hackpad_url = models.URLField(blank=True)
+    event_coordinates = models.TextField(blank=True, null=True)
     is_initial_upload = models.BooleanField(default=False)
 
     submission_date = models.DateTimeField(auto_now_add=True)
@@ -257,8 +272,30 @@ class Paper(models.Model):
     email_review = models.BooleanField(
         _("Send me an email when a review is received"), default=True)
     submitter = models.ForeignKey(
-        get_user_model(), default=None, null=True, blank=True, on_delete=models.SET_NULL)
+        get_user_model(), default=None, null=True, blank=True, on_delete=models.SET_NULL,
+        related_name="submitted_papers")
     is_initial_upload = models.BooleanField(default=False)
+
+    @property
+    def num_reviews(self):
+        return self.reviews.count()
+
+    @property
+    def mean_reproducibility_score(self):
+
+        num_reviews = self.num_reviews
+
+        if num_reviews < 1:
+            return 0
+
+        rep_score = 0
+        for review in self.reviews.all():
+            rep_score = rep_score + review.reproducibility_rating
+
+        rep_score = rep_score/num_reviews
+
+        return rep_score
+
 
     @property
     def is_available_for_review(self):
@@ -266,7 +303,7 @@ class Paper(models.Model):
 
     def get_reviews_viewable_by_user(self, user):
         reviews_list = []
-        for review in self.review_set.all():
+        for review in self.reviews.all():
             if review.is_viewable_by_user(user):
                 reviews_list.append(review)
 
@@ -348,7 +385,7 @@ class Review(models.Model):
                                        through="PaperReviewer",
                                        through_fields=('review', 'user'),)
     #
-    paper = models.ForeignKey(Paper, on_delete=models.SET_NULL, null=True)
+    paper = models.ForeignKey(Paper, on_delete=models.SET_NULL, null=True, related_name="reviews")
     reproducibility_outcome = models.CharField(_("Did you manage to reproduce it?"),
                                                max_length=1,
                                                choices=ReproducibilityOutcomes.choices,

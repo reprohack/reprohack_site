@@ -67,7 +67,9 @@ class EventCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.user = self.request.user
+        self.object.creator = self.request.user
+        if not self.object.contact_email:
+            self.object.contact_email = self.object.creator.email 
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -426,7 +428,30 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     template_name = "registration/user_detail.html"
     slug_field = "username"
     slug_url_kwarg = "username"
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+
+        viewing_user = self.request.user
+        user = self.get_object()
+
+        context = super().get_context_data(**kwargs)
+
+        context["events"] = user.get_related_events()
+        context["papers"] = user.get_related_papers()
+
+        # Filter reviews by viewing permission set by paper author and user
+        viewable_reviews = []
+        for review in user.get_related_reviews():
+            if review.is_viewable_by_user(viewing_user):
+                viewable_reviews.append(review)
+
+        context["reviews"] = viewable_reviews
+
+        return context
+
     #user_reviews = Review.objects.all().filter(user=self. request.user)
+
+
 
     def test_func(self):
         return self.request.user.pk == self.get_object().pk

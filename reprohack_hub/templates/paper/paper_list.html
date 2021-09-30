@@ -30,6 +30,15 @@
                 <a href="/paper/?tags={{ tag }}" class="badge badge-primary p-1 m-1">{{ tag }}</a>
                 {% endfor %}
               </div>
+              {% if paper.num_reviews > 0 %}
+              <span class="paper-metric">
+                <strong> <i class="fas fa-check-circle"></i> &nbsp; Mean reproducibility score: </strong> &nbsp;
+                {{ paper.mean_reproducibility_score | floatformat:1 }}/10
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                <strong><i class="fas fa-recycle"></i> Number of reviews: </strong> &nbsp;
+                {{ paper.num_reviews }}
+              </span>
+              {% endif %}
             </li>
             {% endfor %}
           </ul>

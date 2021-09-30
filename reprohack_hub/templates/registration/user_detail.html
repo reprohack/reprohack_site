@@ -17,47 +17,101 @@
       <div class="col-md-10">
 
         <h2><i class="bi-person-fill"></i>
-          {{ user.username }} </h2>
-        <hr>
-
+          {{ user.username }}
+          {% if user.twitter %}
+          <a href="https://twitter.com/{{ user.twitter }}">
+            <i class="fab fa-twitter"></i></a>
+          {% endif %}
+          {% if user.github %}
+          <a href="https://github.com/{{ user.github }}">
+            <i class="fab fa-github"></i> </a>
+          {% endif %}
+          {% if user.orcid %}
+          <a href="https://orcid.org/{{ user.orcid }}">
+            <i class="fab fa-orcid"></i> </a>
+          {% endif %}
+        </h2>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-3">
-        <strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}
-        <br>
-        <strong>Affiliation:</strong> {{ user.affiliation }}
-        <br>
-        <strong>Location:</strong> {{ user.location }}
-        <br>
-        <strong>Email:</strong> {{ user.email }}
-        <br>
-        <a href="https://twitter.com/{{ user.twitter }}">
-          <i class="ti-twitter-alt"></i> {{ user.twitter }}</a>
-        <br>
-        <a href="https://github.com/{{ user.github }}">
-          <i class="fa fa-github"></i> {{ user.github }}</a>
-        <br>
-        <a href="https://orcid.org/{{ user.orcid }}">
-          <i class="fab fa-orcid"></i> {{ user.orcid }}</a>
-        <br>
-        <br>
-        {{ user.bio }}
-
+      <div class="col-md-6">
+        <p>
+          <span class="detail_header">Name:</span> {{ user.first_name }} {{ user.last_name }}
+        </p>
+        <p>
+          <span class="detail_header">Affiliation:</span> {{ user.affiliation }}
+        </p>
+        <p>
+          <span class="detail_header">Location:</span> {{ user.location }}
+        </p>
       </div>
-      <div class="col-md-3">
-        <h4> Papers </h4>
-      </div>
-      <div class="col-md-3">
-        <h4> Reviews </h4>
-
-      </div>
-      <div class="col-md-3">
-        <h4> Events </h4>
+      <div class="col-md-6">
+        <p class="detail_header">
+          Bio:
+        </p>
+        <p class="header_text">
+          {{ user.bio }}
+        </p>
       </div>
     </div>
-
-
+    <hr>
+    <div class="row">
+      <div class="col-md-6">
+        <h2> <i class="fa fa-file"></i> &nbsp; Papers </h2>
+        {% if papers.count > 0 %}
+        <ul>
+          {% for paper in papers %}
+          <li class="card">
+            <a href="{{ paper.get_absolute_url }}">
+              <h4 class="card-title">{{ paper.title }}</h4>
+            </a></li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <h4> No Papers to show </h4>
+        {% endif %}
+      </div>
+      <div class="col-md-6">
+        <h2> <i class="fas fa-clipboard-check"></i> Reviews </h2>
+        {% if reviews %}
+        {{ review.get_absolute_url }}
+        <ul>
+          {% for review in reviews %}
+          <li class="card">
+            <a href="{{ review.get_absolute_url }}">
+              <h4 class="card-title"> Review of "{{ review.paper.title }}" </h4>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        No Reviews to show
+        {% endif %}
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-6">
+        <h2> <i class="far fa-calendar-alt"></i>&nbsp; Events </h2>
+        {% if events.count > 0 %}
+        <ul>
+          {% for event in events %}
+          <li class="card">
+            <a href="{{ event.get_absolute_url }}">
+              <h4 class="card-title"> {{ event.title }} </h4>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <strong> No Events to show </strong>
+        {% endif %}
+      </div>
+    </div>
   </div>
+</div>
+
+
+</div>
 </div>
 {% endblock %}
