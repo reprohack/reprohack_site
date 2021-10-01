@@ -29,15 +29,15 @@
                     </a>
                   </li>
                   <li class="d-block d-lg-none">
-                    <a href="{% url 'logout' %}"><strong>Logout</strong></a>
+                    <a href="{% url 'account_logout' %}"><strong>Logout</strong></a>
                   </li>
                   <hr class="d-block d-lg-none">
                   {% else %}
                   <li class="d-block d-lg-none">
-                    <a href="{% url 'login' %}"><strong>Login</strong></a>
+                    <a href="{% url 'account_login' %}"><strong>Login</strong></a>
                   </li>
                   <li class="d-block d-lg-none">
-                    <a href="{% url 'signup' %}"><strong>Sign Up</strong></a>
+                    <a href="{% url 'account_signup' %}"><strong>Sign Up</strong></a>
                   </li>
                   <hr class="d-block d-lg-none">
                   {% endif %}
@@ -64,7 +64,7 @@
                 </a>
               </div>
               {% else %}
-              <a href="{% url 'signup' %}" class="login-txt">
+              <a href="{% url 'account_signup' %}" class="login-txt">
                 <i class="bi-person-fill"></i>
                 <span>Sign up </span>
               </a>

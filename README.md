@@ -110,6 +110,22 @@ This package includes the script linked in the documentation above, which simpli
   SECRET_GMAIL_API_REFRESH_TOKEN = 'your_google_assigned_token'
   ```
 
+#### Authentication and E-mail verification
+
+The site uses the [allauth](https://django-allauth.readthedocs.io/en/latest/index.html) library to manage user 
+authentication and email validation. The configuration can be found in `config/settings.base.py` under the 
+section `# django-allauth`.
+
+The `ACCOUNT_EMAIL_VERIFICATION` variable controls whether a user's e-mail needs to be verified, the options 
+are `none`, `optional` or `mandatory` e.g.:
+
+```python
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+```
+
+See [allauth's documentation](https://django-allauth.readthedocs.io/en/latest/index.html) for more details on 
+other configuration variables.
+
 ### Running the development server
 
 Run the development server with the following command:
@@ -158,6 +174,13 @@ The admin panel can be access at `/admin` e.g. for the local development server 
 
 The panel can be used to browse and edit your database.  
 
+#### Changing the site name (Related to sent email templates)
+
+The site name that's used in email templates can be changed in the admin panel.
+
+* Login to the admin panel `/admin`
+* In the left sidebar click on `Sites`
+* A newly initialised site will be named `example.com`, click on it, enter the new name and click save.
 
 ### Testing
 

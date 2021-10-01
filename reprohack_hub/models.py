@@ -32,7 +32,7 @@ import os
 
 from reprohack_hub.utils import next_x_hour
 
-
+from allauth.account.decorators import verified_email_required
 RATING_MIN = 0
 RATING_MAX = 10
 RATING_DEFAULT = 5
@@ -73,7 +73,7 @@ class User(AbstractUser):
 
     #: First and last name do not cover name patterns around the globe
     name = CharField(_("Name of User"), blank=True, max_length=255)
-    email = CharField(_("E-mail"), blank=False, max_length=255)
+    email = CharField(_("E-mail"), blank=False, unique=True, max_length=255)
     bio = models.TextField(max_length=500, blank=True)
     affiliation = models.CharField(max_length=70, blank=True)
     location = models.CharField(max_length=70, blank=True)
