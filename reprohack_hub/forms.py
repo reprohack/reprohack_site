@@ -330,15 +330,6 @@ class UserCreationForm(forms.UserCreationForm):
                   'bio', 'location')
         model = get_user_model()
 
-    def clean_username(self):
-        username = self.cleaned_data["username"]
-
-        try:
-            get_user_model().objects.get(username=username)
-        except get_user_model().DoesNotExist:
-            return username
-
-        raise ValidationError(self.error_messages["duplicate_username"])
 
     def __init__(self, *args, **kwargs):
         super(UserCreationForm, self).__init__(*args, **kwargs)
