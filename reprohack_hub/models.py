@@ -240,7 +240,7 @@ class Paper(models.Model):
         _("Short Description of the paper"), max_length=2000,
         help_text=_("Include a description of analysis and reproducibility approach (e.g. programming language etc)"))
     why = models.TextField(
-        _("Why someone attempt to reproduce this paper?"), max_length=2000,
+        _("Why should someone attempt to reproduce this paper?"), max_length=2000,
         help_text=_("Help motivate potential reviewers to select your paper!"))
     focus = models.TextField(
         _("What should reviewers focus on?"), help_text=_("Optional. Use to point reviewers to specific difficulties or particular areas you want feedback on"),
