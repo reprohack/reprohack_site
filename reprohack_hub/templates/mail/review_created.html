@@ -2,10 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Your paper {{ paper_title }} has been reviewed</title>
+    <title>[{{ current_site.name }}] Your paper {{ paper_title }} has been reviewed!</title>
 </head>
 <body>
-Your paper has been reviewed, you can see the content of the review here: LINK HERE.
+
+<div>
+<img src="{{ logo_url }}" />
+</div>
+
+
+Dear {{user.name}},
+
+<strong>Your paper has been reviewed! You can see the content of the review
+  here: <a href="{{ review_url }}">{{ review_url }}</a>.</strong>
+
+{% if review_event %}
+  <p>
+  Thank you so much for sharing your paper <strong>{{ paper_title }}</strong>  to be
+  reproduced at <strong>{{ review_event.title }}</strong>.
+
+  </p>
+
+  <p>
+  We had a productive time at {{ event.title }} participant feedback on your paper has just been submitted!
+
+  </p>
+{% endif %}
+
+<p>
+As you know, reviewers are encouraged to fill in a “Review Form”, recording their experiences of attempting to reproduce authors' work. You are receiving this email because you agreed to be notified of any new reviews
+</p>
+
+<p>
+We can wholeheartedly say that reviewers where very engaged with the process and greatly
+benefited from working with the submitted materials, regardless of how successful they were
+at reproducing the work. We hope you will also find the feedback useful, regardless of any difficulties
+reviewers may have had.
+</p>
+
+
+<p>
+With warm regards,
+</p>
+
+<p>
+The ReproHack Core Team {% if review_event  %} & event host(s) {{ review_event.host }} {% endif %}
+</p>
+
+
+
+<a href="https:\\reprohack.org">reprohack.org</a>
 
 
 </body>

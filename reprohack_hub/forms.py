@@ -4,6 +4,7 @@ from typing import Any, Optional, Dict, Union, Type, Sequence
 
 from django.forms import Field as DFField, ModelForm, Widget, TextInput, RadioSelect, CharField, NumberInput
 from django.forms.models import ModelChoiceField
+from django.forms.widgets import Textarea
 from django.utils.translation import gettext_lazy as _
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit, Row, Column, HTML, Field, Div
@@ -49,7 +50,7 @@ class EventForm(ModelForm):
             'title',
             'host',
             Field('contact_email'),
-            HTML("<small style='color: #7e7e7e;'>If no email supplied, the email associated with the account submitting the event will be used as contact.</small><br><br><br>"), 
+            HTML("<small style='color: #7e7e7e;'>If no email supplied, the email associated with the account submitting the event will be used as contact.</small><br><br><br>"),
             'registration_url',
             'hackpad_url',
             Fieldset('Event Time/Date',
@@ -99,12 +100,12 @@ class PaperForm(ModelForm):
         widgets = {
             'title': TextInput(),
             # 'review_availability': RadioSelect(),
-            'authors': TextInput(attrs={'style': 'height:6em'}),
-            'citation_txt': TextInput(attrs={'style': 'height:8rem'}),
-            'citation_bib': TextInput(attrs={'style': 'height:12rem'}),
-            'description': TextInput(attrs={'style': 'height:18rem'}),
-            'why': TextInput(attrs={'style': 'height:18rem'}),
-            'focus': TextInput(attrs={'style': 'height:12rem'}),
+            'authors': Textarea(attrs={'style': 'height:6em'}),
+            'citation_txt': Textarea(attrs={'style': 'height:8rem'}),
+            'citation_bib': Textarea(attrs={'style': 'height:12rem'}),
+            'description': Textarea(attrs={'style': 'height:18rem'}),
+            'why': Textarea(attrs={'style': 'height:18rem'}),
+            'focus': Textarea(attrs={'style': 'height:12rem'}),
             'tags': TagWidget(),
             'archive': DjangoToggleSwitchWidget(round=True, klass="django-toggle-switch-success"),
             'email_review': DjangoToggleSwitchWidget(round=True, klass="django-toggle-switch-success"),
@@ -291,7 +292,7 @@ class UserChangeForm(forms.UserChangeForm):
                 Column('last_name', css_class='form-group col-md-7 mb-0')
             ),
              Row(
-                Column('password', css_class='form-group col-md-6 mb-0')
+                HTML("<div><label>Password</label><p><a href='/accounts/password/set'>Reset password using this form.</a></p></div>")
             ),
             HTML("<h2> Additional Profile Info </h2>"),
               Row(
@@ -301,16 +302,16 @@ class UserChangeForm(forms.UserChangeForm):
               Fieldset('Social',
               Row(
                 Column(
-                    PrependedAppendedText('twitter', '@', '<i class="fab fa-twitter"></i>', 
+                    PrependedAppendedText('twitter', '@', '<i class="fab fa-twitter"></i>',
                     placeholder="username"), css_class='form-group col-md-4 mb-0'
                 ),
                 Column(
-                    PrependedAppendedText('github', '@', '<i class="fab fa-github"></i>', 
+                    PrependedAppendedText('github', '@', '<i class="fab fa-github"></i>',
                     placeholder="username"), css_class='form-group col-md-4 mb-0'
                     ),
                 Column(
-                    PrependedText('orcid', '<i class="fab fa-orcid"></i>', 
-                    placeholder="0000-0000-0000-0000", 
+                    PrependedText('orcid', '<i class="fab fa-orcid"></i>',
+                    placeholder="0000-0000-0000-0000",
                     title = 'ORCID ID'), css_class='form-group col-md-4 mb-0'
                     )
                 )
@@ -325,7 +326,7 @@ class UserCreationForm(forms.UserCreationForm):
 
     class Meta(forms.UserCreationForm.Meta):
         fields = ('first_name', "last_name", 'username', 'email', 'password1',
-                  'password2', 'affiliation', 'twitter', 'github', 'orcid', 
+                  'password2', 'affiliation', 'twitter', 'github', 'orcid',
                   'bio', 'location')
         model = get_user_model()
 
@@ -365,16 +366,16 @@ class UserCreationForm(forms.UserCreationForm):
               Fieldset('Social',
               Row(
                 Column(
-                    PrependedAppendedText('twitter', '@', '<i class="fab fa-twitter"></i>', 
+                    PrependedAppendedText('twitter', '@', '<i class="fab fa-twitter"></i>',
                     placeholder="username"), css_class='form-group col-md-4 mb-0'
                 ),
                 Column(
-                    PrependedAppendedText('github', '@', '<i class="fab fa-github"></i>', 
+                    PrependedAppendedText('github', '@', '<i class="fab fa-github"></i>',
                     placeholder="username"), css_class='form-group col-md-4 mb-0'
                     ),
                 Column(
-                    PrependedText('orcid', '<i class="fab fa-orcid"></i>', 
-                    placeholder="0000-0000-0000-0000", 
+                    PrependedText('orcid', '<i class="fab fa-orcid"></i>',
+                    placeholder="0000-0000-0000-0000",
                     title = 'ORCID ID'), css_class='form-group col-md-4 mb-0'
                     )
                 )

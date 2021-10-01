@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Dict, Any, Optional, Type
 import json
 from django import http
+from django.contrib.sites.shortcuts import get_current_site
 from django.core import mail
 from django.contrib.auth import get_user_model
 from django.conf import settings
@@ -69,12 +70,12 @@ class EventCreate(LoginRequiredMixin, CreateView):
         self.object = form.save(commit=False)
         self.object.creator = self.request.user
         if not self.object.contact_email:
-            self.object.contact_email = self.object.creator.email 
+            self.object.contact_email = self.object.creator.email
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
 
-class EventUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class EventUpdate(UserPassesTestMixin, UpdateView):
     model = Event
     form_class = EventForm
     template_name = "event/event_edit.html"
@@ -111,6 +112,7 @@ class EventList(ListView):
         context["now"] = timezone.now()
         context["search"] = self.request.GET.get("search", "")
         return context
+
 
 
 # ------ PAPER ------- ##
@@ -267,10 +269,13 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
         paper_submitter_email = paper.submitter.email
 
         mail_context = {
-            "paper_title": paper_title
+            "paper_title": paper_title,
+            "logo_url": self.request.build_absolute_uri("/static/images/reprohack-logo-med.png"),
+            "review_url": self.request.build_absolute_uri(review.get_absolute_url()),
+            "review_event": review.event,
         }
 
-        send_mail_from_template(subject=f"[REPROHACK_HUB] Your paper \"{paper_title}\" has a new review.",
+        send_mail_from_template(subject=f"[{get_current_site(self.request).name}] Your paper \"{paper_title}\" has a new review.",
                                 template_name="mail/review_created.html",
                                 context=mail_context,
                                 from_email=settings.EMAIL_ADMIN_ADDRESS,
@@ -402,30 +407,9 @@ class UserSearchEndpointView(View):
         return JsonResponse(response, safe=False)
 
 
-class UserCreateView(CreateView):
-    """
-    Used when user signs up
-    """
-    model = User
-    form_class = UserCreationForm
-    template_name = "registration/signup.html"
-
-    # success_url = "event/???pk???"
-
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.save()
-        # username = form.cleaned_data.get('username')
-        # raw_password = form.cleaned_data.get('password1')
-        # user = authenticate(username=username, password=raw_password)
-        # login(request, user)
-        print(form.errors)
-        return HttpResponseRedirect(self.get_success_url())
-
-
 class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
-    template_name = "registration/user_detail.html"
+    template_name = "account/user_detail.html"
     slug_field = "username"
     slug_url_kwarg = "username"
 
@@ -460,7 +444,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = User
     form_class = UserChangeForm
-    template_name = "registration/user_update.html"
+    template_name = "account/user_update.html"
 
     def get_success_url(self):
         res = reverse("user_redirect")
