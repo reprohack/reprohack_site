@@ -7,14 +7,19 @@
 <body>
 
 <div>
-<img src="{{ logo_url }}" />
+  <img src="{{ logo_url }}" />
 </div>
 
-
+<p>
 Dear {{user.name}},
+</p>
 
-<strong>Your paper has been reviewed! You can see the content of the review
+<p>
+  <strong>Your paper has been reviewed! You can see the content of the review
   here: <a href="{{ review_url }}">{{ review_url }}</a>.</strong>
+
+</p>
+
 
 {% if review_event %}
   <p>
