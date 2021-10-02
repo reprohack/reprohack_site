@@ -13,104 +13,112 @@
 <!-- bradcam_area_end -->
 <div class="whole-wrap">
   <div class="container mt-3 mb-3">
-    <div class="row">
-      <div class="col-md-10">
+    <div class="markdownx-preview">
+      <div class="row">
+        <div class="col-md-10">
 
-        <h2><i class="bi-person-fill"></i>
-          {{ user.username }}
-          {% if user.twitter %}
-          <a href="https://twitter.com/{{ user.twitter }}">
-            <i class="fab fa-twitter"></i></a>
+          <h2><i class="bi-person-fill"></i>
+            {{ user.username }}
+            {% if user.twitter %}
+            <a href="https://twitter.com/{{ user.twitter }}">
+              <i class="fab fa-twitter"></i></a>
+            {% endif %}
+            {% if user.github %}
+            <a href="https://github.com/{{ user.github }}">
+              <i class="fab fa-github"></i> </a>
+            {% endif %}
+            {% if user.orcid %}
+            <a href="https://orcid.org/{{ user.orcid }}">
+              <i class="fab fa-orcid"></i> </a>
+            {% endif %}
+          </h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <p>
+            <span class="detail_header">Name:</span> {{ user.first_name }} {{ user.last_name }}
+          </p>
+          {% if user.affiliation %}
+          <p>
+            <span class="detail_header">Affiliation:</span> {{ user.affiliation }}
+          </p>
           {% endif %}
-          {% if user.github %}
-          <a href="https://github.com/{{ user.github }}">
-            <i class="fab fa-github"></i> </a>
+          {% if user.location %}
+          <p>
+            <span class="detail_header">Location:</span> {{ user.location }}
+          </p>
           {% endif %}
-          {% if user.orcid %}
-          <a href="https://orcid.org/{{ user.orcid }}">
-            <i class="fab fa-orcid"></i> </a>
+        </div>
+        <div class="col-md-6">
+          {% if user.bio %}
+          <p class="detail_header">
+            Bio:
+          </p>
+          <p class="header_text">
+            {{ user.bio }}
+          </p>
           {% endif %}
-        </h2>
+        </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-6">
-        <p>
-          <span class="detail_header">Name:</span> {{ user.first_name }} {{ user.last_name }}
-        </p>
-        <p>
-          <span class="detail_header">Affiliation:</span> {{ user.affiliation }}
-        </p>
-        <p>
-          <span class="detail_header">Location:</span> {{ user.location }}
-        </p>
+    <div class="indent-body">
+      <div class="row">
+        <div class="col-md-6">
+          <h2> <i class="fa fa-file"></i> &nbsp; Papers </h2>
+          {% if papers.count > 0 %}
+          <ul>
+            {% for paper in papers %}
+            <li class="card">
+              <a href="{{ paper.get_absolute_url }}">
+                <h4 class="card-title">{{ paper.title }}</h4>
+              </a></li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          No Papers to show
+          {% endif %}
+        </div>
+        <div class="col-md-6">
+          <h2> <i class="fas fa-clipboard-check"></i> Reviews </h2>
+          {% if reviews %}
+          {{ review.get_absolute_url }}
+          <ul>
+            {% for review in reviews %}
+            <li class="card">
+              <a href="{{ review.get_absolute_url }}">
+                <h4 class="card-title"> Review of "{{ review.paper.title }}" </h4>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          No Reviews to show
+          {% endif %}
+        </div>
       </div>
-      <div class="col-md-6">
-        <p class="detail_header">
-          Bio:
-        </p>
-        <p class="header_text">
-          {{ user.bio }}
-        </p>
-      </div>
-    </div>
-    <hr>
-    <div class="row">
-      <div class="col-md-6">
-        <h2> <i class="fa fa-file"></i> &nbsp; Papers </h2>
-        {% if papers.count > 0 %}
-        <ul>
-          {% for paper in papers %}
-          <li class="card">
-            <a href="{{ paper.get_absolute_url }}">
-              <h4 class="card-title">{{ paper.title }}</h4>
-            </a></li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        <h4> No Papers to show </h4>
-        {% endif %}
-      </div>
-      <div class="col-md-6">
-        <h2> <i class="fas fa-clipboard-check"></i> Reviews </h2>
-        {% if reviews %}
-        {{ review.get_absolute_url }}
-        <ul>
-          {% for review in reviews %}
-          <li class="card">
-            <a href="{{ review.get_absolute_url }}">
-              <h4 class="card-title"> Review of "{{ review.paper.title }}" </h4>
-            </a>
-          </li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        No Reviews to show
-        {% endif %}
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="col-md-6">
-        <h2> <i class="far fa-calendar-alt"></i>&nbsp; Events </h2>
-        {% if events.count > 0 %}
-        <ul>
-          {% for event in events %}
-          <li class="card">
-            <a href="{{ event.get_absolute_url }}">
-              <h4 class="card-title"> {{ event.title }} </h4>
-            </a>
-          </li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        <strong> No Events to show </strong>
-        {% endif %}
+      <br>
+      <div class="row">
+        <div class="col-md-6">
+          <h2> <i class="far fa-calendar-alt"></i>&nbsp; Events </h2>
+          {% if events.count > 0 %}
+          <ul>
+            {% for event in events %}
+            <li class="card">
+              <a href="{{ event.get_absolute_url }}">
+                <h4 class="card-title"> {{ event.title }} </h4>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          No Events to show
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
 
 </div>
 </div>
