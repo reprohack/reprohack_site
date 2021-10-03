@@ -24,12 +24,6 @@
               <h5>DOI: <a href="{{ paper.doi }}">{{ paper.doi }}</a></h5>
               <h5>Submitted by <a href="{{ paper.submitter.get_absolute_url }}">{{ paper.submitter.username }}</a>
               </h5>
-              <div class="detail_text">
-                <span class="detail_header">Tags:</span>
-                {% for tag in paper.tags.all %}
-                <a href="/paper/?tags={{ tag }}" class="badge badge-primary p-1 m-1">{{ tag }}</a>
-                {% endfor %}
-              </div>
               {% if paper.num_reviews > 0 %}
               <span class="paper-metric">
                 <strong> <i class="fas fa-check-circle"></i> &nbsp; Mean reproducibility score: </strong> &nbsp;
@@ -39,6 +33,18 @@
                 {{ paper.num_reviews }}
               </span>
               {% endif %}
+              <hr>
+              <small>
+                <strong> Why should we attempt to reproduce this paper? </strong>
+                <p>{{ paper.why }}</p>
+              </small>
+
+              <div class="detail_text">
+                <span class="detail_header">Tags:</span>
+                {% for tag in paper.tags.all %}
+                <a href="/paper/?tags={{ tag }}" class="badge badge-primary p-1 m-1">{{ tag }}</a>
+                {% endfor %}
+              </div>
             </li>
             {% endfor %}
           </ul>
