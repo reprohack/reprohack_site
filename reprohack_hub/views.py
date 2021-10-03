@@ -276,7 +276,7 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
             "review_event": review.event,
         }
 
-        send_mail_from_template(subject=f"[ReproHack Hub] Your paper \"{paper_title}\" has a new review.",
+        send_mail_from_template(subject=f"[{get_current_site(self.request).name}] Your paper \"{paper_title}\" has a new review.",
                                 template_name="mail/review_created.html",
                                 context=mail_context,
                                 from_email=settings.EMAIL_ADMIN_ADDRESS,
