@@ -159,11 +159,11 @@ ul {
     &:before {
       content: "";
       position: absolute;
-      width: 14px;
-      height: 14px;
+      width: 0.7rem;
+      height: 0.7rem;
       border: 3px solid $primary;
       background: $white;
-      top: 4px;
+      top: 0.6rem;
       left: 0;
       border-radius: 50%;
     }

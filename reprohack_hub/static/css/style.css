@@ -347,11 +347,14 @@ ul {
     ul li:before {
       content: "";
       position: absolute;
-      width: 14px;
-      height: 14px;
+      width: 11.2px;
+      width: 0.7rem;
+      height: 11.2px;
+      height: 0.7rem;
       border: 3px solid #ff5e13;
       background: #fff;
-      top: 4px;
+      top: 9.6px;
+      top: 0.6rem;
       left: 0;
       border-radius: 50%; }
 
