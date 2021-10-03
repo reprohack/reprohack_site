@@ -89,7 +89,7 @@
           <br>
           <h3>Public reviews</h3>
           <ul>
-            {% for review in reviews %}
+            {% for review in reviews reversed %}
 
             <li class="card">
               <a href="{% url 'review_detail' pk=review.pk %}">
