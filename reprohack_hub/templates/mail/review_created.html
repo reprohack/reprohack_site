@@ -16,22 +16,19 @@
     Dear {{paper_user_name}},
   </p>
 
-  <p>
-    <h3>Your paper has been reviewed! </h3>
 
+  <h3>Your paper has been reviewed! </h3>
+
+  <p>
+    Thank you so much for sharing your paper <strong>"{{ paper_title }}"</strong> to be
+    reproduced.
   </p>
 
 
   {% if review_event %}
   <p>
-    Thank you so much for sharing your paper <strong>{{ paper_title }}</strong> to be
-    reproduced at {{ review_event.title }}</strong>.
-
-  </p>
-
-  <p>
-    We had a productive time at the event and participant feedback on your paper has just been
-    submitted!
+    We had a productive time at <strong>{{ review_event.title }}</strong> and participant feedback on your paper has
+    just been submitted!
 
   </p>
   {% endif %}
