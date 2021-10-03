@@ -10,7 +10,7 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Q
 from django.forms.models import BaseModelForm
 from django.http.response import JsonResponse
 from django.template.loader import render_to_string
@@ -108,9 +108,20 @@ class EventList(ListView):
         return result
 
     def get_context_data(self, **kwargs):
+
+        upcoming_events = []
+        past_events = []
+        for event in Event.objects.all().order_by('start_time'):
+            if event.end_time >= timezone.now():
+                upcoming_events.append(event)
+            else:
+                past_events.append(event)
+
         context = super().get_context_data(**kwargs)
         context["now"] = timezone.now()
         context["search"] = self.request.GET.get("search", "")
+        context["upcoming_events"] = upcoming_events
+        context["past_events"] = past_events
         return context
 
 

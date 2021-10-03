@@ -24,8 +24,7 @@
 
           <h1>Upcoming Events</h1>
           <ul>
-            {% for event in object_list %}
-            {% if event.end_time >= now %}
+            {% for event in upcoming_events %}
             <li class="event card">
               <h3 class="card-title"><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
               {% if event.remote %}
@@ -38,8 +37,6 @@
                 {{ event.start_time }} - {{ event.end_time }} (TZ: {{ event.time_zone }})
               </div>
             </li>
-            {% else %}
-            {% endif %}
             {% endfor %}
 
           </ul>
@@ -50,8 +47,7 @@
 
           <h1>Past Events</h1>
           <ul>
-            {% for event in object_list reversed %}
-            {% if event.end_time < now %}
+            {% for event in past_events reversed %}
             <li class="event card">
               <h3 class="card-title"><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
               {% if event.remote %}
@@ -64,8 +60,6 @@
                 {{ event.start_time }} - {{ event.end_time }} (TZ: {{ event.time_zone }})
               </div>
             </li>
-            {% else %}
-            {% endif %}
             {% endfor %}
 
           </ul>
