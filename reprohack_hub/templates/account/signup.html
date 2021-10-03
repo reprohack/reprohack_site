@@ -8,7 +8,7 @@
 {% block content %}
 <!-- bradcam_area_start -->
 <div class="bradcam_area breadcam_bg overlay2">
-  <h3>Signup</h3>
+  <h1>Signup</h1>
 </div>
 <!-- bradcam_area_end -->
 <div class="whole-wrap">
@@ -16,7 +16,8 @@
     <div class="section-top-border">
       <div class="col-md-10">
         <h3>Welcome to the reprohack community</h3>
-      <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+        <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign
+            in</a>.{% endblocktrans %}</p>
         <form method="post">
           {% csrf_token %}
           {% crispy form %}
