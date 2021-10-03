@@ -85,6 +85,7 @@
               No associated event.
               {% endif %}
           </div>
+          {% if user.is_authenticated %}
           {% if reviews %}
           <br>
           <h3>Public reviews</h3>
@@ -99,6 +100,7 @@
             </li>
             {% endfor %}
           </ul>
+          {% endif %}
           {% endif %}
         </div>
       </div>

@@ -10,6 +10,16 @@
 <div class="whole-wrap">
   <div class="container box_1170">
     <div class="section-top-border">
+      {% if user.is_authenticated %}
+      <div class="markdownx-preview">
+        <h4>Please note: Not all reviews are visible</h4>
+        Reviews are visible when both:
+        <ul>
+          <li> The author has set reviews on their paper to be public.</li>
+          <li> Reviewers have set their review to be public. </li>
+        </ul>
+        Reviews are always visible to paper authors and reviewers.
+      </div>
       <h1>Recent Reviews</h1>
       <ul>
         {% for review in reviews_list reversed %}
@@ -27,13 +37,14 @@
 
         </li>
         {% endfor %}
-
       </ul>
 
 
       {# Pagination #}
       {% include "misc/pagination.html" %}
-
+      {% else %}
+      <h3>Please log in to view visible reviews</h3>
+      {% endif %}
 
     </div>
   </div>
