@@ -35,7 +35,7 @@ from reprohack_hub.utils import next_x_hour
 from allauth.account.decorators import verified_email_required
 RATING_MIN = 0
 RATING_MAX = 10
-RATING_DEFAULT = 5
+RATING_DEFAULT = 10
 
 DEFAULT_EVENT_START_HOUR = 10
 DEFAULT_EVENT_END_HOUR = 16
@@ -390,7 +390,7 @@ class Review(models.Model):
     reproducibility_outcome = models.CharField(_("Did you manage to reproduce it?"),
                                                max_length=1,
                                                choices=ReproducibilityOutcomes.choices,
-                                               default=ReproducibilityOutcomes.NOT_REPRODUCIBLE)
+                                               default=ReproducibilityOutcomes.FULLY_REPRODUCIBLE)
     reproducibility_rating = models.IntegerField(
         _("How much of the paper did you manage to reproduce?"),
         default=RATING_DEFAULT,
