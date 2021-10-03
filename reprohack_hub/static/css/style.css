@@ -1411,12 +1411,12 @@ a {
       color: #fff; }
       @media (min-width: 992px) and (max-width: 1200px) {
         .header-area .log_chat_area .live_chat_btn a {
-          padding: 0.7rem 0.7rem;
+          padding: 0.9rem 1.25rem;
           font-size: 0.85rem; } }
       @media (min-width: 1200px) and (max-width: 1500px) {
         .header-area .log_chat_area .live_chat_btn a {
-          font-size: 0.9;
-          padding: 1.2 1.2; } }
+          font-size: 1rem;
+          padding: 1.2 1.5rem; } }
       .header-area .log_chat_area .live_chat_btn a i {
         padding-right: 16px;
         padding-right: 1rem; }
