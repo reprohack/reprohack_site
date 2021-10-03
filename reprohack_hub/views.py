@@ -372,7 +372,21 @@ class ReviewList(ListView):
     #     context = super().get_context_data(**kwargs)
     #     context['now'] = timezone.now()
     #     return context
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
 
+        viewing_user = self.request.user
+
+        context = super().get_context_data(**kwargs)
+
+        # Filter reviews by viewing permission set by paper author and user
+        viewable_reviews = []
+        for review in Review.objects.all():
+            if review.is_viewable_by_user(viewing_user):
+                viewable_reviews.append(review)
+
+        context["viewable_reviews"] = viewable_reviews
+
+        return context
 
 class MarkdownView(TemplateView):
     """Base template for static Markdown file.
