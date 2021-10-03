@@ -5,7 +5,7 @@
 <div class="bradcam_area breadcam_bg overlay2">
 
   <h1>{{ paper.title }}
-    {% if user.is_authenticated %}
+    {% if user.pk == paper.submitter.pk %}
     <a class="btn btn-default" href="{% url 'paper_edit' pk=paper.pk %}"><i class="bi-pencil-fill"></i></a>
     {% endif %}
   </h1>
