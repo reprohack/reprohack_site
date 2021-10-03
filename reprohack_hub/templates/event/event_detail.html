@@ -80,8 +80,10 @@
           {% if event.paper_set.count > 0 %}
           <ul>
             {% for paper in event.paper_set.all %}
-            <li><a href="{% url 'paper_detail' pk=paper.event.pk %}">
+            {% if not paper.archive %}
+            <li><a href="{% url 'paper_detail' pk=paper.pk %}">
                 {{ paper }} </a> </li>
+            {% endif %}
             {% endfor %}
           </ul>
           {% else %}
