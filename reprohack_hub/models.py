@@ -300,7 +300,7 @@ class Paper(models.Model):
 
     @property
     def is_available_for_review(self):
-        return self.review_availability != self.archive
+        return self.review_availability == "ALL" and not self.archive
 
     def get_reviews_viewable_by_user(self, user):
         reviews_list = []

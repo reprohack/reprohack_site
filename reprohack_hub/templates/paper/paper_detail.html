@@ -5,13 +5,20 @@
 <div class="bradcam_area breadcam_bg overlay2">
 
   <h1>{{ paper.title }}
-    {% if user.is_authenticated %}
+    {% if user.pk == paper.submitter.pk %}
     <a class="btn btn-default" href="{% url 'paper_edit' pk=paper.pk %}"><i class="bi-pencil-fill"></i></a>
     {% endif %}
   </h1>
   <br>
-  {%  if paper.is_available_for_review %}
+  {%  if not paper.archive %}
   <a href="{% url 'review_new' paperid=paper.pk %}" class="boxed_btn">Review this paper</a>
+  {% if paper.review_availability == "EVT_ONLY" %}
+  <br>
+  <h3 style="color: white;"> <i class="fas fa-exclamation-circle"></i> &nbsp; Paper is only available for review at the
+    <strong>{{ paper.event.title }}</strong> event &nbsp; <i class="fas fa-exclamation-circle"></i> </h3>
+  {% endif %}
+  {% else %}
+  <h2 style="color: white;"> <i class="fas fa-archive"></i> PAPER ARCHIVED <i class="fas fa-archive"></i></h2>
   {% endif %}
 </div>
 <div class="whole-wrap">

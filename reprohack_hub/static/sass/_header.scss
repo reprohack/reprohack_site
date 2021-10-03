@@ -303,13 +303,13 @@
         color: #fff;
 
         @media #{$mid_device} {
-          padding: 0.7rem 0.7rem;
+          padding: 0.9rem 1.25rem;
           font-size: 0.85rem;
         }
 
         @media #{$large_device} {
-          font-size: 0.9;
-          padding: 1.2 1.2;
+          font-size: 1rem;
+          padding: 1.2 1.5rem;
         }
 
         i {

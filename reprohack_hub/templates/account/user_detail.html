@@ -71,7 +71,10 @@
             {% for paper in papers %}
             <li class="card">
               <a href="{{ paper.get_absolute_url }}">
-                <h4 class="card-title">{{ paper.title }}</h4>
+                <h4 class="card-title">
+                  {{ paper.title }}
+                  {%  if paper.archive %} &nbsp; <i class="fas fa-archive"></i> {% endif %}
+                </h4>
               </a></li>
             {% endfor %}
           </ul>
