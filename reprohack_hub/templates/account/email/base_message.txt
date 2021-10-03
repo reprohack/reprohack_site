@@ -1,7 +1,7 @@
-{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name %}Hello from the ReproHack Hub!{% endblocktrans %}
+{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name %}Hello from the {{ site_name }}!{% endblocktrans %}
 
 {% block content %}{% endblock %}
 
-{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Thank you for using the ReproHack Hub!
-reprohack.org {% endblocktrans %}
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Thank you for using the {{ site_name }}!
+{{ site_domain }}{% endblocktrans %}
 {% endautoescape %}
