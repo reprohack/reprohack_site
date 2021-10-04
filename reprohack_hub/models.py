@@ -271,7 +271,7 @@ class Paper(models.Model):
         help_text=_("The paper will no longer be available for review"))
     public_reviews = models.BooleanField(
         _("Make reviews public"), default=True,
-        help_text=_("Only reviews that have also been set to public by reviewers will be visible to others"))
+        help_text=_("Only reviews that have also been set to public by reviewers will be visible to other signed in users"))
     email_review = models.BooleanField(
         _("Send me an email when a review is received"), default=True)
     submitter = models.ForeignKey(
