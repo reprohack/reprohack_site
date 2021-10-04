@@ -206,7 +206,8 @@ class Event(models.Model):
         return None
 
 # ---- Papers ---- #
-
+def limit_paper_event_choices():
+    return {'start_time__gte': timezone.now()}
 
 class Paper(models.Model):
 
@@ -230,7 +231,7 @@ class Paper(models.Model):
         _("Paper Authors"),
         help_text=_("Please separate authors names with commas"))
     event = models.ForeignKey(Event, help_text=_("Associated Event (leave blank if general submission)"), null=True, blank=True,
-                              on_delete=models.SET_NULL)
+                              on_delete=models.SET_NULL, limit_choices_to = limit_paper_event_choices)
 
     citation_txt = models.TextField(_(
         "Reference"), max_length=1000,
