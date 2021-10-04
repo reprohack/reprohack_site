@@ -5,7 +5,7 @@ Todo:
     * Check if default submission_date for Event and Paper is redundant.
 """
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.contrib.auth import get_user_model
 from django_countries.fields import CountryField
@@ -20,6 +20,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import AbstractUser, AnonymousUser
 from django.db.models import CharField
@@ -299,8 +300,18 @@ class Paper(models.Model):
 
 
     @property
-    def is_available_for_review(self):
+    def is_available_for_general_review(self):
         return self.review_availability == "ALL" and not self.archive
+
+    def is_available_for_event_review(self):
+        def time_in_range(start, end, x):
+            if start <= end:
+                return start <= x <= end
+            else:
+                return start <= x or x <= end
+
+        return self.review_availability == "EVT_ONLY" and time_in_range(self.event.start_time - timedelta(days=2),
+        self.event.end_time + timedelta(days=7), timezone.now()) and not self.archive
 
     def get_reviews_viewable_by_user(self, user):
         reviews_list = []
@@ -341,6 +352,8 @@ class AuthorsAndSubmitters(models.Model):
     # def __str__(self):
     #     return f"{self.user} {self.paper}"
 
+def limit_review_event_choices():
+    return {'end_time__gte': timezone.now() - timedelta(days=7)}
 
 class Review(models.Model):
 
@@ -380,7 +393,7 @@ class Review(models.Model):
     # id = models.AutoField(primary_key=True)
     event = models.ForeignKey(Event, help_text=_("Is the review associated with an Event? (leave blank if not)"),
                               on_delete=models.SET_NULL,
-                              null=True, blank=True)
+                              null=True, blank=True, limit_choices_to = limit_review_event_choices)
     # Lead reviewer...?
     reviewers = models.ManyToManyField(User,
                                        through="PaperReviewer",

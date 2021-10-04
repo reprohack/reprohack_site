@@ -10,14 +10,15 @@
     {% endif %}
   </h1>
   <br>
-  {%  if not paper.archive %}
+  {%  if paper.is_available_for_general_review or paper.is_available_for_event_review %}
   <a href="{% url 'review_new' paperid=paper.pk %}" class="boxed_btn">Review this paper</a>
+  {% endif %}
   {% if paper.review_availability == "EVT_ONLY" %}
   <br>
   <h3 style="color: white;"> <i class="fas fa-exclamation-circle"></i> &nbsp; Paper is only available for review at the
     <strong>{{ paper.event.title }}</strong> event &nbsp; <i class="fas fa-exclamation-circle"></i> </h3>
   {% endif %}
-  {% else %}
+  {%  if paper.archive %}
   <h2 style="color: white;"> <i class="fas fa-archive"></i> PAPER ARCHIVED <i class="fas fa-archive"></i></h2>
   {% endif %}
 </div>

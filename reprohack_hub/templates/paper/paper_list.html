@@ -18,7 +18,7 @@
           <h2 class="mb-4">Browse ReproHack papers</h2>
           <ul>
             {% for paper in object_list %}
-            {% if paper.is_available_for_review %}
+            {% if paper.is_available_for_general_review %}
             <li class="paper card">
               <h3><a href="{{ paper.get_absolute_url }}">{{ paper.title }}</a></h3>
               <h5>Authors: {{ paper.authors }}</h5>
