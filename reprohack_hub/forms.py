@@ -325,7 +325,7 @@ class UserCreationForm(forms.UserCreationForm):
     )
 
     class Meta(forms.UserCreationForm.Meta):
-        fields = ('first_name', "last_name", 'username', 'email', 'password1',
+        fields = ('name', 'username', 'email', 'password1',
                   'password2', 'affiliation', 'twitter', 'github', 'orcid',
                   'bio', 'location')
         model = get_user_model()
@@ -342,8 +342,8 @@ class UserCreationForm(forms.UserCreationForm):
             'username',
             'email',
             Row(
-                Column('first_name', css_class='form-group col-md-5 mb-0'),
-                Column('last_name', css_class='form-group col-md-7 mb-0')
+                Column('name', css_class=''),
+
             ),
             Row(
                 Column('password1', css_class='form-group col-md-6 mb-0'),

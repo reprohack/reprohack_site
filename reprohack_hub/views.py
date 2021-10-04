@@ -10,6 +10,7 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator
 from django.db.models import QuerySet, Q
 from django.forms.models import BaseModelForm
 from django.http.response import JsonResponse
@@ -95,12 +96,12 @@ class EventDetail(DetailView):
 class EventList(ListView):
     model = Event
     template_name = "event/event_list.html"
-    paginate_by = 20  # if pagination is desired
+    paginate_by = 3  # if pagination is desired
 
     def get_queryset(self) -> QuerySet:
         search_string = self.request.GET.get("search")
 
-        result = Event.objects.all().order_by('start_time')
+        result = Event.objects.all().order_by('-start_time')
 
         if search_string and len(search_string) > 0:
             result = result.filter(title__contains=search_string)
@@ -111,7 +112,19 @@ class EventList(ListView):
 
         upcoming_events = []
         past_events = []
-        for event in Event.objects.all().order_by('start_time'):
+
+        # Since it's impossible to get the actual paginator object used in listview
+        # we're creating another one that will get the the same object list
+        paginator = Paginator(self.get_queryset(), self.paginate_by)
+        page = self.request.GET.get(self.page_kwarg, 1)
+        page_obj = []
+        try:
+            page_obj = paginator.page(page).object_list
+        except:
+            page_obj = paginator.page(1).object_list
+
+
+        for event in page_obj:
             if event.end_time >= timezone.now():
                 upcoming_events.append(event)
             else:
