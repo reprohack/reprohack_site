@@ -3012,6 +3012,15 @@ pre {
   border-radius: 10px;
   padding: 2em; }
 
+.icon-box {
+  padding: 3.2px;
+  padding: 0.2rem;
+  font-size: 16px;
+  font-size: 1rem;
+  color: #2E004B; }
+  .icon-box.orange {
+    color: #ff5e13; }
+
 label.django-toggle-switch + label.custom-control-label::before {
   border: none;
   background-color: transparent; }

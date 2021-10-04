@@ -24,7 +24,11 @@
         </div>
 
         <div>
-          <h4>Submitted by {{ review.reviewers.first }}</h4> {{review.submission_date}}
+          <h4>Submitted by {{ review.reviewers.first }} <span class="icon-box">
+              {%  if review.public_review %} &nbsp; <i class="fas fa-globe-africa"></i> {% endif %}
+            </span>
+          </h4>
+          {{review.submission_date}}
         </div>
         {%  if  review.get_lead_reviewers  %}
         <div>

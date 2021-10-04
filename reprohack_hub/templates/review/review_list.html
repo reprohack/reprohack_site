@@ -31,6 +31,9 @@
           <div>
             By: {% for reviewer in review.reviewers.all %}<a
               href="{{ reviewer.get_absolute_url }}">{{ reviewer.username }}</a> {% endfor %}
+            <span class="icon-box orange">
+              {%  if review.public_review %} &nbsp; <i class="fas fa-globe-africa"></i> {% endif %}
+            </span>
           </div>
           <div>
             <i class="bi-clock"></i> Submitted: {{ review.submission_date }}

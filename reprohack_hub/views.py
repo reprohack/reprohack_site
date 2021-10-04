@@ -285,9 +285,13 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
+        
+        if self.object.paper.email_review:
+            review = self.object
+            paper = review.paper
 
-        review = self.object
-        paper = review.paper
+            paper_title = paper.title
+            paper_submitter_email = paper.submitter.email
 
         paper_title = paper.title
 

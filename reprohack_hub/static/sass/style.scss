@@ -310,6 +310,15 @@ pre {
 
 }
 
+.icon-box {
+  padding: 0.2rem;
+  font-size: 1rem;
+  color: $reprohack-purple;
+
+  &.orange {
+    color: $theme-color2;
+  }
+}
 
 label.django-toggle-switch+label.custom-control-label::before {
   border: none;
