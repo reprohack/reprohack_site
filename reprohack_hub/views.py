@@ -272,27 +272,28 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
+        
+        if self.object.paper.email_review:
+            review = self.object
+            paper = review.paper
 
-        review = self.object
-        paper = review.paper
+            paper_title = paper.title
+            paper_submitter_email = paper.submitter.email
 
-        paper_title = paper.title
-        paper_submitter_email = paper.submitter.email
+            mail_context = {
+                "paper_user_name": paper.submitter.first_name,
+                "paper_title": paper_title,
+                "logo_url": self.request.build_absolute_uri("/static/images/reprohack-logo-med.png"),
+                "review_url": self.request.build_absolute_uri(review.get_absolute_url()),
+                "review_event": review.event,
+            }
 
-        mail_context = {
-            "paper_user_name": paper.submitter.first_name,
-            "paper_title": paper_title,
-            "logo_url": self.request.build_absolute_uri("/static/images/reprohack-logo-med.png"),
-            "review_url": self.request.build_absolute_uri(review.get_absolute_url()),
-            "review_event": review.event,
-        }
-
-        send_mail_from_template(subject=f"[{get_current_site(self.request).name}] Your paper \"{paper_title}\" has a new review.",
-                                template_name="mail/review_created.html",
-                                context=mail_context,
-                                from_email=settings.EMAIL_ADMIN_ADDRESS,
-                                recipient_list=[paper_submitter_email]
-                                )
+            send_mail_from_template(subject=f"[{get_current_site(self.request).name}] Your paper \"{paper_title}\" has a new review.",
+                                    template_name="mail/review_created.html",
+                                    context=mail_context,
+                                    from_email=settings.EMAIL_ADMIN_ADDRESS,
+                                    recipient_list=[paper_submitter_email]
+                                    )
 
         return response
 
