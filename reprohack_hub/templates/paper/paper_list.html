@@ -24,6 +24,12 @@
               <h5>Authors: {{ paper.authors }}</h5>
               <h5>DOI: <a href="{{ paper.doi }}">{{ paper.doi }}</a></h5>
               <h5>Submitted by <a href="{{ paper.submitter.get_absolute_url }}">{{ paper.submitter.username }}</a>
+                <span class="icon-box">
+                  {%  if paper.event %} &nbsp; <i class="fas fa-calendar-day"></i> {% endif %}
+                  {%  if paper.review_availability == "ALL" %} &nbsp; <i class="far fa-list-alt"></i>
+                  {% endif %}
+                  {%  if paper.public_reviews %} &nbsp; <i class="fas fa-globe-africa"></i> {% endif %}
+                </span>
               </h5>
               {% if paper.num_reviews > 0 %}
               <span class="paper-metric">
@@ -94,7 +100,13 @@
               </a>
             </div>
           </form>
-
+          <br>
+          <h4> Key </h4>
+          <small>
+            <i class="fas fa-calendar-day"></i> &nbsp; Associated with an event <br>
+            <i class="far fa-list-alt"></i> &nbsp; Available for general review <br>
+            <i class="fas fa-globe-africa"></i> &nbsp; Public reviews welcome
+          </small>
         </div>
 
       </div>

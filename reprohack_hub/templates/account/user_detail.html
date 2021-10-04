@@ -73,9 +73,17 @@
               <a href="{{ paper.get_absolute_url }}">
                 <h4 class="card-title">
                   {{ paper.title }}
-                  {%  if paper.archive %} &nbsp; <i class="fas fa-archive"></i> {% endif %}
                 </h4>
-              </a></li>
+              </a>
+              <p class="icon-box orange">
+                {%  if paper.event %} &nbsp; <i class="fas fa-calendar-day"></i> {% endif %}
+                {%  if paper.review_availability == "ALL" %} &nbsp; <i class="far fa-list-alt"></i>
+                {% endif %}
+                {%  if paper.public_reviews %} &nbsp; <i class="fas fa-globe-africa"></i> {% endif %}
+                {%  if paper.email_review %} &nbsp; <i class="fas fa-envelope"></i> {% endif %}
+                {%  if paper.archive %} &nbsp; <i class="fas fa-archive"></i> {% endif %}
+              </p>
+            </li>
             {% endfor %}
           </ul>
           {% else %}
@@ -91,6 +99,9 @@
             <li class="card">
               <a href="{{ review.get_absolute_url }}">
                 <h4 class="card-title"> Review of "{{ review.paper.title }}" </h4>
+                <p class="icon-box orange">
+                  {%  if review.public_review %} &nbsp; <i class="fas fa-globe-africa"></i> {% endif %}
+                </p>
               </a>
             </li>
             {% endfor %}
@@ -117,6 +128,17 @@
           {% else %}
           No Events to show
           {% endif %}
+        </div>
+        <div class="col-md-6">
+          <br>
+          <h3> Key </h3>
+          <ul>
+            <li><i class="fas fa-calendar-day"></i> &nbsp; Associated with an event</li>
+            <li><i class="far fa-list-alt"></i> &nbsp; Available for general review</li>
+            <li><i class="fas fa-globe-africa"></i> &nbsp; Public reviews</li>
+            <li><i class="fas fa-envelope"></i> &nbsp; Email notifications on</li>
+            <li><i class="fas fa-archive"></i> &nbsp; Archived</li>
+          </ul>
         </div>
       </div>
     </div>
