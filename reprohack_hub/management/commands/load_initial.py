@@ -7,18 +7,15 @@ from reprohack_hub.models import Event, Paper, Review
 from datetime import datetime, timedelta
 
 class Command(BaseCommand):
-    help = "Load initial data"
+    help = "Load initial data. \n Usage: \n ./manage.py load_initial -adminuser adminusername"
+
+    def add_arguments(self, parser):
+        parser.add_argument('-adminuser', nargs=1, type=str, help="The admin username to be associated with initial uploads")
 
     def handle(self, *args, **options):
-        print("Creating initial db data")
-        admin_user = get_user_model().objects.create(username="rhadmin",
-                                                     email="reprohack-hub@sheffield.ac.uk",
-                                                     is_superuser=True,
-                                                     is_staff=True)
-        admin_user.set_password("T47BfFovEAvTsJiKp3A")
-        admin_user.save()
-
-        self.load_initial_data()
+        print(f"Creating initial db data, objects will be assigned to admin user {options['adminuser'][0]}")
+        admin_username = options['adminuser'][0]
+        self.load_initial_data(admin_username)
 
 
     def get_csv_dict(self, path):
@@ -31,12 +28,12 @@ class Command(BaseCommand):
 
         return out_list
 
-    def load_initial_data(self):
+    def load_initial_data(self, admin_username):
         events_path = "data/events.csv"
         papers_path = "data/papers.csv"
         reviews_path = "data/reviews.csv"
 
-        admin = get_user_model().objects.get(username="rhadmin")
+        admin = get_user_model().objects.get(username=admin_username)
 
         events = self.get_csv_dict(events_path)
         for row in events:
@@ -58,6 +55,7 @@ class Command(BaseCommand):
 
         papers = self.get_csv_dict(papers_path)
         for row in papers:
+            paper = Paper.objects.create()
             print(row)
 
         reviews = self.get_csv_dict(reviews_path)
