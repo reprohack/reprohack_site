@@ -23,7 +23,7 @@
 
     var eventLocations = [
       {% for event in object_list %}
-        {% if event.lat and event.long %}
+        {% if event.lat and event.long and not event.remote %}
       {
         latlng: L.latLng({{ event.lat }}, {{ event.long }}),
         title: "{{ event.title }}",
