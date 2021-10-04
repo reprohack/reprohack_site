@@ -35,15 +35,16 @@
     <div class="section-top-border">
       <h1>Event details</h1>
     </div>
-  </div>
-  <div class="content container">
-    <div class="row">
-      <div class="col-md-12">
-        {% block event-form %}
-        {% endblock %}
-        <div class="event-form" method="POST">
-          {% csrf_token %}
-          {% crispy form %}
+
+    <div class="content container">
+      <div class="row">
+        <div class="col-md-12">
+          {% block event-form %}
+          {% endblock %}
+          <div class="event-form" method="POST">
+            {% csrf_token %}
+            {% crispy form %}
+          </div>
         </div>
       </div>
     </div>
