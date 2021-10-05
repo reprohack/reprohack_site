@@ -1,4 +1,6 @@
+from allauth.account.views import PasswordChangeView
 from django.conf.urls import url
+from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 from django.urls import include, path, re_path
@@ -9,10 +11,12 @@ from .views import (EventCreate, EventUpdate, EventDetail, EventList, IndexView,
                     PaperCreate, PaperUpdate, PaperDetail, PaperList,
                     ReviewCreate, ReviewDetail, ReviewUpdate, ReviewList,
                     UserDetailView, UserUpdateView, UserRedirectView, MarkdownView,
-                    UserSearchEndpointView, PaperTagSearchEndpointView)
+                    UserSearchEndpointView, PaperTagSearchEndpointView, UserEditRedirectView)
 
 
 urlpatterns = [
+    # User management
+    path("accounts/", include("allauth.urls")),
     path('accounts/', include('django.contrib.auth.urls')),
     path('resources',
          MarkdownView.as_view(extra_context={'title': 'Resources',
@@ -51,6 +55,7 @@ urlpatterns = [
                                              'markdown_file': 'templates/intro-slides-hackmd-template.md'}),
          name='intro_slides_template'),
     path("user_redirect/", view=UserRedirectView.as_view(), name="user_redirect"),
+    path("user_edit_redirect/", view=UserEditRedirectView.as_view(), name="user_edit_redirect"),
     path('users/<str:username>/', UserDetailView.as_view(), name='user_detail'),
     path('users/<str:username>/edit/',
          UserUpdateView.as_view(), name='user_update'),

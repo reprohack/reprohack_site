@@ -3,6 +3,8 @@ from os import PathLike
 from pathlib import Path
 from typing import Dict, Any, Optional, Type
 import json
+
+from allauth.account.views import PasswordChangeView
 from django import http
 from django.contrib.sites.shortcuts import get_current_site
 from django.core import mail
@@ -96,7 +98,7 @@ class EventDetail(DetailView):
 class EventList(ListView):
     model = Event
     template_name = "event/event_list.html"
-    paginate_by = 3  # if pagination is desired
+    paginate_by = 20  # if pagination is desired
 
     def get_queryset(self) -> QuerySet:
         search_string = self.request.GET.get("search")
@@ -285,7 +287,7 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        
+
         if self.object.paper.email_review:
             review = self.object
             paper = review.paper
@@ -514,3 +516,10 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         return reverse("user_detail", kwargs={"username": self.request.user.username})
+
+class UserEditRedirectView(LoginRequiredMixin, RedirectView):
+    permanent = False
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse("user_update", kwargs={"username": self.request.user.username})
+
+
