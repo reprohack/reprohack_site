@@ -217,6 +217,8 @@ class PaperList(ListView):
         if search_string and len(search_string) > 0:
             result = result.filter(title__contains=search_string)
 
+        result = result.filter(review_availability="ALL").exclude(archive=True)
+
         return result.order_by('-submission_date')
 
     def get_context_data(self, **kwargs):
