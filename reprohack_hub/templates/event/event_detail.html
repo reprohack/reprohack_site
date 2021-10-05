@@ -17,7 +17,7 @@
   <div class="container box_1170">
     <div class="section-top-border">
       <div class="event">
-        <div class="card" style="">
+        <div class="card-box" style="">
           <div class="card-body">
             <div class="row">
               <div class="col-md-9">
@@ -81,8 +81,40 @@
           <ul>
             {% for paper in event.paper_set.all %}
             {% if not paper.archive %}
-            <li><a href="{% url 'paper_detail' pk=paper.pk %}">
-                {{ paper }} </a> </li>
+            <li class="paper card-box">
+              <h3><a href="{{ paper.get_absolute_url }}">{{ paper.title }}</a></h3>
+              <h5>Authors: {{ paper.authors }}</h5>
+              <h5>DOI: <a href="{{ paper.doi }}">{{ paper.doi }}</a></h5>
+              <h5>Submitted by <a href="{{ paper.submitter.get_absolute_url }}">{{ paper.submitter.username }}</a>
+                <span class="icon-box">
+                  {%  if paper.event %} &nbsp; <i class="fas fa-calendar-day"></i> {% endif %}
+                  {%  if paper.review_availability == "ALL" %} &nbsp; <i class="far fa-list-alt"></i>
+                  {% endif %}
+                  {%  if paper.public_reviews %} &nbsp; <i class="fas fa-globe-africa"></i> {% endif %}
+                </span>
+              </h5>
+              {% if paper.num_reviews > 0 %}
+              <span class="paper-metric">
+                <strong> <i class="fas fa-check-circle"></i> &nbsp; Mean reproducibility score: </strong> &nbsp;
+                {{ paper.mean_reproducibility_score | floatformat:1 }}/10
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                <strong><i class="fas fa-recycle"></i> Number of reviews: </strong> &nbsp;
+                {{ paper.num_reviews }}
+              </span>
+              {% endif %}
+              <hr>
+              <small>
+                <strong> Why should we attempt to reproduce this paper? </strong>
+                <p>{{ paper.why }}</p>
+              </small>
+
+              <div class="detail_text">
+                <span class="detail_header">Tags:</span>
+                {% for tag in paper.tags.all %}
+                <a href="/paper/?tags={{ tag }}" class="badge badge-primary p-1 m-1">{{ tag }}</a>
+                {% endfor %}
+              </div>
+            </li>
             {% endif %}
             {% endfor %}
           </ul>

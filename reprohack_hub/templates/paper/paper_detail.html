@@ -107,7 +107,7 @@
           <ul>
             {% for review in reviews reversed %}
 
-            <li class="card">
+            <li class="card-box">
               <a href="{% url 'review_detail' pk=review.pk %}">
                 Review by {% for reviewer in review.reviewers.all %}{{ reviewer.username }}
                 , {% endfor %}, {{ review.submission_date }}

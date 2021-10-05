@@ -171,7 +171,19 @@ blockquote {
 
 }
 
+.card-box {
+  padding: 0.5rem;
+  margin-right: 2rem;
+  border-bottom: 0.3rem double $reprohack-purple;
 
+  &:first-of-type {
+    border-top: 0.3rem double $reprohack-purple;
+  }
+
+  &:before {
+    content: none;
+  }
+}
 
 .contact-box {
   align-items: center;
