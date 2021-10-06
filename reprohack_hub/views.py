@@ -98,7 +98,7 @@ class EventDetail(DetailView):
 class EventList(ListView):
     model = Event
     template_name = "event/event_list.html"
-    paginate_by = 1 # if pagination is desired
+    paginate_by = 20 # if pagination is desired
 
     def get_queryset(self) -> QuerySet:
 

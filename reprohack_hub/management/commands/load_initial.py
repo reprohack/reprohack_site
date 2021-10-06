@@ -7,14 +7,14 @@ from reprohack_hub.models import Event, Paper, Review
 from datetime import datetime, timedelta
 
 class Command(BaseCommand):
-    help = "Load initial data. \n Usage: \n ./manage.py load_initial -adminuser adminusername"
+    help = "Load initial data. \n Usage: \n ./manage.py load_initial -submitter [username]"
 
     def add_arguments(self, parser):
-        parser.add_argument('-adminuser', nargs=1, type=str, help="The admin username to be associated with initial uploads")
+        parser.add_argument('-submitter', nargs=1, type=str, help="The username to be associated with initial uploads")
 
     def handle(self, *args, **options):
-        print(f"Creating initial db data, objects will be assigned to admin user {options['adminuser'][0]}")
-        admin_username = options['adminuser'][0]
+        print(f"Creating initial db data, objects will be assigned to admin user {options['submitter'][0]}")
+        admin_username = options['submitter'][0]
         self.load_initial_data(admin_username)
 
 
