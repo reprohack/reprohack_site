@@ -17,15 +17,15 @@
           <br>
           <div class="row">
             <div class="col">
-              {% include "event/event_map.html" %}
+              {% include "event/event_map.html" with object_list=page_object_list %}
             </div>
           </div>
           <br>
 
-          {% if upcoming_events|length > 0 %}
+
           <h1>Upcoming Events</h1>
           <ul>
-            {% for event in  upcoming_events %}
+            {% for event in  upcoming_page.object_list %}
             <li class="event card-box">
               <h3 class="card-title"><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
               {% if event.remote %}
@@ -42,14 +42,19 @@
 
           </ul>
 
-          {% endif %}
+        {% include "misc/pagination-2-lists.html" with page_obj=upcoming_page page2_obj=past_page page_var=upcoming_event_query_var page2_var=past_event_query_var %}
 
 
-          {% if past_events|length > 0 %}
+
+
+
 
           <h1>Past Events</h1>
+        {% if not past_page.object_list %}
+          No objects
+        {% endif %}
           <ul>
-            {% for event in past_events %}
+            {% for event in past_page.object_list %}
             <li class="event card-box">
               <h3 class="card-title"><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
               {% if event.remote %}
@@ -63,15 +68,10 @@
               </div>
             </li>
             {% endfor %}
-
           </ul>
 
-          {% endif %}
+        {% include "misc/pagination-2-lists.html" with page_obj=past_page page2_obj=upcoming_page page_var=past_event_query_var page2_var=upcoming_event_query_var%}
 
-
-
-          {# Pagination #}
-          {% include "misc/pagination.html" %}
 
         </div>
         <div class="col-sm-3">

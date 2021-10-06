@@ -98,46 +98,57 @@ class EventDetail(DetailView):
 class EventList(ListView):
     model = Event
     template_name = "event/event_list.html"
-    paginate_by = 20  # if pagination is desired
+    paginate_by = 1 # if pagination is desired
 
     def get_queryset(self) -> QuerySet:
-        search_string = self.request.GET.get("search")
 
-        result = Event.objects.all().order_by('-start_time')
-
-        if search_string and len(search_string) > 0:
-            result = result.filter(title__contains=search_string)
-
-        return result
+        # Return default queryset as we're doing the fetch in get_context_data
+        return Event.objects.all()
 
     def get_context_data(self, **kwargs):
 
-        upcoming_events = []
-        past_events = []
-
-        # Since it's impossible to get the actual paginator object used in listview
-        # we're creating another one that will get the the same object list
-        paginator = Paginator(self.get_queryset(), self.paginate_by)
-        page = self.request.GET.get(self.page_kwarg, 1)
-        page_obj = []
-        try:
-            page_obj = paginator.page(page).object_list
-        except:
-            page_obj = paginator.page(1).object_list
-
-
-        for event in page_obj:
-            if event.end_time >= timezone.now():
-                upcoming_events.append(event)
-            else:
-                past_events.append(event)
-
         context = super().get_context_data(**kwargs)
+
+        upcoming_event_query_var = "uc"
+        past_event_query_var = "pe"
+
+        search_string = self.request.GET.get("search")
+
+        result = Event.objects.all()
+        if search_string and len(search_string) > 0:
+            result = result.filter(title__contains=search_string)
+
+        upcoming_events = result.filter(start_time__gte=timezone.now()).order_by("start_time")
+        past_events = result.filter(start_time__lt=timezone.now()).order_by("-start_time")
+
+        upcoming_paginator = Paginator(upcoming_events, self.paginate_by)
+        past_paginator = Paginator(past_events, self.paginate_by)
+
+        upcoming_page = self.get_page_from_request(upcoming_paginator,
+                                                   upcoming_event_query_var,
+                                                   self.request)
+        past_page = self.get_page_from_request(past_paginator,
+                                               past_event_query_var,
+                                               self.request)
+
+
         context["now"] = timezone.now()
         context["search"] = self.request.GET.get("search", "")
-        context["upcoming_events"] = upcoming_events
-        context["past_events"] = past_events
+        context["upcoming_event_query_var"] = upcoming_event_query_var
+        context["past_event_query_var"] = past_event_query_var
+        context["upcoming_page"] = upcoming_page
+        context["past_page"] = past_page
+        ojl =upcoming_page.object_list | past_page.object_list
+        context["page_object_list"] = ojl
         return context
+
+    def get_page_from_request(self, paginator, request_var_name, request):
+        page = self.request.GET.get(request_var_name, "1")
+
+        try:
+            return paginator.page(page)
+        except:
+            return paginator.page(1)
 
 
 
