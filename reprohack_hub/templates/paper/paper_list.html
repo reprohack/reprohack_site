@@ -19,7 +19,7 @@
           <ul>
             {% for paper in object_list %}
 
-            <li class="paper card">
+            <li class="paper card-box">
               <h3><a href="{{ paper.get_absolute_url }}">{{ paper.title }}</a></h3>
               <h5>Authors: {{ paper.authors }}</h5>
               <h5>DOI: <a href="{{ paper.doi }}">{{ paper.doi }}</a></h5>

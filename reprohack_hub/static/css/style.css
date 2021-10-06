@@ -2890,6 +2890,19 @@ blockquote {
   padding-bottom: 9.6px;
   padding-bottom: 0.6rem; }
 
+.card-box {
+  padding: 8px;
+  padding: 0.5rem;
+  margin-right: 32px;
+  margin-right: 2rem;
+  border-bottom: 4.8px double #2E004B;
+  border-bottom: 0.3rem double #2E004B; }
+  .card-box:first-of-type {
+    border-top: 4.8px double #2E004B;
+    border-top: 0.3rem double #2E004B; }
+  .card-box:before {
+    content: none; }
+
 .contact-box {
   -webkit-box-align: center;
       -ms-flex-align: center;
