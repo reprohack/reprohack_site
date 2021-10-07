@@ -56,8 +56,66 @@ class Command(BaseCommand):
         papers = self.get_csv_dict(papers_path)
         for row in papers:
             paper = Paper.objects.create()
-            print(row)
+            # row["Name"]
+            # row["Email address"]
+            # row["GitHub username (optional)"]
+            # row["Twitter handle (optional)"]
+            # row["Can participants contact you directly regarding your paper?"]
+            paper.title = row["Paper title"]
+            paper.citation_txt = row["Paper citation"]
+            paper.paper_url = row["Paper URL"]
+            paper.data_url = row["Data URL"]
+            paper.code_url = row["Code URL"]
+            paper.why = row["Why should we attempt to reproduce this paper?"]
+            if row["Can we  make the paper available for future ReproHacks?"] == "Yes":
+                paper.review_availability = paper.ReviewAvailability.ALL
+            else:
+                paper.review_availability = paper.ReviewAvailability.EVENT_ONLY
+            paper.archive = False
+
+
+            # row["Would you like to receive a copy of any feedback on the paper?"]
+            # row["Can feedback on your paper be made public?"]
+            paper.save()
 
         reviews = self.get_csv_dict(reviews_path)
         for row in reviews:
-            print(row)
+
+            title = row["Which paper did you attempt?"]
+            papers_query = Paper.objects.filter(title__contains=title)
+            if papers_query.count() < 1:
+                print(f"No paper \"{title}\" found, skipping review")
+                continue
+
+            review = Review.objects.create()
+            review.paper = papers_query.first()
+
+            if row["Did you manage to reproduce it?"] == "Yes":
+                review.reproducibility_outcome = review.ReproducibilityOutcomes.FULLY_REPRODUCIBLE
+            elif row["Did you manage to reproduce it?"] == "Almost":
+                review.reproducibility_outcome = review.ReproducibilityOutcomes.PARTIALLY_REPRODUCIBLE
+            else:
+                review.reproducibility_outcome = review.ReproducibilityOutcomes.NOT_REPRODUCIBLE
+
+            # row["Timestamp"]
+            # row["Name of participant(s)"]
+            review.reproducibility_description = row["Briefly describe the procedure followed / tools used to reproduce it."]
+            review.reproducibility_rating = int(row["On a scale of 1 to 10, how much of the paper did you manage to reproduce?"])
+            review.familiarity_with_method = row["Briefly describe your familiarity with the procedure/ tools used by the paper."]
+            review.challenges = row["What were the main challenges you ran into (if any)?"]
+            review.advantages = row["What were the positive features of this approach?"]
+            review.comments_and_suggestions = row["Any other comments / suggestions on the reproducibility approach?"]
+            review.documentation_rating = int(row["How well was the material documented?"])
+            review.documentation_cons = row["How could the documentation be improved?"]
+            review.documentation_pros = row["What did you like about the documentation?"]
+            review.method_familiarity_rating = int(row["After attempting to reproduce, how familiar do you feel with code and method used in the paper?"])
+            review.transparency_suggestions = row["Any suggestions on how the analysis could be made more transparent?"]
+            review.method_reusability_rating = int(row["Rate the project on reusability of the material"])
+            # row["Are materials clearly covered by a permissive enough license to build on?"]
+            review.reusability_suggestions = row["Any suggestions on how the project could be more reusable?"]
+            review.general_comments = row["Any Final Comments:"]
+            # row["Contact email"]
+            # row["Attach document with additional review comments"]
+            review.public_review = True
+            review.save()
+
