@@ -14,8 +14,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         print(f"Creating initial db data, objects will be assigned to admin user {options['submitter'][0]}")
-        admin_username = options['submitter'][0]
-        self.load_initial_data(admin_username)
+        submitter_username = options['submitter'][0]
+        self.load_initial_data(submitter_username)
 
 
     def get_csv_dict(self, path):
@@ -28,12 +28,12 @@ class Command(BaseCommand):
 
         return out_list
 
-    def load_initial_data(self, admin_username):
+    def load_initial_data(self, submitter_username):
         events_path = "data/events.csv"
         papers_path = "data/papers.csv"
         reviews_path = "data/reviews.csv"
 
-        admin = get_user_model().objects.get(username=admin_username)
+        admin = get_user_model().objects.get(username=submitter_username)
 
         events = self.get_csv_dict(events_path)
         for row in events:
