@@ -22,23 +22,29 @@ def test_user_delete(user: User):
     paper2 = PaperFactory()
     review = ReviewFactory()
     review_assoc = PaperReviewer.objects.create(review=review, user=user, lead_reviewer=True)
-    review_assoc2 = PaperReviewer.objects.create(review=review, user=user2)
+    review_assoc2 = PaperReviewer.objects.create(review=review, user=user2, lead_reviewer=False)
 
     assert review.paperreviewer_set.count() == 2
 
     user.delete()
 
 
+    # Event creator should be none
     event.refresh_from_db()
     assert event.creator is None
 
+    # Paper submitter should be none, and the paper should be archived
     paper1.refresh_from_db()
     assert paper1.submitter is None
     assert paper1.archive is True
 
+    # No of reviwers is reduced by 1, the lead reviewer should be switched to user 2
     review.refresh_from_db()
     assert review.paperreviewer_set.count() == 1
+    for paperreviwer in review.paperreviewer_set.all():
+        assert paperreviwer.lead_reviewer == True
 
+    # Review should have no reviewers if both users are deleted
     user2.delete()
     review.refresh_from_db()
     assert review.paperreviewer_set.count() == 0

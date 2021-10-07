@@ -114,14 +114,14 @@ class User(AbstractUser):
             paper.save()
 
         # Make someone else lead reviewer
-        for paperreviewer in self.paperreviewer_set:
+        for paperreviewer in self.paperreviewer_set.all():
             if paperreviewer.lead_reviewer:
                 paperreviewer.lead_reviewer = False
                 paperreviewer.save()  # Make user not lead reviewer
                 review = paperreviewer.review
 
                 # Make first other user in the set a lead reviewer
-                for prv in review.paperreviewer_set:
+                for prv in review.paperreviewer_set.all():
                     if prv.user.pk != self.pk:
                         prv.lead_reviewer = True
                         prv.save()
@@ -163,7 +163,7 @@ class Event(models.Model):
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="created_events")
     host = models.CharField(max_length=200)
     title = models.CharField(_('Event Title'), max_length=200)
-    contact_email = models.EmailField(blank=True)
+    contact_email = models.EmailField(null=True, blank=True)
     # time
     # date = models.DateField(default=date.today)
     start_time = models.DateTimeField(default=default_event_start)
@@ -531,8 +531,14 @@ class Review(models.Model):
         Todo:
             * Consider adding reviewer list or 'et al.'.
         """
-        return (f"Review of '{self.paper}' by " +
-                str(self.get_lead_reviewers().first()))
+
+        reviewer_names = settings.DELETED_USERNAME_PLACEHOLDER
+        if self.reviewers.count() > 0:
+            reviewer_names = str(self.get_lead_reviewers().first())
+        
+        return (f"Review of '{self.paper}' by " + reviewer_names)
+
+
 
     def get_lead_reviewers(self):
         res = self.reviewers.filter(paperreviewer__lead_reviewer=True)
@@ -585,4 +591,4 @@ class PaperReviewer(models.Model):
 
     review = models.ForeignKey(Review, on_delete=models.CASCADE, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    lead_reviewer = models.BooleanField(default=True)
+    lead_reviewer = models.BooleanField(default=False)
