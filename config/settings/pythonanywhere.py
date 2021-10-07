@@ -4,7 +4,6 @@ DEBUG = False
 
 ALLOWED_HOSTS += ["reprohacks.eu.pythonanywhere.com", "reprohack.org",  "www.reprohack.org"]
 
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
 DATABASES = {
     "default": {
