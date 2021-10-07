@@ -11,7 +11,7 @@ from .views import (EventCreate, EventUpdate, EventDetail, EventList, IndexView,
                     PaperCreate, PaperUpdate, PaperDetail, PaperList,
                     ReviewCreate, ReviewDetail, ReviewUpdate, ReviewList,
                     UserDetailView, UserUpdateView, UserRedirectView, MarkdownView,
-                    UserSearchEndpointView, PaperTagSearchEndpointView, UserEditRedirectView)
+                    UserSearchEndpointView, PaperTagSearchEndpointView, UserEditRedirectView, UserDeleteView)
 
 
 urlpatterns = [
@@ -59,6 +59,8 @@ urlpatterns = [
     path('users/<str:username>/', UserDetailView.as_view(), name='user_detail'),
     path('users/<str:username>/edit/',
          UserUpdateView.as_view(), name='user_update'),
+    path('users/<str:username>/delete/',
+         UserDeleteView.as_view(), name='user_delete'),
     path("user_search", view=UserSearchEndpointView.as_view()),
     path('', IndexView.as_view(), name='index'),
     path('', IndexView.as_view(), name='home'),

@@ -15,7 +15,8 @@ from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.db.models import QuerySet, Q
 from django.forms.models import BaseModelForm
-from django.http.response import JsonResponse
+from django.http.request import HttpRequest
+from django.http.response import JsonResponse, HttpResponse
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.utils.translation import gettext as _
@@ -26,7 +27,7 @@ from django.utils import timezone
 from django.utils.module_loading import import_string
 from django.views.generic.base import TemplateView, View
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView, FormView
+from django.views.generic.edit import CreateView, UpdateView, FormView, DeleteView
 from django.views.generic.list import ListView
 
 # custom
@@ -502,7 +503,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         return self.request.user.pk == self.get_object().pk
 
 
-class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class UserUpdateView(UserPassesTestMixin, UpdateView):
     model = User
     form_class = UserChangeForm
     template_name = "account/user_update.html"
@@ -523,6 +524,18 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         return self.request.user.pk == self.get_object().pk
 
+class UserDeleteView(UserPassesTestMixin, DeleteView):
+    model = User
+    slug_field = "username"
+    slug_url_kwarg = "username"
+    template_name = "account/user_delete.html"
+
+    def get_success_url(self) -> str:
+        return "/"
+
+
+    def test_func(self):
+        return self.request.user.pk == self.get_object().pk
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):
     permanent = False

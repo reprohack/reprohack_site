@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<!-- bradcam_area_start -->
+<div class="bradcam_area breadcam_bg overlay2">
+  <h1>Delete your account: {{ user.username }}</h1>
+</div>
+<!-- bradcam_area_end -->
+<div class="whole-wrap">
+  <div class="container box_1170">
+    <div class="section-top-border">
+      <div class="col-md-10">
+        <form method="post">
+          {% csrf_token %}
+          <p>Are you sure you want to delete your user account "{{ user.username }}"? </p>
+          <p class="badge badge-danger">Warning! This action is irreversible!</p>
+          <div class="row mt-4">
+            <div class="col">
+              <input type="submit" class="boxed_btn_orange" value="Delete my account!">
+
+            </div>
+            <div class="col">
+              <a href="{% url "user_edit_redirect" %}" class="boxed_btn" style="padding: 12px 32px">Cancel</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
