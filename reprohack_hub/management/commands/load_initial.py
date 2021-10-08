@@ -3,11 +3,11 @@ from typing import Any, Optional
 from django.core.management.base import BaseCommand, CommandError
 import csv
 from django.contrib.auth import get_user_model
-from reprohack_hub.models import Event, Paper, Review
+from reprohack_hub.models import Event, Paper, Review, PaperReviewer
 from datetime import datetime, timedelta
 
 class Command(BaseCommand):
-    help = "Load initial data. \n Usage: \n ./manage.py load_initial -submitter [username]"
+    help = "Load initial data, the initial .csv files must be placed in the /initial_data folder with the name of events.csv, papers.csv and reviews.csv. \n Usage: \n ./manage.py load_initial -submitter [username]"
 
     def add_arguments(self, parser):
         parser.add_argument('-submitter', nargs=1, type=str, help="The username to be associated with initial uploads")
@@ -18,27 +18,19 @@ class Command(BaseCommand):
         self.load_initial_data(submitter_username)
 
 
-    def get_csv_dict(self, path):
-        out_list = []
-        with open(path) as events_file:
-            reader = csv.DictReader(events_file)
-            for row in reader:
-                out_list.append(row)
 
-
-        return out_list
 
     def load_initial_data(self, submitter_username):
-        events_path = "data/events.csv"
-        papers_path = "data/papers.csv"
-        reviews_path = "data/reviews.csv"
+        events_path = "initial_data/events.csv"
+        papers_path = "initial_data/papers.csv"
+        reviews_path = "initial_data/reviews.csv"
 
-        admin = get_user_model().objects.get(username=submitter_username)
+        submitter = get_user_model().objects.get(username=submitter_username)
 
         events = self.get_csv_dict(events_path)
         for row in events:
             event = Event.objects.create()
-            event.creator = admin
+            event.creator = submitter
             event.host = ""
             event.title = row["title"]
             event.is_initial_upload = True
@@ -56,6 +48,7 @@ class Command(BaseCommand):
         papers = self.get_csv_dict(papers_path)
         for row in papers:
             paper = Paper.objects.create()
+            paper.submitter = submitter
             # row["Name"]
             # row["Email address"]
             # row["GitHub username (optional)"]
@@ -72,10 +65,11 @@ class Command(BaseCommand):
             else:
                 paper.review_availability = paper.ReviewAvailability.EVENT_ONLY
             paper.archive = False
-
-
             # row["Would you like to receive a copy of any feedback on the paper?"]
-            # row["Can feedback on your paper be made public?"]
+            if row["Can feedback on your paper be made public?"] == "Yes":
+                paper.public_reviews = True
+            else:
+                paper.public_reviews = False
             paper.save()
 
         reviews = self.get_csv_dict(reviews_path)
@@ -119,3 +113,14 @@ class Command(BaseCommand):
             review.public_review = True
             review.save()
 
+            PaperReviewer.objects.create(review=review, user=submitter)
+
+    def get_csv_dict(self, path):
+        out_list = []
+        with open(path) as events_file:
+            reader = csv.DictReader(events_file)
+            for row in reader:
+                out_list.append(row)
+
+
+        return out_list
