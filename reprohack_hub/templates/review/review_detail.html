@@ -183,6 +183,7 @@
 
 
           <hr>
+          {% if is_author or is_reviewer %}
           <h2 id="comments">Comments</h2>
           {% for comment in review.comment_set.all %}
           <b>{{ comment.commenter }}</b> said <b>{{ comment.created_on|timesince }} ago</b>
@@ -198,6 +199,7 @@
             {% csrf_token %}
             {% crispy comment_form %}
           </div>
+          {% endif %}
         </div>
 
       </div>

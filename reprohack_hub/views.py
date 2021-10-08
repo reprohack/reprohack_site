@@ -355,7 +355,10 @@ class ReviewDetail(DetailView):
             if self.request.user.pk == reviewer.pk:
                 is_reviewer = True
                 break
+        is_author = self.request.user.pk == self.get_object().paper.submitter.pk
+
         context['is_reviewer'] = is_reviewer
+        context['is_author'] = is_author
         context['comment_form'] = CommentForm()
         return context
 
