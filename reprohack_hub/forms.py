@@ -16,7 +16,7 @@ from django_toggle_switch_widget.widgets import DjangoToggleSwitchWidget
 from django.contrib.auth import forms, get_user_model
 from django.core.exceptions import ValidationError
 
-from .models import Event, Paper, Review, PaperReviewer
+from .models import Event, Paper, Review, PaperReviewer, Comment
 
 logger = logging.getLogger(__name__)
 
@@ -382,3 +382,15 @@ class UserCreationForm(forms.UserCreationForm):
               )
 
         )
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['comment']
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(CommentForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Post', css_class = 'boxed_btn'))
