@@ -7,11 +7,48 @@ from datetime import timedelta
 import pytest
 from django.utils import timezone
 
-from reprohack_hub.models import Event, Paper, Review
+from reprohack_hub.models import Event, Paper, Review, PaperReviewer
 from reprohack_hub.models import User
-from reprohack_hub.tests.factories import ReviewFactory
+from reprohack_hub.tests.factories import ReviewFactory, EventFactory, PaperFactory, UserFactory
 
 pytestmark = pytest.mark.django_db
+
+def test_user_delete(user: User):
+
+    user2 = UserFactory()
+
+    event = EventFactory(creator=user)
+    paper1 = PaperFactory(submitter=user)
+    paper2 = PaperFactory()
+    review = ReviewFactory()
+    review_assoc = PaperReviewer.objects.create(review=review, user=user, lead_reviewer=True)
+    review_assoc2 = PaperReviewer.objects.create(review=review, user=user2, lead_reviewer=False)
+
+    assert review.paperreviewer_set.count() == 2
+
+    user.delete()
+
+
+    # Event creator should be none
+    event.refresh_from_db()
+    assert event.creator is None
+
+    # Paper submitter should be none, and the paper should be archived
+    paper1.refresh_from_db()
+    assert paper1.submitter is None
+    assert paper1.archive is True
+
+    # No of reviwers is reduced by 1, the lead reviewer should be switched to user 2
+    review.refresh_from_db()
+    assert review.paperreviewer_set.count() == 1
+    for paperreviwer in review.paperreviewer_set.all():
+        assert paperreviwer.lead_reviewer == True
+
+    # Review should have no reviewers if both users are deleted
+    user2.delete()
+    review.refresh_from_db()
+    assert review.paperreviewer_set.count() == 0
+
 
 
 def test_user_get_absolute_url(user: User):

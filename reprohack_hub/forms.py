@@ -199,6 +199,7 @@ class ReviewForm(ModelForm):
         self.helper.layout = Layout(
             # HTML('<h2>ReproHack Author Feedback Form</h2>'),
             'reviewers',
+            HTML('<p class="mt-3">To add a reviewer: <ul><li>Type a username into the box above and <strong>press enter</strong>, multiple usernames can be entered.</li> <li>Then click on the <strong>Add a reviewer</strong> button to actually add the user(s) to the reviwers list.</li></ul><p>'),
             'paper',
             'event',
             HTML(f"<h3>{_('Reproducibility')}</h3>"),

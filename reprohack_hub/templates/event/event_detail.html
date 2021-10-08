@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load deleted_user %}
 {% load markdown_tags %}
 
 {% block content %}
@@ -37,9 +38,14 @@
                   {% endif%}
                 </p>
                 <br>
-                <h6 class="card-subtitle mb-2 text-muted">Event submitted by: <a
-                    href="{{ event.creator.get_absolute_url }}">{{ event.creator.username }}</a> on
-                  {{ event.submission_date }} </h6>
+                <h6 class="card-subtitle mb-2 text-muted">Event submitted by:
+                  {% if event.creator %}
+                    <a href="{{ event.creator.get_absolute_url }}">{{ event.creator.username }}</a>
+                  {% else %}
+                    {% deleted_user %}
+                  {% endif %}
+                   on {{ event.submission_date }}
+                </h6>
               </div>
               <div class="col-md-3" style="align:center;">
                 <br>
