@@ -17,7 +17,7 @@
           <br>
           <div class="row">
             <div class="col">
-              {% include "event/event_map.html" %}
+              {% include "event/event_map.html" with object_list=page_object_list %}
             </div>
           </div>
           <br>
@@ -25,13 +25,13 @@
 
           <h1>Upcoming Events</h1>
           <ul>
-            {% for event in upcoming_events %}
+            {% for event in  upcoming_page.object_list %}
             <li class="event card-box">
               <h3 class="card-title"><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
               {% if event.remote %}
-              <h4> <i class="fas fa-globe"></i> &nbsp;&nbsp; Remote </h4>
+              <h4><i class="fas fa-globe"></i> &nbsp;&nbsp; Remote </h4>
               {% else %}
-              <h4> <i class="fa fa-map-pin"></i> &nbsp; {{ event.city }}, {{ event.country }} </h4>
+              <h4><i class="fa fa-map-pin"></i> &nbsp; {{ event.city }}, {{ event.country }} </h4>
               {% endif %}
               <div class="date">
                 <i class="bi-clock"></i>
@@ -42,19 +42,25 @@
 
           </ul>
 
+        {% include "misc/pagination-2-lists.html" with page_obj=upcoming_page page2_obj=past_page page_var=upcoming_event_query_var page2_var=past_event_query_var %}
 
-          {# Pagination #}
-          {% include "misc/pagination.html" %}
+
+
+
+
 
           <h1>Past Events</h1>
+        {% if not past_page.object_list %}
+          No objects
+        {% endif %}
           <ul>
-            {% for event in past_events reversed %}
+            {% for event in past_page.object_list %}
             <li class="event card-box">
               <h3 class="card-title"><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3>
               {% if event.remote %}
-              <h4> <i class="fas fa-globe"></i> &nbsp; Remote </h4>
+              <h4><i class="fas fa-globe"></i> &nbsp; Remote </h4>
               {% else %}
-              <h4> <i class="fa fa-map-pin"></i> &nbsp; {{ event.city }}, {{ event.country }} </h4>
+              <h4><i class="fa fa-map-pin"></i> &nbsp; {{ event.city }}, {{ event.country }} </h4>
               {% endif %}
               <div class="date">
                 <i class="bi-clock"></i>
@@ -62,12 +68,10 @@
               </div>
             </li>
             {% endfor %}
-
           </ul>
 
+        {% include "misc/pagination-2-lists.html" with page_obj=past_page page2_obj=upcoming_page page_var=past_event_query_var page2_var=upcoming_event_query_var%}
 
-          {# Pagination #}
-          {% include "misc/pagination.html" %}
 
         </div>
         <div class="col-sm-3">
@@ -89,7 +93,6 @@
 
         </div>
       </div>
-
 
 
     </div>

@@ -1,8 +1,11 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 from django.urls import include, path, re_path
+from django.urls.base import reverse_lazy, reverse
 from django.views import defaults as default_views
+from allauth.account.views import PasswordChangeView
 
 urlpatterns = [
     # path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
@@ -11,8 +14,7 @@ urlpatterns = [
     # ),
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
-    # User management
-    path("accounts/", include("allauth.urls")),
+
     # Your stuff: custom urls includes go here
     # path("reprohack/", include("reprohack_hub.urls", namespace="reprohack")),
     path("", include("reprohack_hub.urls")),

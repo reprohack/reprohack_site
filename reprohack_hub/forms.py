@@ -276,7 +276,7 @@ class UserChangeForm(forms.UserChangeForm):
     class Meta(forms.UserChangeForm.Meta):
         model = get_user_model()
         exclude = ["password", "id_password"]
-        fields = ['first_name', 'last_name', 'email', 'bio', 'affiliation',
+        fields = ['full_name', 'preferred_name', 'email', 'bio', 'affiliation',
                   'location', 'twitter', 'github', 'orcid']
 
     def __init__(self, *args, **kwargs):
@@ -288,8 +288,12 @@ class UserChangeForm(forms.UserChangeForm):
             HTML("<h2> Account Details </h2>"),
             'email',
             Row(
-                Column('first_name', css_class='form-group col-md-5 mb-0'),
-                Column('last_name', css_class='form-group col-md-7 mb-0')
+                Column('full_name', css_class=''),
+
+            ),
+            Row(
+                Column('preferred_name', css_class=''),
+
             ),
              Row(
                 HTML("<div><label>Password</label><p><a href='/accounts/password/set'>Reset password using this form.</a></p></div>")
@@ -325,7 +329,7 @@ class UserCreationForm(forms.UserCreationForm):
     )
 
     class Meta(forms.UserCreationForm.Meta):
-        fields = ('first_name', "last_name", 'username', 'email', 'password1',
+        fields = ('full_name', 'preferred_name', 'username', 'email', 'password1',
                   'password2', 'affiliation', 'twitter', 'github', 'orcid',
                   'bio', 'location')
         model = get_user_model()
@@ -342,8 +346,12 @@ class UserCreationForm(forms.UserCreationForm):
             'username',
             'email',
             Row(
-                Column('first_name', css_class='form-group col-md-5 mb-0'),
-                Column('last_name', css_class='form-group col-md-7 mb-0')
+                Column('full_name', css_class=''),
+
+            ),
+            Row(
+                Column('preferred_name', css_class=''),
+
             ),
             Row(
                 Column('password1', css_class='form-group col-md-6 mb-0'),

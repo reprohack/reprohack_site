@@ -341,3 +341,4 @@ reprohack_hub/media/
 .env
 .envs/*
 !.envs/.local/
+.vscode/*

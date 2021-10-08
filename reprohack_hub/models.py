@@ -73,7 +73,8 @@ class User(AbstractUser):
     """
 
     #: First and last name do not cover name patterns around the globe
-    name = CharField(_("Name of User"), blank=True, max_length=255)
+    full_name = CharField(_("Your full name"), null=True, blank=False, max_length=255)
+    preferred_name = CharField(_("What should we call you?"), null=True, blank=False, max_length=255)
     email = CharField(_("E-mail"), blank=False, unique=True, max_length=255)
     bio = models.TextField(max_length=500, blank=True)
     affiliation = models.CharField(max_length=70, blank=True)
