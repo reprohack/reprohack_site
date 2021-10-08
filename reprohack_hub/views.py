@@ -15,7 +15,8 @@ from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.db.models import QuerySet, Q
 from django.forms.models import BaseModelForm
-from django.http.response import JsonResponse
+from django.http.request import HttpRequest
+from django.http.response import JsonResponse, HttpResponse
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.utils.translation import gettext as _
@@ -26,7 +27,7 @@ from django.utils import timezone
 from django.utils.module_loading import import_string
 from django.views.generic.base import TemplateView, View
 from django.views.generic.detail import DetailView, SingleObjectMixin
-from django.views.generic.edit import CreateView, UpdateView, FormView
+from django.views.generic.edit import CreateView, UpdateView, FormView, DeleteView
 from django.views.generic.list import ListView
 
 # custom
@@ -98,46 +99,57 @@ class EventDetail(DetailView):
 class EventList(ListView):
     model = Event
     template_name = "event/event_list.html"
-    paginate_by = 20  # if pagination is desired
+    paginate_by = 20 # if pagination is desired
 
     def get_queryset(self) -> QuerySet:
-        search_string = self.request.GET.get("search")
 
-        result = Event.objects.all().order_by('-start_time')
-
-        if search_string and len(search_string) > 0:
-            result = result.filter(title__contains=search_string)
-
-        return result
+        # Return default queryset as we're doing the fetch in get_context_data
+        return Event.objects.all()
 
     def get_context_data(self, **kwargs):
 
-        upcoming_events = []
-        past_events = []
-
-        # Since it's impossible to get the actual paginator object used in listview
-        # we're creating another one that will get the the same object list
-        paginator = Paginator(self.get_queryset(), self.paginate_by)
-        page = self.request.GET.get(self.page_kwarg, 1)
-        page_obj = []
-        try:
-            page_obj = paginator.page(page).object_list
-        except:
-            page_obj = paginator.page(1).object_list
-
-
-        for event in page_obj:
-            if event.end_time >= timezone.now():
-                upcoming_events.append(event)
-            else:
-                past_events.append(event)
-
         context = super().get_context_data(**kwargs)
+
+        upcoming_event_query_var = "uc"
+        past_event_query_var = "pe"
+
+        search_string = self.request.GET.get("search")
+
+        result = Event.objects.all()
+        if search_string and len(search_string) > 0:
+            result = result.filter(title__contains=search_string)
+
+        upcoming_events = result.filter(start_time__gte=timezone.now()).order_by("start_time")
+        past_events = result.filter(start_time__lt=timezone.now()).order_by("-start_time")
+
+        upcoming_paginator = Paginator(upcoming_events, self.paginate_by)
+        past_paginator = Paginator(past_events, self.paginate_by)
+
+        upcoming_page = self.get_page_from_request(upcoming_paginator,
+                                                   upcoming_event_query_var,
+                                                   self.request)
+        past_page = self.get_page_from_request(past_paginator,
+                                               past_event_query_var,
+                                               self.request)
+
+
         context["now"] = timezone.now()
         context["search"] = self.request.GET.get("search", "")
-        context["upcoming_events"] = upcoming_events
-        context["past_events"] = past_events
+        context["upcoming_event_query_var"] = upcoming_event_query_var
+        context["past_event_query_var"] = past_event_query_var
+        context["upcoming_page"] = upcoming_page
+        context["past_page"] = past_page
+        ojl =upcoming_page.object_list | past_page.object_list
+        context["page_object_list"] = ojl
         return context
+
+    def get_page_from_request(self, paginator, request_var_name, request):
+        page = self.request.GET.get(request_var_name, "1")
+
+        try:
+            return paginator.page(page)
+        except:
+            return paginator.page(1)
 
 
 
@@ -217,7 +229,8 @@ class PaperList(ListView):
         if search_string and len(search_string) > 0:
             result = result.filter(title__contains=search_string)
 
-        result = result.filter(review_availability="ALL").exclude(archive=True)
+        result = result.filter(review_availability__contains="ALL")
+        result = result.exclude(archive=True)
 
         return result.order_by('-submission_date')
 
@@ -499,7 +512,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         return self.request.user.pk == self.get_object().pk
 
 
-class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class UserUpdateView(UserPassesTestMixin, UpdateView):
     model = User
     form_class = UserChangeForm
     template_name = "account/user_update.html"
@@ -520,6 +533,18 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         return self.request.user.pk == self.get_object().pk
 
+class UserDeleteView(UserPassesTestMixin, DeleteView):
+    model = User
+    slug_field = "username"
+    slug_url_kwarg = "username"
+    template_name = "account/user_delete.html"
+
+    def get_success_url(self) -> str:
+        return "/"
+
+
+    def test_func(self):
+        return self.request.user.pk == self.get_object().pk
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):
     permanent = False

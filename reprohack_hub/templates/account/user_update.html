@@ -16,6 +16,8 @@
           {% csrf_token %}
           {% crispy form %}
         </form>
+
+        <a href="{% url "user_delete" username=user.username %}" class="boxed_btn_orange">Delete my account</a>
       </div>
     </div>
   </div>

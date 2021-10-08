@@ -6,6 +6,7 @@ Todo:
 """
 
 from datetime import datetime, timedelta
+from typing import Any, Tuple, Dict
 
 from django.contrib.auth import get_user_model
 from django_countries.fields import CountryField
@@ -105,6 +106,30 @@ class User(AbstractUser):
 
         return related_reviews
 
+    def delete(self, using=None, keep_parents=False):
+
+        # Archive all user's papers
+        for paper in self.submitted_papers.all():
+            paper.archive = True
+            paper.save()
+
+        # Make someone else lead reviewer
+        for paperreviewer in self.paperreviewer_set.all():
+            if paperreviewer.lead_reviewer:
+                paperreviewer.lead_reviewer = False
+                paperreviewer.save()  # Make user not lead reviewer
+                review = paperreviewer.review
+
+                # Make first other user in the set a lead reviewer
+                for prv in review.paperreviewer_set.all():
+                    if prv.user.pk != self.pk:
+                        prv.lead_reviewer = True
+                        prv.save()
+                        break
+
+
+        return super().delete(using, keep_parents)
+
 
 def default_event_start(hour: int = DEFAULT_EVENT_START_HOUR) -> datetime:
     """Return next default start time."""
@@ -138,7 +163,7 @@ class Event(models.Model):
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="created_events")
     host = models.CharField(max_length=200)
     title = models.CharField(_('Event Title'), max_length=200)
-    contact_email = models.EmailField(blank=True)
+    contact_email = models.EmailField(null=True, blank=True)
     # time
     # date = models.DateField(default=date.today)
     start_time = models.DateTimeField(default=default_event_start)
@@ -481,9 +506,9 @@ class Review(models.Model):
     # ("Are materials clearly "
     #  "covered by a " "permissive enough " "license to build " "on?")
     data_permissive_license = models.BooleanField(_("Permissive license "
-                                                    "for DATA included"))
+                                                    "for DATA included"), default=False)
     code_permissive_license = models.BooleanField(_("Permissive license "
-                                                    "for CODE included"))
+                                                    "for CODE included"), default=False)
     reusability_suggestions = MarkdownxField(_("Any suggestions on how "
                                                "the project could be "
                                                "more reusable?"),
@@ -506,8 +531,14 @@ class Review(models.Model):
         Todo:
             * Consider adding reviewer list or 'et al.'.
         """
-        return (f"Review of '{self.paper}' by " +
-                str(self.get_lead_reviewers().first()))
+
+        reviewer_names = settings.DELETED_USERNAME_PLACEHOLDER
+        if self.reviewers.count() > 0:
+            reviewer_names = str(self.get_lead_reviewers().first())
+
+        return (f"Review of '{self.paper}' by " + reviewer_names)
+
+
 
     def get_lead_reviewers(self):
         res = self.reviewers.filter(paperreviewer__lead_reviewer=True)
@@ -520,8 +551,13 @@ class Review(models.Model):
         return reverse('review_detail', args=[self.id])
 
     def is_viewable_by_user(self, user):
+
+        # Superuser and staff can always view reviews
+        if user.is_superuser or user.is_staff:
+            return True
+
         # If public then viewable by everyone
-        if self.public_review and self.paper.public_reviews:
+        if self.public_review and self.paper and self.paper.public_reviews:
             return True
 
         # Otherwise you'd have to be logged in
@@ -534,7 +570,7 @@ class Review(models.Model):
                 return True
 
         # And by the paper submitter
-        if self.paper.submitter.pk == user.pk:
+        if self.paper and self.paper.submitter and self.paper.submitter.pk == user.pk:
             return True
 
         return False
@@ -557,7 +593,7 @@ class PaperReviewer(models.Model):
     """
     A group of paper reviewers.
     """
-
+    
     review = models.ForeignKey(Review, on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     lead_reviewer = models.BooleanField(default=True)

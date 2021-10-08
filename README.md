@@ -168,6 +168,20 @@ python manage.py createsuperuser
 
 Only the superuser is allowed to log into the admin panel (see next section).
 
+### Loading initial data
+
+The command `load_initial` is created to load initial data. T
+he initial .csv files must be placed in the /initial_data folder with the name of events.csv, 
+papers.csv and reviews.csv.
+
+Ensure that the user to be assigned as the 'submitter/creator/reviewer' is created then use the command as follows:
+
+```bash
+./manage.py load_initial -submitter username
+```
+
+
+
 ### Admin panel
 
 The admin panel can be access at `/admin` e.g. for the local development server `http://127.0.0.1:8000/admin`.

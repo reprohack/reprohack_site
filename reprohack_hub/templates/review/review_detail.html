@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
+{% load deleted_user %}
 {% load markdown_tags %}
 
 
@@ -26,8 +27,8 @@
         </div>
 
         <div>
-          <h4>Submitted by {{ review.reviewers.first }} <span class="icon-box">
-              {%  if review.public_review %} &nbsp; <i class="fas fa-globe-africa"></i> {% endif %}
+          <h4>Submitted by {%if review.reviewers.count > 0 %}{{ review.reviewers.first }}{% else %}{% deleted_user %}{% endif %} <span class="icon-box">
+              {%  if review.public_review %} &nbsp; <i class="fas fa-globe-africa" title="Public review"></i> {% endif %}
             </span>
           </h4>
           {{review.submission_date}}

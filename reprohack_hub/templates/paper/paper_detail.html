@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load deleted_user %}
 
 {% block content %}
 <div class="bradcam_area breadcam_bg overlay2">
@@ -27,7 +28,11 @@
     <div class="section-top-border">
       <div class="paper">
         <div>
-          <h4>Submitted by <a href="{{ paper.submitter.get_absolute_url }}">{{ paper.submitter.username }}</a>
+          <h4>Submitted by
+            {% if paper.submitter %}<a href="{{ paper.submitter.get_absolute_url }}">{{ paper.submitter.username }}</a>
+            {% else %} {% deleted_user %}
+            {% endif %}
+
           </h4> {{paper.submission_date}}
         </div>
         <hr>
@@ -40,10 +45,10 @@
           <div class="header_italic"> {{ paper.citation_txt }}</div>
           <a href="{{ paper.doi }}">{{ paper.doi }}</a>
           <span class="icon-box">
-            {%  if paper.event %} &nbsp; <i class="fas fa-calendar-day"></i> {% endif %}
+            {%  if paper.event %} &nbsp; <a href="{{ paper.event.get_absolute_url }}"><i class="fas fa-calendar-day" title="Has associated event"></i></a>  {% endif %}
             {%  if paper.review_availability == "ALL" %} &nbsp; <i class="far fa-list-alt"></i>
             {% endif %}
-            {%  if paper.public_reviews %} &nbsp; <i class="fas fa-globe-africa"></i> {% endif %}
+            {%  if paper.public_reviews %} &nbsp; <i class="fas fa-globe-africa" title="Available for general review"></i> {% endif %}
             {%  if paper.email_review %} &nbsp; <i class="fas fa-envelope"></i> {% endif %}
           </span>
           {% if paper.num_reviews > 0 %}<br><br>
@@ -109,8 +114,12 @@
 
             <li class="card-box">
               <a href="{% url 'review_detail' pk=review.pk %}">
-                Review by {% for reviewer in review.reviewers.all %}{{ reviewer.username }}
-                , {% endfor %}, {{ review.submission_date }}
+                Review by {% if review.reviewers.count > 0 %}
+                    {% for reviewer in review.reviewers.all %}{{ reviewer.username }}, {% endfor %}
+                    {% else %}
+                    {% deleted_user %}
+                    {% endif %}
+                , {{ review.submission_date }}
               </a>
             </li>
             {% endfor %}

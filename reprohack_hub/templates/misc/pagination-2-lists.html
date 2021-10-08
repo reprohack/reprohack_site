@@ -1,0 +1,32 @@
+<nav aria-label="Pages navigation">
+  <ul class="pagination justify-content-center mt-4 mb-4">
+    {# Previous page #}
+    {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link"
+           href="?{{page_var}}={{ page_obj.previous_page_number }}&{{ page2_var }}={{ page2_obj.number }}{% if search %}&search={{ search }}{% endif %}{% if tags %}&tags={{ tags }}{% endif %}">Previous</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+    {% endif %}
+
+    {#  List all the pages #}
+    {% for page_no in page_obj.paginator.page_range %}
+      <li class="page-item {% if page_no == page_obj.number %}active{% endif %}">
+        <a class="page-link"
+           href="?{{page_var}}={{ page_no }}&{{ page2_var }}={{ page2_obj.number }}{% if search %}&search={{ search }}{% endif %}{% if tags %}&tags={{ tags }}{% endif %}">{{ page_no }}</a>
+      </li>
+    {% endfor %}
+    {# Next page #}
+    {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link"
+           href="?{{page_var}}={{ page_obj.next_page_number }}&{{ page2_var }}={{ page2_obj.number }}{% if search %}&search={{ search }}{% endif %}{% if tags %}&tags={{ tags }}{% endif %}">Next</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <a class="page-link" href="#">Next</a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>

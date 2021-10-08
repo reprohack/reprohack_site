@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load deleted_user %}
 
 {% block content %}
 <div class="bradcam_area breadcam_bg overlay2">
@@ -29,9 +30,16 @@
             <a href="{{ review.get_absolute_url }}">{{ review }}</a>
           </h3>
           <div>
-            By: {% for reviewer in review.reviewers.all %}<a
+            By:
+            {%  if review.reviewers.count > 0 %}
+            {% for reviewer in review.reviewers.all %}<a
               href="{{ reviewer.get_absolute_url }}">{{ reviewer.username }}</a> {% endfor %}
-            <span class="icon-box orange">
+            {% else %}
+              {% deleted_user %}
+            {% endif %}
+
+
+            <span class="icon-box orange" title="Paper is public">
               {%  if review.public_review %} &nbsp; <i class="fas fa-globe-africa"></i> {% endif %}
             </span>
           </div>
