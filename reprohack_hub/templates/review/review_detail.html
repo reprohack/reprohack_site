@@ -187,12 +187,23 @@
           <hr>
           {% if is_author or is_reviewer %}
           <h2 id="comments">Comments</h2>
+          <small>This section is available to authors and reviewers only and can be used to discuss review points.
+          </small>
+          <br>
+          <br>
           {% for comment in review.comment_set.all %}
-          <b>{{ comment.commenter }}</b> said <b>{{ comment.created_on|timesince }} ago</b>
-          <p>{{ comment.comment }}</p>
+          <ul>
+            <li class="card">
+              <span><b>{{ comment.commenter }}</b> said <b>{{ comment.created_on|timesince }} ago</b></span>
+              <p>{{ comment.comment }}</p>
+            </li>
+          </ul>
           {% empty %}
-          <p>Feel free to leave the first comment!</p>
+          <p>No one has commented yet. Feel free to leave the first comment!</p>
+
           {% endfor %}
+
+
           <hr>
           <h3>Add a comment</h3>
           {% block comment-form %}
