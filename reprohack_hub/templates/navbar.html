@@ -41,12 +41,15 @@
                   </li>
                   <hr class="d-block d-lg-none">
                   {% endif %}
-                  <li><a class="active" href="{% url 'index' %}">home</a></li>
-                  <li><a href="{% url 'event_list' %}">Events</a></li>
-                  <li><a href="{% url 'paper_list' %}">Papers</a></li>
-                  <li><a href="{% url 'review_list' %}">Reviews</a></li>
-                  <li><a href="{% url 'about' %}">About</a></li>
-                  <li><a href="{% url 'resources' %}">Resources</a></li>
+                  {% with request.resolver_match.view_name as view_name %}
+                    <li><a {% if view_name == "index" %} class="active" {% endif %} href="{% url 'index' %}">home</a></li>
+                    <li><a {% if view_name == "event_list" or view_name == "event_detail" %} class="active" {% endif %} href="{% url 'event_list' %}">Events</a></li>
+                    <li><a {% if view_name == "paper_list" or view_name == "paper_detail" %} class="active" {% endif %} href="{% url 'paper_list' %}">Papers</a></li>
+                    <li><a {% if view_name == "review_list" or view_name == "review_detail" %} class="active" {% endif %} href="{% url 'review_list' %}">Reviews</a></li>
+                    <li><a {% if view_name == "about" %} class="active" {% endif %} href="{% url 'about' %}">About</a></li>
+                    <li><a {% if view_name == "resources" %} class="active" {% endif %} href="{% url 'resources' %}">Resources</a></li>
+                  {% endwith %}
+
                 </ul>
               </nav>
             </div>
