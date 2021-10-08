@@ -506,9 +506,9 @@ class Review(models.Model):
     # ("Are materials clearly "
     #  "covered by a " "permissive enough " "license to build " "on?")
     data_permissive_license = models.BooleanField(_("Permissive license "
-                                                    "for DATA included"))
+                                                    "for DATA included"), default=False)
     code_permissive_license = models.BooleanField(_("Permissive license "
-                                                    "for CODE included"))
+                                                    "for CODE included"), default=False)
     reusability_suggestions = MarkdownxField(_("Any suggestions on how "
                                                "the project could be "
                                                "more reusable?"),
@@ -535,7 +535,7 @@ class Review(models.Model):
         reviewer_names = settings.DELETED_USERNAME_PLACEHOLDER
         if self.reviewers.count() > 0:
             reviewer_names = str(self.get_lead_reviewers().first())
-        
+
         return (f"Review of '{self.paper}' by " + reviewer_names)
 
 
@@ -551,8 +551,13 @@ class Review(models.Model):
         return reverse('review_detail', args=[self.id])
 
     def is_viewable_by_user(self, user):
+
+        # Superuser and staff can always view reviews
+        if user.is_superuser or user.is_staff:
+            return True
+
         # If public then viewable by everyone
-        if self.public_review and self.paper.public_reviews:
+        if self.public_review and self.paper and self.paper.public_reviews:
             return True
 
         # Otherwise you'd have to be logged in
@@ -565,7 +570,7 @@ class Review(models.Model):
                 return True
 
         # And by the paper submitter
-        if self.paper.submitter.pk == user.pk:
+        if self.paper and self.paper.submitter and self.paper.submitter.pk == user.pk:
             return True
 
         return False
