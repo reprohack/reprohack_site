@@ -566,3 +566,4 @@ class ReviewDetailView(View):
     def post(self, request, *args, **kwargs):
         view = ReviewComment.as_view()
         return view(request, *args, **kwargs)
+        
