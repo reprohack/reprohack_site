@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% load markdown_tags %}
+
 
 {% block content %}
 
@@ -180,9 +182,22 @@
 
 
 
-
-
-
+          <hr>
+          <h2 id="comments">Comments</h2>
+          {% for comment in review.comment_set.all %}
+          <b>{{ comment.commenter }}</b> said <b>{{ comment.created_on|timesince }} ago</b>
+          <p>{{ comment.comment }}</p>
+          {% empty %}
+          <p>Feel free to leave the first comment!</p>
+          {% endfor %}
+          <hr>
+          <h3>Add a comment</h3>
+          {% block comment-form %}
+          {% endblock %}
+          <div class="comment-form" action="" method="POST">
+            {% csrf_token %}
+            {% crispy comment_form %}
+          </div>
         </div>
 
       </div>

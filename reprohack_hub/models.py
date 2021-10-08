@@ -561,3 +561,17 @@ class PaperReviewer(models.Model):
     review = models.ForeignKey(Review, on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     lead_reviewer = models.BooleanField(default=True)
+
+
+## COMMENTS ##
+class Comment(models.Model):
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+    commenter = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
+    comment = models.TextField(max_length=1000)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['created_on']
+
+    def __str__(self):
+        return self.comment[:60]
