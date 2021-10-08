@@ -26,12 +26,12 @@ from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.utils.module_loading import import_string
 from django.views.generic.base import TemplateView, View
-from django.views.generic.detail import DetailView
+from django.views.generic.detail import DetailView, SingleObjectMixin
 from django.views.generic.edit import CreateView, UpdateView, FormView, DeleteView
 from django.views.generic.list import ListView
 
 # custom
-from .forms import EventForm, PaperForm, ReviewForm, UserChangeForm, UserCreationForm
+from .forms import EventForm, PaperForm, ReviewForm, UserChangeForm, UserCreationForm, CommentForm
 from .models import Event, Paper, Review
 
 # Users
@@ -356,9 +356,10 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
         return form_initial
 
 
-class ReviewDetail(DetailView):
+class ReviewDisplay(DetailView):
     model = Review
     template_name = "review/review_detail.html"
+    context_object_name = "review"
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
@@ -367,9 +368,52 @@ class ReviewDetail(DetailView):
             if self.request.user.pk == reviewer.pk:
                 is_reviewer = True
                 break
+        is_author = self.request.user.pk == self.get_object().paper.submitter.pk
+
         context['is_reviewer'] = is_reviewer
+        context['is_author'] = is_author
+        context['comment_form'] = CommentForm()
         return context
 
+    def get_absolute_url(self):
+        return reverse('review', args=[str(self.pk)])
+
+## COMMENTS ##
+class ReviewComment(SingleObjectMixin, FormView):
+    model = Review
+    form_class = CommentForm
+    template_name = 'review_detail.html'
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().post(request, *args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super(ReviewComment, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
+    def form_valid(self, form):
+        comment = form.save(commit=False)
+        comment.commenter = self.request.user
+        comment.review = self.object
+        comment.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        review = self.get_object()
+        return reverse('review_detail', kwargs={'pk': review.pk}) + '#comments'
+
+
+class ReviewDetail(View):
+
+    def get(self, request, *args, **kwargs):
+        view = ReviewDisplay.as_view()
+        return view(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        view = ReviewComment.as_view()
+        return view(request, *args, **kwargs)
 
 class ReviewUpdate(LoginRequiredMixin, UpdateView):
     model = Review
@@ -548,5 +592,4 @@ class UserEditRedirectView(LoginRequiredMixin, RedirectView):
     permanent = False
     def get_redirect_url(self, *args, **kwargs):
         return reverse("user_update", kwargs={"username": self.request.user.username})
-
 
