@@ -122,8 +122,8 @@ class EventList(ListView):
         upcoming_events = result.filter(start_time__gte=timezone.now()).order_by("start_time")
         past_events = result.filter(start_time__lt=timezone.now()).order_by("-start_time")
 
-        upcoming_paginator = Paginator(upcoming_events, self.paginate_by)
-        past_paginator = Paginator(past_events, self.paginate_by)
+        upcoming_paginator = Paginator(list(upcoming_events), self.paginate_by)
+        past_paginator = Paginator(list(past_events), self.paginate_by)
 
         upcoming_page = self.get_page_from_request(upcoming_paginator,
                                                    upcoming_event_query_var,
@@ -403,7 +403,7 @@ class ReviewComment(SingleObjectMixin, FormView):
         review = self.object
         paper = review.paper
         paper_title = paper.title
-        
+
         comment_recipients = []
         if paper.email_comment:
             comment_recipients.append(paper.submitter)
@@ -444,7 +444,7 @@ class ReviewComment(SingleObjectMixin, FormView):
                                             from_email=settings.EMAIL_ADMIN_ADDRESS,
                                             recipient_list=[comment_recipient.email]
                                             )
-       
+
         return super().form_valid(form)
 
     def get_success_url(self):
