@@ -184,8 +184,9 @@
           <div class="detail_text">{{ review.general_comments | show_markdown | safe }}</div>
 
 
-          <hr>
+
           {% if is_author or is_reviewer %}
+          <hr>
           <h2 id="comments">Comments</h2>
           <small>
             <p>
