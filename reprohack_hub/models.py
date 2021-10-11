@@ -300,6 +300,8 @@ class Paper(models.Model):
         help_text=_("Only reviews that have also been set to public by reviewers will be visible to other signed in users"))
     email_review = models.BooleanField(
         _("Send me an email when a review is received"), default=True)
+    email_comment = models.BooleanField(
+        _("Send me an email when a comment is posted to a review of my paper"), default=True)
     submitter = models.ForeignKey(
         get_user_model(), default=None, null=True, blank=True, on_delete=models.SET_NULL,
         related_name="submitted_papers")
@@ -523,6 +525,8 @@ class Review(models.Model):
     public_review = models.BooleanField(
         _("Allow this review to be made public"), default=True,
         help_text=_("Only reviews on papers that have also been set to receive public reviews by authors will be visible to others"))
+    email_comment = models.BooleanField(
+        _("Send an email to reviewers when a comment is posted to this review"), default=True)
     is_initial_upload = models.BooleanField(default=False)
 
     def __str__(self):
@@ -610,4 +614,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment[:60]
-        
