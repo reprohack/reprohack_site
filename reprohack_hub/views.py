@@ -310,26 +310,26 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
             paper_title = paper.title
             paper_submitter_email = paper.submitter.email
 
-        paper_title = paper.title
+            paper_title = paper.title
 
-        # Sends review create email
-        if paper.submitter and paper.submitter.email:
-            paper_submitter_email = paper.submitter.email
+            # Sends review create email
+            if paper.submitter and paper.submitter.email:
+                paper_submitter_email = paper.submitter.email
 
-            mail_context = {
-                "paper_user_name": paper.submitter.first_name,
-                "paper_title": paper_title,
-                "logo_url": self.request.build_absolute_uri("/static/images/reprohack-logo-med.png"),
-                "review_url": self.request.build_absolute_uri(review.get_absolute_url()),
-                "review_event": review.event,
-            }
+                mail_context = {
+                    "paper_user_name": paper.submitter.first_name,
+                    "paper_title": paper_title,
+                    "logo_url": self.request.build_absolute_uri("/static/images/reprohack-logo-med.png"),
+                    "review_url": self.request.build_absolute_uri(review.get_absolute_url()),
+                    "review_event": review.event,
+                }
 
-            send_mail_from_template(subject=f"[{get_current_site(self.request).name}] Your paper \"{paper_title}\" has a new review.",
-                                    template_name="mail/review_created.html",
-                                    context=mail_context,
-                                    from_email=settings.EMAIL_ADMIN_ADDRESS,
-                                    recipient_list=[paper_submitter_email]
-                                    )
+                send_mail_from_template(subject=f"[{get_current_site(self.request).name}] Your paper \"{paper_title}\" has a new review.",
+                                        template_name="mail/review_created.html",
+                                        context=mail_context,
+                                        from_email=settings.EMAIL_ADMIN_ADDRESS,
+                                        recipient_list=[paper_submitter_email]
+                                        )
 
         return response
 
@@ -398,6 +398,53 @@ class ReviewComment(SingleObjectMixin, FormView):
         comment.commenter = self.request.user
         comment.review = self.object
         comment.save()
+
+
+        review = self.object
+        paper = review.paper
+        paper_title = paper.title
+        
+        comment_recipients = []
+        if paper.email_comment:
+            comment_recipients.append(paper.submitter)
+        if review.email_comment:
+            for reviewer in review.reviewers.all():
+                comment_recipients.append(reviewer)
+
+        comment_recipients = [comment_recipient for comment_recipient in comment_recipients if comment_recipient.pk != self.request.user.pk]
+
+        # Sends review create email
+        if len(comment_recipients) > 0:
+            for comment_recipient in comment_recipients:
+                if comment_recipient and comment_recipient.email:
+
+                    is_reviewer = False
+                    is_author = False
+
+                    if comment_recipient == paper.submitter:
+                        is_author = True
+                        email_subject = f"[{get_current_site(self.request).name}] A comment has been posted to a review of your paper \"{ paper_title }\"."
+                    else:
+                        is_reviewer = True
+                        email_subject = f"[{get_current_site(self.request).name}] A comment has been posted to your review of paper \"{ paper_title }\"."
+
+                    mail_context = {
+                        "now": timezone.now(),
+                        "recipient_name": comment_recipient.preferred_name,
+                        'paper_title': paper_title,
+                        "is_reviewer": is_reviewer,
+                        'is_author': is_author,
+                        'commenter_username': comment.commenter.username,
+                        "comment_url": self.request.build_absolute_uri(review.get_absolute_url()+ '#comments'),
+                    }
+
+                    send_mail_from_template(subject=email_subject,
+                                            template_name="mail/review_comment_created.html",
+                                            context=mail_context,
+                                            from_email=settings.EMAIL_ADMIN_ADDRESS,
+                                            recipient_list=[comment_recipient.email]
+                                            )
+       
         return super().form_valid(form)
 
     def get_success_url(self):

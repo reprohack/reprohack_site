@@ -109,6 +109,7 @@ class PaperForm(ModelForm):
             'tags': TagWidget(),
             'archive': DjangoToggleSwitchWidget(round=True, klass="django-toggle-switch-success"),
             'email_review': DjangoToggleSwitchWidget(round=True, klass="django-toggle-switch-success"),
+            'email_comment': DjangoToggleSwitchWidget(round=True, klass="django-toggle-switch-success"),
             'public_reviews': DjangoToggleSwitchWidget(round=True, klass="django-toggle-switch-success"),
         }
 
@@ -150,7 +151,7 @@ class PaperForm(ModelForm):
             Fieldset("Review Visibility",
                      Field("public_reviews"), type=""),
             Fieldset("Notifications",
-                     "email_review")
+                     "email_review", 'email_comment')
         )
 
 
@@ -185,8 +186,9 @@ class ReviewForm(ModelForm):
     class Meta:
         model = Review
         exclude = ['reviewers']
-        widgets = {'public_review': DjangoToggleSwitchWidget(
-            round=True, klass="django-toggle-switch-success")}
+        widgets = {
+            'public_review': DjangoToggleSwitchWidget(round=True, klass="django-toggle-switch-success"),
+            'email_comment': DjangoToggleSwitchWidget(round=True, klass="django-toggle-switch-success"),}
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
@@ -238,7 +240,7 @@ class ReviewForm(ModelForm):
             'reusability_suggestions',
             'general_comments',
             Fieldset(_("Permissions"),
-                     "public_review"
+                     "public_review", 'email_comment'
                      )
         )
 

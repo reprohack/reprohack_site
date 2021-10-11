@@ -184,10 +184,20 @@
           <div class="detail_text">{{ review.general_comments | show_markdown | safe }}</div>
 
 
-          <hr>
+
           {% if is_author or is_reviewer %}
+          <hr>
           <h2 id="comments">Comments</h2>
-          <small>This section is available to authors and reviewers only and can be used to discuss review points.
+          <small>
+            <p>
+              This <strong>private section is available to authors and reviewers only</strong> and can be used to
+              discuss
+              review
+              points.
+            </p>
+            Please remember to respect the <a href="{% url 'code-of-conduct' %}"> Code of Conduct</a> in your
+            communications.
+
           </small>
           <br>
           <br>

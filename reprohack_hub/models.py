@@ -300,6 +300,8 @@ class Paper(models.Model):
         help_text=_("Only reviews that have also been set to public by reviewers will be visible to other signed in users"))
     email_review = models.BooleanField(
         _("Send me an email when a review is received"), default=True)
+    email_comment = models.BooleanField(
+        _("Send me an email when a comment is posted to a review of my paper"), default=True)
     submitter = models.ForeignKey(
         get_user_model(), default=None, null=True, blank=True, on_delete=models.SET_NULL,
         related_name="submitted_papers")
@@ -453,7 +455,7 @@ class Review(models.Model):
     operating_system_detail = models.CharField(_("What operating system were you "
                                                  "using (eg. Ubuntu 14.04.6 LTS, "
                                                  "macOS 10.15 or Windows 10 Pro)?"),
-                                               max_length=100)
+                                               max_length=100, blank=True)
     software_installed = MarkdownxField(_("What additional software did you need "
                                           "to install?"),
                                         help_text=_("Markdown field"))
@@ -523,6 +525,8 @@ class Review(models.Model):
     public_review = models.BooleanField(
         _("Allow this review to be made public"), default=True,
         help_text=_("Only reviews on papers that have also been set to receive public reviews by authors will be visible to others"))
+    email_comment = models.BooleanField(
+        _("Send an email to reviewers when a comment is posted to this review"), default=True)
     is_initial_upload = models.BooleanField(default=False)
 
     def __str__(self):
@@ -610,4 +614,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment[:60]
-        
