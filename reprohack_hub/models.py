@@ -455,7 +455,7 @@ class Review(models.Model):
     operating_system_detail = models.CharField(_("What operating system were you "
                                                  "using (eg. Ubuntu 14.04.6 LTS, "
                                                  "macOS 10.15 or Windows 10 Pro)?"),
-                                               max_length=100)
+                                               max_length=100, blank=True)
     software_installed = MarkdownxField(_("What additional software did you need "
                                           "to install?"),
                                         help_text=_("Markdown field"))
