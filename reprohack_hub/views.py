@@ -139,7 +139,7 @@ class EventList(ListView):
         context["past_event_query_var"] = past_event_query_var
         context["upcoming_page"] = upcoming_page
         context["past_page"] = past_page
-        ojl =upcoming_page.object_list | past_page.object_list
+        ojl =upcoming_page.object_list + past_page.object_list
         context["page_object_list"] = ojl
         return context
 
