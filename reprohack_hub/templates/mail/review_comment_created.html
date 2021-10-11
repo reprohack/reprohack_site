@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  {% if is_author %}
+  <title>[ reprohack.org ] A comment has been posted to a review of your paper {{ paper_title }}.</title>
+  {% elif is_reviewer %}
+  <title>[ reprohack.org ] A comment has been posted to your review of paper {{ paper_title }}.</title>
+  {% endif %}
+</head>
+
+<body>
+  <p>
+    Dear {{ recipient_name }},
+  </p>
+
+
+  {% if is_author %}
+  <h3>A new comment has been posted to a review of your paper "{{ paper_title }}" by {{ commenter_username }} (on
+    {{ now }} UTC).</h3>
+  {% elif is_reviewer %}
+  <h3> A new comment has been posted to your review of paper "{{ paper_title }}" {{ commenter_username }} (on {{ now }}
+    UTC).</h3>
+  {% endif %}
+
+
+
+
+  <h3>
+    You can see the comment here: <a href="{{ comment_url }}">{{ comment_url }}</a>.
+  </h3>
+  <p>
+    You can manage comment notifications by editing the settings on your {% if is_author %} paper. {% else %}
+    review.{% endif %}
+  </p>
+  <p>
+    With warm regards,
+  </p>
+
+  <p>
+    The ReproHack Core Team
+  </p>
+
+
+
+  <a href="https://reprohack.org">reprohack.org</a>
+
+
+</body>
+
+</html>
