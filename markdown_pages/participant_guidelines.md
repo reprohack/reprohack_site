@@ -85,7 +85,7 @@ Here's some tips on more specific aspects of the materials to focus on:
 
 - Did you manage to download all the files you needed?
 
-]
+
 
 #### Installation
 
@@ -104,26 +104,13 @@ Here's some tips on more specific aspects of the materials to focus on:
 
 - Were **data documented** ...somehow...
 
-#### Documentation
-
-Was there **adequate documentation** describing:
-- how to **install** necessary software including non-standard dependencies?
-
-- how to **use** materials to reproduce the paper?
-
-- how to **cite** the materials, ideally in a form that can be copy and pasted?
 #### Analysis
 
-- **Were you able to fully reproduce** the paper? `r emo::ji("white_check_mark")`
+- **Were you able to fully reproduce** the paper? 
 
 - **How automated** was the process of reproducing the paper?
 
-- **How easy was it to link** analysis **code** to:
-   - the **plots** it generates
-   - **sections in the manuscript** in which it is described and results reported
-
-
-#### If the analysis was not fully reproducible 
+- **If the analysis was not fully reproducible:** 
 
  - Were there **missing dependencies?**
  
@@ -133,8 +120,57 @@ Was there **adequate documentation** describing:
  
  - Did **code run but results (e.g. model outputs, tables, figures) differ** to those published? By **how much?**
 
+#### Documentation
 
-### Transparency 
+Was there **adequate documentation** describing:
 
-- How easy was it to navigate the materials?
-- How easy was it to find the code the generated specific results (plot, table, reported statistic)?
+- how to **install** necessary software including non-standard dependencies?
+
+- how to **use** materials to reproduce the paper?
+
+- how to **cite** the materials, ideally in a form that can be copy and pasted?
+
+
+
+#### Transparency 
+
+- How easy was it to **navigate the materials**?
+
+- **How easy was it to link** analysis **code** to:
+   - the **plots** it generates
+   - **sections in the manuscript** in which it is described and results reported
+
+
+### Review as a User
+
+Another perspective that can be useful in a review is that of a user, and in particular that of two distinct user personas:
+
+- **New User**: the unfamiliarity with the tools or domain of a new user can generate very useful feedback on aspects which may seem obvious and be easily missed by authors or more experienced reviewers. Such feedback can help uncover ways to make materials accessible to a wider range of users.
+- **Invested User:** another interesting perspective is that of an invested user who can see themselves making use of and building on the materials and can evaluate it for fitness of purpose. Such a perspective can generate useful feedback for improving usability and even uncovering new features work could be used for.
+
+### Review as a Community Member!
+
+
+- **Acknowledge author effort:** another reminder that a lot of work with likely little _official_ support and guidance has gone into materials the authors have provided. 
+
+- **Give feedback in good faith:** there is a lot wrong with our current publication system but authors and the work they have submitted are part of the solution not the problem. 
+
+- **Focus on community benefits and system level solutions:** Ultimately we are here to help make modern research better! So let's focus on system level benefits and solutions and help **develop advice and best practice** on a **modern, fit-for-purpose reproducible research compendium!**
+
+
+## Finished early?
+
+### Explore the work more deeply:
+
+- Try and run additional analyses.
+
+- Create new plots. 
+
+- Combine materials with your own or other open materials available on the web!
+
+
+## Remember to submit your review!
+
+The most important part of the activity for both reviewers and authors is documenting your experiences through the review feedback form, so please make sure to complete it, ideally before the end of the day.
+
+Please note that if a paper is associated with a specific event only, reviews will not be able to be submitted after one week past the date of the event.
