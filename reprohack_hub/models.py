@@ -83,6 +83,7 @@ class User(AbstractUser):
     twitter = models.CharField(max_length=15, blank=True)
     github = models.CharField(max_length=39, blank=True)
     orcid = models.CharField(max_length=17, blank=True)
+    consent = models.BooleanField(_("I have read and accept the Data Protection & Privacy Policy"), default = False)
 
     def get_absolute_url(self):
         """Get url for user's detail view.
@@ -207,7 +208,7 @@ class Event(models.Model):
     def address(self):
         addr_items = [self.address1, self.address2,
                       self.city, self.postcode, self.country.name]
-
+                      
         used_addr_items = []
         for addr_item in addr_items:
             if addr_item and isinstance(addr_item, str) and len(addr_item.strip()) > 0:
