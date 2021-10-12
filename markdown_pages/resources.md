@@ -12,7 +12,8 @@
 
 ## For Authors
 
-TO DO
+- [Author Guidelines](author_guidelines)
+- [Code of Conduct](code-of-conduct)
 
 
 ## Blogs / Presentations on ReproHacks
