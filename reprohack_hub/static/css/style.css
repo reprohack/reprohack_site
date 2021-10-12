@@ -2990,6 +2990,11 @@ correct bootstrap pagination styling
   .card:before {
     content: none; }
 
+figcaption {
+  font-size: 11.2px;
+  font-size: 0.7rem;
+  font-style: italic; }
+
 .sponsors {
   padding: 16px 9.6px;
   padding: 1rem 0.6rem; }
