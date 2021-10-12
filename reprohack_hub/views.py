@@ -317,7 +317,7 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
                 paper_submitter_email = paper.submitter.email
 
                 mail_context = {
-                    "paper_user_name": paper.submitter.first_name,
+                    "paper_user_name": paper.submitter.preferred_name,
                     "paper_title": paper_title,
                     "logo_url": self.request.build_absolute_uri("/static/images/reprohack-logo-med.png"),
                     "review_url": self.request.build_absolute_uri(review.get_absolute_url()),
