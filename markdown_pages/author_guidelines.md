@@ -22,9 +22,18 @@ For more information on what participants might look for during reviews, have a 
 
 Ideally you will have a DOI associated with your paper when you submit your paper to the ReproHack Hub. Post publication would be fine but we believe the best time to submit your paper is at the preprint stage. 
 
+### How can I make my paper easier to find?
+
+The central paper list has a search box which participants can use to filter papers. However we recommend making good use of **tags**. Use them to tag your paper with any tools used (e.g. programming languages like R or Python) and keywords identifying the paper domain.
 
 
-### What if I don't want to recieve notifications.
+### What if I want to associate my paper with a single event.
+
+The Hub is designed to accomodate submitting papers for specific events (for example a thematic event involving an institution or specific domain). Select the event you want to associate your paper with from the drop down menu on the submission form in the **Paper details** section. Once associated with an event, the paper will appear on the *Associated Papers* list on the event page. 
+
+If you choose to associate your paper with an event, you can also specify whether you want your paper associated solely with that event under the **Review Availability** section. If you chose to make it available for review only at the associated event, your paper will be open for review only during the event and for the week following the event end date. Otherwise it will also be listed on the central paper list and made available for general review.
+
+### What if I don't want to recieve email notifications.
 
 There are two types of notifications you can receive an email about. The first is notification that a review has been received and the second that a comment has been posted to the review by a reviewer. You can set this notifications when you first submit your paper or edit them at any time on your **edit paper** <i class="bi-pencil-fill"></i> page.
 
@@ -43,3 +52,7 @@ We accept papers that require proprietary software. The only hindrance is that w
 ### What if my paper requires High Performance Computing (HPC)?
 
 The current ReproHack format involves participants joining events using their own computers. However we are working on an HPC ReproHack format to explore reproducibility of computationally intesing research so we welcome submissions in view of such an event. If you do submit a computationally intensive paper, please make sure to tag it with `HPC` and supply any know details about computational requirements in the ***What to focus on*** section.
+
+### Where can I find my papers?
+
+You can access a list of any materials you have submitted on your user profile page which you can access by clicking on your <strong><i class="bi-person-fill"></i> username</strong> on the navigation bar.
