@@ -73,7 +73,7 @@ To protect the integrity of ReroHack activity records, we do not by default dele
 
 ### Contact Us
 
-Please feel free to contact us at [reprohack-team@googlemail.com] if:
+Please feel free to contact us at [reprohack.team@googlemail.com](mailto:reprohack.team@googlemail.com) if:
 
 - you have a query about how your data is being used.
 - you would like to report a data security breach (e.g. if you think your personal data has been lost or disclosed inappropriately).
