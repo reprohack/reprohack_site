@@ -30,6 +30,8 @@
 
 ### Data we collect
 
+The only personal data we require are users' names and email addresses. Any other personal information on users' profiles is optional. Emails are never disclosed publicly on the Hub while names and other user profile information is only visible to other logged in users. 
+
 We **do not collect sensitive personal information** on our users, [as defined by the European Commision](https://ec.europa.eu/info/law/law-topic/data-protection/reform/rules-business-and-organisations/legal-grounds-processing-data/sensitive-data/what-personal-data-considered-sensitive_en), for example, data on racial or ethnic origin, polical opinions, religious or philosophical beliefs, sexuality, genetic, biometric or health data etc.
 
 ### Who do we share your data with?
