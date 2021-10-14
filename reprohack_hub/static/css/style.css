@@ -284,7 +284,7 @@ sup,
 sub,
 u,
 del {
-  color: #ff5e13; }
+  color: #D77914; }
 
 h1 {
   font-size: 36px;
@@ -351,7 +351,7 @@ ul {
       width: 0.7rem;
       height: 11.2px;
       height: 0.7rem;
-      border: 3px solid #ff5e13;
+      border: 3px solid #D77914;
       background: #fff;
       top: 9.6px;
       top: 0.6rem;
@@ -362,7 +362,7 @@ ol {
   margin-left: 30px; }
   ol li {
     list-style-type: decimal-leading-zero;
-    color: #ff5e13;
+    color: #D77914;
     font-weight: 500;
     line-height: 1.82em !important; }
     ol li span {
@@ -437,19 +437,19 @@ a {
       border: 1px solid transparent; }
   .genric-btn.primary {
     color: #fff;
-    background: #ff5e13;
+    background: #D77914;
     border: 1px solid transparent; }
     .genric-btn.primary:hover {
-      color: #ff5e13;
-      border: 1px solid #ff5e13;
+      color: #D77914;
+      border: 1px solid #D77914;
       background: #fff; }
   .genric-btn.primary-border {
-    color: #ff5e13;
-    border: 1px solid #ff5e13;
+    color: #D77914;
+    border: 1px solid #D77914;
     background: #fff; }
     .genric-btn.primary-border:hover {
       color: #fff;
-      background: #ff5e13;
+      background: #D77914;
       border: 1px solid transparent; }
   .genric-btn.success {
     color: #fff;
@@ -645,7 +645,7 @@ a {
   margin-left: 30px; }
   .ordered-list li {
     list-style-type: decimal-leading-zero;
-    color: #ff5e13;
+    color: #D77914;
     font-weight: 500;
     line-height: 1.82em !important; }
     .ordered-list li span {
@@ -655,7 +655,7 @@ a {
 .ordered-list-alpha li {
   margin-left: 30px;
   list-style-type: lower-alpha;
-  color: #ff5e13;
+  color: #D77914;
   font-weight: 500;
   line-height: 1.82em !important; }
   .ordered-list-alpha li span {
@@ -665,7 +665,7 @@ a {
 .ordered-list-roman li {
   margin-left: 30px;
   list-style-type: lower-roman;
-  color: #ff5e13;
+  color: #D77914;
   font-weight: 500;
   line-height: 1.82em !important; }
   .ordered-list-roman li span {
@@ -719,7 +719,7 @@ a {
   padding: 0 20px; }
   .single-input-primary:focus {
     outline: none;
-    border: 1px solid #ff5e13; }
+    border: 1px solid #D77914; }
 
 .single-input-accent {
   display: block;
@@ -769,7 +769,7 @@ a {
       width: 15px;
       height: 15px;
       border-radius: 50%;
-      background: #ff5e13;
+      background: #D77914;
       -webkit-transition: all 0.2s;
       transition: all 0.2s;
       -webkit-box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.2);
@@ -833,7 +833,7 @@ a {
     .primary-switch input:checked + label:after {
       left: 19px; }
     .primary-switch input:checked + label:before {
-      background: #ff5e13; }
+      background: #D77914; }
 
 .confirm-switch {
   width: 35px;
@@ -1110,10 +1110,10 @@ a {
         font-size: 12px;
         padding-left: 20px; }
         .default-select .nice-select .list .option.selected {
-          color: #ff5e13;
+          color: #D77914;
           background: transparent; }
         .default-select .nice-select .list .option:hover {
-          color: #ff5e13;
+          color: #D77914;
           background: transparent; }
   .default-select .current {
     margin-right: 50px;
@@ -1149,10 +1149,10 @@ a {
         font-size: 12px;
         padding-left: 45px; }
         .form-select .nice-select .list .option.selected {
-          color: #ff5e13;
+          color: #D77914;
           background: transparent; }
         .form-select .nice-select .list .option:hover {
-          color: #ff5e13;
+          color: #D77914;
           background: transparent; }
   .form-select .current {
     margin-right: 50px;
@@ -1570,7 +1570,7 @@ a {
   font-family: "Poppins", sans-serif;
   color: #fff;
   padding: 12px 30px;
-  background: #ff5e13;
+  background: #D77914;
   border-radius: 30px;
   border: 1px solid transparent;
   display: inline-block;
@@ -1578,9 +1578,9 @@ a {
   transition: 0.3s; }
   .boxed_btn_orange:hover {
     background: transparent;
-    color: #ff5e13;
-    border: 1px solid #ff5e13;
-    color: #ff5e13 !important; }
+    color: #D77914;
+    border: 1px solid #D77914;
+    color: #D77914 !important; }
 
 .boxed_btn_orange2 {
   cursor: pointer;
@@ -1592,12 +1592,12 @@ a {
   -webkit-transition: 0.3s;
   transition: 0.3s;
   background: transparent;
-  color: #ff5e13;
-  border: 1px solid #ff5e13;
+  color: #D77914;
+  border: 1px solid #D77914;
   display: inline-block; }
   .boxed_btn_orange2:hover {
     color: #fff !important;
-    background: #ff5e13; }
+    background: #D77914; }
 
 .section_title h3 {
   font-size: 46px;
@@ -2461,7 +2461,7 @@ a {
           margin: 0 10px;
           font-size: 30px;
           color: #ddd;
-          text-shadow: 2px 2px 0 #ff5e13, -1px -1px 0 #ff5e13, 1px -1px 0 #ff5e13, -1px 1px 0 #ff5e13, 1px 1px 0 #ff5e13; }
+          text-shadow: 2px 2px 0 #D77914, -1px -1px 0 #D77914, 1px -1px 0 #D77914, -1px 1px 0 #D77914, 1px 1px 0 #D77914; }
           .our_team_member .single_team .thumb .social_link a:hover {
             color: #fff; }
     .our_team_member .single_team .master_name {
@@ -2498,9 +2498,9 @@ a {
   padding-bottom: 10px; }
 
 .find_us_area .find_info {
-  background: #ff5e13;
+  background: #D77914;
   padding: 70px 0 60px 80px;
-  background: #ff5e13; }
+  background: #D77914; }
   @media (max-width: 767px) {
     .find_us_area .find_info {
       padding: 20px; } }
@@ -2650,7 +2650,7 @@ a {
           .popular_courses .single_courses .courses_info h3 br {
             display: none; } }
         .popular_courses .single_courses .courses_info h3 a:hover {
-          color: #ff5e13; }
+          color: #D77914; }
       .popular_courses .single_courses .courses_info .star_prise {
         border-top: 1px solid #E8E8E8;
         padding-top: 16px; }
@@ -2732,7 +2732,7 @@ a {
     font-size: 16px;
     color: #2a2a2a; }
     .contact-info .media-body h3 a:hover {
-      color: #ff5e13; }
+      color: #D77914; }
   .contact-info .media-body p {
     color: #8a8a8a; }
 
@@ -2827,7 +2827,7 @@ a {
     border-radius: 50px;
     margin-top: 0; }
     .contact-section .btn_2:hover {
-      background-color: #ff5e13; }
+      background-color: #D77914; }
 
 .alert-debug {
   background-color: #fff;
@@ -2849,7 +2849,7 @@ strong {
 blockquote {
   padding: 30px 50px 30px 30px;
   background: #f9f9ff;
-  border-left: 2px solid #ff5e13;
+  border-left: 2px solid #D77914;
   font-style: italic;
   font-size: 1.5em; }
 
@@ -2946,7 +2946,7 @@ fieldset {
   color: #f9f9ff !important;
   font-size: 19.2px !important;
   font-size: 1.2rem !important;
-  text-shadow: 2px 2px 0 #ff5e13, -1px -1px 0 #ff5e13, 1px -1px 0 #ff5e13, -1px 1px 0 #ff5e13, 1px 1px 0 #ff5e13; }
+  text-shadow: 2px 2px 0 #D77914, -1px -1px 0 #D77914, 1px -1px 0 #D77914, -1px 1px 0 #D77914, 1px 1px 0 #D77914; }
 
 .login-txt-nav {
   padding-top: 8px;
@@ -3042,7 +3042,7 @@ pre {
   font-size: 1rem;
   color: #2E004B; }
   .icon-box.orange {
-    color: #ff5e13; }
+    color: #D77914; }
 
 label.django-toggle-switch + label.custom-control-label::before {
   border: none;
