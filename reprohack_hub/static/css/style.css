@@ -94,7 +94,7 @@ li {
   list-style: none; }
 
 p {
-  font-weight: 300;
+  font-weight: normal;
   line-height: 28px;
   color: #212529;
   margin-bottom: 13px;
