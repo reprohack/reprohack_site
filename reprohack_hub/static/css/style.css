@@ -1522,9 +1522,10 @@ a {
 
 .boxed_btn {
   cursor: pointer;
-  font-size: 17.6px;
-  font-size: 1.1rem;
+  font-size: 20.8px;
+  font-size: 1.3rem;
   color: #fff;
+  font-weight: 500;
   font-family: "Poppins", sans-serif;
   padding: 16px 32px;
   padding: 1rem 2rem;
