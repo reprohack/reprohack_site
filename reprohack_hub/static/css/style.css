@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,600,600i,700|Lora:400,400i,600,600i,700|Poppins:200,300,400,500,500i,600,700,800&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,600,600i,700|Lora:400,400i,600,600i,700|Poppins:200,300,400,500,500i,600,700,800&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,500i,600,700,800|Work+Sans:ital,wght@0,200;0,300;0,400;0,500;0,700;1,200;1,300;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,500i,600,700,800|Work+Sans:ital,wght@0,200;0,300;0,400;0,500;0,700;1,200;1,300;1,400&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
 .flex-center-start {
   display: -webkit-box;
@@ -34,7 +34,7 @@
 
 /* 1. Theme default css */
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: "Work Sans", sans-serif;
   font-size: 17.6px;
   font-size: 1.1rem;
   font-weight: normal;
@@ -98,10 +98,10 @@ p {
   line-height: 28px;
   color: #212529;
   margin-bottom: 13px;
-  font-family: "Roboto", sans-serif; }
+  font-family: "Work Sans", sans-serif; }
 
 label {
-  color: #7e7e7e;
+  color: #383838;
   cursor: pointer;
   font-size: 19.2px;
   font-size: 1.2rem;
@@ -1619,7 +1619,7 @@ a {
 
 .section_title p {
   font-size: 17px;
-  font-family: "Roboto", sans-serif;
+  font-family: "Work Sans", sans-serif;
   font-weight: 400;
   line-height: 28px;
   color: #727272;
@@ -2852,6 +2852,9 @@ blockquote {
   font-style: italic;
   font-size: 1.5em; }
 
+.text-muted {
+  color: #383838 !important; }
+
 .detail_header {
   font-weight: bold;
   margin-bottom: 0.3em;
@@ -3091,7 +3094,7 @@ input:checked + .django-toggle-switch-slider {
 
 .info {
   padding: 6px 8px;
-  font-family: "Roboto", sans-serif;
+  font-family: "Work Sans", sans-serif;
   font-size: 16px;
   font-size: 1rem;
   background: white;
@@ -3121,7 +3124,7 @@ input:checked + .django-toggle-switch-slider {
   opacity: 0.7; }
 
 .leaflet-popup-content {
-  font-family: "Roboto", sans-serif; }
+  font-family: "Work Sans", sans-serif; }
   .leaflet-popup-content a {
     font-size: 20.8px;
     font-size: 1.3rem;
