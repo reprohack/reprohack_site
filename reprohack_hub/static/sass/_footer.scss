@@ -51,7 +51,7 @@
       }
 
       p {
-        color: #C7C7C7;
+        color: #e9ecef;
       }
 
       p.footer_text {
@@ -66,8 +66,8 @@
           font-weight: 400;
 
           &:hover {
-            color: #ff5e13;
-            border-bottom: 1px solid #ff5e13
+            color: #2E004B;
+            border-bottom: 1px solid #2E004B
           }
         }
 
@@ -77,8 +77,8 @@
             color: #B2B2B2;
 
             &:hover {
-              color: #ff5e13;
-              border-bottom: 1px solid #ff5e13
+              color: #2E004B;
+              border-bottom: 1px solid #2E004B
             }
 
             &.first {
@@ -95,11 +95,11 @@
 
           a {
             font-size: 16px;
-            color: #BABABA;
+            color: #e9ecef;
             line-height: 42px;
 
             &:hover {
-              color: #ff5e13;
+              color: #2E004B;
             }
           }
 
@@ -137,7 +137,7 @@
           border: none;
           font-size: 14px;
           color: #fff;
-          background: #ff5e13;
+          background: #2E004B;
           padding: 10px;
           padding: 0 22px;
           cursor: pointer;
@@ -146,7 +146,7 @@
 
       .newsletter_text {
         font-size: 16px;
-        color: #BABABA;
+        color: #e9ecef;
       }
     }
   }
@@ -170,7 +170,7 @@
       }
 
       a {
-        color: #ff5e13;
+        color: #2E004B;
       }
     }
   }
