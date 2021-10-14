@@ -41,6 +41,7 @@ class Command(BaseCommand):
             event.address1 = row["address"]
             event.registration_url = row["url"]
             event.event_coordinates = ",".join([row["lat"], row["lon"]])
+            event.is_initial_upload = True
             event.save()
 
 
@@ -70,6 +71,9 @@ class Command(BaseCommand):
                 paper.public_reviews = True
             else:
                 paper.public_reviews = False
+            paper.email_review = False
+            paper.email_comment = False
+            paper.is_initial_upload = True
             paper.save()
 
         reviews = self.get_csv_dict(reviews_path)
@@ -96,6 +100,7 @@ class Command(BaseCommand):
             review.reproducibility_description = row["Briefly describe the procedure followed / tools used to reproduce it."]
             review.reproducibility_rating = int(row["On a scale of 1 to 10, how much of the paper did you manage to reproduce?"])
             review.familiarity_with_method = row["Briefly describe your familiarity with the procedure/ tools used by the paper."]
+            review.operating_system = row["OS"]
             review.challenges = row["What were the main challenges you ran into (if any)?"]
             review.advantages = row["What were the positive features of this approach?"]
             review.comments_and_suggestions = row["Any other comments / suggestions on the reproducibility approach?"]
@@ -110,7 +115,9 @@ class Command(BaseCommand):
             review.general_comments = row["Any Final Comments:"]
             # row["Contact email"]
             # row["Attach document with additional review comments"]
-            review.public_review = True
+            review.public_review = False
+            review.email_comment = False
+            review.is_initial_upload = True
             review.save()
 
             PaperReviewer.objects.create(review=review, user=submitter)
