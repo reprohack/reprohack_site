@@ -1901,7 +1901,7 @@ a {
         .footer .footer_top .footer_widget .footer_logo {
           margin-bottom: 20px; } }
     .footer .footer_top .footer_widget p {
-      color: #C7C7C7; }
+      color: #e9ecef; }
     .footer .footer_top .footer_widget p.footer_text {
       font-size: 16px;
       color: #B2B2B2;
@@ -1912,24 +1912,24 @@ a {
         color: #B2B2B2;
         font-weight: 400; }
         .footer .footer_top .footer_widget p.footer_text a.domain:hover {
-          color: #ff5e13;
-          border-bottom: 1px solid #ff5e13; }
+          color: #2E004B;
+          border-bottom: 1px solid #2E004B; }
       .footer .footer_top .footer_widget p.footer_text.doanar a {
         font-weight: 500;
         color: #B2B2B2; }
         .footer .footer_top .footer_widget p.footer_text.doanar a:hover {
-          color: #ff5e13;
-          border-bottom: 1px solid #ff5e13; }
+          color: #2E004B;
+          border-bottom: 1px solid #2E004B; }
         .footer .footer_top .footer_widget p.footer_text.doanar a.first {
           margin-bottom: 10px; }
     .footer .footer_top .footer_widget ul li {
       padding-left: 0; }
       .footer .footer_top .footer_widget ul li a {
         font-size: 16px;
-        color: #BABABA;
+        color: #e9ecef;
         line-height: 42px; }
         .footer .footer_top .footer_widget ul li a:hover {
-          color: #ff5e13; }
+          color: #2E004B; }
       .footer .footer_top .footer_widget ul li::before {
         border: none;
         background: none; }
@@ -1967,13 +1967,13 @@ a {
         border: none;
         font-size: 14px;
         color: #fff;
-        background: #ff5e13;
+        background: #2E004B;
         padding: 10px;
         padding: 0 22px;
         cursor: pointer; }
     .footer .footer_top .footer_widget .newsletter_text {
       font-size: 16px;
-      color: #BABABA; }
+      color: #e9ecef; }
   .footer .copy-right_text {
     padding-bottom: 30px; }
     .footer .copy-right_text .footer_border {
@@ -1988,7 +1988,7 @@ a {
         .footer .copy-right_text .copy_right {
           font-size: 14px; } }
       .footer .copy-right_text .copy_right a {
-        color: #ff5e13; }
+        color: #2E004B; }
   .footer .socail_links {
     margin-top: 47px; }
     @media (max-width: 767px) {
@@ -2663,7 +2663,7 @@ a {
         .popular_courses .single_courses .courses_info .star_prise .prise span {
           font-size: 16px; }
           .popular_courses .single_courses .courses_info .star_prise .prise span.offer {
-            color: #C7C7C7;
+            color: #e9ecef;
             text-decoration: line-through;
             margin-right: 14px; }
           .popular_courses .single_courses .courses_info .star_prise .prise span.active_prise {
@@ -2942,9 +2942,10 @@ fieldset {
   font-style: italic; }
 
 .login-txt {
-  color: #ff5e13 !important;
+  color: #f9f9ff !important;
   font-size: 16px !important;
-  font-size: 1rem !important; }
+  font-size: 1rem !important;
+  text-shadow: 2px 2px 0 #ff5e13, -1px -1px 0 #ff5e13, 1px -1px 0 #ff5e13, -1px 1px 0 #ff5e13, 1px 1px 0 #ff5e13; }
 
 .login-txt-nav {
   padding-top: 8px;
