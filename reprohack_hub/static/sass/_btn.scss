@@ -181,7 +181,7 @@
   font-family: $font1;
   color: #fff;
   padding: 12px 30px;
-  background: #FDAE5C;
+  background: #ff5e13;
   @include border-radius(30px);
   border: 1px solid transparent;
   display: inline-block;
@@ -189,9 +189,9 @@
 
   &:hover {
     background: transparent;
-    color: #FDAE5C;
-    border: 1px solid #FDAE5C;
-    color: #FDAE5C !important;
+    color: #ff5e13;
+    border: 1px solid #ff5e13;
+    color: #ff5e13 !important;
   }
 }
 
@@ -204,12 +204,12 @@
   border: 1px solid transparent;
   @include transition(.3s);
   background: transparent;
-  color: #FDAE5C;
-  border: 1px solid #FDAE5C;
+  color: #ff5e13;
+  border: 1px solid #ff5e13;
   display: inline-block;
 
   &:hover {
     color: #fff !important;
-    background: #FDAE5C;
+    background: #ff5e13;
   }
 }
