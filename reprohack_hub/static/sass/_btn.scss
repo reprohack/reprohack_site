@@ -182,7 +182,7 @@
   font-family: $font1;
   color: #fff;
   padding: 12px 30px;
-  background: #ff5e13;
+  background: $theme-color2;
   @include border-radius(30px);
   border: 1px solid transparent;
   display: inline-block;
@@ -190,9 +190,9 @@
 
   &:hover {
     background: transparent;
-    color: #ff5e13;
-    border: 1px solid #ff5e13;
-    color: #ff5e13 !important;
+    color: $theme-color2;
+    border: 1px solid $theme-color2;
+    color: $theme-color2 !important;
   }
 }
 
@@ -205,12 +205,12 @@
   border: 1px solid transparent;
   @include transition(.3s);
   background: transparent;
-  color: #ff5e13;
-  border: 1px solid #ff5e13;
+  color: $theme-color2;
+  border: 1px solid $theme-color2;
   display: inline-block;
 
   &:hover {
     color: #fff !important;
-    background: #ff5e13;
+    background: $theme-color2;
   }
 }

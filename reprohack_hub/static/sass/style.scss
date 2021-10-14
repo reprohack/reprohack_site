@@ -229,11 +229,11 @@ fieldset {
 .login-txt {
   color: #f9f9ff !important;
   font-size: 1.2rem !important;
-  text-shadow: 2px 2px 0 #ff5e13,
-    -1px -1px 0 #ff5e13,
-    1px -1px 0 #ff5e13,
-    -1px 1px 0 #ff5e13,
-    1px 1px 0 #ff5e13;
+  text-shadow: 2px 2px 0 $theme-color2,
+    -1px -1px 0 $theme-color2,
+    1px -1px 0 $theme-color2,
+    -1px 1px 0 $theme-color2,
+    1px 1px 0 $theme-color2;
 }
 
 .login-txt-nav {

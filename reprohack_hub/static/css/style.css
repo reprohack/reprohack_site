@@ -2433,7 +2433,6 @@ a {
         width: 100%;
         height: 100%;
         content: "";
-        background-image: url(../img/team/overlay.png);
         background-size: cover;
         background-position: bottom;
         background-repeat: no-repeat;
@@ -2461,7 +2460,8 @@ a {
         .our_team_member .single_team .thumb .social_link a {
           margin: 0 10px;
           font-size: 30px;
-          color: #ddd; }
+          color: #ddd;
+          text-shadow: 2px 2px 0 #ff5e13, -1px -1px 0 #ff5e13, 1px -1px 0 #ff5e13, -1px 1px 0 #ff5e13, 1px 1px 0 #ff5e13; }
           .our_team_member .single_team .thumb .social_link a:hover {
             color: #fff; }
     .our_team_member .single_team .master_name {
