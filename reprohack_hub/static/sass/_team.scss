@@ -33,7 +33,6 @@
         width: 100%;
         height: 100%;
         content: "";
-        background-image: url(../img/team/overlay.png);
         background-size: cover;
         background-position: bottom;
         background-repeat: no-repeat;
@@ -63,6 +62,11 @@
           margin: 0 10px;
           font-size: 30px;
           color: #ddd;
+          text-shadow: 2px 2px 0 $theme-color2,
+            -1px -1px 0 $theme-color2,
+            1px -1px 0 $theme-color2,
+            -1px 1px 0 $theme-color2,
+            1px 1px 0 $theme-color2;
 
           &:hover {
             color: #fff;
@@ -120,7 +124,7 @@
   }
 
   .find_info {
-    background: #ff5e13;
+    background: $theme-color2;
     padding: 70px 0 60px 80px;
 
     @media #{$mobile_device} {
@@ -151,7 +155,7 @@
       }
     }
 
-    background: #ff5e13;
+    background: $theme-color2;
 
     .single_find {
       i {
