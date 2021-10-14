@@ -42,7 +42,7 @@
 
           </ul>
 
-        {% include "misc/pagination-2-lists.html" with page_obj=upcoming_page page2_obj=past_page page_var=upcoming_event_query_var page2_var=past_event_query_var %}
+          {% include "misc/pagination-2-lists.html" with page_obj=upcoming_page page2_obj=past_page page_var=upcoming_event_query_var page2_var=past_event_query_var %}
 
 
 
@@ -50,9 +50,9 @@
 
 
           <h1>Past Events</h1>
-        {% if not past_page.object_list %}
+          {% if not past_page.object_list %}
           No objects
-        {% endif %}
+          {% endif %}
           <ul>
             {% for event in past_page.object_list %}
             <li class="event card-box">
@@ -70,7 +70,7 @@
             {% endfor %}
           </ul>
 
-        {% include "misc/pagination-2-lists.html" with page_obj=past_page page2_obj=upcoming_page page_var=past_event_query_var page2_var=upcoming_event_query_var%}
+          {% include "misc/pagination-2-lists.html" with page_obj=past_page page2_obj=upcoming_page page_var=past_event_query_var page2_var=upcoming_event_query_var%}
 
 
         </div>
@@ -79,7 +79,7 @@
           <form method="get">
             <div class="mb-4">
               <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search events..." name="search"
+                <input type="text" class="form-control" placeholder="Search events..." name="search" aria-label="Search"
                   value="{{ search }}" />
                 <div class="input-group-append">
                   <button type="submit" class="btn-primary btn"><i class="bi-search m-0 p-0"

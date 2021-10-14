@@ -24,14 +24,18 @@
               <h5>Authors: {{ paper.authors }}</h5>
               <h5>DOI: <a href="{{ paper.doi }}">{{ paper.doi }}</a></h5>
               <h5>Submitted by
-                {% if paper.submitter %}<a href="{{ paper.submitter.get_absolute_url }}">{{ paper.submitter.username }}</a>
+                {% if paper.submitter %}<a
+                  href="{{ paper.submitter.get_absolute_url }}">{{ paper.submitter.username }}</a>
                 {% else %} {% deleted_user %}
                 {% endif %}
                 <span class="icon-box">
-                  {%  if paper.event %} &nbsp; <a href="{{ paper.event.get_absolute_url }}"><i class="fas fa-calendar-day" title="Has associated event"></i></a> {% endif %}
-                  {%  if paper.review_availability == "ALL" %} &nbsp; <i class="far fa-list-alt" title="Available for general review"></i>
+                  {%  if paper.event %} &nbsp; <a href="{{ paper.event.get_absolute_url }}"><i
+                      class="fas fa-calendar-day" title="Has associated event"></i></a> {% endif %}
+                  {%  if paper.review_availability == "ALL" %} &nbsp; <i class="far fa-list-alt"
+                    title="Available for general review"></i>
                   {% endif %}
-                  {%  if paper.public_reviews %} &nbsp; <i class="fas fa-globe-africa" title="Public reviews welcome"></i> {% endif %}
+                  {%  if paper.public_reviews %} &nbsp; <i class="fas fa-globe-africa"
+                    title="Public reviews welcome"></i> {% endif %}
                 </span>
               </h5>
               {% if paper.num_reviews > 0 %}
@@ -74,7 +78,7 @@
             <div class="mb-4">
               <input type="hidden" name="tags" value="{{ tags }}">
               <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search papers..." name="search"
+                <input type="text" class="form-control" placeholder="Search papers..." name="search" aria-label="Search"
                   value="{{ search }}" />
                 <div class="input-group-append">
                   <button type="submit" class="btn-primary btn"><i class="bi-search m-0 p-0"

@@ -1,5 +1,6 @@
 /* 1. Theme default css */
 @import url("https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i,900|Roboto:100,100i,300,400,400i,500,500i,700,900&display=swap");
+
 /* line 4, ../../Arafath/CL/CL september/205. Barber/HTML/scss/theme-default.scss */
 body {
   font-family: 'Raleway', sans-serif;
@@ -27,7 +28,8 @@ a,
 
 /* line 21, ../../Arafath/CL/CL september/205. Barber/HTML/scss/theme-default.scss */
 a:focus,
-.button:focus, button:focus {
+.button:focus,
+button:focus {
   text-decoration: none;
   outline: none;
 }
@@ -55,7 +57,11 @@ button {
 }
 
 /* line 42, ../../Arafath/CL/CL september/205. Barber/HTML/scss/theme-default.scss */
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-family: 'Playfair Display', serif;
   color: #1F1F1F;
 }
@@ -93,7 +99,7 @@ p {
 
 /* line 71, ../../Arafath/CL/CL september/205. Barber/HTML/scss/theme-default.scss */
 label {
-  color: #7e7e7e;
+  color: #383838;
   cursor: pointer;
   font-size: 14px;
   font-weight: 400;

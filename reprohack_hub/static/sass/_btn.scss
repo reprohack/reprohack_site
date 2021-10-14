@@ -130,8 +130,9 @@
 
 .boxed_btn {
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   color: #fff;
+  font-weight: 500;
   font-family: $font1;
   padding: 1rem 2rem;
   background: $reprohack-green-light;
@@ -181,7 +182,7 @@
   font-family: $font1;
   color: #fff;
   padding: 12px 30px;
-  background: #FDAE5C;
+  background: $theme-color2;
   @include border-radius(30px);
   border: 1px solid transparent;
   display: inline-block;
@@ -189,9 +190,9 @@
 
   &:hover {
     background: transparent;
-    color: #FDAE5C;
-    border: 1px solid #FDAE5C;
-    color: #FDAE5C !important;
+    color: $theme-color2;
+    border: 1px solid $theme-color2;
+    color: $theme-color2 !important;
   }
 }
 
@@ -204,12 +205,12 @@
   border: 1px solid transparent;
   @include transition(.3s);
   background: transparent;
-  color: #FDAE5C;
-  border: 1px solid #FDAE5C;
+  color: $theme-color2;
+  border: 1px solid $theme-color2;
   display: inline-block;
 
   &:hover {
     color: #fff !important;
-    background: #FDAE5C;
+    background: $theme-color2;
   }
 }
