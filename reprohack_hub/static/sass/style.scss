@@ -292,6 +292,14 @@ correct bootstrap pagination styling
   border-color: $reprohack-purple;
 }
 
+.badge-success {
+  background-color: $reprohack-green-dark;
+}
+
+.badge-warning {
+  background-color: $reprohack-green-light;
+}
+
 .card {
   margin-bottom: 0.6rem !important;
   border-radius: 0.5rem;
