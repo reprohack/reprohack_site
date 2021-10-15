@@ -264,6 +264,9 @@ ul li {
 The default theme overrides the standard li style so we have to override it again for the
 correct bootstrap pagination styling
  */
+////////////////////////////////
+// Pagination //
+////////////////////////////////
 .pagination {
   li {
     padding-left: 0px;
@@ -274,6 +277,35 @@ correct bootstrap pagination styling
     }
   }
 }
+
+.page-item .page-link {
+  color: $reprohack-purple;
+}
+
+.page-item.active .page-link {
+  background-color: $reprohack-purple !important;
+  border-color: $reprohack-purple;
+}
+
+////////////////////////////////
+// Tags & Search //
+////////////////////////////////
+.btn-primary {
+  background-color: $reprohack-purple !important;
+  border-color: $reprohack-purple;
+}
+
+.badge-success {
+  background-color: $reprohack-green-dark;
+}
+
+.badge-warning {
+  background-color: $reprohack-green-light;
+}
+
+////////////////////////////////
+// Card //
+////////////////////////////////
 
 .card {
   margin-bottom: 0.6rem !important;

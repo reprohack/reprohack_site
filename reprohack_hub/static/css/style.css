@@ -1989,7 +1989,7 @@ a {
         .footer .copy-right_text .copy_right {
           font-size: 14px; } }
       .footer .copy-right_text .copy_right a {
-        color: #2E004B; }
+        color: #a8a8a8; }
   .footer .socail_links {
     margin-top: 47px; }
     @media (max-width: 767px) {
@@ -2981,6 +2981,23 @@ correct bootstrap pagination styling
   padding-left: 0px; }
   .pagination li:before {
     content: none; }
+
+.page-item .page-link {
+  color: #2E004B; }
+
+.page-item.active .page-link {
+  background-color: #2E004B !important;
+  border-color: #2E004B; }
+
+.btn-primary {
+  background-color: #2E004B !important;
+  border-color: #2E004B; }
+
+.badge-success {
+  background-color: #11725E; }
+
+.badge-warning {
+  background-color: #02CC98; }
 
 .card {
   margin-bottom: 9.6px !important;
