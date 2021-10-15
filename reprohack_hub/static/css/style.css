@@ -2982,6 +2982,17 @@ correct bootstrap pagination styling
   .pagination li:before {
     content: none; }
 
+.page-item .page-link {
+  color: #2E004B; }
+
+.page-item.active .page-link {
+  background-color: #2E004B !important;
+  border-color: #2E004B; }
+
+.btn-primary {
+  background-color: #2E004B !important;
+  border-color: #2E004B; }
+
 .card {
   margin-bottom: 9.6px !important;
   margin-bottom: 0.6rem !important;
