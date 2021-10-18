@@ -1529,10 +1529,10 @@ a {
   font-family: "Poppins", sans-serif;
   padding: 16px 32px;
   padding: 1rem 2rem;
-  background: #02CC98;
+  background: #02CC98 !important;
   /*#04D2C8;*/
   border-radius: 2rem;
-  border: 1px solid transparent;
+  border: 1px solid transparent !important;
   display: inline-block;
   -webkit-transition: 0.3s;
   transition: 0.3s; }
@@ -2990,7 +2990,7 @@ correct bootstrap pagination styling
   border-color: #2E004B; }
 
 .btn-primary {
-  background-color: #2E004B !important;
+  background-color: #2E004B;
   border-color: #2E004B; }
 
 .badge-success {

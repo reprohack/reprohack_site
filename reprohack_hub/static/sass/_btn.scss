@@ -135,10 +135,10 @@
   font-weight: 500;
   font-family: $font1;
   padding: 1rem 2rem;
-  background: $reprohack-green-light;
+  background: $reprohack-green-light !important;
   /*#04D2C8;*/
   @include border-radius(2rem);
-  border: 1px solid transparent;
+  border: 1px solid transparent !important;
   display: inline-block;
   @include transition(.3s);
 
