@@ -82,7 +82,7 @@ class User(AbstractUser):
     location = models.CharField(max_length=70, blank=True)
     twitter = models.CharField(max_length=15, blank=True)
     github = models.CharField(max_length=39, blank=True)
-    orcid = models.CharField(max_length=17, blank=True)
+    orcid = models.CharField(max_length=19, blank=True)
     consent = models.BooleanField(_("I have read and accept the Data Protection & Privacy Policy"), default = False)
 
     def get_absolute_url(self):
