@@ -38,10 +38,10 @@ Additionally, once a valid registration is supplied, a registration button linki
 ## During the event
 
 - Start with an Introduction, Ice breaker and Tips for Reviewing (see slide template for details).
-- Make sure to **bring attention to the [Code of Conduct]()** and remind participants thet **constructive criticism** and **care in how they frame their comments** to authors is of utmost importance.
+- Make sure to **bring attention to the [Code of Conduct](code-of-conduct)** and remind participants thet **constructive criticism** and **care in how they frame their comments** to authors is of utmost importance.
 - Make sure to also bering the group back together after each ReproHack session to share their experience. Encourage them to use the hackpad to summarise them.
 - By the end of the day, ensure participants have completed the feedback form to authors.
-- At the end of the day, ask partipants for feedback for your event. Ask them to record one thing they enjoyed and one thing that could be improved. If you use the hackpad template provided, there is already a section to leave feedback. If you think any of the feedback is woth passing on, feel free to open an issue, either in or [general organisation repo]() or the [reprohack hub site](https://github.com/reprohack/reprohack_site/issues), or just let us know on slack!
+- At the end of the day, ask partipants for feedback for your event. Ask them to record one thing they enjoyed and one thing that could be improved. If you use the hackpad template provided, there is already a section to leave feedback. If you think any of the feedback is woth passing on, feel free to open an issue, either in or [general organisation repo](https://github.com/reprohack/reprohack-hq) or the [reprohack hub site](https://github.com/reprohack/reprohack_site/issues), or just let us know on slack!
 
 ## After the event.
 

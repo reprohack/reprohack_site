@@ -1,6 +1,6 @@
 > **As all ReproHack events, we strive to make this event open and inclusive
 to all. As such the event is governed by the [ReproHack Code of
-Conduct](code-of-conduct.html)
+Conduct](code-of-conduct)
 and you should read it before participating. By participating, you are
 expected to uphold this code.**
 
@@ -34,7 +34,7 @@ community as a whole.
 
 ### Considerations when Reviewing
 
-In addition to complying to the **[ReproHack Code of Conduct](code-of-conduct.html)**, please also consider the following when developing your feedback to the authors:
+In addition to complying to the **[ReproHack Code of Conduct](code-of-conduct)**, please also consider the following when developing your feedback to the authors:
 
 - #### Reproducibility is hard!
   Authors submitting their materials for us to work with are incredibly brave. Often, it might be the first time that someone else has attempted to reproduce their work so things that might be obviously missing from a reviewers point of view might have been impossible to pick up.
