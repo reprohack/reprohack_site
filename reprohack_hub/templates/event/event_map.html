@@ -21,38 +21,68 @@
       className: 'awesome-marker leaflet-pin'
       });
 
+    const greenGlobeMarker = L.divIcon({
+      html: '<i class="fas fa-globe fa-3x"></i>',
+      iconSize: [20, 20],
+      className: 'green-globe-icon'
+    });
+
+    const orangeGlobeMarker = L.divIcon({
+      html: '<i class="fas fa-globe fa-3x"></i>',
+      iconSize: [20, 20],
+      className: 'orange-globe-icon leaflet-pin'
+    });
+
+function dynamicSort(property) {
+var sortOrder = 1;
+if(property[0] === "-") {
+sortOrder = -1;
+property = property.substr(1);
+}
+return function (a,b) {
+/* next line works with strings and numbers,
+* and you may want to customize it to your needs
+*/
+var result = (a[property] < b[property]) ? -1 : (a[property]> b[property]) ? 1 : 0;
+  return result * sortOrder;
+  }
+  }
+
     var eventLocations = [
       {% for event in object_list %}
         {% if event.lat and event.long and not event.remote %}
-      {
-        latlng: L.latLng({{ event.lat }}, {{ event.long }}),
-        title: "{{ event.title }}",
-        url: "{{ event.url }}",
-        start: "{{ event.start_time }}",
-        end: "{{ event.end_time }}",
-        {% if event.end_time > now %}
-          icon: greenMarker,
-        {% else %}
-          icon: orangeMarker,
+          {
+            latlng: L.latLng({{ event.lat }}, {{ event.long }}),
+            title: "{{ event.title }}",
+            url: "{{ event.url }}",
+            start: "{{ event.start_time }}",
+            end: "{{ event.end_time }}",
+            remote: false,
+            {% if event.end_time > now %}
+              icon: greenMarker,
+            {% else %}
+              icon: orangeMarker,
+            {% endif %}
+          },
         {% endif %}
-      },
+        {% if event.remote %}
+          {
+           latlng: L.latLng( 36 ,  -42 ),
+            title: "{{ event.title }}",
+            url: "{{ event.url }}",
+            start: "{{ event.start_time }}",
+            end: "{{ event.end_time }}",
+            tz: "{{ event.time_zone }}",
+            remote: true,
+            {% if event.end_time > now %}
+              icon: greenGlobeMarker,
+            {% else %}
+              icon: orangeGlobeMarker,
+            {% endif %}
+           },
         {% endif %}
       {% endfor %}
-      {% if event and event.lat and event.long %}
-        {
-        latlng: L.latLng({{ event.lat }}, {{ event.long }}),
-        title: "{{ event.title }}",
-          url: "{{ event.url }}",
-          start: "{{ event.start_time }}", 
-          end: "{{ event.end_time }}",
-          {% if event.end_time > now %}
-            icon: greenMarker,
-          {% else %}
-            icon: orangeMarker,
-          {% endif %}
-
-      {% endif %}
-    ];
+    ].sort(dynamicSort("-end"));
 
 
     let eventBounds = null;
@@ -87,35 +117,58 @@
       maxZoom: 19
       }).addTo(map);
 
+    // Add overlapping marker spiderifier 
+    var oms = new OverlappingMarkerSpiderfier(map);
+    var popup = new L.Popup({closeButton: false, offset: new L.Point(0.5, -24)});
+    oms.addListener('click', function(marker) {
+      popup.setContent(marker.desc);
+      popup.setLatLng(marker.getLatLng());
+      map.openPopup(popup);
+    });
+
     // Add markers
 
-for(let i in eventLocations){ let event = eventLocations[i]; 
-  let marker = L.marker(event.latlng, {icon: event.icon}).addTo(map) 
-  .bindPopup(`<a href="${event.url}">${event.title}</a><br>${event.start} - ${event.end}`);
-}
+    for(let i in eventLocations){ let event = eventLocations[i]; 
+      let marker = L.marker(event.latlng, {icon: event.icon}).addTo(map);
+      //.bindPopup(`<a href="${event.url}">${event.title}</a><br>${event.start} - ${event.end}`);
+      if(event.remote){
+      marker.desc = `<a href="${event.url}">${event.title}</a><br>${event.start} - ${event.end} (${event.tz})`;
+      } else {
+      marker.desc = `<a href="${event.url}">${event.title}</a><br>${event.start} - ${event.end}`;
+      }
+      oms.addMarker(marker);
+    }
 
-function getColor(d) { 
-  return d === 'Upcoming' ? "#6CA625" : 
-         d === 'Past' ? "#EB902D" : 
-         '#FFEDA0'; } 
+    // Add legend
+    function getColor(d) { 
+      return d === 'Upcoming' ? "#6CA625" : 
+            d === 'Past' ? "#EB902D" : 
+            d === 'Remote' ? "":
+            '#FFEDA0'; } 
 
-var legend = L.control({position: 'bottomright'}); 
+    function getIconClass(d) {
+      return d === 'Upcoming' ? "circle" :
+            d === 'Past' ? "circle" :
+            d === 'Remote' ? "fas fa-globe":
+            'circle'; }
 
-legend.onAdd = function (map) { 
-  var div = L.DomUtil.create('div', 'info legend'), 
-      categories = ["Upcoming", 'Past'],
-      labels = [];  
-for (var i = 0; i < categories.length; i++) { 
-  div.innerHTML +=
-  labels.push(
-      '<i class="circle" style="background:' + getColor(categories[i]) + '"></i>' +
-      (categories[i] ? categories[i] : '+')); 
-    } 
-    div.innerHTML = labels.join('<br>');
-    return div;
-};
-  
-  legend.addTo(map);
+    var legend = L.control({position: 'bottomright'}); 
+
+    legend.onAdd = function (map) { 
+      var div = L.DomUtil.create('div', 'info legend'), 
+          categories = ["Upcoming", 'Past', 'Remote'],
+          labels = [];  
+    for (var i = 0; i < categories.length; i++) { 
+      div.innerHTML +=
+      labels.push(
+          '<i class="' + getIconClass(categories[i]) + '" style="background:' + getColor(categories[i]) + '"></i>' +
+          (categories[i] ? categories[i] : '+')); 
+        } 
+        div.innerHTML = labels.join('<br>');
+        return div;
+    };
+      
+      legend.addTo(map);
 
   })
 </script>

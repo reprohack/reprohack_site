@@ -3109,7 +3109,7 @@ input:checked + .django-toggle-switch-slider {
 /* MAP STYLES */
 .leaflet-pin {
   opacity: 0.75;
-  z-index: 99; }
+  z-index: -9; }
 
 .info {
   padding: 6px 8px;
@@ -3149,3 +3149,9 @@ input:checked + .django-toggle-switch-slider {
     font-size: 1.3rem;
     color: #2E004B;
     font-family: "Poppins", sans-serif; }
+
+.orange-globe-icon {
+  color: #EB902D; }
+
+.green-globe-icon {
+  color: #6CA625; }
