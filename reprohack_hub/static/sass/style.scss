@@ -437,7 +437,7 @@ input:checked+.django-toggle-switch-slider {
 
 .leaflet-pin {
   opacity: 0.75;
-  z-index: 99;
+  z-index: -9;
 }
 
 .info {
@@ -482,4 +482,12 @@ input:checked+.django-toggle-switch-slider {
     color: $reprohack-purple;
     font-family: $font1;
   }
+}
+
+.orange-globe-icon {
+  color: #EB902D
+}
+
+.green-globe-icon {
+  color: #6CA625;
 }
