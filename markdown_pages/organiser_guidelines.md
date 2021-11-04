@@ -6,6 +6,12 @@ There are multiple ways to organize a Reprohack, depending on who is your target
   
   <img src="/static/images/workflow.png" width=70%>
 
+### **Invite Speakers**:
+
+We have found that **including short relevant talks can help break up the day and enhance the learning experience for participants**. We recommend keeping talks short (up to 15min) and setting aside at least 10 minutes for questions and discussion after each. We've managed to include up to 3 talks in a 9am-5pm event in the past but for shorter events, we recommend 1-2 talks. This is not necessary and can be easier to organise for remote rather than in-person events but it is worth considering. 
+
+We are working on recording talks at any events we run to build up a library of videos organisers can use if that can't source speakers. If you have a short recorded talk you would like to make available, please get in touch!
+
 ### **Create materials associated with event**: 
 
 You will need the relevant URLs when submitting your event (although you can always edit your event with this information at a later date)
@@ -37,10 +43,13 @@ Additionally, once a valid registration is supplied, a registration button linki
     
 ## During the event
 
-- Start with an Introduction, Ice breaker and Tips for Reviewing (see slide template for details).
-- Make sure to **bring attention to the [Code of Conduct](code-of-conduct)** and remind participants thet **constructive criticism** and **care in how they frame their comments** to authors is of utmost importance.
-- Make sure to also bering the group back together after each ReproHack session to share their experience. Encourage them to use the hackpad to summarise them.
-- By the end of the day, ensure participants have completed the feedback form to authors.
+- Start the event with an Introduction, Ice breaker and Tips for Reviewing (see slide template for details) and any morning talk you have scheduled. 
+- In a remote event or an event with too many participants to go round everyone, you are best running the ice-breaker in break-out groups (once the hosts have introduced themselves to the whole group to demonstrate).
+- If you are using break-out rooms at a remote event and have the option to name the break-out rooms, it's fun to let groups pick a name for their room during the ice-breaker. Get them to record their room ID and the name they want to assign and have a demonstrator re-name them for each group.
+- At remote events, it's also good to create a few extra rooms like a cafe and quiet room where participants can go to chat informally or work quietly.
+- Make sure to **bring attention to the [Code of Conduct](code-of-conduct)** and remind participants thet **constructive criticism** and **care in how they frame their comments** to authors is of utmost importance.  
+- Make sure to also bring the group back together after each ReproHack session to share their experience. Encourage them to use the hackpad to summarise them.
+- By the end of the day, ensure participants have completed the feedback form to authors. Remind them that any papers submitted for this event only will only be available to review for one week after the event.
 - At the end of the day, ask partipants for feedback for your event. Ask them to record one thing they enjoyed and one thing that could be improved. If you use the hackpad template provided, there is already a section to leave feedback. If you think any of the feedback is woth passing on, feel free to open an issue, either in or [general organisation repo](https://github.com/reprohack/reprohack-hq) or the [reprohack hub site](https://github.com/reprohack/reprohack_site/issues), or just let us know on slack!
 
 ## After the event.
@@ -51,28 +60,93 @@ Additionally, once a valid registration is supplied, a registration button linki
 
 ## Example AGENDA
 
-10:00 -  Welcome and Orientation  
+Here are example markdown agenda templates for an in-person or remote event starting at 10am, ending at 5pm and including 2 short talks (approx 15mins) with 10mins for discussion after each. The remote event agenda includes indication of times when participants will be working in break-out rooms.
 
-10:10 - Ice breaker session in groups 
+Feel free to use and customise these templates according to the timings of your event. 
 
-10:20 - TALK SPEAKER NAME: *TALK TITLE*. 
+_Note that the css table style applies a different styling to only the first column of the table._
 
-10:45 - Tips and Tricks for Reproducing and Reviewing.
+### For In-person Event:
 
-11:10 - Select Papers, Chat and 
+    |   Time  	|   Event  	|
+    |---	|---	|
+    |   10:00  	|    Welcome and Orientation  	|
+    |   10:10  	|    Ice breaker session  	|
+    |   10:20  	|    **TALK: [Speaker Name]: [Talk title].**  	|
+    |   10:45  	|    Tips and Tricks for Reproducing and Reviewing.  	|
+    |   11:10  	|    Select Papers, Chat and coffee  	|
+    |   11:30  	|    Round I of ReproHacking  	|
+    |   12:30  	|    Re-group and sharing of experiences  	|
+    |   12:45  	|    LUNCH   	|
+    |   13:45  	|    Round II of ReproHacking  	|
+    |   14:45  	|    Coffee break  	|
+    |   15:00  	|    Round III of ReproHacking - Complete Feedback form  	|
+    |   16:00  	|    **TALK: TALK: [Speaker Name]: [Talk title].** 	|
+    |   16:25  	|    Re-group and sharing of experiences  	|
+    |   16:50  	|    Feedback and Closing  	|
 
-11:30 - Round I of ReproHacking (break-out rooms) 
+    ---
 
-12:30 - Re-group and sharing of experiences 
+which will render to:
 
-12:45 - LUNCH
+|   Time  	|   Event  	|
+|---	|---	|
+|   10:00  	|    Welcome and Orientation  	|
+|   10:10  	|    Ice breaker session  	|
+|   10:20  	|    **TALK: [Speaker Name]: [Talk title].**  	|
+|   10:45  	|    Tips and Tricks for Reproducing and Reviewing.  	|
+|   11:10  	|    Select Papers, Chat and coffee  	|
+|   11:30  	|    Round I of ReproHacking  	|
+|   12:30  	|    Re-group and sharing of experiences  	|
+|   12:45  	|    LUNCH   	|
+|   13:45  	|    Round II of ReproHacking  	|
+|   14:45  	|    Coffee break  	|
+|   15:00  	|    Round III of ReproHacking - Complete Feedback form  	|
+|   16:00  	|    **TALK: TALK: [Speaker Name]: [Talk title].** 	|
+|   16:25  	|    Re-group and sharing of experiences  	|
+|   16:50  	|    Feedback and Closing  	|
 
-13:45 - Round II of ReproHacking (break-out rooms) 
+---
 
-14:45 - Coffee break 
 
-15:00 - Round III of ReproHacking (break-out rooms) - Complete Feedback form 
+### For Remote Event:
 
-16:15 - Re-group and sharing of experiences 
+    |   Time  	|   Event  	|
+    |---	|---	|
+    |   10:00  	|    Welcome and Orientation  	|
+    |   10:10  	|    Ice breaker session in groups  	|
+    |   10:20  	|    **TALK: [Speaker Name]: [Talk title].**  	|
+    |   10:45  	|    Tips and Tricks for Reproducing and Reviewing.  	|
+    |   11:10  	|    Select Papers, Chat and coffee  	|
+    |   11:30  	|    Round I of ReproHacking (break-out rooms)  	|
+    |   12:30  	|    Re-group and sharing of experiences  	|
+    |   12:45  	|    LUNCH   	|
+    |   13:45  	|    Round II of ReproHacking (break-out rooms)  	|
+    |   14:45  	|    Coffee break  	|
+    |   15:00  	|    Round III of ReproHacking (break-out rooms) - Complete Feedback form  	|
+    |   16:00  	|    **TALK: TALK: [Speaker Name]: [Talk title].** 	|
+    |   16:25  	|    Re-group and sharing of experiences  	|
+    |   16:50  	|    Feedback and Closing  	|
 
-16:45 - Feedback and Closing
+    ---
+
+which will render to:
+
+|   Time  	|   Event  	|
+|---	|---	|
+|   10:00  	|    Welcome and Orientation  	|
+|   10:10  	|    Ice breaker session in groups  	|
+|   10:20  	|    **TALK: [Speaker Name]: [Talk title].**  	|
+|   10:45  	|    Tips and Tricks for Reproducing and Reviewing.  	|
+|   11:10  	|    Select Papers, Chat and coffee  	|
+|   11:30  	|    Round I of ReproHacking (break-out rooms)  	|
+|   12:30  	|    Re-group and sharing of experiences  	|
+|   12:45  	|    LUNCH   	|
+|   13:45  	|    Round II of ReproHacking (break-out rooms)  	|
+|   14:45  	|    Coffee break  	|
+|   15:00  	|    Round III of ReproHacking (break-out rooms) - Complete Feedback form  	|
+|   16:00  	|    **TALK: TALK: [Speaker Name]: [Talk title].** 	|
+|   16:25  	|    Re-group and sharing of experiences  	|
+|   16:50  	|    Feedback and Closing  	|
+
+---
