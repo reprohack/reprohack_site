@@ -33,10 +33,30 @@ Join us at the hack to **dig into exciting science**, learn more about
 more!
 
 -----
+## Agenda
+
+<!-- The following agenda is for a remote event from 10am to 5pm which includes 2 talks. Customise as required -->
+
+|   Time    |   Event   |
+|---    |---    |
+|   10:00   |    Welcome and Orientation    |
+|   10:10   |    Ice breaker session in groups      |
+|   10:20   |    **TALK: [Speaker Name]: [Talk title].**    |
+|   10:45   |    Tips and Tricks for Reproducing and Reviewing.     |
+|   11:10   |    Select Papers, Chat and coffee     |
+|   11:30   |    Round I of ReproHacking (break-out rooms)      |
+|   12:30   |    Re-group and sharing of experiences    |
+|   12:45   |    LUNCH      |
+|   13:45   |    Round II of ReproHacking (break-out rooms)     |
+|   14:45   |    Coffee break   |
+|   15:00   |    Round III of ReproHacking (break-out rooms) - Complete Feedback form   |
+|   16:00   |    **TALK: TALK: [Speaker Name]: [Talk title].**  |
+|   16:25   |    Re-group and sharing of experiences    |
+|   16:50   |    Feedback and Closing   |
+
+---
 
 ## **On the day**
-
-### Agenda 
 
 We’ll track of discussions and collaborative notes on the
 event **hackpad**

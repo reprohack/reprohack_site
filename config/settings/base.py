@@ -318,3 +318,6 @@ STATICFILES_FINDERS += ["compressor.finders.CompressorFinder"]
 DELETED_USERNAME_PLACEHOLDER = "deleted-user"
 
 MARKDOWNX_MARKDOWNIFY_FUNCTION = 'markdownx.utils.markdownify'
+MARKDOWNX_MARKDOWN_EXTENSIONS = [
+    'tables'
+]
