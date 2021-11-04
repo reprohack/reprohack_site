@@ -2843,6 +2843,44 @@ a {
   margin-bottom: 0px !important;
   margin-bottom: 0rem !important; }
 
+table.tb {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse; }
+
+table td,
+table th {
+  border: 1px solid #FFFFFF;
+  padding: 4.8px 12.8px;
+  padding: 0.3rem 0.8rem; }
+
+table tbody td {
+  font-size: 16px;
+  font-size: 1rem; }
+
+tbody > tr > :nth-child(1) {
+  /* your css here */
+  text-align: center;
+  font-weight: bold; }
+
+table thead {
+  border-bottom: 4px solid #2E004B; }
+
+table thead th {
+  font-size: 19.2px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #2E004B;
+  text-align: center; }
+
+thead > tr > :nth-child(2) {
+  /* your css here */
+  text-align: left; }
+
+table tfoot td {
+  font-size: 16px;
+  font-size: 1rem; }
+
 strong {
   font-weight: bold; }
 

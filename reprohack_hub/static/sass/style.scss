@@ -108,6 +108,49 @@ $red: #b94a48;
   margin-bottom: 0rem !important;
 }
 
+
+table.tb {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+table td,
+table th {
+  border: 1px solid #FFFFFF;
+  padding: 0.3rem 0.8rem;
+}
+
+table tbody td {
+  font-size: 1rem;
+}
+
+tbody>tr>:nth-child(1) {
+  /* your css here */
+  text-align: center;
+  font-weight: bold;
+}
+
+table thead {
+  border-bottom: 4px solid $reprohack-purple;
+}
+
+table thead th {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: $reprohack-purple;
+  text-align: center;
+}
+
+thead>tr>:nth-child(2) {
+  /* your css here */
+  text-align: left;
+}
+
+table tfoot td {
+  font-size: 1rem;
+}
+
 strong {
   font-weight: bold;
 }
