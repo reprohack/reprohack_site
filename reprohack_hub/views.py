@@ -310,11 +310,8 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
             paper_title = paper.title
             paper_submitter_email = paper.submitter.email
 
-            paper_title = paper.title
-
             # Sends review create email
-            if paper.submitter and paper.submitter.email:
-                paper_submitter_email = paper.submitter.email
+            if paper_submitter_email:
 
                 mail_context = {
                     "paper_user_name": paper.submitter.preferred_name,
