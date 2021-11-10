@@ -245,7 +245,7 @@ Uncomment below to enable settings
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
 EMAIL_TIMEOUT = 5
-EMAIL_ADMIN_ADDRESS = "reprohack-hub@sheffield.ac.uk"
+EMAIL_ADMIN_ADDRESS = "hub@reprohack.org"
 
 
 # ADMIN

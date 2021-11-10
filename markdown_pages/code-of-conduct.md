@@ -93,7 +93,7 @@ participants with disabilities.
 If you experience or witness unacceptable behavior, or have any other concerns,
 please report it by completing our [CoC Incident Report form](https://forms.gle/ukXPeMPsrp9psJTG6) . All reports will be handled with discretion. 
 
-The ReproHack Code of Conduct Committee is responsible for enforcing the Code of Conduct. It can be contacted by emailing [reprohack-coc@googlegroups.com](mailto:reprohack-coc@googlegroups.com). All reports will be reviewed by the Code of Conduct Committee and will be kept confidential.
+The ReproHack Code of Conduct Committee is responsible for enforcing the Code of Conduct. It can be contacted by emailing [coc@reprohack.org](mailto:coc@reprohack.org). All reports will be reviewed by the Code of Conduct Committee and will be kept confidential.
 
 
 After filing a report, a representative will contact you personally, review the
