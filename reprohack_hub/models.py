@@ -593,7 +593,7 @@ class Review(models.Model):
             Q(paper__submitter_id=user.pk)  # Reviews viewable by user as the paper submitter
         )
 
-        return result
+        return result.distinct()
 
     def is_editable_by_user(self, user):
 
