@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 from typing import Any, Tuple, Dict
 
 from django.contrib.auth import get_user_model
+from django.db.models.query_utils import Q
 from django_countries.fields import CountryField
 
 from markdownx.models import MarkdownxField
@@ -586,16 +587,13 @@ class Review(models.Model):
         if user.is_superuser or user.is_staff:
             return Review.objects.all()
 
-        # Get reviews viewable by everyone
-        public_reviews = Review.objects.filter(public_review=True, paper__public_reviews=True)
+        result = Review.objects.filter(
+            Q(public_review=True, paper__public_reviews=True) |  # Public reviews
+            Q(reviewers__id=user.pk) |  # Reviews viewable by user as a reviewer
+            Q(paper__submitter_id=user.pk)  # Reviews viewable by user as the paper submitter
+        )
 
-        # Review viewable by reviwers
-        reviews_by_user = Review.objects.filter(reviewers__id=user.pk)
-
-        # And by the paper submitter
-        reviews_by_paper_submitter = Review.objects.filter(paper__submitter_id=user.pk)
-
-        return (public_reviews | reviews_by_user | reviews_by_paper_submitter)
+        return result
 
     def is_editable_by_user(self, user):
 
