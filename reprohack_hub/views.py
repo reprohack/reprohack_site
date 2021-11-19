@@ -504,25 +504,13 @@ class ReviewList(ListView):
     template_name = "review/review_list.html"
     paginate_by = 20  # if pagination is desired
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['now'] = timezone.now()
-    #     return context
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
 
+    def get_queryset(self) -> QuerySet:
         viewing_user = self.request.user
 
-        context = super().get_context_data(**kwargs)
-
         # Filter reviews by viewing permission set by paper author and user
-        viewable_reviews = []
-        for review in Review.objects.all():
-            if review.is_viewable_by_user(viewing_user):
-                viewable_reviews.append(review)
+        return Review.get_reviews_viewable_by_user(viewing_user).order_by('-submission_date')
 
-        context["viewable_reviews"] = viewable_reviews
-
-        return context
 
 class MarkdownView(TemplateView):
     """Base template for static Markdown file.

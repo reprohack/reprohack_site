@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 from typing import Any, Tuple, Dict
 
 from django.contrib.auth import get_user_model
+from django.db.models.query_utils import Q
 from django_countries.fields import CountryField
 
 from markdownx.models import MarkdownxField
@@ -208,7 +209,7 @@ class Event(models.Model):
     def address(self):
         addr_items = [self.address1, self.address2,
                       self.city, self.postcode, self.country.name]
-                      
+
         used_addr_items = []
         for addr_item in addr_items:
             if addr_item and isinstance(addr_item, str) and len(addr_item.strip()) > 0:
@@ -579,6 +580,20 @@ class Review(models.Model):
             return True
 
         return False
+
+    @staticmethod
+    def get_reviews_viewable_by_user(user):
+        # Superuser and staff can always view reviews
+        if user.is_superuser or user.is_staff:
+            return Review.objects.all()
+
+        result = Review.objects.filter(
+            Q(public_review=True, paper__public_reviews=True) |  # Public reviews
+            Q(reviewers__id=user.pk) |  # Reviews viewable by user as a reviewer
+            Q(paper__submitter_id=user.pk)  # Reviews viewable by user as the paper submitter
+        )
+
+        return result
 
     def is_editable_by_user(self, user):
 
