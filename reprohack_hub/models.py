@@ -208,7 +208,7 @@ class Event(models.Model):
     def address(self):
         addr_items = [self.address1, self.address2,
                       self.city, self.postcode, self.country.name]
-                      
+
         used_addr_items = []
         for addr_item in addr_items:
             if addr_item and isinstance(addr_item, str) and len(addr_item.strip()) > 0:
@@ -579,6 +579,23 @@ class Review(models.Model):
             return True
 
         return False
+
+    @staticmethod
+    def get_reviews_viewable_by_user(user):
+        # Superuser and staff can always view reviews
+        if user.is_superuser or user.is_staff:
+            return Review.objects.all()
+
+        # Get reviews viewable by everyone
+        public_reviews = Review.objects.filter(public_review=True, paper__public_reviews=True)
+
+        # Review viewable by reviwers
+        reviews_by_user = Review.objects.filter(reviewers__id=user.pk)
+
+        # And by the paper submitter
+        reviews_by_paper_submitter = Review.objects.filter(paper__submitter_id=user.pk)
+
+        return (public_reviews | reviews_by_user | reviews_by_paper_submitter)
 
     def is_editable_by_user(self, user):
 

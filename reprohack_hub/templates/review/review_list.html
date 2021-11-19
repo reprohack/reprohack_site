@@ -24,7 +24,7 @@
       </div>
       <h1>Recent Reviews</h1>
       <ul>
-        {% for review in viewable_reviews reversed %}
+        {% for review in object_list %}
         <li class="review mb-4 card-box">
           <h3>
             <a href="{{ review.get_absolute_url }}">{{ review }}</a>

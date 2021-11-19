@@ -125,3 +125,71 @@ def test_review_save(user: User) -> None:
     review.reviewers.add(user, through_defaults={"lead_reviewer": True})
     assert str(review) == f"Review of '{test_title}' by {user}"
     assert review.get_absolute_url() == f"/review/{review.id}/"
+
+def test_review_viewable_by_user():
+
+    num_papers = 3
+    num_public_review = 3
+    num_private_review = 1
+    num_total_reviews = num_papers * (num_public_review+num_private_review)
+
+    # One user per paper
+    users = [UserFactory() for i in range(num_papers)]
+    user = users[0]  # Test from the pespective of this user
+
+    papers = [PaperFactory(public_reviews=True) for i in range(num_papers)]
+    for paper in papers:
+        for i in range(num_public_review):
+            review = ReviewFactory(public_review=True, paper=paper)
+
+        for i in range(num_private_review):
+            review = ReviewFactory(public_review=False, paper=paper)
+
+    # Can only see public reviews
+    result = Review.get_reviews_viewable_by_user(users[0])
+    assert result.count() == num_papers*num_public_review
+
+    # Test user as staff and superuser
+    user.is_staff = True
+    user.is_superuser = False
+    user.save()
+    result = Review.get_reviews_viewable_by_user(user)
+    assert result.count() == num_total_reviews
+
+    user.is_staff = False
+    user.is_superuser = True
+    user.save()
+    result = Review.get_reviews_viewable_by_user(user)
+    assert result.count() == num_total_reviews
+
+    user.is_staff = False
+    user.is_superuser = False
+    user.save()
+
+    # Make each user owner of one paper
+    for i in range(num_papers):
+        papers[i].submitter = users[i]
+        papers[i].save()
+
+    # Test user as publisher on one of the papers
+    result = Review.get_reviews_viewable_by_user(user)
+    assert result.count() == (num_papers * num_public_review) + 1
+
+    # Test user as reviewer of all the reviews in the second paper
+    for review in papers[1].reviews.all():
+        review.reviewers.add(user)
+        review.save()
+
+    result = Review.get_reviews_viewable_by_user(user)
+    assert result.count() == (num_papers * num_public_review) + 2
+
+    # Check for duplicates - Test user as reviewer of all the reviews in all papers
+    for paper in papers:
+        for review in paper.reviews.all():
+            review.reviewers.add(user)
+            review.save()
+
+    result = Review.get_reviews_viewable_by_user(user)
+    assert result.count() == num_total_reviews
+
+
