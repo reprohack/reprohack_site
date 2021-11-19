@@ -175,6 +175,14 @@ def test_review_viewable_by_user():
     result = Review.get_reviews_viewable_by_user(user)
     assert result.count() == (num_papers * num_public_review) + 1
 
+    # Test making second paper private
+    papers[1].public_reviews = False
+    papers[1].save()
+
+    result = Review.get_reviews_viewable_by_user(user)
+    assert result.count() == (num_papers * num_public_review) + 1 - num_public_review
+
+
     # Test user as reviewer of all the reviews in the second paper
     for review in papers[1].reviews.all():
         review.reviewers.add(user)
