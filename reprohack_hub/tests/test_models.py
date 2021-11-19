@@ -194,8 +194,9 @@ def test_review_viewable_by_user():
     # Check for duplicates - Test user as reviewer of all the reviews in all papers
     for paper in papers:
         for review in paper.reviews.all():
-            review.reviewers.add(user)
-            review.save()
+            for reviewer in users:
+                review.reviewers.add(reviewer)
+                review.save()
 
     result = Review.get_reviews_viewable_by_user(user)
     assert result.count() == num_total_reviews
