@@ -39,7 +39,7 @@
                     title="Public reviews welcome"></i> {% endif %}
                 </span>
               </h5>
-              {% if paper.num_reviews > 0 and  user.is_authenticated %}
+              {% if paper.num_reviews > 0 %}
               <span class="paper-metric">
                 <strong> <i class="fas fa-check-circle"></i> &nbsp; Mean reproducibility score: </strong> &nbsp;
                 {{ paper.mean_reproducibility_score | floatformat:1 }}/10
