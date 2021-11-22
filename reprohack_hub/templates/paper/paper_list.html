@@ -22,7 +22,8 @@
             <li class="paper card-box">
               <h3><a href="{{ paper.get_absolute_url }}">{{ paper.title }}</a></h3>
               {% if paper.authors %}<h5>Authors: {{ paper.authors }}</h5>{% endif %}
-              {% if paper.doi %}<h5>DOI: <a href="{{ paper.doi }}">{{ paper.doi }}</a></h5>{% endif %}
+              {% if paper.doi %}<h5>DOI: <a href="https://www.doi.org/{{ paper.doi }}">{{ paper.doi }}</a></h5>
+              {% endif %}
               <h5>Submitted by
                 {% if paper.submitter %}<a
                   href="{{ paper.submitter.get_absolute_url }}">{{ paper.submitter.username }}</a>
