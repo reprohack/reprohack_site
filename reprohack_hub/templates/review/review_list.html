@@ -12,7 +12,6 @@
 <div class="whole-wrap">
   <div class="container box_1170">
     <div class="section-top-border">
-      {% if user.is_authenticated %}
       <div class="markdownx-preview">
         <h4>Please note: Not all reviews are visible</h4>
         Reviews are visible when both:
@@ -54,10 +53,6 @@
 
       {# Pagination #}
       {% include "misc/pagination.html" %}
-      {% else %}
-      <h3>Please log in to view visible reviews</h3>
-      {% endif %}
-
     </div>
   </div>
 </div>
