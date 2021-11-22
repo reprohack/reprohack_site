@@ -88,6 +88,8 @@ We’ll start with a brief review of the **available papers** and then form into
 
   - In your teams, (or individually if you prefer) **decide which paper** you wish to work on.
 
+  - **Create user accounts** on the Hub for all reviewers that want to be associated with the review.
+
   - **Register your team and paper** by logging the title of the
     selected paper and the name(s) of the reviewer(s) in the
     **hackpad**. You
