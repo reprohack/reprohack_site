@@ -43,14 +43,14 @@
           <h3>{{ paper.title }}</h3>
           <div class="header_text">{{ paper.authors }}</div>
           <div class="header_italic"> {{ paper.citation_txt }}</div>
-          <a href="{{ paper.doi }}">{{ paper.doi }}</a>
+          <h5>DOI: &nbsp;<a href="https://www.doi.org/{{ paper.doi }}">{{ paper.doi }}</a> &nbsp;
           <span class="icon-box">
             {%  if paper.event %} &nbsp; <a href="{{ paper.event.get_absolute_url }}"><i class="fas fa-calendar-day" title="Has associated event"></i></a>  {% endif %}
             {%  if paper.review_availability == "ALL" %} &nbsp; <i class="far fa-list-alt"></i>
             {% endif %}
             {%  if paper.public_reviews %} &nbsp; <i class="fas fa-globe-africa" title="Available for general review"></i> {% endif %}
             {%  if paper.email_review %} &nbsp; <i class="fas fa-envelope"></i> {% endif %}
-          </span>
+          </span></h5>
           {% if paper.num_reviews > 0 %}<br><br>
           <span class="paper-metric">
             <strong> <i class="fas fa-check-circle"></i> &nbsp; Mean reproducibility score: </strong>
