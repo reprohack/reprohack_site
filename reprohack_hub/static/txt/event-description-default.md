@@ -118,7 +118,7 @@ and **add any links to such materials to the hackpad**.
 
 #### **4. Complete your Review with feedback for the authors**
 
-The most important part of the day is recording our experiences as feedback to the authors. Please complete the make sure to complete a ** Review feedback form** for the paper you've selected, ideally, by the end of the day. Please also remember to be kind
+The most important part of the day is recording our experiences as feedback to the authors. Please make sure to complete a ** Review feedback form** for the paper you've selected, ideally, by the end of the day. Please also remember to be kind
 and constructive. Reproducibilty is hard and all authors submitting
 their papers have been incredibly brave. Feel free to browse any public feedback submissions to get inspiration. 
 
