@@ -1,4 +1,11 @@
+
+
+
 ## Before the event
+
+### Event Organiser's Checklist 
+
+Start with our [Event Organiser's Checklist](https://docs.google.com/spreadsheets/d/15LNtRxCPn4YyH4R3Uuep7oEMT29_nAWdU9t-k0w3eGc/edit#gid=0) to help you plan event preparation.
 
 ### **Select Event type**: 
 
