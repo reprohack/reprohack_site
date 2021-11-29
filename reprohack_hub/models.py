@@ -299,7 +299,7 @@ class Paper(models.Model):
         help_text=_("The paper will no longer be available for review"))
     public_reviews = models.BooleanField(
         _("Make reviews public"), default=True,
-        help_text=_("Only reviews that have also been set to public by reviewers will be visible to other signed in users"))
+        help_text=_("Only reviews that have also been set to public by reviewers will be visible publicly"))
     email_review = models.BooleanField(
         _("Send me an email when a review is received"), default=True)
     email_comment = models.BooleanField(
@@ -526,7 +526,7 @@ class Review(models.Model):
 
     public_review = models.BooleanField(
         _("Allow this review to be made public"), default=True,
-        help_text=_("Only reviews on papers that have also been set to receive public reviews by authors will be visible to others"))
+        help_text=_("Only reviews on papers that have also been set to receive public reviews by authors will be visible publicly"))
     email_comment = models.BooleanField(
         _("Send an email to reviewers when a comment is posted to this review"), default=True)
     is_initial_upload = models.BooleanField(default=False)
