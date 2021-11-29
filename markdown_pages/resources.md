@@ -1,6 +1,7 @@
 ## For Organisers
 
 - [Organiser Guidelines](organiser_guidelines)
+- [Event Organiser's Checklist](https://docs.google.com/spreadsheets/d/15LNtRxCPn4YyH4R3Uuep7oEMT29_nAWdU9t-k0w3eGc/edit#gid=0)
 - [Code of Conduct](code-of-conduct)
 - [7 Flavors of Reprohack](ways-to-reprohack) 
 
