@@ -186,7 +186,8 @@ class Event(models.Model):
     postcode = models.CharField(max_length=15, blank=True)
     country = CountryField(blank=True)
     registration_url = models.URLField(blank=True)
-    hackpad_url = models.URLField(blank=True, help_text=mark_safe("See our hack.md <a href='/hackpad_template'> event hackpad template</a>"))
+    hackpad_url = models.URLField(blank=True, help_text=mark_safe("See our hackmd.io <a href='/hackpad_template'> Event Hackpad Template</a>"))
+    slides_url = models.URLField(blank=True, help_text=mark_safe("See our hackmd.io <a href='/intro_slides_template'> Introductory Slides Template</a>"))
     event_coordinates = models.TextField(blank=True, null=True)
     is_initial_upload = models.BooleanField(default=False)
 
