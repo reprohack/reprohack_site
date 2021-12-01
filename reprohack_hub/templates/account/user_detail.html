@@ -82,7 +82,21 @@
                 {%  if paper.public_reviews %} &nbsp; <i class="fas fa-globe-africa"></i> {% endif %}
                 {%  if paper.email_review %} &nbsp; <i class="fas fa-envelope"></i> {% endif %}
                 {%  if paper.archive %} &nbsp; <i class="fas fa-archive"></i> {% endif %}
-              </p>
+              
+                        {% if paper.num_reviews > 0 %}
+                        <span class="paper-metric">
+                          &nbsp;&nbsp;
+                          {%  if paper.public_reviews %}
+                          <strong> <i class="fas fa-check-circle"></i> </strong>
+                          &nbsp;
+                          {{ paper.mean_reproducibility_score | floatformat:1 }}/10
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          {% endif %}
+                          <strong><i class="fas fa-recycle"></i>  </strong> &nbsp;
+                          {{ paper.num_reviews }}
+                        </span>
+                        {% endif %}
+                        </p>
             </li>
             {% endfor %}
           </ul>
@@ -138,6 +152,8 @@
             <li><i class="fas fa-globe-africa"></i> &nbsp; Public reviews</li>
             <li><i class="fas fa-envelope"></i> &nbsp; Email notifications on</li>
             <li><i class="fas fa-archive"></i> &nbsp; Archived</li>
+            <li><i class="fas fa-check-circle"></i> &nbsp; Mean Reproducibility Score</li>
+            <li><i class="fas fa-recycle"></i> &nbsp; Number of reviews</li>
           </ul>
         </div>
       </div>
