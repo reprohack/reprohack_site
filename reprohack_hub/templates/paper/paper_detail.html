@@ -44,13 +44,15 @@
           <div class="header_text">{{ paper.authors }}</div>
           <div class="header_italic"> {{ paper.citation_txt }}</div>
           <h5>DOI: &nbsp;<a href="https://www.doi.org/{{ paper.doi }}">{{ paper.doi }}</a> &nbsp;
-          <span class="icon-box">
-            {%  if paper.event %} &nbsp; <a href="{{ paper.event.get_absolute_url }}"><i class="fas fa-calendar-day" title="Has associated event"></i></a>  {% endif %}
-            {%  if paper.review_availability == "ALL" %} &nbsp; <i class="far fa-list-alt"></i>
-            {% endif %}
-            {%  if paper.public_reviews %} &nbsp; <i class="fas fa-globe-africa" title="Available for general review"></i> {% endif %}
-            {%  if paper.email_review %} &nbsp; <i class="fas fa-envelope"></i> {% endif %}
-          </span></h5>
+            <span class="icon-box">
+              {%  if paper.event %} &nbsp; <a href="{{ paper.event.get_absolute_url }}"><i class="fas fa-calendar-day"
+                  title="Has associated event"></i></a> {% endif %}
+              {%  if paper.review_availability == "ALL" %} &nbsp; <i class="far fa-list-alt"></i>
+              {% endif %}
+              {%  if paper.public_reviews %} &nbsp; <i class="fas fa-globe-africa"
+                title="Available for general review"></i> {% endif %}
+              {%  if paper.email_review %} &nbsp; <i class="fas fa-envelope"></i> {% endif %}
+            </span></h5>
           {% if paper.num_reviews > 0 %}<br><br>
           <span class="paper-metric">
             {%  if paper.public_reviews %}
@@ -117,10 +119,10 @@
             <li class="card-box">
               <a href="{% url 'review_detail' pk=review.pk %}">
                 Review by {% if review.reviewers.count > 0 %}
-                    {% for reviewer in review.reviewers.all %}{{ reviewer.username }}, {% endfor %}
-                    {% else %}
-                    {% deleted_user %}
-                    {% endif %}
+                {% for reviewer in review.reviewers.all %}{{ reviewer.username }}, {% endfor %}
+                {% else %}
+                {% deleted_user %}
+                {% endif %}
                 , {{ review.submission_date }}
               </a>
             </li>

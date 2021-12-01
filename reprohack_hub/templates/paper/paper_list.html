@@ -41,9 +41,12 @@
               </h5>
               {% if paper.num_reviews > 0 %}
               <span class="paper-metric">
-                <strong> <i class="fas fa-check-circle"></i> &nbsp; Mean reproducibility score: </strong> &nbsp;
+                {%  if paper.public_reviews %}
+                <strong> <i class="fas fa-check-circle"></i> &nbsp; Mean reproducibility score: </strong>
+                &nbsp;
                 {{ paper.mean_reproducibility_score | floatformat:1 }}/10
                 &nbsp;&nbsp;|&nbsp;&nbsp;
+                {% endif %}
                 <strong><i class="fas fa-recycle"></i> Number of reviews: </strong> &nbsp;
                 {{ paper.num_reviews }}
               </span>
