@@ -2023,13 +2023,14 @@ a {
   background-size: cover;
   background-position: center center;
   text-align: center;
-  padding: 100px 0 159px 0; }
+  padding: 100px 16px 159px 16px;
+  padding: 100px 1rem 159px 1rem; }
   @media (max-width: 767px) {
     .bradcam_area {
-      padding: 150px 0; } }
+      padding: 150px 0.5rem; } }
   @media (min-width: 768px) and (max-width: 991px) {
     .bradcam_area {
-      padding: 150px 0; } }
+      padding: 150px 0.5rem; } }
   .bradcam_area h1 {
     font-size: 60px;
     color: #fff;
@@ -2054,7 +2055,7 @@ a {
   padding: 220px 0 180px 0; }
   @media (max-width: 767px) {
     .bradcam_area2 {
-      padding: 150px  0; } }
+      padding: 150px 0; } }
   .bradcam_area2 .breadcam_text h3 {
     font-size: 42px;
     color: #fff;
@@ -2181,7 +2182,8 @@ a {
     .popup_box .doen_have_acc a {
       color: #fff; }
 
-#test-form, #test-form2 {
+#test-form,
+#test-form2 {
   display: inline-block;
   margin: auto;
   text-align: center;
@@ -2191,26 +2193,31 @@ a {
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%); }
   @media (max-width: 767px) {
-    #test-form, #test-form2 {
+    #test-form,
+    #test-form2 {
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       -webkit-transform: none;
       transform: none; } }
-  #test-form .mfp-close-btn-in .mfp-close, #test-form2 .mfp-close-btn-in .mfp-close {
+  #test-form .mfp-close-btn-in .mfp-close,
+  #test-form2 .mfp-close-btn-in .mfp-close {
     color: #333;
     display: none !important; }
-  #test-form button.mfp-close, #test-form2 button.mfp-close {
+  #test-form button.mfp-close,
+  #test-form2 button.mfp-close {
     display: none !important; }
     @media (max-width: 767px) {
-      #test-form button.mfp-close, #test-form2 button.mfp-close {
+      #test-form button.mfp-close,
+      #test-form2 button.mfp-close {
         display: block !important;
         position: absolute;
         left: 0;
         right: 0;
         margin: auto; } }
-  #test-form button.mfp-close, #test-form2 button.mfp-close {
+  #test-form button.mfp-close,
+  #test-form2 button.mfp-close {
     overflow: visible;
     cursor: pointer;
     background: transparent;
@@ -3116,6 +3123,10 @@ label.django-toggle-switch + label.custom-control-label::before {
 .django-toggle-switch-success input:checked + .django-toggle-switch-slider,
 input:checked + .django-toggle-switch-slider {
   background-color: #02CC98 !important; }
+
+.md-extra-large-box {
+  height: 736px !important;
+  height: 46rem !important; }
 
 .md-large-box {
   height: 416px !important;

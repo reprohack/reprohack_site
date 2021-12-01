@@ -149,11 +149,11 @@ Requires a bigger organizing team
 ### Material from last Future Organizers Call
 
 Slides used for community call:
-https://docs.google.com/presentation/d/1dzNo0w1a1Aug7OvkeyZygAuUlHK8dgYyv8X-FXgYj5w/edit?usp=sharing
+[https://docs.google.com/presentation/d/1dzNo0w1a1Aug7OvkeyZygAuUlHK8dgYyv8X-FXgYj5w/edit?usp=sharing](https://docs.google.com/presentation/d/1dzNo0w1a1Aug7OvkeyZygAuUlHK8dgYyv8X-FXgYj5w/edit?usp=sharing)
 
 Collaborative Notes of the Community Call:
-https://hackmd.io/@DGawehns/Sk5K1GYa8/edit
+[https://hackmd.io/@DGawehns/Sk5K1GYa8/edit](https://hackmd.io/@DGawehns/Sk5K1GYa8/edit)
 
----
 
-### Thank you! :sheep: 
+
+
