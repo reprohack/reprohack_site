@@ -177,8 +177,8 @@ class Event(models.Model):
     # location
     # venue = models.ForeignKey(Venue, on_delete=models.SET_NULL, null=True)
     description = MarkdownxField(_('Feel free to customise provided template'),
-                                 default=get_default_description, 
-                                 help_text="Markdown field. See <a href='https://daringfireball.net/projects/markdown/syntax'> full documentation of supported syntax </a>." )
+                                 default=get_default_description,
+                                 help_text=mark_safe("Markdown field. See <a href='https://daringfireball.net/projects/markdown/syntax'> full documentation of supported syntax</a>" ))
     # location = models.CharField(max_length=200)  # Location name?
     address1 = models.CharField(max_length=200, blank=True)
     address2 = models.CharField(max_length=200, blank=True)
@@ -186,7 +186,7 @@ class Event(models.Model):
     postcode = models.CharField(max_length=15, blank=True)
     country = CountryField(blank=True)
     registration_url = models.URLField(blank=True)
-    hackpad_url = models.URLField(blank=True)
+    hackpad_url = models.URLField(blank=True, help_text=mark_safe("See our hack.md <a href='/hackpad_template'> event hackpad template</a>"))
     event_coordinates = models.TextField(blank=True, null=True)
     is_initial_upload = models.BooleanField(default=False)
 
