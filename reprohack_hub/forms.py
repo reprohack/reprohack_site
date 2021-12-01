@@ -73,7 +73,7 @@ class EventForm(ModelForm):
                 ),
                 'event_coordinates'),
             Fieldset('Event Description',
-            'description'),
+                     Field('description', css_class="md-extra-large-box")),
         )
 
 

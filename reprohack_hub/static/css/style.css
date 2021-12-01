@@ -3117,6 +3117,10 @@ label.django-toggle-switch + label.custom-control-label::before {
 input:checked + .django-toggle-switch-slider {
   background-color: #02CC98 !important; }
 
+.md-extra-large-box {
+  height: 736px !important;
+  height: 46rem !important; }
+
 .md-large-box {
   height: 416px !important;
   height: 26rem !important; }
