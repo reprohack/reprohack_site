@@ -35,6 +35,21 @@ If you choose to associate your paper with an event, you can also specify whethe
 
 Note that you can change any of this settings at anytime by editing your paper through the **edit paper** <i class="bi-pencil-fill"></i> page. For example, if you wish to associate your paper with a new event, just select the new event form the Event drop-down menu.
 
+### What if I'm not happy with my reproducibility score
+
+Firstly, **reproducibility scores are not an objective reflection of your paper**. They are not stadardised in any formal way (although we are working on ways to do this) and importantly they encompass the familiarity, previous experiences and domain knowledge of reviewers. Functionally **they are meant more as a signal to other participants**, especially those looking for something _easy_ to work on, so **we do ask authors not to get too invested in them**. 
+
+Having said that, we do find that papers that make it easy for participants with no experience in a given domain / tool tend to score highest. Often this comes down to either very user friendly automation and/or detailed documentation with clear instructions that make no assumptions on participants prior knowledge.
+
+If you are still not happy with your reproducibility score, you have the following options:
+
+- **Make reviews on your paper private.** That also hides the mean reproducbility score associated with your paper.
+- **Engage with the reviewers in the review comments section.** Often minor changes (especiallly to documentation) can make the materials much more usable and convince reviewers to change their score. Please avoid trying to convince them that, for example, they missed something and therefore should change the score without any changes to the materials. Even if that's the case, it is more useful to understand why something was missed and try to make it impossible to miss going forward.
+- **Accept the score.** The most recommended course of action in our opinion is to accept the score, take on board any suggestions by the reviewers and make improvements to your paper. You might even want to signal that to future reviewers by making a note in your paper listing. In time this should result in a higher mean reproducibility score.
+### Is there a way to communicate with the reviewers?
+
+Yes! We've added a comment section at the bottom of each review that is visible only to the authors and reviewers. You can use this section to have discussions about each review. Please remember to abide by the code of conduct in all your communications.
+
 ### What if I want reviews and reproducibility scores associated with my paper to be private
 
 You can set reviews on your paper to be private in the **Review Visibility** section, by switching ***Make reviews public*** off. This will also hide the <span class="paper-metric"> Mean Reproducibility Score </span> from the paper listing.
