@@ -25,7 +25,7 @@ You will need the relevant URLs when submitting your event (although you can alw
 
   - **Set up registration**: The hub does not have functionality for managing registrations so you will need to use [Eventbrite](https://www.eventbrite.co.uk/) or a similar platform for for that purpose. 
   - **Event Hackpad** (eg etherpad, hack.md, googledoc  for collaborative notetaking at the event (optional). We strongly recommend having an event hackpad. Not only does it provide a place for participants to take collabotative notes of their experiences (useful during feedback sessions) but it also provides a space for them to register the papers they are working on so others can see them and perhaps join forces. You can use the [hackmd.io hackpad template](hackpad_template) we provide if you wish. This hackpad also contains a **template agenda for the day**. Feel free to customise as you wish.
-  - **Introductory Slides**: Use this to introduce your participants to the platform / building, run the ice breaker, remind them of good conduct during the event and introduce tips for reviewing. You can use the [hackmd.io introductory slides](intro_slides_template) we provide as a template for welcoming all participants. Customise with details of your event.
+  - **Introductory Slides**: Use this to introduce your participants to the platform / building, run the ice breaker, remind them of good conduct during the event and introduce tips for reviewing. You can use the [hackmd.io introductory slides template](intro_slides_template) we provide as a template for welcoming all participants. Customise with details of your event.
 
 ### Register Your Event!
 

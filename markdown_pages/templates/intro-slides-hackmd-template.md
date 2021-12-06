@@ -7,8 +7,9 @@ If you are new to HackMD, please see this [short guide](https://hackmd.io/@turin
 
 The most important setting to note is that to you view the sldes you need to **enable** <i class="fa fa-tv"></i> **Slide Mode** in the top right sharing <i class="fa fa-share-alt fa-18"></i> menu and hit "**Preview**" to see your slide.
 
-![](https://i.imgur.com/Ov8F3IV.png =450x)
 
+
+<img src='https://i.imgur.com/Ov8F3IV.png' width=500px>
 
 ### Template
 
@@ -26,24 +27,24 @@ The most important setting to note is that to you view the sldes you need to **e
 
     ## Welcome to the <your-event-name> ReproHack!
 
-    <!-- Put the link to this slide here so people can follow -->
     <br>
 
+    <!-- Put the link to the event page here so people can access all materials -->
     ### Event Page: 
-    ### http://reprohack.org/event/<your-event-id>/
+    ### http://reprohack.org/event/<your-event-id>
 
     Contains all event information and links to materials
 
     ---
-    <!-- Add any housekeeping details here. If running an online event, you might want to include an introduction to the platform here --> 
 
+    <!-- Add any housekeeping details here. If running an online event, you might want to include 
+    an introduction to the platform here -->
+        
     ### House Keeping:
 
     - No Fire Alarm test today
     - Toilets & Fire Exit
     - Water point - downstairs
-
-
 
     ---
 
@@ -54,7 +55,7 @@ The most important setting to note is that to you view the sldes you need to **e
 
     ---
 
-    <!-- Add details about yourself the organiser here: -->
+    <!-- Add details about yourself the organiser in the next few slides: -->
 
     ## Who am I?
 
@@ -63,38 +64,48 @@ The most important setting to note is that to you view the sldes you need to **e
     - Research Software Engineer _University of Sheffield_
     - 2019 Fellow _Software Sustainability Institute_
     - Software Peer Review Editor _rOpenSci_ 
-    - Co-organiser _Sheffield R Users Group_
+    - Core Team member: _ReproHack_
 
     ---
 
     ## Why am I here?
 
-    I believe there's lots to learn about Reproducibility from working with real published projects.
+    <!-- Edit with your own answer -->
+
+    > I believe there's lots to learn about Reproducibility from working with real published projects.
 
     ---
 
     ## Who is my favorite animated character?
 
+    <!-- Edit with your own answer -->
+
     Stitch!
 
     ![](https://media3.giphy.com/media/95MU6SEzeLnUc/giphy.gif?cid=790b76115d11033236595055776d483b&rid=giphy.gif)
 
+    <!-- Let the rest of the organisers do the same -->
+
+
+
     ---
 
+        
     <!-- Open it up to participants -->
+    - ### Who are you?
 
-    ## Who are you?
+    - ### Why are you here?
 
-    ## Why are you here?
+    - ### Who is your favorite animated character?
 
-    ## Who is your favorite animated character?
+    <!-- Delete below if participants NOT renaming breakout rooms -->
 
+    - #### As a group: Name your room! :mountain: :camping: :desert::roller_coaster::national_park::stadium::desert_island::sunrise::Tokyo_tower:  
+        
 
     ---
 
     # Welcome Back
-
-    ## Introduction & tips for reviewing
 
     ---
 
@@ -114,16 +125,19 @@ The most important setting to note is that to you view the sldes you need to **e
 
     ### Reproduce paper
 
-    1. **Project review and team formation**
+    1. **Paper review and team formation**
 
+    2. **Select and register your paper on hackpad**
 
-    2. **Select and register your project**
-
-    3. **Work on your project!**
-
+    3. **Work on your paper!**
+        
     4. **Re-group part-way through.**
 
-    6. **Feedback at the end (group & authors)**
+    5. **Feedback at the end (group & authors)**
+
+    ---
+
+    # Tips for reviewing
 
     ---
 
@@ -143,7 +157,7 @@ The most important setting to note is that to you view the sldes you need to **e
 
     ---
 
-    ## Thank you Authors! :raised_hands: 
+    ## Thank you Authors! :raised_hands:
 
     - #### Without them there would be no ReproHack.
     - #### Show gratitude and appreciation for their effort and bravery. :pray: 
@@ -160,6 +174,8 @@ The most important setting to note is that to you view the sldes you need to **e
 
     ## Selecting Papers
 
+    - **Author comments:** paper descroption and why you should choose to reproduce.
+    - **Tags:** Tools, languages & domains
     - **No. attempts:** No. times reproduction has been attempted
     - **Mean Repro Score:** Mean reproducibility score (out of 10)
         - lower == harder!
@@ -168,6 +184,13 @@ The most important setting to note is that to you view the sldes you need to **e
     ---
 
     ## Review as an auditor :bookmark_tabs:
+
+    ### Looking for FAIR principles
+
+    - Findable 
+    - Accessible
+    - Interoperable
+    - Reusable
 
     ---
 
@@ -237,7 +260,7 @@ The most important setting to note is that to you view the sldes you need to **e
 
     # Feed back
 
-    # :speech_balloon: 
+    # :speech_balloon:
 
     ---
 
@@ -260,44 +283,42 @@ The most important setting to note is that to you view the sldes you need to **e
 
     ## Finished early?
 
-
     ### Explore the work more deeply:
     - Try and run additional analyses.
     - Create new plots. 
     - Combine materials with your own or other open materials available on the web!
 
+    ---
+
+    # Let's go! :checkered_flag:
 
     ---
 
-    # Resources
-
-    - [**Example Compendium**](https://github.com/annakrystalli/rrcompendiumDTB): Demo Research compendium 
-    - [**The Turing Way**](https://the-turing-way.netlify.com/introduction/introduction): a lightly opinionated guide to reproducible data science.
-    - [**Statistical Analyses and Reproducible Research**](): Gentleman and Temple Lang's introduction of the concept of Research Compendia
-    - [**Packaging data analytical work reproducibly using R (and friends)**](https://peerj.com/preprints/3192/): how researchers can improve the reproducibility of their work using research compendia based on R packages and related tools
-
-
-
-    ---
-
-    # Let's go! :checkered_flag: 
-
-    ---
-
-    ## 1. Paper review
+    ## 1. Paper review / Team formation 
 
     + Have a look at the papers available for reproduction
-
-
-    ## 2. Team formation / project registration
-
-    + Fine to work individually
-    + Add your details to the [**hackpad**](https://hackmd.io/6nhNpD0VTHaCLuXPBy-dFw?both#Leeds).
-    + Register your team and paper on the [**hackpad**](https://hackmd.io/6nhNpD0VTHaCLuXPBy-dFw?both#Leeds)
+    + Add your details to the **hackpad**.
+    + Fine to work individually or tackle a papers as group
 
     ---
 
-    ## 3. Mid-point regroup
+    ## 2. Project registration
+
+    + Register your team and paper on the **hackpad**
+    + Register for an account on the Hub.
+    + Feel free to work here or in break-out rooms.
+
+    ---
+
+    ## 3. Reproduce Paper
+
+    - Inspect the review form.
+    - Try to reproduce the paper using the materials provided.
+    - Record your responses to review questions according to your experiences.
+
+    ---
+
+    ## 4. Mid-point regroup
 
     - Which paper have you selected? Briefly describe what it's about.
     - Briefly describe the approach to reproducibility the paper has taken.
@@ -306,14 +327,14 @@ The most important setting to note is that to you view the sldes you need to **e
 
     ---
 
-    ## 4. Feedback to authors
+    ## 5. Feedback to authors
 
     - **Please complete the feedback form for authors**
     - Feel free to record general findings the hackpad
 
     ---
 
-    ## 5. Final regroup
+    ## 6. Final regroup
 
     - So, how did you get on? 
     - Final comments.
@@ -322,11 +343,8 @@ The most important setting to note is that to you view the sldes you need to **e
 
     ---
 
-
-
     # Get involved!
-
-
+        
     ### Visit ReproHack Hub <https://reprohack.org>
 
     - [**Submit a paper for review**](https://reprohack.org/paper/new/)
@@ -338,15 +356,12 @@ The most important setting to note is that to you view the sldes you need to **e
 
     [![Slack](https://img.shields.io/badge/slack-join%20us-orange?style=for-the-badge&logo=slack)](https://reprohack-autoinvite.herokuapp.com/)
 
-
     ---
 
-    # THANK YOU ALL! :pray: 
+    # THANK YOU ALL! :pray:
 
-    - ### Thank you PARTICIPANTS for coming!
-    - ### Thank you AUTHORS for submitting!
-    - ### Thank to <any-sponsors> for sponsoring!
+    - #### Thank you PARTICIPANTS for coming!
+    - #### Thank you AUTHORS for submitting!
+    - #### Thanks to <any-sponsors> for sponsoring!
 
-
-    # :wave: 
-
+    # :wave:
