@@ -88,10 +88,13 @@ class TagWidget(Widget):
         :param value:
         :return:
         """
-        if value:
-            return ",".join([tag.name for tag in value])
 
-        return ""
+        if value is list:
+            return ",".join([tag.name in value])
+        elif value:
+            return value
+        else:
+            return ""
 
 
 class PaperForm(ModelForm):
