@@ -10,7 +10,6 @@
     "jquery": "3.5.1",
     "leaflet": "^1.7.1",
     "leaflet.awesome-markers": "2.0.5"
-
   },
   "devDependencies": {
     "autoprefixer": "^9.4.7",
