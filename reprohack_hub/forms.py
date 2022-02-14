@@ -53,6 +53,7 @@ class EventForm(ModelForm):
             HTML("<small style='color: #383838;'>If no email supplied, the email associated with the account submitting the event will be used as contact.</small><br><br><br>"),
             'registration_url',
             'hackpad_url',
+            'slides_url',
             Fieldset('Event Time/Date',
             Row(
                 Column('start_time', css_class='form-group col-md-4 mb-0'),
@@ -72,7 +73,7 @@ class EventForm(ModelForm):
                 ),
                 'event_coordinates'),
             Fieldset('Event Description',
-            'description'),
+                     Field('description', css_class="md-extra-large-box")),
         )
 
 
@@ -87,10 +88,13 @@ class TagWidget(Widget):
         :param value:
         :return:
         """
-        if value:
-            return ",".join([tag.name for tag in value])
 
-        return ""
+        if value is list:
+            return ",".join([tag.name in value])
+        elif value:
+            return value
+        else:
+            return ""
 
 
 class PaperForm(ModelForm):

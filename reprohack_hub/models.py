@@ -23,6 +23,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+from django.utils.safestring import mark_safe
 from django.db import models
 from django.contrib.auth.models import AbstractUser, AnonymousUser
 from django.db.models import CharField
@@ -176,7 +177,8 @@ class Event(models.Model):
     # location
     # venue = models.ForeignKey(Venue, on_delete=models.SET_NULL, null=True)
     description = MarkdownxField(_('Feel free to customise provided template'),
-                                 default=get_default_description)
+                                 default=get_default_description,
+                                 help_text=mark_safe("Markdown field. See <a href='https://daringfireball.net/projects/markdown/syntax'> full documentation of supported syntax</a>" ))
     # location = models.CharField(max_length=200)  # Location name?
     address1 = models.CharField(max_length=200, blank=True)
     address2 = models.CharField(max_length=200, blank=True)
@@ -184,7 +186,8 @@ class Event(models.Model):
     postcode = models.CharField(max_length=15, blank=True)
     country = CountryField(blank=True)
     registration_url = models.URLField(blank=True)
-    hackpad_url = models.URLField(blank=True)
+    hackpad_url = models.URLField(blank=True, help_text=mark_safe("See our hackmd.io <a href='/hackpad_template'> Event Hackpad Template</a>"))
+    slides_url = models.URLField(blank=True, help_text=mark_safe("See our hackmd.io <a href='/intro_slides_template'> Introductory Slides Template</a>"))
     event_coordinates = models.TextField(blank=True, null=True)
     is_initial_upload = models.BooleanField(default=False)
 
@@ -299,7 +302,7 @@ class Paper(models.Model):
         help_text=_("The paper will no longer be available for review"))
     public_reviews = models.BooleanField(
         _("Make reviews public"), default=True,
-        help_text=_("Only reviews that have also been set to public by reviewers will be visible to other signed in users"))
+        help_text=_("Only reviews that have also been set to public by reviewers will be visible publicly"))
     email_review = models.BooleanField(
         _("Send me an email when a review is received"), default=True)
     email_comment = models.BooleanField(
@@ -526,7 +529,7 @@ class Review(models.Model):
 
     public_review = models.BooleanField(
         _("Allow this review to be made public"), default=True,
-        help_text=_("Only reviews on papers that have also been set to receive public reviews by authors will be visible to others"))
+        help_text=_("Only reviews on papers that have also been set to receive public reviews by authors will be visible publicly"))
     email_comment = models.BooleanField(
         _("Send an email to reviewers when a comment is posted to this review"), default=True)
     is_initial_upload = models.BooleanField(default=False)

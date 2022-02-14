@@ -10,9 +10,9 @@ More broadly, submitting your work and letting others work with it gives opportu
 
 Two of the most common reasons for participants having difficulty with reproductions are:
 
-1. **Insufficient documentation:**
+- **Insufficient documentation:**
     This might be a result of documentation not being included or documentation being present but a participant not being able to locate it! Because of this not uncommon situation we suggest you provide many points of entry to your documentation.
-2. **Incomplete or missing description of computational environment:**
+- **Incomplete or missing description of computational environment:**
     This can include listing or formally managing dependencies, system requirements, system configurations or operating system limitations.
 
 For more information on what participants might look for during reviews, have a look at our [participant guidelines](participant_guidelines)
@@ -29,18 +29,39 @@ The central paper list has a search box which participants can use to filter pap
 
 ### What if I want to associate my paper with a single event.
 
-The Hub is designed to accomodate submitting papers for specific events (for example a thematic event involving an institution or specific domain). Select the event you want to associate your paper with from the drop down menu on the submission form in the **Paper details** section. Once associated with an event, the paper will appear on the *Associated Papers* list on the event page. 
+The Hub is designed to accommodate submitting papers for specific events (for example a thematic event involving an institution or specific domain). Select the event you want to associate your paper with from the Event drop down menu on the submission form in the **Paper details** section. Once associated with an event, the paper will appear on the *Associated Papers* list on the event page. 
 
 If you choose to associate your paper with an event, you can also specify whether you want your paper associated solely with that event under the **Review Availability** section. If you chose to make it available for review only at the associated event, your paper will be open for review only during the event and for the week following the event end date. Otherwise it will also be listed on the central paper list and made available for general review.
 
-### What if I don't want to recieve email notifications.
+Note that you can change any of this settings at anytime by editing your paper through the **edit paper** <i class="bi-pencil-fill"></i> page. For example, if you wish to associate your paper with a new event, just select the new event form the Event drop-down menu.
+
+### What if I'm not happy with my reproducibility score
+
+Firstly, **reproducibility scores are not an objective reflection of your paper**. They are not stadardised in any formal way (although we are working on ways to do this) and importantly they encompass the familiarity, previous experiences and domain knowledge of reviewers. Functionally **they are meant more as a signal to other participants**, especially those looking for something _easy_ to work on, so **we do ask authors not to get too invested in them**. 
+
+Having said that, we do find that papers that make it easy for participants with no experience in a given domain / tool tend to score highest. Often this comes down to either very user friendly automation and/or detailed documentation with clear instructions that make no assumptions on participants prior knowledge.
+
+If you are still not happy with your reproducibility score, you have the following options:
+
+- **Make reviews on your paper private.** That also hides the mean reproducbility score associated with your paper.
+- **Engage with the reviewers in the review comments section.** Often minor changes (especiallly to documentation) can make the materials much more usable and convince reviewers to change their score. Please avoid trying to convince them that, for example, they missed something and therefore should change the score without any changes to the materials. Even if that's the case, it is more useful to understand why something was missed and try to make it impossible to miss going forward.
+- **Accept the score.** The most recommended course of action in our opinion is to accept the score, take on board any suggestions by the reviewers and make improvements to your paper. You might even want to signal that to future reviewers by making a note in your paper listing. In time this should result in a higher mean reproducibility score.
+### Is there a way to communicate with the reviewers?
+
+Yes! We've added a comment section at the bottom of each review that is visible only to the authors and reviewers. You can use this section to have discussions about each review. Please remember to abide by the code of conduct in all your communications.
+
+### What if I want reviews and reproducibility scores associated with my paper to be private
+
+You can set reviews on your paper to be private in the **Review Visibility** section, by switching ***Make reviews public*** off. This will also hide the <span class="paper-metric"> Mean Reproducibility Score </span> from the paper listing.
+
+### What if I don't want to receive email notifications.
 
 There are two types of notifications you can receive an email about. The first is notification that a review has been received and the second that a comment has been posted to the review by a reviewer. You can set this notifications when you first submit your paper or edit them at any time on your **edit paper** <i class="bi-pencil-fill"></i> page.
 
 
 ### What if I don't want my paper reviewed anymore
 
-You can edit your paper's availability for review at any time. In the **edit paper** <i class="bi-pencil-fill"></i> page, toggle the archive paper switch to change it's availability. This will not remove the paper from the database but will make it unavailable for further reviews. We do suggest you consider turning off notifications instead of archiving. If you change your mind at any time, you can also unarchive using the same toggle. 
+You can edit your paper's availability for review at any time. In the **edit paper** <i class="bi-pencil-fill"></i> page, **toggle the archive paper** switch to change it's availability. This will not remove the paper from the database but will make it unavailable for further reviews. We do suggest you consider turning off notifications instead of archiving. If you change your mind at any time, you can also unarchive using the same toggle. 
 
 
 

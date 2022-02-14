@@ -15,87 +15,61 @@ If you are new to HackMD, please see this [short guide](https://hackmd.io/@turin
     - :calendar: **DATE**
     - :watch: **10:00 - 17:00 UTC**
     - :arrow_forward: **Slides:** SLIDE_URL
+    - :scroll: **Participant Guidelines:** https://reprohack.org/participant_guidelines
     - :purple_heart: **Code of Conduct:** https://reprohack.org/code-of-conduct
     - :left_speech_bubble: Chat to us on Slack: https://reprohack-autoinvite.herokuapp.com/
-
-    ***
-    ## Agenda
-    **10:00 -  Welcome and Orientation
-    10:10 - Ice breaker session in groups
-    10:20 - TALK SPEAKER NAME: *TALK TITLEß*.
-    10:45 - Tips and Tricks for Reproducing and Reviewing.
-    11:10 - Select Papers, Chat and :coffee:
-    11:30 - Round I of ReproHacking (break-out rooms)
-    12:30 - Re-group and sharing of experiences
-    12:45 - LUNCH :pizza: :stew: :strawberry:
-    13:45 - Round II of ReproHacking (break-out rooms)
-    14:45 - Coffee break :coffee:
-    15:00 - Round III of ReproHacking (break-out rooms) - Complete Feedback form
-    16:15 - Re-group and sharing of experiences
-    16:45 - Feedback and Closing**
+    - :Bird: **Twitter:**  #ReproHackHub @ReproHack
+    - **hackmd docs:** https://hackmd.io/s/features
 
     ***
 
     ## Participants:
     **Please sign in below:**
-    - Jane Doe (Affiliation / twitter / etc)
+    - ***Jane Doe (pronouns/ Affiliation / twitter / etc)***
+    - 
+    - 
+    - 
+    - 
 
+    <! ---  DELETE THE FOLLOWING SECTION IF PARTICIPANTS NOT RENAMING BREAKOUT ROOMS --->
+    
+    ---
 
+    # Icebreaker Room Names
+    - **Group 1:** 
+    - **Group 2:** 
+    - **Group 3:**  
+    - **Group 4:** 
+    - **Group 5:** 
+    - **Group 6:**  
+    - **Group 7:**
+    - **Group 8:**
+    - **Group 9:**
+    - **Group 10:**
 
     :::
 
-    # Plan of Action
-    ## Welcome and Introduction 
-
-    - Into Slides
 
 
-    :computer: Form teams
-    ---
-    Feel free to tackle papers individually or as teams. 
+    # Paper Registration
 
-    :dart: Select papers
-    ---
-    - Choose paper from list of proposed papers
+    _Use the following template and register your review below._
 
-    - Register the paper selected and the participants reproducing below. You can copy, paste and edit the following template:
     ```
     ### **Paper:** <Title of the paper reproduced>
     **Reviewers:** Reviewer 1, Reviewer 2 etc.
+    ***
     ```
-
-
-    :books: Reproduce
-    ---
-    - Attempt to reproduce papers from available materials and documentation
-    - Make notes about your experiences, in particular with respect to how easy it is to:
-    - :earth_africa: navigate the materials
-    - :repeat: reproduce the analysis
-    - :recycle: reuse the materials
-
-    :memo:  Feedback to authors
-    --
-    <br>
-
-    ---
-
+    <!-- Please register your paper in the space below using the template provided -->
 
 
     ***
     # Questions for Speaker(s)
     <!-- Please add any questions for our speaker below -->
 
-    # Paper Registration
-
-    _Use the following template (also provided in "Plan of Action") and register your review below._
-
-    ### **Paper:** <Title of the paper reproduced>
-    **Reviewers:** Reviewer 1, Reviewer 2 etc.
-    ***    
-
-    <!-- Please register your paper in the space below using the template provided -->
 
 
+    ***
 
     # Discussion topics 
 

@@ -40,11 +40,11 @@
                 <br>
                 <h6 class="card-subtitle mb-2 text-muted">Event submitted by:
                   {% if event.creator %}
-                    <a href="{{ event.creator.get_absolute_url }}">{{ event.creator.username }}</a>
+                  <a href="{{ event.creator.get_absolute_url }}">{{ event.creator.username }}</a>
                   {% else %}
-                    {% deleted_user %}
+                  {% deleted_user %}
                   {% endif %}
-                   on {{ event.submission_date }}
+                  on {{ event.submission_date }}
                 </h6>
               </div>
               <div class="col-md-3" style="align:center;">
@@ -66,7 +66,13 @@
                   <br>
                   {% if event.hackpad_url %}
                   <a href={{ event.hackpad_url }}>
-                    <i class="far fa-edit"></i></i> Event Hackpad
+                    <i class="far fa-edit"></i></i> Hackpad
+                  </a>
+                  {% endif %}
+                  {% if event.slides_url %}
+                  <br>
+                  <a href={{ event.slides_url }}>
+                    <i class="far fa-play-circle"></i></i> Slides
                   </a>
                   {% endif %}
                 </div>
