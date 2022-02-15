@@ -174,7 +174,7 @@ The most important setting to note is that to you view the sldes you need to **e
 
     ## Selecting Papers
 
-    - **Author comments:** paper descroption and why you should choose to reproduce.
+    - **Author comments:** paper description and why you should choose to reproduce.
     - **Tags:** Tools, languages & domains
     - **No. attempts:** No. times reproduction has been attempted
     - **Mean Repro Score:** Mean reproducibility score (out of 10)
