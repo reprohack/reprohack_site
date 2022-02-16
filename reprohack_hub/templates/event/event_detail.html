@@ -96,7 +96,7 @@
             <li class="paper card-box">
               <h3><a href="{{ paper.get_absolute_url }}">{{ paper.title }}</a></h3>
               <h5>Authors: {{ paper.authors }}</h5>
-              <h5>DOI: <a href="{{ paper.doi }}">{{ paper.doi }}</a></h5>
+              <h5>DOI: &nbsp;<a href="https://www.doi.org/{{ paper.doi }}">{{ paper.doi }}</a></h5>
               <h5>Submitted by <a href="{{ paper.submitter.get_absolute_url }}">{{ paper.submitter.username }}</a>
                 <span class="icon-box">
                   {%  if paper.event %} &nbsp; <i class="fas fa-calendar-day"></i> {% endif %}
