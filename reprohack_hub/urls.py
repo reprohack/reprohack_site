@@ -1,4 +1,5 @@
 from allauth.account.views import PasswordChangeView
+from django.contrib.staticfiles.storage import staticfiles_storage
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
@@ -9,7 +10,7 @@ from django.conf import settings
 from .models import Event
 from .views import (EventCreate, EventUpdate, EventDetail, EventList, IndexView,
                     PaperCreate, PaperUpdate, PaperDetail, PaperList,
-                    ReviewCreate, ReviewDetail, ReviewUpdate, ReviewList,
+                    ReviewCreate, ReviewDetail, ReviewUpdate, ReviewList, RedirectView,
                     UserDetailView, UserUpdateView, UserRedirectView, MarkdownView,
                     UserSearchEndpointView, PaperTagSearchEndpointView, UserEditRedirectView, UserDeleteView)
 
@@ -86,4 +87,5 @@ urlpatterns = [
     url(r'^markdownx/', include('markdownx.urls')),
     path('about', TemplateView.as_view(
         template_name='about.html'), name='about'),
+    	 path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('images/reprohack_favicons/favicon.ico'))),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
