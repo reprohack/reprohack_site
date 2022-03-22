@@ -119,8 +119,8 @@ class EventList(ListView):
         if search_string and len(search_string) > 0:
             result = result.filter(title__contains=search_string)
 
-        upcoming_events = result.filter(start_time__gte=timezone.now()).order_by("start_time")
-        past_events = result.filter(start_time__lt=timezone.now()).order_by("-start_time")
+        upcoming_events = result.filter(end_time__gte=timezone.now()).order_by("start_time")
+        past_events = result.filter(end_time__lt=timezone.now()).order_by("-start_time")
 
         upcoming_paginator = Paginator(list(upcoming_events), self.paginate_by)
         past_paginator = Paginator(list(past_events), self.paginate_by)
