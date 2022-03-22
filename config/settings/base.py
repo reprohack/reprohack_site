@@ -321,3 +321,5 @@ MARKDOWNX_MARKDOWNIFY_FUNCTION = 'markdownx.utils.markdownify'
 MARKDOWNX_MARKDOWN_EXTENSIONS = [
     'tables'
 ]
+
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
