@@ -421,6 +421,8 @@ class Review(models.Model):
             'Linux/FreeBSD or other Open Source Operating system')
         MACOS = 'macOS', _('Apple Operating System (macOSX)')
         WINDOWS = 'windows', _('Windows Operating System')
+        HPC = 'HPC', _('High Performance Computing Cluster')
+        CLOUD = 'Cloud', _('Cloud Computing')
 
     RATING_CHOICES = [(x, x) for x in range(RATING_MIN, RATING_MAX + 1)]
 
@@ -459,7 +461,7 @@ class Review(models.Model):
                                         choices=OperatingSystems.choices)
     operating_system_detail = models.CharField(_("What operating system were you "
                                                  "using (eg. Ubuntu 14.04.6 LTS, "
-                                                 "macOS 10.15 or Windows 10 Pro)?"),
+                                                 "macOS 10.15 or Windows 10 Pro, Sulis HPC Framework)?"),
                                                max_length=100, blank=True)
     software_installed = MarkdownxField(_("What additional software did you need "
                                           "to install?"),
