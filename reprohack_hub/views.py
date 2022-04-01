@@ -555,16 +555,18 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
 
         viewing_user = self.request.user
-        user = self.get_object()
+        viewed_user = self.get_object()
 
         context = super().get_context_data(**kwargs)
-
-        context["events"] = user.get_related_events()
-        context["papers"] = user.get_related_papers()
+        context["viewed_user"] = viewed_user
+        context["events"] = viewed_user.get_related_events()
+        context["papers"] = viewed_user.get_related_papers()
+        context["user"] = viewing_user
+        context["is_user"] = viewing_user.pk == viewed_user.pk
 
         # Filter reviews by viewing permission set by paper author and user
         viewable_reviews = []
-        for review in user.get_related_reviews():
+        for review in viewed_user.get_related_reviews():
             if review.is_viewable_by_user(viewing_user):
                 viewable_reviews.append(review)
 
