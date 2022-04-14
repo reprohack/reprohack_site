@@ -51,10 +51,11 @@ Additionally, once a valid registration is supplied, a registration button linki
 ## During the event
 
 - Start the event with an Introduction, Ice breaker and Tips for Reviewing (see slide template for details) and any morning talk you have scheduled. 
+- Make sure to **bring attention to the [Code of Conduct](code-of-conduct)** and remind participants thet **constructive criticism** and **care in how they frame their comments** to authors is of utmost importance.  
 - In a remote event or an event with too many participants to go round everyone, you are best running the ice-breaker in break-out groups (once the hosts have introduced themselves to the whole group to demonstrate).
 - If you are using break-out rooms at a remote event and have the option to name the break-out rooms, it's fun to let groups pick a name for their room during the ice-breaker. Get them to record their room ID and the name they want to assign and have a demonstrator re-name them for each group.
 - At remote events, it's also good to create a few extra rooms like a cafe and quiet room where participants can go to chat informally or work quietly.
-- Make sure to **bring attention to the [Code of Conduct](code-of-conduct)** and remind participants thet **constructive criticism** and **care in how they frame their comments** to authors is of utmost importance.  
+- At remote events using break-out rooms, make sure organisers drop into each room at least once during each ReproHack session to check in on participants.
 - Make sure to also bring the group back together after each ReproHack session to share their experience. Encourage them to use the hackpad to summarise them.
 - By the end of the day, ensure participants have completed the feedback form to authors. Remind them that any papers submitted for this event only will only be available to review for one week after the event.
 - At the end of the day, ask partipants for feedback for your event. Ask them to record one thing they enjoyed and one thing that could be improved. If you use the hackpad template provided, there is already a section to leave feedback. If you think any of the feedback is woth passing on, feel free to open an issue, either in or [general organisation repo](https://github.com/reprohack/reprohack-hq) or the [reprohack hub site](https://github.com/reprohack/reprohack_site/issues), or just let us know on slack!

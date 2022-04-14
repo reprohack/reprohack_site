@@ -387,7 +387,7 @@ class AuthorsAndSubmitters(models.Model):
     #     return f"{self.user} {self.paper}"
 
 def limit_review_event_choices():
-    return {'end_time__gte': timezone.now() - timedelta(days=7)}
+    return {'end_time__gte': timezone.now() - timedelta(days=31)}
 
 class Review(models.Model):
 
