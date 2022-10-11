@@ -1,5 +1,6 @@
 import logging
 import json
+import re
 from typing import Any, Optional, Dict, Union, Type, Sequence
 
 from django.forms import Field as DFField, ModelForm, Widget, TextInput, RadioSelect, CharField, NumberInput
@@ -91,6 +92,11 @@ class TagWidget(Widget):
 
         if value is list:
             return ",".join([tag.name in value])
+        elif type(value) == list:
+            tagnames = ""
+            for tag in value:
+                tagnames += tag.name + ","
+            return tagnames
         elif value:
             return value
         else:
