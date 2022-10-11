@@ -115,4 +115,5 @@ LOGGING = {
 
 # Your stuff...
 # ------------------------------------------------------------------------------
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+#ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_VERIFICATION = "none"
