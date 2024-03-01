@@ -225,23 +225,23 @@ X_FRAME_OPTIONS = "DENY"
 # emails though Google's API. See README.md for more details.
 # USERNAME, PASSWORD AND SECRET TOKENS SHOULD BE PLACED INSIDE secret.py
 """
-EMAIL_BACKEND = 'gmailapi_backend.mail.GmailBackend'
-GMAIL_API_CLIENT_ID = SECRET_GMAIL_API_CLIENT_ID
-GMAIL_API_CLIENT_SECRET = SECRET_GMAIL_API_CLIENT_SECRET
-GMAIL_API_REFRESH_TOKEN = SECRET_GMAIL_API_REFRESH_TOKEN
+# EMAIL_BACKEND = 'gmailapi_backend.mail.GmailBackend'
+# GMAIL_API_CLIENT_ID = SECRET_GMAIL_API_CLIENT_ID
+# GMAIL_API_CLIENT_SECRET = SECRET_GMAIL_API_CLIENT_SECRET
+# GMAIL_API_REFRESH_TOKEN = SECRET_GMAIL_API_REFRESH_TOKEN
 
 """
-Send e-mail through standard SMTP serer. See [https://github.com/dolfim/django-gmailapi-backend](https://github.com/dolfim/django-gmailapi-backend)
+Send e-mail through standard SMTP serer. See [https://docs.djangoproject.com/en/3.2/topics/email/#smtp-backend](https://docs.djangoproject.com/en/3.2/topics/email/#smtp-backend)
 for full list of configuration parameters.
 
 Uncomment below to enable settings
 """
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'myserver.com'
-# EMAIL_PORT = 22
-# EMAIL_HOST_USER = SECRET_EMAIL_HOST_USER
-# EMAIL_HOST_PASSWORD = SECRET_EMAIL_HOST_PASSWORD
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mailfence.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = SECRET_EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = SECRET_EMAIL_HOST_PASSWORD
+EMAIL_USE_SSL = True
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
 EMAIL_TIMEOUT = 5
