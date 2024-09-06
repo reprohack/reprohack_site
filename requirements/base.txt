@@ -14,14 +14,13 @@ django-environ==0.4.5  # https://github.com/joke2k/django-environ
 django-model-utils==4.0.0  # https://github.com/jazzband/django-model-utils
 django-allauth==64.2.1  # https://github.com/pennersr/django-allauth
 django-crispy-forms==1.9.2  # https://github.com/django-crispy-forms/django-crispy-forms
-django-compressor==2.4  # https://github.com/django-compressor/django-compressor
-django-markdownx==4.0.7
+django-compressor==4.5  # https://github.com/django-compressor/django-compressor
+django-markdownx==4.0.7 # https://github.com/neutronX/django-markdownx
 asgiref==3.8.1
 
 
 # ReproHack
 # ------------------------------------------------------------------------------
-django-markdownx==3.0.1  # https://github.com/neutronX/django-markdownx
 django-taggit==1.3.0  # https://github.com/jazzband/django-taggit
 django-countries==7.3.2  # https://github.com/SmileyChris/django-countries
 django-timezone-field # Why?
