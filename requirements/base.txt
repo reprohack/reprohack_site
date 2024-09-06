@@ -3,16 +3,21 @@ python-slugify==4.0.1  # https://github.com/un33k/python-slugify
 Pillow==9.0.1  # https://github.com/python-pillow/Pillow
 argon2-cffi==20.1.0  # https://github.com/hynek/argon2_cffi
 whitenoise==5.2.0  # https://github.com/evansd/whitenoise
-sqlparse==0.4.2 # https://github.com/andialbrecht/sqlparse
+sqlparse==0.5.1 # https://github.com/andialbrecht/sqlparse
+typing_extensions==4.12.2
+typed-ast==1.4.2
 
 # Django
 # ------------------------------------------------------------------------------
-django==3.2.12  # pyup: < 3.2  # https://www.djangoproject.com/
+Django==4.2.16  # pyup: < 3.2  # https://www.djangoproject.com/
 django-environ==0.4.5  # https://github.com/joke2k/django-environ
 django-model-utils==4.0.0  # https://github.com/jazzband/django-model-utils
-django-allauth==0.47.0  # https://github.com/pennersr/django-allauth
+django-allauth==64.2.1  # https://github.com/pennersr/django-allauth
 django-crispy-forms==1.9.2  # https://github.com/django-crispy-forms/django-crispy-forms
 django-compressor==2.4  # https://github.com/django-compressor/django-compressor
+django-markdownx==4.0.7
+asgiref==3.8.1
+
 
 # ReproHack
 # ------------------------------------------------------------------------------
