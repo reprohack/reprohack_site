@@ -345,3 +345,5 @@ reprohack_hub/media/
 .envs/*
 !.envs/.local/
 .vscode/*
+
+attic/*
