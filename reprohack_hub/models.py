@@ -20,7 +20,7 @@ from taggit.managers import TaggableManager
 
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.urls import reverse
+from django.urls import include, re_path, reverse
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.utils.safestring import mark_safe
@@ -205,7 +205,7 @@ class Event(models.Model):
         return reverse('event_detail', args=[self.id])
 
     @ property
-    def url(self):
+    def re_path(self):
         return self.get_absolute_url()
 
     @ property

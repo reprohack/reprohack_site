@@ -1,6 +1,5 @@
 from allauth.account.views import PasswordChangeView
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
@@ -84,7 +83,7 @@ urlpatterns = [
     path('review/new/<int:paperid>', ReviewCreate.as_view(), name="review_new"),
     path('review/<int:pk>/', ReviewDetail.as_view(), name="review_detail"),
     path('review/<int:pk>/edit/', ReviewUpdate.as_view(), name="review_edit"),
-    url(r'^markdownx/', include('markdownx.urls')),
+    re_path(r'^markdownx/', include('markdownx.urls')),
     path('about', TemplateView.as_view(
         template_name='about.html'), name='about'),
     	 path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('images/reprohack_favicons/favicon.ico'))),
