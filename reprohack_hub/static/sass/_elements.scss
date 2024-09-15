@@ -192,12 +192,12 @@ a {
 }
 
 .button-area {
+  background: $white;
   .border-top-generic {
     padding: 70px 15px;
     border-top: 1px dotted #eee;
   }
 
-  background: $white;
 }
 
 .button-group-area {
@@ -654,12 +654,12 @@ a {
     left: 20px;
     top: 0;
     line-height: 40px;
+    z-index: 3;
 
     i {
       color: #797979;
     }
 
-    z-index: 3;
   }
 
   .single-input {
