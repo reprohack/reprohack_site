@@ -29,7 +29,7 @@ conda create -n reprohack python=3.8
 source activate reprohack
 
 # Install nodejs from conda-forge
-conda install -c conda-forge nodejs=14
+conda install conda-forge::nodejs
 
 # Install python dependencies
 pip install -r requirements/local.txt
