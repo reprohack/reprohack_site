@@ -25,6 +25,7 @@
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
           {% endif %}
         </form>
+        <p>{% blocktrans %}By submitting this form, you confirm that you have read and agree to our  <a href="{% url 'data_protection_and_privacy_policy' %}">Data & Privacy Policy</a>.{% endblocktrans %}</p>
       </div>
     </div>
   </div>
