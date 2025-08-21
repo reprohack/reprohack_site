@@ -332,11 +332,7 @@ class UserChangeForm(forms.UserChangeForm):
                     title = 'ORCID ID'), css_class='form-group col-md-4 mb-0'
                     )
                 )
-              ),
-              Fieldset('Consent',
-              Div(HTML("See our <a href='{% url 'data_protection_and_privacy_policy' %}'> Data Protection and Privacy Policy</a>"), css_class="header_text"),
-              Field('consent', required = True),
-              HTML("<br>"))
+              )
         )
 
 class UserCreationForm(forms.UserCreationForm):
@@ -395,8 +391,11 @@ class UserCreationForm(forms.UserCreationForm):
                     title = 'ORCID ID'), css_class='form-group col-md-4 mb-0'
                     )
                 )
-              )
-
+              ),
+              Fieldset('Consent',
+              Div(HTML("See our <a href='{% url 'data_protection_and_privacy_policy' %}'> Data Protection and Privacy Policy</a>"), css_class="header_text"),
+              Field('consent', required = True),
+              HTML("<br>"))
         )
 
 class CommentForm(ModelForm):
