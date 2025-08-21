@@ -290,7 +290,7 @@ class UserChangeForm(forms.UserChangeForm):
         model = get_user_model()
         exclude = ["password", "id_password"]
         fields = ['full_name', 'preferred_name', 'email', 'bio', 'affiliation',
-                  'location', 'twitter', 'github', 'orcid', 'consent']
+                  'location', 'twitter', 'github', 'orcid']
 
     def __init__(self, *args, **kwargs):
         super(UserChangeForm, self).__init__(*args, **kwargs)
@@ -332,11 +332,7 @@ class UserChangeForm(forms.UserChangeForm):
                     title = 'ORCID ID'), css_class='form-group col-md-4 mb-0'
                     )
                 )
-              ),
-              Fieldset('Consent',
-              Div(HTML("See our <a href='{% url 'data_protection_and_privacy_policy' %}'> Data Protection and Privacy Policy</a>"), css_class="header_text"),
-              Field('consent', required = True),
-              HTML("<br>"))
+              )
         )
 
 class UserCreationForm(forms.UserCreationForm):
@@ -348,7 +344,7 @@ class UserCreationForm(forms.UserCreationForm):
     class Meta(forms.UserCreationForm.Meta):
         fields = ('full_name', 'preferred_name', 'username', 'email', 'password1',
                   'password2', 'affiliation', 'twitter', 'github', 'orcid',
-                  'bio', 'location')
+                  'bio', 'location', 'consent')
         model = get_user_model()
 
 
@@ -395,7 +391,11 @@ class UserCreationForm(forms.UserCreationForm):
                     title = 'ORCID ID'), css_class='form-group col-md-4 mb-0'
                     )
                 )
-              )
+              ),
+              Fieldset('Consent',
+              Div(HTML("See our <a href='{% url 'data_protection_and_privacy_policy' %}'> Data Protection and Privacy Policy</a>"), css_class="header_text"),
+              Field('consent', required = True),
+              HTML("<br>"))
 
         )
 
