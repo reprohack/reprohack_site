@@ -7,7 +7,10 @@
 <div class="bradcam_area breadcam_bg overlay2">
   <h1>
     User profile
-    <a class="btn btn-default" href="{% url 'user_update' username=user.username %}"><i class="bi-pencil-fill"></i> </a>
+    {% if is_user %}
+    <a class="btn btn-default" href="{% url 'user_update' username=viewed_user.username %}"><i
+        class="bi-pencil-fill"></i> </a>
+    {% endif %}
   </h1>
 </div>
 <!-- bradcam_area_end -->
@@ -18,16 +21,16 @@
         <div class="col-md-10">
 
           <h2><i class="bi-person-fill"></i>
-            {{ user.username }}
-            {% if user.twitter %}
-            <a href="https://twitter.com/{{ user.twitter }}">
+            {{ viewed_user.username }}
+            {% if viewed_user.twitter %}
+            <a href="https://twitter.com/{{ viewed_user.twitter }}">
               <i class="fab fa-twitter"></i></a>
             {% endif %}
-            {% if user.github %}
-            <a href="https://github.com/{{ user.github }}">
+            {% if viewed_user.github %}
+            <a href="https://github.com/{{ viewed_user.github }}">
               <i class="fab fa-github"></i> </a>
             {% endif %}
-            {% if user.orcid %}
+            {% if viewed_user.orcid %}
             <a href="https://orcid.org/{{ user.orcid }}">
               <i class="fab fa-orcid"></i> </a>
             {% endif %}
@@ -37,26 +40,26 @@
       <div class="row">
         <div class="col-md-6">
           <p>
-            <span class="detail_header">Name:</span> {{ user.full_name }}
+            <span class="detail_header">Name:</span> {{ viewed_user.full_name }}
           </p>
-          {% if user.affiliation %}
+          {% if viewed_user.affiliation %}
           <p>
-            <span class="detail_header">Affiliation:</span> {{ user.affiliation }}
+            <span class="detail_header">Affiliation:</span> {{ viewed_user.affiliation }}
           </p>
           {% endif %}
-          {% if user.location %}
+          {% if viewed_user.location %}
           <p>
-            <span class="detail_header">Location:</span> {{ user.location }}
+            <span class="detail_header">Location:</span> {{ viewed_user.location }}
           </p>
           {% endif %}
         </div>
         <div class="col-md-6">
-          {% if user.bio %}
+          {% if viewed_user.bio %}
           <p class="detail_header">
             Bio:
           </p>
           <p class="header_text">
-            {{ user.bio }}
+            {{ viewed_user.bio }}
           </p>
           {% endif %}
         </div>

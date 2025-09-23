@@ -42,7 +42,7 @@ TEMPLATES[-1]["OPTIONS"]["loaders"] = [  # type: ignore[index] # noqa F405
 # EMAIL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#default-from-email
-DEFAULT_FROM_EMAIL = "ReproHack Hub <reprohack-hub@sheffield.ac.uk>"
+DEFAULT_FROM_EMAIL = "ReproHack Hub <hub@reprohack.org>"
 # https://docs.djangoproject.com/en/dev/ref/settings/#server-email
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-subject-prefix
